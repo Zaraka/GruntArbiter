@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.shadowrun.controllers.ControllerMain">
+   <children>
+      <MenuBar>
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+                  <MenuItem mnemonicParsing="false" onAction="#newCampaignOnAction" text="New campaign" />
+                  <MenuItem mnemonicParsing="false" onAction="#openCampaignOnAction" text="Open campaign" />
+                  <MenuItem fx:id="menuItem_saveCampaign" mnemonicParsing="false" text="Save campaign" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem fx:id="menuItem_newBattle" mnemonicParsing="false" onAction="#newBattleOnAction" text="New battle" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+              <MenuItem mnemonicParsing="false" onAction="#closeAppOnAction" text="Close" />
+            </items>
+          </Menu>
+          <Menu fx:id="menu_campaign" mnemonicParsing="false" text="Campaign">
+            <items>
+              <MenuItem fx:id="menuItem_addPlayer" mnemonicParsing="false" onAction="#addPlayerOnAction" text="Add player" />
+            </items>
+          </Menu>
+            <Menu mnemonicParsing="false" text="View">
+              <items>
+                  <CheckMenuItem mnemonicParsing="false" text="Real World" />
+                  <CheckMenuItem mnemonicParsing="false" text="Astral Plane" />
+                  <CheckMenuItem mnemonicParsing="false" text="Matrix" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                <MenuItem mnemonicParsing="false" text="Action 1" />
+              </items>
+            </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#aboutOnAction" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <TabPane tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
+        <tabs>
+          <Tab fx:id="tab_characters" text="Characters">
+            <content>
+              <AnchorPane minHeight="-Infinity" minWidth="-Infinity">
+                     <children>
+                        <TableView fx:id="tableView_playerCharacters" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <columns>
+                              <TableColumn fx:id="tableColumn_playerCharacters_character" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="500.0" resizable="false" text="Character" />
+                           </columns>
+                        </TableView>
+                     </children></AnchorPane>
+            </content>
+          </Tab>
+          <Tab fx:id="tab_battle" text="Battle">
+            <content>
+              <AnchorPane minHeight="-Infinity" minWidth="-Infinity">
+                     <children>
+                        <VBox prefHeight="167.0" prefWidth="1024.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <HBox maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" prefWidth="200.0" />
+                              <SplitPane dividerPositions="0.3" prefHeight="160.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                                 <items>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                       <children>
+                                          <VBox prefHeight="707.0" prefWidth="301.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                             <children>
+                                                <Separator layoutX="10.0" layoutY="26.0" orientation="VERTICAL" prefHeight="20.0" />
+                                                <Label layoutX="10.0" layoutY="210.0" text="Real World">
+                                                   <font>
+                                                      <Font name="System Bold" size="13.0" />
+                                                   </font>
+                                                </Label>
+                                                <Separator orientation="VERTICAL" prefHeight="20.0" />
+                                                <Label text="Matrix">
+                                                   <font>
+                                                      <Font name="System Bold" size="13.0" />
+                                                   </font>
+                                                </Label>
+                                                <Separator orientation="VERTICAL" prefHeight="20.0" />
+                                                <Label text="Astral Plane">
+                                                   <font>
+                                                      <Font name="System Bold" size="13.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </AnchorPane>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                       <children>
+                                          <VBox prefHeight="707.0" prefWidth="713.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                             <children>
+                                                <TableView id="tableView_turnTable" fx:id="tableView_masterTable" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                                                   <columns>
+                                                      <TableColumn fx:id="tableColumn_masterTable_character" prefWidth="145.0" text="Character" />
+                                                      <TableColumn fx:id="tableColumn_masterTable_initiative" prefWidth="86.0" text="Initiative" />
+                                                      <TableColumn fx:id="tableColumn_masterTable_turn1" prefWidth="134.0" text="1" />
+                                                      <TableColumn fx:id="tableColumn_masterTable_turn2" prefWidth="75.0" text="2" />
+                                                      <TableColumn fx:id="tableColumn_masterTable_turn3" prefWidth="75.0" text="3" />
+                                                      <TableColumn fx:id="tableColumn_masterTable_turn4" prefWidth="75.0" text="4" />
+                                                      <TableColumn fx:id="tableColumn_masterTable_turn5" prefWidth="75.0" text="5" />
+                                                      <TableColumn fx:id="tableColumn_masterTable_turn6" prefWidth="75.0" text="6" />
+                                                      <TableColumn fx:id="tableColumn_masterTable_turn7" prefWidth="75.0" text="7" />
+                                                   </columns>
+                                                </TableView>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </AnchorPane>
+                                 </items>
+                              </SplitPane>
+                           </children>
+                        </VBox>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</VBox>
