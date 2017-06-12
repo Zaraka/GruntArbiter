@@ -22,8 +22,8 @@
             <HBox>
                <children>
                   <Separator prefWidth="300.0" />
-                  <Button mnemonicParsing="false" onAction="#closeOnAction" text="Close" />
-                  <Button mnemonicParsing="false" onAction="#okOnAction" text="Ok" />
+                  <Button cancelButton="true" mnemonicParsing="false" onAction="#closeOnAction" text="Close" />
+                  <Button defaultButton="true" mnemonicParsing="false" onAction="#okOnAction" text="Ok" />
                </children>
             </HBox>
          </children>

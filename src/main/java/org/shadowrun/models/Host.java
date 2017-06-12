@@ -1,9 +1,14 @@
 package org.shadowrun.models;
 
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 public class Host {
-    private IntegerProperty ratting;
+    private IntegerProperty rating;
 
     private IntegerProperty attack;
 
@@ -15,12 +20,21 @@ public class Host {
 
     private IntegerProperty overwatchScore;
 
-    public int getRatting() {
-        return ratting.get();
+    public Host() {
+        rating = new SimpleIntegerProperty(0);
+        attack = new SimpleIntegerProperty(0);
+        sleeze = new SimpleIntegerProperty(0);
+        firewall = new SimpleIntegerProperty(0);
+        dataProcessing = new SimpleIntegerProperty(0);
+        overwatchScore = new SimpleIntegerProperty(0);
     }
 
-    public void setRatting(int ratting) {
-        this.ratting.setValue(ratting);
+    public int getRating() {
+        return rating.get();
+    }
+
+    public void setRating(int rating) {
+        this.rating.setValue(rating);
     }
 
     public int getAttack() {
@@ -63,8 +77,8 @@ public class Host {
         this.overwatchScore.setValue(overwatchScore);
     }
 
-    public IntegerProperty rattingProperty() {
-        return ratting;
+    public IntegerProperty ratingProperty() {
+        return rating;
     }
 
     public IntegerProperty attackProperty() {
@@ -85,5 +99,18 @@ public class Host {
 
     public IntegerProperty overwatchScoreProperty() {
         return overwatchScore;
+    }
+
+    public void randomize(int rating) {
+        this.rating.set(rating);
+        ArrayList<Integer> ratings = new ArrayList<>();
+        for(int i = 0; i < 4; i++){
+            ratings.add(rating + i);
+        }
+        Collections.shuffle(ratings);
+        attack.set(ratings.get(0));
+        sleeze.set(ratings.get(1));
+        firewall.set(ratings.get(2));
+        dataProcessing.set(ratings.get(3));
     }
 }

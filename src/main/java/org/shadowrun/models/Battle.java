@@ -6,6 +6,8 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Comparator;
 import java.util.List;
@@ -13,6 +15,8 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class Battle {
+
+    private static final Logger LOG = LoggerFactory.getLogger(Battle.class);
 
     private ObjectProperty<Host> host;
 
@@ -26,7 +30,7 @@ public class Battle {
 
     private ObjectProperty<Character> currentCharacter;
 
-    private static final Function<PlayerCharacter, Character> player2Character = playerCharacter -> new Character(playerCharacter.getName(), 0, World.REAL, false);
+    private static final Function<PlayerCharacter, Character> player2Character = playerCharacter -> new Character(playerCharacter.getName(), 0, World.REAL);
 
     public Battle(List<PlayerCharacter> players) {
         backgroundCount = new SimpleIntegerProperty(0);
@@ -34,6 +38,7 @@ public class Battle {
         combatTurn = new SimpleIntegerProperty(0);
         characters = FXCollections.observableArrayList(players.stream().map(player2Character).collect(Collectors.toList()));
         currentCharacter = new SimpleObjectProperty<>(characters.stream().max(Comparator.comparingInt(Character::getInitiative)).get());
+        host = new SimpleObjectProperty<>(new Host());
     }
 
     public Host getHost() {
@@ -86,21 +91,22 @@ public class Battle {
 
     public void nextTurn() {
         List<Character> combatCharacters = getCombatTurnCharacters();
-        combatTurn.add(1);
+        combatTurn.set(getCombatTurn() + 1);
         if (combatTurn.get() > combatCharacters.size()) {
-            combatTurn.set(1);
-            iteration.add(1);
+            combatTurn.set(0);
+            iteration.set(getIteration() + 1);
         }
 
         List<Character> combatCharactersFinal = getCombatTurnCharacters();
         currentCharacter.setValue(combatCharactersFinal.get(combatTurn.get()));
+
     }
 
     public void previousturn() {
         if(iteration.get() > 0) {
-            combatTurn.subtract(1);
+            combatTurn.set(getCombatTurn() - 1);
             if(combatTurn.get() < 1) {
-                iteration.subtract(1);
+                iteration.set(getIteration() - 1);
             }
             List<Character> combatCharactersFinal = getCombatTurnCharacters();
             currentCharacter.setValue(combatCharactersFinal.get(combatTurn.get()));

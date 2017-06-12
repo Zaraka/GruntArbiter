@@ -5,167 +5,302 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
+<?import org.controlsfx.glyphfont.*?>
 
 <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.shadowrun.controllers.ControllerMain">
-   <children>
-      <MenuBar>
-        <menus>
-          <Menu mnemonicParsing="false" text="File">
-            <items>
-                  <MenuItem mnemonicParsing="false" onAction="#newCampaignOnAction" text="New campaign" />
-                  <MenuItem mnemonicParsing="false" onAction="#openCampaignOnAction" text="Open campaign" />
-                  <MenuItem fx:id="menuItem_saveCampaign" mnemonicParsing="false" text="Save campaign" />
-                  <SeparatorMenuItem mnemonicParsing="false" />
-              <MenuItem mnemonicParsing="false" onAction="#closeAppOnAction" text="Close" />
-            </items>
-          </Menu>
-          <Menu fx:id="menu_campaign" mnemonicParsing="false" text="Campaign">
-            <items>
-              <MenuItem fx:id="menuItem_addPlayer" mnemonicParsing="false" onAction="#addPlayerOnAction" text="Add player" />
-                  <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem fx:id="menuItem_newBattle" mnemonicParsing="false" onAction="#newBattleOnAction" text="New battle" />
-            </items>
-          </Menu>
-            <Menu mnemonicParsing="false" text="View">
-              <items>
-                  <CheckMenuItem mnemonicParsing="false" text="Real World" />
-                  <CheckMenuItem mnemonicParsing="false" text="Astral Plane" />
-                  <CheckMenuItem mnemonicParsing="false" text="Matrix" />
-                  <SeparatorMenuItem mnemonicParsing="false" />
-                <MenuItem mnemonicParsing="false" text="Action 1" />
-              </items>
-            </Menu>
-          <Menu mnemonicParsing="false" text="Help">
-            <items>
-              <MenuItem mnemonicParsing="false" onAction="#aboutOnAction" text="About" />
-            </items>
-          </Menu>
-        </menus>
-      </MenuBar>
-      <TabPane fx:id="tabPane" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
-        <tabs>
-          <Tab fx:id="tab_characters" text="Characters">
-            <content>
-              <AnchorPane minHeight="-Infinity" minWidth="-Infinity">
-                     <children>
-                        <TableView fx:id="tableView_playerCharacters" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                           <columns>
-                              <TableColumn fx:id="tableColumn_playerCharacters_character" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="500.0" resizable="false" text="Character" />
-                           </columns>
-                        </TableView>
-                     </children></AnchorPane>
-            </content>
-          </Tab>
-          <Tab fx:id="tab_battle" text="Battle">
-            <content>
-              <AnchorPane minHeight="-Infinity" minWidth="-Infinity">
-                     <children>
-                        <VBox prefHeight="167.0" prefWidth="1024.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                           <children>
-                              <HBox>
-                                 <children>
-                                    <Button fx:id="button_prevTurn" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#prevTurnOnAction" text="Prav turn" />
+    <children>
+        <MenuBar>
+            <menus>
+                <Menu mnemonicParsing="false" text="File">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#newCampaignOnAction" text="New campaign" />
+                        <MenuItem mnemonicParsing="false" onAction="#openCampaignOnAction" text="Open campaign" />
+                        <MenuItem fx:id="menuItem_saveCampaign" mnemonicParsing="false" text="Save campaign" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" onAction="#closeAppOnAction" text="Close" />
+                    </items>
+                </Menu>
+                <Menu fx:id="menu_campaign" mnemonicParsing="false" text="Campaign">
+                    <items>
+                        <MenuItem fx:id="menuItem_addPlayer" mnemonicParsing="false" onAction="#addPlayerOnAction" text="Add player" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem fx:id="menuItem_newBattle" mnemonicParsing="false" onAction="#newBattleOnAction" text="New battle" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="View">
+                    <items>
+                        <CheckMenuItem mnemonicParsing="false" text="Real World" />
+                        <CheckMenuItem mnemonicParsing="false" text="Astral Plane" />
+                        <CheckMenuItem mnemonicParsing="false" text="Matrix" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" text="Action 1" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#aboutOnAction" text="About" />
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+        <TabPane fx:id="tabPane" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
+            <tabs>
+                <Tab fx:id="tab_characters" text="Characters">
+                    <content>
+                        <AnchorPane minHeight="-Infinity" minWidth="-Infinity">
+                            <children>
+                                <TableView fx:id="tableView_playerCharacters" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <columns>
+                                        <TableColumn fx:id="tableColumn_playerCharacters_character" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="500.0" resizable="false" text="Character" />
+                                    </columns>
+                                </TableView>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+                <Tab fx:id="tab_battle" text="Battle">
+                    <content>
+                        <AnchorPane minHeight="-Infinity" minWidth="-Infinity">
+                            <children>
+                                <VBox prefHeight="167.0" prefWidth="1024.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <children>
+                              <ToolBar prefHeight="40.0" prefWidth="200.0">
+                                <items>
+                                    <Button fx:id="button_prevTurn" mnemonicParsing="false" onAction="#prevTurnOnAction" text="Prav turn" />
                                     <Button fx:id="button_nextTurn" mnemonicParsing="false" onAction="#nextTurnOnAction" text="Next turn" />
+                                    <Separator prefWidth="5.0" />
                                     <Label text="Iteration">
                                        <font>
                                           <Font name="System Bold" size="18.0" />
                                        </font>
                                     </Label>
-                                    <Separator layoutX="112.0" layoutY="10.0" prefWidth="5.0" />
-                                    <Label fx:id="label_iterationCounter" layoutX="10.0" layoutY="10.0" text="0">
+                                    <Label fx:id="label_iterationCounter" text="0">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Separator prefWidth="5.0" />
+                                    <Label text="Combat turn">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="label_combatTurnsCounter" text="0">
                                        <font>
                                           <Font name="System Bold" size="18.0" />
                                        </font>
                                     </Label>
                                     <Separator prefWidth="25.0" />
-                                    <Label layoutX="128.0" layoutY="10.0" text="Combat turn">
+                                    <Label text="Current ">
                                        <font>
                                           <Font name="System Bold" size="18.0" />
                                        </font>
                                     </Label>
-                                    <Separator layoutX="99.0" layoutY="10.0" prefWidth="5.0" />
-                                    <Label fx:id="label_combatTurnsCounter" layoutX="246.0" layoutY="10.0" text="0">
+                                    <Label fx:id="label_currentCharacter" text="john doe">
                                        <font>
                                           <Font name="System Bold" size="18.0" />
                                        </font>
                                     </Label>
-                                    <Separator layoutX="122.0" layoutY="10.0" prefWidth="25.0" />
-                                    <Label layoutX="147.0" layoutY="10.0" text="Current ">
+                                    <Pane HBox.hgrow="ALWAYS" />
+                                    <Label layoutX="278.0" layoutY="14.0" text="OS">
                                        <font>
                                           <Font name="System Bold" size="18.0" />
                                        </font>
                                     </Label>
-                                    <Separator layoutX="275.0" layoutY="10.0" prefWidth="5.0" />
-                                    <Label fx:id="label_currentCharacter" layoutX="285.0" layoutY="10.0" text="john doe">
+                                    <Label fx:id="label_overwatchScore" layoutX="991.0" layoutY="14.0" text="0">
                                        <font>
                                           <Font name="System Bold" size="18.0" />
                                        </font>
                                     </Label>
-                                 </children></HBox>
-                              <SplitPane dividerPositions="0.3" prefHeight="160.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
-                                 <items>
-                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
-                                       <children>
-                                          <VBox prefHeight="707.0" prefWidth="301.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                             <children>
-                                                <HBox>
-                                                   <children>
-                                                      <Button mnemonicParsing="false" onAction="#addCharacterOnAction" text="Add character" />
-                                                      <Button mnemonicParsing="false" onAction="#addICeOnAction" text="Add ICe" />
-                                                   </children>
-                                                </HBox>
-                                                <Separator layoutX="10.0" layoutY="26.0" orientation="VERTICAL" prefHeight="20.0" />
-                                                <Label layoutX="10.0" layoutY="210.0" text="Real World">
-                                                   <font>
-                                                      <Font name="System Bold" size="13.0" />
-                                                   </font>
-                                                </Label>
-                                                <Separator orientation="VERTICAL" prefHeight="20.0" />
-                                                <Label text="Matrix">
-                                                   <font>
-                                                      <Font name="System Bold" size="13.0" />
-                                                   </font>
-                                                </Label>
-                                                <Separator orientation="VERTICAL" prefHeight="20.0" />
-                                                <Label text="Astral Plane">
-                                                   <font>
-                                                      <Font name="System Bold" size="13.0" />
-                                                   </font>
-                                                </Label>
-                                             </children>
-                                          </VBox>
-                                       </children>
-                                    </AnchorPane>
-                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
-                                       <children>
-                                          <VBox prefHeight="707.0" prefWidth="713.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                             <children>
-                                                <TableView id="tableView_turnTable" fx:id="tableView_masterTable" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
-                                                   <columns>
-                                                      <TableColumn fx:id="tableColumn_masterTable_character" prefWidth="145.0" sortable="false" text="Character" />
-                                                      <TableColumn fx:id="tableColumn_masterTable_initiative" maxWidth="90.0" minWidth="90.0" prefWidth="90.0" resizable="false" sortType="DESCENDING" text="Initiative" />
-                                                      <TableColumn fx:id="tableColumn_masterTable_turn1" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" resizable="false" sortable="false" text="1" />
-                                                      <TableColumn fx:id="tableColumn_masterTable_turn2" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" resizable="false" sortable="false" text="2" />
-                                                      <TableColumn fx:id="tableColumn_masterTable_turn3" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" resizable="false" sortable="false" text="3" />
-                                                      <TableColumn fx:id="tableColumn_masterTable_turn4" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" resizable="false" sortable="false" text="4" />
-                                                      <TableColumn fx:id="tableColumn_masterTable_turn5" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" resizable="false" sortable="false" text="5" />
-                                                      <TableColumn fx:id="tableColumn_masterTable_turn6" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" resizable="false" sortable="false" text="6" />
-                                                      <TableColumn fx:id="tableColumn_masterTable_turn7" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" resizable="false" sortable="false" text="7" />
-                                                   </columns>
-                                                </TableView>
-                                             </children>
-                                          </VBox>
-                                       </children>
-                                    </AnchorPane>
-                                 </items>
-                              </SplitPane>
-                           </children>
-                        </VBox>
-                     </children>
-                  </AnchorPane>
-            </content>
-          </Tab>
-        </tabs>
-      </TabPane>
-   </children>
+                                    <Button mnemonicParsing="false" onAction="#overwatchScorePlusOnAction" GridPane.columnIndex="2">
+                                        <graphic>
+                                            <Glyph fontFamily="FontAwesome" icon="PLUS" />
+                                        </graphic>
+                                    </Button>
+                                    <Button mnemonicParsing="false" onAction="#overwatchScoreMinusOnAction" GridPane.columnIndex="2">
+                                        <graphic>
+                                            <Glyph fontFamily="FontAwesome" icon="MINUS" />
+                                        </graphic>
+                                    </Button>
+                                </items>
+                              </ToolBar>
+                              <HBox>
+                                 <children>
+                                              <HBox />
+                                 </children>
+                              </HBox>
+                                        <SplitPane dividerPositions="0.3" prefHeight="160.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                                            <items>
+                                                <AnchorPane maxWidth="280.0" minWidth="280.0" prefWidth="280.0">
+                                                    <children>
+                                                        <VBox prefHeight="707.0" prefWidth="301.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                            <children>
+                                                                <HBox>
+                                                                    <children>
+                                                                        <Button mnemonicParsing="false" onAction="#addCharacterOnAction" text="Add character" />
+                                                                    </children>
+                                                                </HBox>
+                                                                <Separator layoutX="10.0" layoutY="26.0" orientation="VERTICAL" prefHeight="20.0" />
+                                                                <VBox fx:id="vbox_selected">
+                                                                    <children>
+                                                                        <Label text="Selected">
+                                                                            <font>
+                                                                                <Font name="System Bold" size="17.0" />
+                                                                            </font>
+                                                                        </Label>
+                                                                        <HBox />
+                                                      <HBox layoutX="10.0" layoutY="31.0" />
+                                                      <GridPane>
+                                                        <columnConstraints>
+                                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="75.0" minWidth="75.0" prefWidth="75.0" />
+                                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
+                                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="25.0" minWidth="25.0" prefWidth="25.0" />
+                                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="25.0" minWidth="25.0" prefWidth="25.0" />
+                                                        </columnConstraints>
+                                                        <rowConstraints>
+                                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                        </rowConstraints>
+                                                         <children>
+                                                            <Label text="Physical" />
+                                                            <TextField fx:id="textField_selected_physical" GridPane.columnIndex="1" />
+                                                            <Button mnemonicParsing="false" onAction="#physicalPlusOnAction" GridPane.columnIndex="2">
+                                                               <graphic>
+                                                                  <Glyph fontFamily="FontAwesome" icon="PLUS" />
+                                                               </graphic>
+                                                            </Button>
+                                                            <Button mnemonicParsing="false" onAction="#physicalMinusOnAction" GridPane.columnIndex="3">
+                                                               <graphic>
+                                                                  <Glyph fontFamily="FontAwesome" icon="MINUS" />
+                                                               </graphic>
+                                                            </Button>
+                                                            <TextField fx:id="textField_selected_stun" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                            <Label text="Stun" GridPane.rowIndex="1" />
+                                                            <Button mnemonicParsing="false" onAction="#stunPlusOnAction" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                                               <graphic>
+                                                                  <Glyph fontFamily="FontAwesome" icon="PLUS" />
+                                                               </graphic>
+                                                            </Button>
+                                                            <Button mnemonicParsing="false" onAction="#stunMinusOnAction" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                                                               <graphic>
+                                                                  <Glyph fontFamily="FontAwesome" icon="MINUS" />
+                                                               </graphic>
+                                                            </Button>
+                                                         </children>
+                                                      </GridPane>
+                                                                    </children>
+                                                                </VBox>
+                                                                <Label layoutX="10.0" layoutY="210.0" text="Real World">
+                                                                    <font>
+                                                                        <Font name="System Bold" size="17.0" />
+                                                                    </font>
+                                                                </Label>
+                                                                <Separator orientation="VERTICAL" prefHeight="20.0" />
+                                                                <Label text="Matrix">
+                                                                    <font>
+                                                                        <Font name="System Bold" size="17.0" />
+                                                                    </font>
+                                                                </Label>
+                                                                <HBox>
+                                                                    <children>
+                                                                        <Button fx:id="button_generateHost" mnemonicParsing="false" onAction="#generateHostOnAction" text="Generate Host" />
+                                                                        <Button mnemonicParsing="false" onAction="#addICeOnAction" text="Add ICe" />
+                                                                    </children>
+                                                                </HBox>
+                                                                <HBox>
+                                                                    <children>
+                                                                        <Label text="R">
+                                                                            <font>
+                                                                                <Font name="System Bold" size="13.0" />
+                                                                            </font>
+                                                                        </Label>
+                                                                        <Separator layoutX="29.0" layoutY="10.0" prefWidth="3.0" />
+                                                                        <Label fx:id="label_host_rating" text="1" />
+                                                                        <Separator prefWidth="20.0" />
+                                                                        <Label text="A">
+                                                                            <font>
+                                                                                <Font name="System Bold" size="13.0" />
+                                                                            </font>
+                                                                        </Label>
+                                                                        <Separator layoutX="20.0" layoutY="10.0" prefWidth="3.0" />
+                                                                        <Label fx:id="label_host_attack" text="2" />
+                                                                        <Separator layoutX="29.0" layoutY="10.0" prefWidth="20.0" />
+                                                                        <Label text="S">
+                                                                            <font>
+                                                                                <Font name="System Bold" size="13.0" />
+                                                                            </font>
+                                                                        </Label>
+                                                                        <Separator layoutX="68.0" layoutY="10.0" prefWidth="3.0" />
+                                                                        <Label fx:id="label_host_sleeze" text="3" />
+                                                                        <Separator layoutX="67.0" layoutY="10.0" prefWidth="20.0" />
+                                                                        <Label text="F">
+                                                                            <font>
+                                                                                <Font name="System Bold" size="13.0" />
+                                                                            </font>
+                                                                        </Label>
+                                                                        <Separator layoutX="116.0" layoutY="10.0" prefWidth="3.0" />
+                                                                        <Label fx:id="label_host_firewall" text="4" />
+                                                                        <Separator layoutX="105.0" layoutY="10.0" prefWidth="20.0" />
+                                                                        <Label text="DP">
+                                                                            <font>
+                                                                                <Font name="System Bold" size="13.0" />
+                                                                            </font>
+                                                                        </Label>
+                                                                        <Separator layoutX="163.0" layoutY="10.0" prefWidth="3.0" />
+                                                                        <Label fx:id="label_host_dataProcessing" text="5" />
+                                                                    </children>
+                                                                </HBox>
+                                                                <Separator orientation="VERTICAL" prefHeight="20.0" />
+                                                                <Label text="Astral Plane">
+                                                                    <font>
+                                                                        <Font name="System Bold" size="17.0" />
+                                                                    </font>
+                                                                </Label>
+                                                                <HBox>
+                                                                    <children>
+                                                                        <Label text="Background count">
+                                                                            <font>
+                                                                                <Font name="System Bold" size="13.0" />
+                                                                            </font>
+                                                                        </Label>
+                                                                        <Separator prefWidth="3.0" />
+                                                                        <Label fx:id="label_astral_backgroundCount" text="1" />
+                                                                    </children>
+                                                                </HBox>
+                                                            </children>
+                                                        </VBox>
+                                                    </children>
+                                                </AnchorPane>
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                                    <children>
+                                                        <VBox prefHeight="707.0" prefWidth="713.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                            <children>
+                                                                <TableView id="tableView_turnTable" fx:id="tableView_masterTable" minWidth="250.0" prefHeight="200.0" prefWidth="250.0" VBox.vgrow="ALWAYS">
+                                                                    <columns>
+                                                                        <TableColumn fx:id="tableColumn_masterTable_character" prefWidth="145.0" sortable="false" text="Character" />
+                                                                        <TableColumn fx:id="tableColumn_masterTable_initiative" maxWidth="90.0" minWidth="90.0" prefWidth="90.0" resizable="false" sortType="DESCENDING" text="Initiative" />
+                                                                        <TableColumn fx:id="tableColumn_masterTable_turn1" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" resizable="false" sortable="false" text="1" />
+                                                                        <TableColumn fx:id="tableColumn_masterTable_turn2" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" resizable="false" sortable="false" text="2" />
+                                                                        <TableColumn fx:id="tableColumn_masterTable_turn3" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" resizable="false" sortable="false" text="3" />
+                                                                        <TableColumn fx:id="tableColumn_masterTable_turn4" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" resizable="false" sortable="false" text="4" />
+                                                                        <TableColumn fx:id="tableColumn_masterTable_turn5" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" resizable="false" sortable="false" text="5" />
+                                                                        <TableColumn fx:id="tableColumn_masterTable_turn6" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" resizable="false" sortable="false" text="6" />
+                                                                        <TableColumn fx:id="tableColumn_masterTable_turn7" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" resizable="false" sortable="false" text="7" />
+                                                                    </columns>
+                                                                </TableView>
+                                                            </children>
+                                                        </VBox>
+                                                    </children>
+                                                </AnchorPane>
+                                            </items>
+                                        </SplitPane>
+                                    </children>
+                                </VBox>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+            </tabs>
+        </TabPane>
+    </children>
 </VBox>

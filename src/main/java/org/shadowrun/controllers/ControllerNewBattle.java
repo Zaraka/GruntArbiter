@@ -34,8 +34,6 @@ public class ControllerNewBattle {
             return playerCharacter;
         }
 
-        // other columns here
-
         public BooleanProperty checkedProperty() {
             return this.checked;
         }

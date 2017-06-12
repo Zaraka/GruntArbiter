@@ -1,15 +1,12 @@
 package org.shadowrun.controllers;
 
 import javafx.beans.property.ReadOnlyObjectWrapper;
-import javafx.collections.ListChangeListener;
-import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.paint.Color;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.shadowrun.common.TurnTableCell;
@@ -32,6 +29,7 @@ public class ControllerMain {
     private AppLogic appLogic;
     private BattleLogic battleLogic;
     private Stage stage;
+
 
     //------------------------object injections
     @FXML
@@ -76,6 +74,9 @@ public class ControllerMain {
     @FXML
     private Tab tab_battle;
 
+    @FXML
+    private VBox vbox_selected;
+
 
     @FXML
     private Label label_iterationCounter;
@@ -85,9 +86,31 @@ public class ControllerMain {
     private Label label_currentCharacter;
 
     @FXML
+    private Label label_host_rating;
+    @FXML
+    private Label label_host_attack;
+    @FXML
+    private Label label_host_sleeze;
+    @FXML
+    private Label label_host_firewall;
+    @FXML
+    private Label label_host_dataProcessing;
+
+    @FXML
+    private Label label_astral_backgroundCount;
+    @FXML
+    private Label label_overwatchScore;
+
+    @FXML
     private Button button_nextTurn;
     @FXML
     private Button button_prevTurn;
+
+    @FXML
+    private TextField textField_selected_physical;
+    @FXML
+    private TextField textField_selected_stun;
+
 
     //------------------------method hooks
     @FXML
@@ -204,6 +227,50 @@ public class ControllerMain {
         battleLogic.prevTurn();
     }
 
+    @FXML
+    private void generateHostOnAction() {
+        TextInputDialog dialog = new TextInputDialog("3");
+        dialog.setTitle("Generate host");
+        dialog.setHeaderText("Attributes will be randomized");
+        dialog.setContentText("Please enter host ratting:");
+        Optional<String> result = dialog.showAndWait();
+        result.ifPresent(rating -> battleLogic.getActiveBattle().getHost().randomize(Integer.parseInt(rating.replaceAll("[^\\d.]", ""))));
+    }
+
+    @FXML
+    private void physicalPlusOnAction() {
+        Character character = tableView_masterTable.getSelectionModel().getSelectedItem();
+        character.physicalMonitorProperty().set(character.getPhysicalMonitor() + 1);
+    }
+
+    @FXML
+    private void physicalMinusOnAction() {
+        Character character = tableView_masterTable.getSelectionModel().getSelectedItem();
+        character.physicalMonitorProperty().set(character.getPhysicalMonitor() - 1);
+    }
+
+    @FXML
+    private void stunPlusOnAction() {
+        Character character = tableView_masterTable.getSelectionModel().getSelectedItem();
+        character.stunMonitorProperty().set(character.getStunMonitor() + 1);
+    }
+
+    @FXML
+    private void stunMinusOnAction() {
+        Character character = tableView_masterTable.getSelectionModel().getSelectedItem();
+        character.stunMonitorProperty().set(character.getStunMonitor() - 1);
+    }
+
+    @FXML
+    private void overwatchScorePlusOnAction() {
+        battleLogic.getActiveBattle().getHost().overwatchScoreProperty().set(battleLogic.getActiveBattle().getHost().getOverwatchScore() + 1);
+    }
+
+    @FXML
+    private void overwatchScoreMinusOnAction() {
+        battleLogic.getActiveBattle().getHost().overwatchScoreProperty().set(battleLogic.getActiveBattle().getHost().getOverwatchScore() - 1);
+    }
+
     private void addCampaignHooks() {
         //Items
         tableView_playerCharacters.setItems(appLogic.getActiveCampaign().getPlayers());
@@ -219,10 +286,25 @@ public class ControllerMain {
         label_iterationCounter.textProperty().unbind();
         label_combatTurnsCounter.textProperty().unbind();
         label_currentCharacter.textProperty().unbind();
+        label_host_attack.textProperty().unbind();
+        label_host_sleeze.textProperty().unbind();
+        label_host_firewall.textProperty().unbind();
+        label_host_dataProcessing.textProperty().unbind();
+        label_host_rating.textProperty().unbind();
+        label_astral_backgroundCount.textProperty().unbind();
+        label_overwatchScore.textProperty().unbind();
+
         //binds
         label_iterationCounter.textProperty().bind(battleLogic.getActiveBattle().iterationProperty().asString());
         label_combatTurnsCounter.textProperty().bind(battleLogic.getActiveBattle().combatTurnProperty().asString());
         label_currentCharacter.textProperty().bind(battleLogic.currentCharacterNameProperty());
+        label_host_attack.textProperty().bind(battleLogic.getActiveBattle().getHost().attackProperty().asString());
+        label_host_sleeze.textProperty().bind(battleLogic.getActiveBattle().getHost().sleezeProperty().asString());
+        label_host_firewall.textProperty().bind(battleLogic.getActiveBattle().getHost().firewallProperty().asString());
+        label_host_dataProcessing.textProperty().bind(battleLogic.getActiveBattle().getHost().dataProcessingProperty().asString());
+        label_host_rating.textProperty().bind(battleLogic.getActiveBattle().getHost().ratingProperty().asString());
+        label_astral_backgroundCount.textProperty().bind(battleLogic.getActiveBattle().backgroundCountProperty().asString());
+        label_overwatchScore.textProperty().bind(battleLogic.getActiveBattle().getHost().overwatchScoreProperty().asString());
 
         //tab selection
         tabPane.getSelectionModel().select(tab_battle);
@@ -262,19 +344,19 @@ public class ControllerMain {
         tableColumn_masterTable_character.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
         tableColumn_masterTable_initiative.setCellValueFactory(cellData -> cellData.getValue().initiativeProperty().asObject());
         tableColumn_masterTable_turn1.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue().countTurn(1)));
-        tableColumn_masterTable_turn1.setCellFactory(param -> new TurnTableCell<>());
+        tableColumn_masterTable_turn1.setCellFactory(param -> new TurnTableCell<Character, Integer>());
         tableColumn_masterTable_turn2.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue().countTurn(2)));
-        tableColumn_masterTable_turn2.setCellFactory(param -> new TurnTableCell<>());
+        tableColumn_masterTable_turn2.setCellFactory(param -> new TurnTableCell<Character, Integer>());
         tableColumn_masterTable_turn3.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue().countTurn(3)));
-        tableColumn_masterTable_turn3.setCellFactory(param -> new TurnTableCell<>());
+        tableColumn_masterTable_turn3.setCellFactory(param -> new TurnTableCell<Character, Integer>());
         tableColumn_masterTable_turn4.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue().countTurn(4)));
-        tableColumn_masterTable_turn4.setCellFactory(param -> new TurnTableCell<>());
+        tableColumn_masterTable_turn4.setCellFactory(param -> new TurnTableCell<Character, Integer>());
         tableColumn_masterTable_turn5.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue().countTurn(5)));
-        tableColumn_masterTable_turn5.setCellFactory(param -> new TurnTableCell<>());
+        tableColumn_masterTable_turn5.setCellFactory(param -> new TurnTableCell<Character, Integer>());
         tableColumn_masterTable_turn6.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue().countTurn(6)));
-        tableColumn_masterTable_turn6.setCellFactory(param -> new TurnTableCell<>());
+        tableColumn_masterTable_turn6.setCellFactory(param -> new TurnTableCell<Character, Integer>());
         tableColumn_masterTable_turn7.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue().countTurn(7)));
-        tableColumn_masterTable_turn7.setCellFactory(param -> new TurnTableCell<>());
+        tableColumn_masterTable_turn7.setCellFactory(param -> new TurnTableCell<Character, Integer>());
 
         tableView_masterTable.setRowFactory(param -> new TableRow<Character>() {
             @Override
@@ -300,6 +382,20 @@ public class ControllerMain {
                 }
             }
         });
+        tableView_masterTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if(oldValue != null) {
+                textField_selected_physical.textProperty().unbind();
+                textField_selected_stun.textProperty().unbind();
+            }
+
+            if(newValue == null) {
+                vbox_selected.setVisible(false);
+            } else {
+                textField_selected_physical.textProperty().bind(newValue.physicalMonitorProperty().asString());
+                textField_selected_stun.textProperty().bind(newValue.stunMonitorProperty().asString());
+                vbox_selected.setVisible(true);
+            }
+        });
 
         MenuItem moveToRealWorld = new MenuItem("Move to real world");
         moveToRealWorld.setOnAction(event -> tableView_masterTable.getSelectionModel().getSelectedItem().setWorld(World.REAL));
@@ -308,9 +404,32 @@ public class ControllerMain {
         MenuItem moveToMatrixSpace = new MenuItem("Move to matrix space");
         moveToMatrixSpace.setOnAction(event -> tableView_masterTable.getSelectionModel().getSelectedItem().setWorld(World.MATRIX));
         SeparatorMenuItem separatorMenuItem = new SeparatorMenuItem();
+        MenuItem addCharacter = new MenuItem("Add character");
+        addCharacter.setOnAction(event -> addCharacterOnAction());
         MenuItem removeCharacter = new MenuItem("Remove character");
-        removeCharacter.setOnAction(event -> battleLogic.getActiveBattle().getCharacters().remove(tableView_masterTable.getSelectionModel().getSelectedItem()));
-        tableView_masterTable.setContextMenu(new ContextMenu(moveToRealWorld, moveToMatrixSpace, moveToAstralPlane, separatorMenuItem, removeCharacter));
+        removeCharacter.setOnAction(event -> battleLogic.getActiveBattle().getCharacters()
+                .remove(tableView_masterTable.getSelectionModel().getSelectedItem()));
+        tableView_masterTable.setContextMenu(new ContextMenu(
+                moveToRealWorld,
+                moveToMatrixSpace,
+                moveToAstralPlane,
+                separatorMenuItem,
+                addCharacter,
+                removeCharacter));
+
+        textField_selected_physical.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                textField_selected_physical.setText(newValue.replaceAll("[^\\d]", ""));
+            }
+        });
+
+        textField_selected_stun.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                textField_selected_stun.setText(newValue.replaceAll("[^\\d]", ""));
+            }
+        });
+
+        vbox_selected.setVisible(false);
 
     }
 }

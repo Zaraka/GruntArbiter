@@ -2,17 +2,19 @@ package org.shadowrun.common;
 
 import javafx.scene.control.TableCell;
 
-public class TurnTableCell<Character, Integer> extends TableCell<Character, Integer> {
+public class TurnTableCell<T, E> extends TableCell {
     @Override
-    protected void updateItem(Integer item, boolean empty) {
+    protected void updateItem(Object item, boolean empty) {
         super.updateItem(item, empty);
-        if(!empty) {
+        if(!empty && item != null) {
             setText(String.valueOf(item));
-            if(item != null && item < 1) {
+            if((int)item < 1) {
                 setStyle("-fx-text-fill: lightgray");
             } else {
                 setStyle(null);
             }
+        } else {
+            setText(null);
         }
     }
 }
