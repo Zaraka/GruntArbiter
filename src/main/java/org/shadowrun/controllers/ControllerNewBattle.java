@@ -17,13 +17,13 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class ControllerNewBattle {
-    private class PickPlayer {
+    public class PickPlayer {
         private ObjectProperty<PlayerCharacter> playerCharacter;
-        private BooleanProperty include;
+        private BooleanProperty checked;
 
         public PickPlayer(PlayerCharacter playerCharacter) {
             this.playerCharacter = new SimpleObjectProperty<>(playerCharacter);
-            this.include = new SimpleBooleanProperty(false);
+            this.checked = new SimpleBooleanProperty(true);
         }
 
         public PlayerCharacter getPlayerCharacter() {
@@ -34,12 +34,18 @@ public class ControllerNewBattle {
             return playerCharacter;
         }
 
-        public boolean isInclude() {
-            return include.get();
+        // other columns here
+
+        public BooleanProperty checkedProperty() {
+            return this.checked;
         }
 
-        public BooleanProperty includeProperty() {
-            return include;
+        public java.lang.Boolean getChecked() {
+            return this.checkedProperty().get();
+        }
+
+        public void setChecked(final java.lang.Boolean checked) {
+            this.checkedProperty().set(checked);
         }
     }
 
@@ -62,7 +68,7 @@ public class ControllerNewBattle {
 
     @FXML
     public void okOnAction() {
-        this.includedPlayers = Optional.of(players.stream().filter(PickPlayer::isInclude).map(PickPlayer::getPlayerCharacter).collect(Collectors.toList()));
+        this.includedPlayers = Optional.of(players.stream().filter(PickPlayer::getChecked).map(PickPlayer::getPlayerCharacter).collect(Collectors.toList()));
         stage.close();
     }
 
@@ -73,7 +79,7 @@ public class ControllerNewBattle {
 
         tableView_players.setItems(this.players);
         tableColumn_character.setCellValueFactory(cellData -> cellData.getValue().getPlayerCharacter().nameProperty());
-        tableColumn_include.setCellValueFactory(cellData -> cellData.getValue().include.asObject());
+        tableColumn_include.setCellValueFactory(cellData -> cellData.getValue().checked.asObject());
     }
 
     public Optional<List<PlayerCharacter>> getIncludedPlayers() {

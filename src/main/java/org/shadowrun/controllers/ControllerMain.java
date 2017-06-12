@@ -1,17 +1,23 @@
 package org.shadowrun.controllers;
 
 import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.collections.ListChangeListener;
+import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.shadowrun.common.TurnTableCell;
 import org.shadowrun.logic.AppLogic;
 import org.shadowrun.logic.BattleLogic;
 import org.shadowrun.models.Character;
 import org.shadowrun.models.PlayerCharacter;
+import org.shadowrun.models.World;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -64,10 +70,24 @@ public class ControllerMain {
     private MenuItem menuItem_saveCampaign;
 
     @FXML
+    private TabPane tabPane;
+    @FXML
     private Tab tab_characters;
     @FXML
     private Tab tab_battle;
 
+
+    @FXML
+    private Label label_iterationCounter;
+    @FXML
+    private Label label_combatTurnsCounter;
+    @FXML
+    private Label label_currentCharacter;
+
+    @FXML
+    private Button button_nextTurn;
+    @FXML
+    private Button button_prevTurn;
 
     //------------------------method hooks
     @FXML
@@ -82,12 +102,19 @@ public class ControllerMain {
             ControllerAddCharacter controllerAddCharacter = loader.getController();
             controllerAddCharacter.onOpen(dialog);
             dialog.showAndWait();
-            controllerAddCharacter.getCharacter().ifPresent(playerCharacter -> battleLogic.getActiveBattle().getCharacters().add(playerCharacter));
-            addBattleHooks();
+            controllerAddCharacter.getCharacter().ifPresent(playerCharacter -> {
+                battleLogic.getActiveBattle().getCharacters().add(playerCharacter);
+                addBattleHooks();
+            });
 
         } catch (IOException ex) {
             LOG.error("Could not load addCharacter dialog: ", ex);
         }
+    }
+
+    @FXML
+    private void addICeOnAction() {
+
     }
 
     @FXML
@@ -143,11 +170,13 @@ public class ControllerMain {
             ControllerNewBattle controllerNewBattle = loader.getController();
             controllerNewBattle.onOpen(dialog, appLogic.getActiveCampaign().getPlayers());
             dialog.showAndWait();
-            controllerNewBattle.getIncludedPlayers().ifPresent(playerCharacters -> battleLogic.createNewBattle(playerCharacters));
-            addBattleHooks();
+            controllerNewBattle.getIncludedPlayers().ifPresent(playerCharacters -> {
+                battleLogic.createNewBattle(playerCharacters);
+                addBattleHooks();
+            });
 
         } catch (IOException ex) {
-            LOG.error("Could not load addCharacter dialog: ", ex);
+            LOG.error("Could not load newBattle dialog: ", ex);
         }
     }
 
@@ -165,23 +194,53 @@ public class ControllerMain {
         alert.showAndWait();
     }
 
+    @FXML
+    private void nextTurnOnAction() {
+        battleLogic.nextTurn();
+    }
+
+    @FXML
+    private void prevTurnOnAction() {
+        battleLogic.prevTurn();
+    }
+
     private void addCampaignHooks() {
+        //Items
         tableView_playerCharacters.setItems(appLogic.getActiveCampaign().getPlayers());
+        //tab selection
+        tabPane.getSelectionModel().select(tab_characters);
     }
 
     private void addBattleHooks() {
+        //Items
         tableView_masterTable.setItems(battleLogic.getActiveBattle().getCharacters());
+
+        //unbinds
+        label_iterationCounter.textProperty().unbind();
+        label_combatTurnsCounter.textProperty().unbind();
+        label_currentCharacter.textProperty().unbind();
+        //binds
+        label_iterationCounter.textProperty().bind(battleLogic.getActiveBattle().iterationProperty().asString());
+        label_combatTurnsCounter.textProperty().bind(battleLogic.getActiveBattle().combatTurnProperty().asString());
+        label_currentCharacter.textProperty().bind(battleLogic.currentCharacterNameProperty());
+
+        //tab selection
+        tabPane.getSelectionModel().select(tab_battle);
     }
 
     public void setStageAndListeners(Stage stage) {
         this.stage = stage;
         appLogic = new AppLogic();
+        battleLogic = new BattleLogic();
 
         menu_campaign.disableProperty().bind(appLogic.hasCampaign());
         menuItem_newBattle.disableProperty().bind(appLogic.hasCampaign());
         menuItem_saveCampaign.disableProperty().bind(appLogic.hasCampaign());
         tab_characters.disableProperty().bind(appLogic.hasCampaign());
-        tab_battle.disableProperty().bind(appLogic.hasCampaign());
+
+        tab_battle.disableProperty().bind(battleLogic.hasBattle());
+        button_nextTurn.disableProperty().bind(battleLogic.hasBattle());
+        button_prevTurn.disableProperty().bind(battleLogic.hasBattle());
 
         tableColumn_playerCharacters_character.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
 
@@ -203,17 +262,55 @@ public class ControllerMain {
         tableColumn_masterTable_character.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
         tableColumn_masterTable_initiative.setCellValueFactory(cellData -> cellData.getValue().initiativeProperty().asObject());
         tableColumn_masterTable_turn1.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue().countTurn(1)));
+        tableColumn_masterTable_turn1.setCellFactory(param -> new TurnTableCell<>());
         tableColumn_masterTable_turn2.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue().countTurn(2)));
+        tableColumn_masterTable_turn2.setCellFactory(param -> new TurnTableCell<>());
         tableColumn_masterTable_turn3.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue().countTurn(3)));
+        tableColumn_masterTable_turn3.setCellFactory(param -> new TurnTableCell<>());
         tableColumn_masterTable_turn4.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue().countTurn(4)));
+        tableColumn_masterTable_turn4.setCellFactory(param -> new TurnTableCell<>());
         tableColumn_masterTable_turn5.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue().countTurn(5)));
+        tableColumn_masterTable_turn5.setCellFactory(param -> new TurnTableCell<>());
         tableColumn_masterTable_turn6.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue().countTurn(6)));
+        tableColumn_masterTable_turn6.setCellFactory(param -> new TurnTableCell<>());
         tableColumn_masterTable_turn7.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue().countTurn(7)));
+        tableColumn_masterTable_turn7.setCellFactory(param -> new TurnTableCell<>());
+
+        tableView_masterTable.setRowFactory(param -> new TableRow<Character>() {
+            @Override
+            protected void updateItem(Character item, boolean empty) {
+                super.updateItem(item, empty);
+                if (!empty ) {
+                    tableView_masterTable.getSortOrder().setAll(tableColumn_masterTable_initiative);
+                    if(!item.isSelected()){
+                        switch (item.getWorld()) {
+                            case REAL:
+                                setStyle(null);
+                                break;
+                            case ASTRAL:
+                                setStyle("-fx-control-inner-background: tomato;");
+                                break;
+                            case MATRIX:
+                                setStyle("-fx-control-inner-background: springgreen;");
+                                break;
+                        }
+                    } else {
+                        setStyle("-fx-control-inner-background: dodgerblue;");
+                    }
+                }
+            }
+        });
 
         MenuItem moveToRealWorld = new MenuItem("Move to real world");
+        moveToRealWorld.setOnAction(event -> tableView_masterTable.getSelectionModel().getSelectedItem().setWorld(World.REAL));
         MenuItem moveToAstralPlane = new MenuItem("Move to astral plane");
+        moveToAstralPlane.setOnAction(event -> tableView_masterTable.getSelectionModel().getSelectedItem().setWorld(World.ASTRAL));
         MenuItem moveToMatrixSpace = new MenuItem("Move to matrix space");
-        tableView_masterTable.setContextMenu(new ContextMenu(moveToRealWorld, moveToMatrixSpace, moveToAstralPlane));
+        moveToMatrixSpace.setOnAction(event -> tableView_masterTable.getSelectionModel().getSelectedItem().setWorld(World.MATRIX));
+        SeparatorMenuItem separatorMenuItem = new SeparatorMenuItem();
+        MenuItem removeCharacter = new MenuItem("Remove character");
+        removeCharacter.setOnAction(event -> battleLogic.getActiveBattle().getCharacters().remove(tableView_masterTable.getSelectionModel().getSelectedItem()));
+        tableView_masterTable.setContextMenu(new ContextMenu(moveToRealWorld, moveToMatrixSpace, moveToAstralPlane, separatorMenuItem, removeCharacter));
 
     }
 }

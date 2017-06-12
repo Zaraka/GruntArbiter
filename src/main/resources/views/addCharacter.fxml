@@ -9,7 +9,7 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<fx:root hgap="14.0" maxHeight="+Infinity" maxWidth="+Infinity" minHeight="-Infinity" minWidth="-Infinity" type="GridPane" vgap="20.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.shadowrun.controllers.ControllerAddCharacter">
+<GridPane hgap="14.0" maxHeight="+Infinity" maxWidth="+Infinity" minHeight="-Infinity" minWidth="-Infinity" vgap="20.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.shadowrun.controllers.ControllerAddCharacter">
   <children>
     <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="TOP">
       <image>
@@ -31,7 +31,7 @@
                 </font>
               </Label>
                   <Separator prefWidth="25.0" />
-                  <TextField id="textField_name" />
+                  <TextField id="textField_name" fx:id="textField_name" />
                </children>
             </HBox>
             <HBox layoutX="10.0" layoutY="33.0">
@@ -42,7 +42,7 @@
                      </font>
                   </Label>
                   <Separator />
-                  <TextField id="textField_initiative" />
+                  <TextField id="textField_initiative" fx:id="textField_initiative" />
                </children>
             </HBox>
             <HBox>
@@ -93,4 +93,4 @@
     <RowConstraints maxHeight="+Infinity" minHeight="-Infinity" valignment="CENTER" vgrow="ALWAYS" />
     <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" vgrow="NEVER" />
   </rowConstraints>
-</fx:root>
+</GridPane>

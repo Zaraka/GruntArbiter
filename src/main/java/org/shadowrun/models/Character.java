@@ -10,10 +10,16 @@ public class Character {
 
     private ObjectProperty<World> world;
 
-    public Character(String name, int initiative, World world) {
+    private BooleanProperty npc;
+
+    private BooleanProperty selected;
+
+    public Character(String name, int initiative, World world, boolean npc) {
         this.name = new SimpleStringProperty(name);
         this.initiative = new SimpleIntegerProperty(initiative);
         this.world = new SimpleObjectProperty<>(world);
+        this.npc = new SimpleBooleanProperty(npc);
+        this.selected = new SimpleBooleanProperty(false);
     }
 
     public String getName() {
@@ -52,7 +58,31 @@ public class Character {
         return world;
     }
 
+    public boolean isNpc() {
+        return npc.get();
+    }
+
+    public BooleanProperty npcProperty() {
+        return npc;
+    }
+
+    public boolean isSelected() {
+        return selected.get();
+    }
+
+    public BooleanProperty selectedProperty() {
+        return selected;
+    }
+
+    public void setNpc(boolean npc) {
+        this.npc.set(npc);
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected.set(selected);
+    }
+
     public int countTurn(int turn) {
-        return initiative.get() - turn * 10;
+        return initiative.get() - (turn - 1) * 10;
     }
 }

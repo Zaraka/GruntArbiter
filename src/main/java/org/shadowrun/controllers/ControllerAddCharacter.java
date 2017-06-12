@@ -33,7 +33,7 @@ public class ControllerAddCharacter {
     @FXML
     public void okOnAction() {
         character = Optional.of(new Character(textField_name.textProperty().get(), Integer.valueOf(textField_initiative.textProperty().get()),
-                (World)world.getSelectedToggle().getUserData()));
+                (World)world.getSelectedToggle().getUserData(), false));
         stage.close();
     }
 
