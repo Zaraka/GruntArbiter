@@ -1,18 +1,29 @@
 package org.shadowrun.controllers;
 
+import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
+import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.util.Pair;
 import org.shadowrun.common.TurnTableCell;
 import org.shadowrun.logic.AppLogic;
 import org.shadowrun.logic.BattleLogic;
 import org.shadowrun.models.Character;
+import org.shadowrun.models.ICE;
 import org.shadowrun.models.PlayerCharacter;
 import org.shadowrun.models.World;
 import org.slf4j.Logger;
@@ -20,7 +31,11 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class ControllerMain {
 
@@ -29,7 +44,6 @@ public class ControllerMain {
     private AppLogic appLogic;
     private BattleLogic battleLogic;
     private Stage stage;
-
 
     //------------------------object injections
     @FXML
@@ -137,7 +151,55 @@ public class ControllerMain {
 
     @FXML
     private void addICeOnAction() {
+        Dialog<Pair<String, String>> dialog = new Dialog<>();
+        dialog.setTitle("ICe");
+        dialog.setHeaderText("Create new ICe");
 
+        ButtonType okButtonType = new ButtonType("Add", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(okButtonType, ButtonType.CANCEL);
+
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(20, 150, 10, 10));
+
+        ComboBox<String> iceChoice = new ComboBox<>(
+                FXCollections.observableArrayList(
+                        Arrays.stream(ICE.values()).map(ICE::getName).collect(Collectors.toList())));
+        TextField initiative = new TextField();
+        initiative.setPromptText("6");
+
+        grid.add(new Label("ICE:"), 0, 0);
+        grid.add(iceChoice, 1, 0);
+        grid.add(new Label("Initiative:"), 0, 1);
+        grid.add(initiative, 1, 1);
+
+        Node addButton = dialog.getDialogPane().lookupButton(okButtonType);
+        addButton.setDisable(true);
+
+        initiative.textProperty().addListener((observable, oldValue, newValue) -> {
+            addButton.setDisable(newValue.trim().isEmpty());
+            if (!newValue.matches("\\d*")) {
+                initiative.setText(newValue.replaceAll("[^\\d]", ""));
+            }
+        });
+
+        dialog.getDialogPane().setContent(grid);
+        Platform.runLater(iceChoice::requestFocus);
+
+        dialog.setResultConverter(dialogButton -> {
+            if (dialogButton == okButtonType) {
+                return new Pair<>(iceChoice.getSelectionModel().getSelectedItem(), initiative.getText());
+            }
+            return null;
+        });
+
+        Optional<Pair<String, String>> result = dialog.showAndWait();
+        result.ifPresent(res -> {
+            ICE ice = ICE.fromName(res.getKey().replaceAll("\\s+", "").toUpperCase());
+            Integer initiativeInt = Integer.parseInt(res.getValue());
+            battleLogic.getActiveBattle().spawnICe(ice, initiativeInt);
+        });
     }
 
     @FXML
@@ -172,12 +234,33 @@ public class ControllerMain {
     private void openCampaignOnAction() {
         FileChooser dialog = new FileChooser();
         dialog.setTitle("Open campaign");
-        dialog.getExtensionFilters().add(new FileChooser.ExtensionFilter("Grunt campaign", "*.gra"));
+        dialog.getExtensionFilters().add(new FileChooser.ExtensionFilter("Grunt campaign (.gra)", "*.gra"));
 
         File file = dialog.showOpenDialog(stage);
         if (file != null) {
             appLogic.openCampaign(file);
             addCampaignHooks();
+        }
+    }
+
+    @FXML
+    private void saveCampaignOnAction() {
+        if(appLogic.getCampaignFile() == null) {
+            saveAsCampaignOnAction();
+        } else {
+            appLogic.saveCampaign();
+        }
+    }
+
+    @FXML
+    private void saveAsCampaignOnAction() {
+        FileChooser dialog = new FileChooser();
+        dialog.setTitle("Save campaign");
+        dialog.getExtensionFilters().add(new FileChooser.ExtensionFilter("Grunt campaign (.gra)", "*.gra"));
+
+        File file = dialog.showSaveDialog(stage);
+        if(file != null) {
+            appLogic.saveAsCampaign(file);
         }
     }
 
@@ -362,7 +445,7 @@ public class ControllerMain {
             @Override
             protected void updateItem(Character item, boolean empty) {
                 super.updateItem(item, empty);
-                if (!empty ) {
+                if (!empty) {
                     tableView_masterTable.getSortOrder().setAll(tableColumn_masterTable_initiative);
                     if(!item.isSelected()){
                         switch (item.getWorld()) {

@@ -16,10 +16,12 @@ public class AppLogic {
 
     private ObjectProperty<Campaign> activeCampaign;
 
+    private ObjectProperty<File> campaignFile;
+
 
     public AppLogic() {
         activeCampaign = new SimpleObjectProperty<>(null);
-
+        campaignFile = new SimpleObjectProperty<>(null);
     }
 
     public void newCampaign(String name) {
@@ -31,6 +33,7 @@ public class AppLogic {
     }
 
     public void openCampaign(File file) {
+        campaignFile.set(file);
 
     }
 
@@ -38,8 +41,22 @@ public class AppLogic {
 
     }
 
+    public void saveAsCampaign(File file) {
+        campaignFile.set(file);
+        saveCampaign();
+    }
+
+    public void closeCampaign() {
+        activeCampaign.set(null);
+        campaignFile.set(null);
+    }
+
     public BooleanBinding hasCampaign() {
         return activeCampaign.isNull();
+    }
+
+    public BooleanBinding hasFile() {
+        return campaignFile.isNull();
     }
 
     public ObjectProperty<Campaign> activeCampaignProperty() {
@@ -48,5 +65,13 @@ public class AppLogic {
 
     public Campaign getActiveCampaign() {
         return activeCampaign.get();
+    }
+
+    public File getCampaignFile() {
+        return campaignFile.get();
+    }
+
+    public ObjectProperty<File> campaignFileProperty() {
+        return campaignFile;
     }
 }

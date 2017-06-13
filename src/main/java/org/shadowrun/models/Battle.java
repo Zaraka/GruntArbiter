@@ -11,7 +11,10 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.UUID;
 import java.util.function.Function;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class Battle {
@@ -31,6 +34,8 @@ public class Battle {
     private ObjectProperty<Character> currentCharacter;
 
     private static final Function<PlayerCharacter, Character> player2Character = playerCharacter -> new Character(playerCharacter.getName(), 0, World.REAL);
+
+    private static final Pattern UUID_GROUP_PATTERN = Pattern.compile(".*-(.*)-.*");
 
     public Battle(List<PlayerCharacter> players) {
         backgroundCount = new SimpleIntegerProperty(0);
@@ -111,5 +116,15 @@ public class Battle {
             List<Character> combatCharactersFinal = getCombatTurnCharacters();
             currentCharacter.setValue(combatCharactersFinal.get(combatTurn.get()));
         }
+    }
+
+    public void spawnICe(ICE ice, Integer initiative) {
+        Matcher matcher = UUID_GROUP_PATTERN.matcher(UUID.randomUUID().toString());
+        StringBuilder iceName = new StringBuilder();
+        iceName.append(ice.getName());
+        iceName.append(" ");
+        iceName.append(matcher.group(1));
+        Character ic = new Character(iceName.toString(), initiative, World.MATRIX, true);
+        characters.add(ic);
     }
 }
