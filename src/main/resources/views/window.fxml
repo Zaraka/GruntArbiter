@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import java.lang.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
@@ -15,9 +16,19 @@
                     <items>
                         <MenuItem mnemonicParsing="false" onAction="#newCampaignOnAction" text="New campaign" />
                         <MenuItem mnemonicParsing="false" onAction="#openCampaignOnAction" text="Open campaign" />
-                        <MenuItem fx:id="menuItem_saveCampaign" mnemonicParsing="false" text="Save campaign" />
+                  <Menu fx:id="menu_recentCampaigns" mnemonicParsing="false" text="Recent campaigns">
+                    <items>
+                      <MenuItem fx:id="menuItem_recentCampaign1" mnemonicParsing="false" onAction="#openRecentCampaign1OnAction" text="recent1" />
+                        <MenuItem fx:id="menuItem_recentCampaign2" mnemonicParsing="false" onAction="#openRecentCampaign2OnAction" text="recent2" />
+                        <MenuItem fx:id="menuItem_recentCampaign3" mnemonicParsing="false" onAction="#openRecentCampaign3OnAction" text="recent3" />
+                    </items>
+                  </Menu>
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem fx:id="menuItem_saveCampaign" mnemonicParsing="false" onAction="#saveCampaignOnAction" text="Save campaign" />
+                  <MenuItem fx:id="menuItem_saveAsCampaign" mnemonicParsing="false" onAction="#saveAsCampaignOnAction" text="Save As campaign" />
+                  <MenuItem fx:id="menuItem_closeCampaign" mnemonicParsing="false" onAction="#closeCampaignOnAction" text="Close campaign" />
                         <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" onAction="#closeAppOnAction" text="Close" />
+                        <MenuItem mnemonicParsing="false" onAction="#closeAppOnAction" text="Close GruntArbiter" />
                     </items>
                 </Menu>
                 <Menu fx:id="menu_campaign" mnemonicParsing="false" text="Campaign">
@@ -29,9 +40,9 @@
                 </Menu>
                 <Menu mnemonicParsing="false" text="View">
                     <items>
-                        <CheckMenuItem mnemonicParsing="false" text="Real World" />
-                        <CheckMenuItem mnemonicParsing="false" text="Astral Plane" />
-                        <CheckMenuItem mnemonicParsing="false" text="Matrix" />
+                        <CheckMenuItem fx:id="checkMenuItem_realWorld" mnemonicParsing="false" text="Real World" />
+                        <CheckMenuItem fx:id="checkMenuItem_astralPlane" mnemonicParsing="false" text="Astral Plane" />
+                        <CheckMenuItem fx:id="checkMenuItem_matrix" mnemonicParsing="false" text="Matrix" />
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem mnemonicParsing="false" text="Action 1" />
                     </items>
@@ -102,26 +113,6 @@
                                        </font>
                                     </Label>
                                     <Pane HBox.hgrow="ALWAYS" />
-                                    <Label layoutX="278.0" layoutY="14.0" text="OS">
-                                       <font>
-                                          <Font name="System Bold" size="18.0" />
-                                       </font>
-                                    </Label>
-                                    <Label fx:id="label_overwatchScore" layoutX="991.0" layoutY="14.0" text="0">
-                                       <font>
-                                          <Font name="System Bold" size="18.0" />
-                                       </font>
-                                    </Label>
-                                    <Button mnemonicParsing="false" onAction="#overwatchScorePlusOnAction" GridPane.columnIndex="2">
-                                        <graphic>
-                                            <Glyph fontFamily="FontAwesome" icon="PLUS" />
-                                        </graphic>
-                                    </Button>
-                                    <Button mnemonicParsing="false" onAction="#overwatchScoreMinusOnAction" GridPane.columnIndex="2">
-                                        <graphic>
-                                            <Glyph fontFamily="FontAwesome" icon="MINUS" />
-                                        </graphic>
-                                    </Button>
                                 </items>
                               </ToolBar>
                               <HBox>
@@ -190,83 +181,122 @@
                                                       </GridPane>
                                                                     </children>
                                                                 </VBox>
-                                                                <Label layoutX="10.0" layoutY="210.0" text="Real World">
-                                                                    <font>
-                                                                        <Font name="System Bold" size="17.0" />
-                                                                    </font>
-                                                                </Label>
+                                                <VBox fx:id="vbox_realWorld">
+                                                   <children>
+                                                                      <Label text="Real World">
+                                                                          <font>
+                                                                              <Font name="System Bold" size="17.0" />
+                                                                          </font>
+                                                                      </Label>
+                                                      <ToolBar prefHeight="40.0" prefWidth="200.0">
+                                                        <items>
+                                                            <Label fx:id="label_time" text="00:00">
+                                                               <font>
+                                                                  <Font size="16.0" />
+                                                               </font>
+                                                            </Label>
+                                                            <ComboBox fx:id="comboBox_weather" prefWidth="150.0" />
+                                                        </items>
+                                                      </ToolBar>
+                                                   </children>
+                                                </VBox>
                                                                 <Separator orientation="VERTICAL" prefHeight="20.0" />
-                                                                <Label text="Matrix">
-                                                                    <font>
-                                                                        <Font name="System Bold" size="17.0" />
-                                                                    </font>
-                                                                </Label>
-                                                                <HBox>
-                                                                    <children>
-                                                                        <Button fx:id="button_generateHost" mnemonicParsing="false" onAction="#generateHostOnAction" text="Generate Host" />
-                                                                        <Button mnemonicParsing="false" onAction="#addICeOnAction" text="Add ICe" />
-                                                                    </children>
-                                                                </HBox>
-                                                                <HBox>
-                                                                    <children>
-                                                                        <Label text="R">
-                                                                            <font>
-                                                                                <Font name="System Bold" size="13.0" />
-                                                                            </font>
-                                                                        </Label>
-                                                                        <Separator layoutX="29.0" layoutY="10.0" prefWidth="3.0" />
-                                                                        <Label fx:id="label_host_rating" text="1" />
-                                                                        <Separator prefWidth="20.0" />
-                                                                        <Label text="A">
-                                                                            <font>
-                                                                                <Font name="System Bold" size="13.0" />
-                                                                            </font>
-                                                                        </Label>
-                                                                        <Separator layoutX="20.0" layoutY="10.0" prefWidth="3.0" />
-                                                                        <Label fx:id="label_host_attack" text="2" />
-                                                                        <Separator layoutX="29.0" layoutY="10.0" prefWidth="20.0" />
-                                                                        <Label text="S">
-                                                                            <font>
-                                                                                <Font name="System Bold" size="13.0" />
-                                                                            </font>
-                                                                        </Label>
-                                                                        <Separator layoutX="68.0" layoutY="10.0" prefWidth="3.0" />
-                                                                        <Label fx:id="label_host_sleeze" text="3" />
-                                                                        <Separator layoutX="67.0" layoutY="10.0" prefWidth="20.0" />
-                                                                        <Label text="F">
-                                                                            <font>
-                                                                                <Font name="System Bold" size="13.0" />
-                                                                            </font>
-                                                                        </Label>
-                                                                        <Separator layoutX="116.0" layoutY="10.0" prefWidth="3.0" />
-                                                                        <Label fx:id="label_host_firewall" text="4" />
-                                                                        <Separator layoutX="105.0" layoutY="10.0" prefWidth="20.0" />
-                                                                        <Label text="DP">
-                                                                            <font>
-                                                                                <Font name="System Bold" size="13.0" />
-                                                                            </font>
-                                                                        </Label>
-                                                                        <Separator layoutX="163.0" layoutY="10.0" prefWidth="3.0" />
-                                                                        <Label fx:id="label_host_dataProcessing" text="5" />
-                                                                    </children>
-                                                                </HBox>
+                                                <VBox fx:id="vbox_matrix">
+                                                   <children>
+                                                                      <Label text="Matrix">
+                                                                          <font>
+                                                                              <Font name="System Bold" size="17.0" />
+                                                                          </font>
+                                                                      </Label>
+                                                      <ToolBar prefHeight="40.0" prefWidth="200.0">
+                                                         <items>
+                                                            <Button fx:id="button_generateHost" mnemonicParsing="false" onAction="#generateHostOnAction" text="Generate Host" />
+                                                            <Button mnemonicParsing="false" onAction="#addICeOnAction" text="Add ICe" />
+                                                         </items>
+                                                      </ToolBar>
+                                                      <ToolBar prefHeight="40.0" prefWidth="200.0">
+                                                         <items>
+                                                            <Label text="R">
+                                                               <font>
+                                                                  <Font name="System Bold" size="13.0" />
+                                                               </font>
+                                                            </Label>
+                                                            <Label fx:id="label_host_rating" text="1" />
+                                                            <Separator prefWidth="3.0" />
+                                                            <Label text="A">
+                                                               <font>
+                                                                  <Font name="System Bold" size="13.0" />
+                                                               </font>
+                                                            </Label>
+                                                            <Label fx:id="label_host_attack" text="2" />
+                                                            <Label text="S">
+                                                               <font>
+                                                                  <Font name="System Bold" size="13.0" />
+                                                               </font>
+                                                            </Label>
+                                                            <Label fx:id="label_host_sleeze" text="3" />
+                                                            <Label text="F">
+                                                               <font>
+                                                                  <Font name="System Bold" size="13.0" />
+                                                               </font>
+                                                            </Label>
+                                                            <Label fx:id="label_host_firewall" text="4" />
+                                                            <Label text="DP">
+                                                               <font>
+                                                                  <Font name="System Bold" size="13.0" />
+                                                               </font>
+                                                            </Label>
+                                                            <Label fx:id="label_host_dataProcessing" text="5" />
+                                                         </items>
+                                                      </ToolBar>
+                                                      <ToolBar prefHeight="40.0" prefWidth="200.0">
+                                                         <items>
+                                                            <Label text="OS">
+                                                               <font>
+                                                                  <Font name="System Bold" size="15.0" />
+                                                               </font>
+                                                            </Label>
+                                                            <Label fx:id="label_overwatchScore" text="0">
+                                                               <font>
+                                                                  <Font name="System Bold" size="15.0" />
+                                                               </font>
+                                                            </Label>
+                                                            <Button mnemonicParsing="false" onAction="#overwatchScorePlusOnAction">
+                                                               <graphic>
+                                                                  <Glyph fontFamily="FontAwesome" icon="PLUS" />
+                                                               </graphic>
+                                                            </Button>
+                                                            <Button mnemonicParsing="false" onAction="#overwatchScoreMinusOnAction">
+                                                               <graphic>
+                                                                  <Glyph fontFamily="FontAwesome" icon="MINUS" />
+                                                               </graphic>
+                                                            </Button>
+                                                            <Button mnemonicParsing="false" text="Reset" />
+                                                         </items>
+                                                      </ToolBar>
+                                                   </children>
+                                                </VBox>
                                                                 <Separator orientation="VERTICAL" prefHeight="20.0" />
-                                                                <Label text="Astral Plane">
-                                                                    <font>
-                                                                        <Font name="System Bold" size="17.0" />
-                                                                    </font>
-                                                                </Label>
-                                                                <HBox>
-                                                                    <children>
-                                                                        <Label text="Background count">
-                                                                            <font>
-                                                                                <Font name="System Bold" size="13.0" />
-                                                                            </font>
-                                                                        </Label>
-                                                                        <Separator prefWidth="3.0" />
-                                                                        <Label fx:id="label_astral_backgroundCount" text="1" />
-                                                                    </children>
-                                                                </HBox>
+                                                <VBox fx:id="vbox_astralPlane">
+                                                   <children>
+                                                                      <Label text="Astral Plane">
+                                                                          <font>
+                                                                              <Font name="System Bold" size="17.0" />
+                                                                          </font>
+                                                                      </Label>
+                                                                      <HBox>
+                                                                          <children>
+                                                                              <Label text="Background count">
+                                                                                  <font>
+                                                                                      <Font name="System Bold" size="13.0" />
+                                                                                  </font>
+                                                                              </Label>
+                                                                              <Separator prefWidth="3.0" />
+                                                                              <Label fx:id="label_astral_backgroundCount" text="1" />
+                                                                          </children>
+                                                                      </HBox>
+                                                   </children>
+                                                </VBox>
                                                             </children>
                                                         </VBox>
                                                     </children>

@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Function;
 import java.util.regex.Matcher;
@@ -44,6 +45,14 @@ public class Battle {
         characters = FXCollections.observableArrayList(players.stream().map(player2Character).collect(Collectors.toList()));
         currentCharacter = new SimpleObjectProperty<>(characters.stream().max(Comparator.comparingInt(Character::getInitiative)).get());
         host = new SimpleObjectProperty<>(new Host());
+        currentCharacterProperty().addListener((observable, oldValue, newValue) -> {
+            if(oldValue != null) {
+                oldValue.setSelected(false);
+            }
+            if(newValue != null) {
+                oldValue.setSelected(true);
+            }
+        });
     }
 
     public Host getHost() {
@@ -94,6 +103,11 @@ public class Battle {
         return characters.stream().filter(character -> character.getInitiative() >= iteration.get()).sorted(Comparator.comparingInt(Character::getInitiative).reversed()).collect(Collectors.toList());
     }
 
+    public void updateCurrentCharacter() {
+        Optional<Character> current = characters.stream().max(Comparator.comparingInt(Character::getInitiative));
+        current.ifPresent(character -> currentCharacter.setValue(character));
+    }
+
     public void nextTurn() {
         List<Character> combatCharacters = getCombatTurnCharacters();
         combatTurn.set(getCombatTurn() + 1);
@@ -110,7 +124,7 @@ public class Battle {
     public void previousturn() {
         if(iteration.get() > 0) {
             combatTurn.set(getCombatTurn() - 1);
-            if(combatTurn.get() < 1) {
+            if(combatTurn.get() < 0) {
                 iteration.set(getIteration() - 1);
             }
             List<Character> combatCharactersFinal = getCombatTurnCharacters();
@@ -119,12 +133,14 @@ public class Battle {
     }
 
     public void spawnICe(ICE ice, Integer initiative) {
-        Matcher matcher = UUID_GROUP_PATTERN.matcher(UUID.randomUUID().toString());
+        String UUIDs = UUID.randomUUID().toString();
+        LOG.info(UUIDs);
+        Matcher matcher = UUID_GROUP_PATTERN.matcher(UUIDs);
         StringBuilder iceName = new StringBuilder();
         iceName.append(ice.getName());
         iceName.append(" ");
         iceName.append(matcher.group(1));
-        Character ic = new Character(iceName.toString(), initiative, World.MATRIX, true);
+        Character ic = new Character(iceName.toString(), initiative, World.MATRIX, true, getHost().getRating() / 2 + 8);
         characters.add(ic);
     }
 }

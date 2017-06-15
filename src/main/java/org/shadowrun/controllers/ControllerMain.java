@@ -1,5 +1,7 @@
 package org.shadowrun.controllers;
 
+import de.jensd.fx.glyphs.weathericons.WeatherIcon;
+import de.jensd.fx.glyphs.weathericons.WeatherIconView;
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
@@ -13,13 +15,22 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Pair;
+import org.apache.commons.lang3.StringUtils;
+import org.controlsfx.glyphfont.FontAwesome;
+import org.controlsfx.glyphfont.Glyph;
+import org.controlsfx.glyphfont.GlyphFont;
+import org.shadowrun.common.ExceptionDialogFactory;
 import org.shadowrun.common.TurnTableCell;
+import org.shadowrun.common.Weather;
 import org.shadowrun.logic.AppLogic;
 import org.shadowrun.logic.BattleLogic;
 import org.shadowrun.models.Character;
@@ -31,6 +42,9 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -80,6 +94,25 @@ public class ControllerMain {
     private MenuItem menuItem_newBattle;
     @FXML
     private MenuItem menuItem_saveCampaign;
+    @FXML
+    private MenuItem menuItem_saveAsCampaign;
+    @FXML
+    private MenuItem menuItem_closeCampaign;
+    @FXML
+    private Menu menu_recentCampaigns;
+    @FXML
+    private MenuItem menuItem_recentCampaign1;
+    @FXML
+    private MenuItem menuItem_recentCampaign2;
+    @FXML
+    private MenuItem menuItem_recentCampaign3;
+    @FXML
+    private CheckMenuItem checkMenuItem_realWorld;
+    @FXML
+    private CheckMenuItem checkMenuItem_astralPlane;
+    @FXML
+    private CheckMenuItem checkMenuItem_matrix;
+
 
     @FXML
     private TabPane tabPane;
@@ -90,6 +123,12 @@ public class ControllerMain {
 
     @FXML
     private VBox vbox_selected;
+    @FXML
+    private VBox vbox_realWorld;
+    @FXML
+    private VBox vbox_matrix;
+    @FXML
+    private VBox vbox_astralPlane;
 
 
     @FXML
@@ -124,6 +163,9 @@ public class ControllerMain {
     private TextField textField_selected_physical;
     @FXML
     private TextField textField_selected_stun;
+
+    @FXML
+    private ComboBox<Weather> comboBox_weather;
 
 
     //------------------------method hooks
@@ -238,7 +280,16 @@ public class ControllerMain {
 
         File file = dialog.showOpenDialog(stage);
         if (file != null) {
-            appLogic.openCampaign(file);
+            try {
+                appLogic.openCampaign(file);
+            } catch (IOException e) {
+                LOG.error(e.getMessage());
+                Alert alert = ExceptionDialogFactory.createExceptionDialog(
+                        "Error!",
+                        "Error occured while opening campaign file.",
+                        "I/O exception", e);
+                alert.showAndWait();
+            }
             addCampaignHooks();
         }
     }
@@ -248,7 +299,16 @@ public class ControllerMain {
         if(appLogic.getCampaignFile() == null) {
             saveAsCampaignOnAction();
         } else {
-            appLogic.saveCampaign();
+            try {
+                appLogic.saveCampaign();
+            } catch (IOException e) {
+                LOG.error(e.getMessage());
+                Alert alert = ExceptionDialogFactory.createExceptionDialog(
+                        "Error!",
+                        "Error occured while saving campaign.",
+                        "I/O exception", e);
+                alert.showAndWait();
+            }
         }
     }
 
@@ -260,8 +320,23 @@ public class ControllerMain {
 
         File file = dialog.showSaveDialog(stage);
         if(file != null) {
-            appLogic.saveAsCampaign(file);
+            try {
+                appLogic.saveAsCampaign(file);
+            } catch (IOException e) {
+                LOG.error(e.getMessage());
+                Alert alert = ExceptionDialogFactory.createExceptionDialog(
+                        "Error!",
+                        "Error occured while saving campaign.",
+                        "I/O exception", e);
+                alert.showAndWait();
+            }
         }
+    }
+
+    @FXML
+    private void closeCampaignOnAction() {
+        appLogic.closeCampaign();
+        addCampaignHooks();
     }
 
     @FXML
@@ -354,11 +429,43 @@ public class ControllerMain {
         battleLogic.getActiveBattle().getHost().overwatchScoreProperty().set(battleLogic.getActiveBattle().getHost().getOverwatchScore() - 1);
     }
 
+    @FXML
+    private void openRecentCampaign1OnAction() {
+        try {
+            appLogic.openCampaign(((Path)menuItem_recentCampaign1.getUserData()).toFile());
+            addCampaignHooks();
+        } catch (IOException e) {
+            LOG.error("File doesn't exists");
+        }
+    }
+
+    @FXML
+    private void openRecentCampaign2OnAction() {
+        try {
+            appLogic.openCampaign(((Path)menuItem_recentCampaign2.getUserData()).toFile());
+            addCampaignHooks();
+        } catch (IOException e) {
+            LOG.error("File doesn't exists");
+        }
+    }
+
+    @FXML
+    private void openRecentCampaign3OnAction() {
+        try {
+            appLogic.openCampaign(((Path)menuItem_recentCampaign3.getUserData()).toFile());
+            addCampaignHooks();
+        } catch (IOException e) {
+            LOG.error("File doesn't exists");
+        }
+    }
+
     private void addCampaignHooks() {
-        //Items
-        tableView_playerCharacters.setItems(appLogic.getActiveCampaign().getPlayers());
-        //tab selection
-        tabPane.getSelectionModel().select(tab_characters);
+        if(appLogic.getActiveCampaign() != null) {
+            //Items
+            tableView_playerCharacters.setItems(appLogic.getActiveCampaign().getPlayers());
+            //tab selection
+            tabPane.getSelectionModel().select(tab_characters);
+        }
     }
 
     private void addBattleHooks() {
@@ -377,20 +484,22 @@ public class ControllerMain {
         label_astral_backgroundCount.textProperty().unbind();
         label_overwatchScore.textProperty().unbind();
 
-        //binds
-        label_iterationCounter.textProperty().bind(battleLogic.getActiveBattle().iterationProperty().asString());
-        label_combatTurnsCounter.textProperty().bind(battleLogic.getActiveBattle().combatTurnProperty().asString());
-        label_currentCharacter.textProperty().bind(battleLogic.currentCharacterNameProperty());
-        label_host_attack.textProperty().bind(battleLogic.getActiveBattle().getHost().attackProperty().asString());
-        label_host_sleeze.textProperty().bind(battleLogic.getActiveBattle().getHost().sleezeProperty().asString());
-        label_host_firewall.textProperty().bind(battleLogic.getActiveBattle().getHost().firewallProperty().asString());
-        label_host_dataProcessing.textProperty().bind(battleLogic.getActiveBattle().getHost().dataProcessingProperty().asString());
-        label_host_rating.textProperty().bind(battleLogic.getActiveBattle().getHost().ratingProperty().asString());
-        label_astral_backgroundCount.textProperty().bind(battleLogic.getActiveBattle().backgroundCountProperty().asString());
-        label_overwatchScore.textProperty().bind(battleLogic.getActiveBattle().getHost().overwatchScoreProperty().asString());
+        if(battleLogic.getActiveBattle() != null) {
+            //binds
+            label_iterationCounter.textProperty().bind(battleLogic.getActiveBattle().iterationProperty().asString());
+            label_combatTurnsCounter.textProperty().bind(battleLogic.getActiveBattle().combatTurnProperty().asString());
+            label_currentCharacter.textProperty().bind(battleLogic.currentCharacterNameProperty());
+            label_host_attack.textProperty().bind(battleLogic.getActiveBattle().getHost().attackProperty().asString());
+            label_host_sleeze.textProperty().bind(battleLogic.getActiveBattle().getHost().sleezeProperty().asString());
+            label_host_firewall.textProperty().bind(battleLogic.getActiveBattle().getHost().firewallProperty().asString());
+            label_host_dataProcessing.textProperty().bind(battleLogic.getActiveBattle().getHost().dataProcessingProperty().asString());
+            label_host_rating.textProperty().bind(battleLogic.getActiveBattle().getHost().ratingProperty().asString());
+            label_astral_backgroundCount.textProperty().bind(battleLogic.getActiveBattle().backgroundCountProperty().asString());
+            label_overwatchScore.textProperty().bind(battleLogic.getActiveBattle().getHost().overwatchScoreProperty().asString());
 
-        //tab selection
-        tabPane.getSelectionModel().select(tab_battle);
+            //tab selection
+            tabPane.getSelectionModel().select(tab_battle);
+        }
     }
 
     public void setStageAndListeners(Stage stage) {
@@ -401,6 +510,8 @@ public class ControllerMain {
         menu_campaign.disableProperty().bind(appLogic.hasCampaign());
         menuItem_newBattle.disableProperty().bind(appLogic.hasCampaign());
         menuItem_saveCampaign.disableProperty().bind(appLogic.hasCampaign());
+        menuItem_saveAsCampaign.disableProperty().bind(appLogic.hasCampaign());
+        menuItem_closeCampaign.disableProperty().bind(appLogic.hasCampaign());
         tab_characters.disableProperty().bind(appLogic.hasCampaign());
 
         tab_battle.disableProperty().bind(battleLogic.hasBattle());
@@ -487,6 +598,24 @@ public class ControllerMain {
         MenuItem moveToMatrixSpace = new MenuItem("Move to matrix space");
         moveToMatrixSpace.setOnAction(event -> tableView_masterTable.getSelectionModel().getSelectedItem().setWorld(World.MATRIX));
         SeparatorMenuItem separatorMenuItem = new SeparatorMenuItem();
+        MenuItem setInitiative = new MenuItem("Set initiative");
+        setInitiative.setOnAction(event -> {
+            Character selectedChar = tableView_masterTable.getSelectionModel().getSelectedItem();
+            TextInputDialog dialog = new TextInputDialog("0");
+            dialog.setTitle("Set initiative");
+            dialog.setHeaderText("Set initiative for " + selectedChar.getName());
+            dialog.setContentText("Please enter initative:");
+            dialog.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
+                if (!newValue.matches("\\d*")) {
+                    dialog.getEditor().setText(newValue.replaceAll("[^\\d]", ""));
+                }
+            });
+            Optional<String> result = dialog.showAndWait();
+            result.ifPresent(initiative -> {
+                selectedChar.setInitiative(Integer.parseInt(initiative));
+                battleLogic.getActiveBattle().updateCurrentCharacter();
+            });
+        });
         MenuItem addCharacter = new MenuItem("Add character");
         addCharacter.setOnAction(event -> addCharacterOnAction());
         MenuItem removeCharacter = new MenuItem("Remove character");
@@ -497,6 +626,7 @@ public class ControllerMain {
                 moveToMatrixSpace,
                 moveToAstralPlane,
                 separatorMenuItem,
+                setInitiative,
                 addCharacter,
                 removeCharacter));
 
@@ -514,5 +644,69 @@ public class ControllerMain {
 
         vbox_selected.setVisible(false);
 
+        label_overwatchScore.textProperty().addListener((observable, oldValue, newValue) -> {
+            if(StringUtils.isNotEmpty(newValue)) {
+                Integer value = Integer.parseInt(newValue);
+                if(value >= 40) {
+                    label_overwatchScore.setTextFill(Color.RED);
+                } else if(value >= 30) {
+                    label_overwatchScore.setTextFill(Color.DARKORANGE);
+                } else if (value >= 20) {
+                    label_overwatchScore.setTextFill(Color.ORANGE);
+                } else {
+                    label_overwatchScore.setTextFill(Color.BLACK);
+                }
+            }
+        });
+
+        checkMenuItem_astralPlane.selectedProperty().bindBidirectional(appLogic.showAstralPlaneProperty());
+        checkMenuItem_matrix.selectedProperty().bindBidirectional(appLogic.showMatrixProperty());
+        checkMenuItem_realWorld.selectedProperty().bindBidirectional(appLogic.showRealWorldProperty());
+
+        appLogic.showRealWorldProperty().addListener((observable, oldValue, newValue) -> {
+            if(newValue != null) {
+                vbox_realWorld.setVisible(newValue);
+            }
+        });
+        appLogic.showAstralPlaneProperty().addListener((observable, oldValue, newValue) -> {
+            if(newValue != null) {
+                vbox_astralPlane.setVisible(newValue);
+            }
+        });
+        appLogic.showMatrixProperty().addListener((observable, oldValue, newValue) -> {
+            if(newValue != null) {
+                vbox_matrix.setVisible(newValue);
+            }
+        });
+
+        loadRecentFiles();
+    }
+
+    /**
+     * These will not utilize observable list, because it's I/O operations
+     */
+    private void loadRecentFiles() {
+        List<MenuItem> menuItems = new ArrayList<>();
+        menuItems.add(menuItem_recentCampaign1);
+        menuItems.add(menuItem_recentCampaign2);
+        menuItems.add(menuItem_recentCampaign3);
+        List<Path> recentCampaigns = appLogic.getConfig().getRecentFiles();
+        if(recentCampaigns.isEmpty()) {
+            menu_recentCampaigns.disableProperty().setValue(true);
+        }
+        for(int i = 0; i < 3; i++) {
+            MenuItem recentCampaignMenuItem = menuItems.get(i);
+            if(recentCampaigns.size() > i) {
+                Path recentCampaignPath = recentCampaigns.get(i);
+                recentCampaignMenuItem.setUserData(recentCampaignPath);
+                recentCampaignMenuItem.textProperty().setValue(recentCampaignPath.getFileName().toString());
+                recentCampaignMenuItem.disableProperty().setValue(false);
+                recentCampaignMenuItem.visibleProperty().setValue(true);
+            } else {
+                recentCampaignMenuItem.disableProperty().setValue(true);
+                recentCampaignMenuItem.visibleProperty().setValue(false);
+                recentCampaignMenuItem.textProperty().setValue(StringUtils.EMPTY);
+            }
+        }
     }
 }
