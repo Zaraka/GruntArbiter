@@ -459,6 +459,11 @@ public class ControllerMain {
         }
     }
 
+    @FXML
+    private void overwatchScoreResetOnAction() {
+        battleLogic.getActiveBattle().getHost().overwatchScoreProperty().setValue(0);
+    }
+
     private void addCampaignHooks() {
         if(appLogic.getActiveCampaign() != null) {
             //Items

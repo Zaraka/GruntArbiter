@@ -1,10 +1,7 @@
 package org.shadowrun.common;
 
 
-import de.jensd.fx.glyphs.GlyphsBuilder;
 import de.jensd.fx.glyphs.weathericons.WeatherIcon;
-import de.jensd.fx.glyphs.weathericons.WeatherIconView;
-import org.controlsfx.glyphfont.Glyph;
 
 public enum Weather {
     DAY_SUNNY("Day sunny", WeatherIcon.DAY_SUNNY),

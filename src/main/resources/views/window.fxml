@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.input.*?>
 <?import javafx.scene.image.*?>
 <?import java.lang.*?>
 <?import javafx.scene.text.*?>
@@ -15,7 +16,10 @@
                 <Menu mnemonicParsing="false" text="File">
                     <items>
                         <MenuItem mnemonicParsing="false" onAction="#newCampaignOnAction" text="New campaign" />
-                        <MenuItem mnemonicParsing="false" onAction="#openCampaignOnAction" text="Open campaign" />
+                        <MenuItem mnemonicParsing="false" onAction="#openCampaignOnAction" text="Open campaign">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator></MenuItem>
                   <Menu fx:id="menu_recentCampaigns" mnemonicParsing="false" text="Recent campaigns">
                     <items>
                       <MenuItem fx:id="menuItem_recentCampaign1" mnemonicParsing="false" onAction="#openRecentCampaign1OnAction" text="recent1" />
@@ -24,9 +28,18 @@
                     </items>
                   </Menu>
                   <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem fx:id="menuItem_saveCampaign" mnemonicParsing="false" onAction="#saveCampaignOnAction" text="Save campaign" />
-                  <MenuItem fx:id="menuItem_saveAsCampaign" mnemonicParsing="false" onAction="#saveAsCampaignOnAction" text="Save As campaign" />
-                  <MenuItem fx:id="menuItem_closeCampaign" mnemonicParsing="false" onAction="#closeCampaignOnAction" text="Close campaign" />
+                        <MenuItem fx:id="menuItem_saveCampaign" mnemonicParsing="false" onAction="#saveCampaignOnAction" text="Save campaign">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator></MenuItem>
+                  <MenuItem fx:id="menuItem_saveAsCampaign" mnemonicParsing="false" onAction="#saveAsCampaignOnAction" text="Save As campaign">
+                     <accelerator>
+                        <KeyCodeCombination alt="DOWN" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator></MenuItem>
+                  <MenuItem fx:id="menuItem_closeCampaign" mnemonicParsing="false" onAction="#closeCampaignOnAction" text="Close campaign">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="Q" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator></MenuItem>
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem mnemonicParsing="false" onAction="#closeAppOnAction" text="Close GruntArbiter" />
                     </items>
@@ -35,7 +48,10 @@
                     <items>
                         <MenuItem fx:id="menuItem_addPlayer" mnemonicParsing="false" onAction="#addPlayerOnAction" text="Add player" />
                         <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem fx:id="menuItem_newBattle" mnemonicParsing="false" onAction="#newBattleOnAction" text="New battle" />
+                        <MenuItem fx:id="menuItem_newBattle" mnemonicParsing="false" onAction="#newBattleOnAction" text="New battle">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator></MenuItem>
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="View">
@@ -44,7 +60,6 @@
                         <CheckMenuItem fx:id="checkMenuItem_astralPlane" mnemonicParsing="false" text="Astral Plane" />
                         <CheckMenuItem fx:id="checkMenuItem_matrix" mnemonicParsing="false" text="Matrix" />
                         <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" text="Action 1" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Help">
@@ -271,7 +286,7 @@
                                                                   <Glyph fontFamily="FontAwesome" icon="MINUS" />
                                                                </graphic>
                                                             </Button>
-                                                            <Button mnemonicParsing="false" text="Reset" />
+                                                            <Button mnemonicParsing="false" onAction="#overwatchScoreResetOnAction" text="Reset" />
                                                          </items>
                                                       </ToolBar>
                                                    </children>

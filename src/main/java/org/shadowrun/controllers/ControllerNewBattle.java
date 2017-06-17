@@ -41,10 +41,7 @@ public class ControllerNewBattle {
         public java.lang.Boolean getChecked() {
             return this.checkedProperty().get();
         }
-
-        public void setChecked(final java.lang.Boolean checked) {
-            this.checkedProperty().set(checked);
-        }
+        
     }
 
     private Stage stage;
@@ -77,7 +74,7 @@ public class ControllerNewBattle {
 
         tableView_players.setItems(this.players);
         tableColumn_character.setCellValueFactory(cellData -> cellData.getValue().getPlayerCharacter().nameProperty());
-        tableColumn_include.setCellValueFactory(cellData -> cellData.getValue().checked.asObject());
+        tableColumn_include.setCellValueFactory(cellData -> cellData.getValue().checkedProperty());
     }
 
     public Optional<List<PlayerCharacter>> getIncludedPlayers() {
