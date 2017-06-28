@@ -8,9 +8,9 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.shadowrun.controllers.ControllerNewBattle">
    <children>
-      <VBox prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox prefHeight="250.0" prefWidth="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <TableView fx:id="tableView_players" editable="true" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+            <TableView fx:id="tableView_players" editable="true" VBox.vgrow="ALWAYS">
               <columns>
                 <TableColumn fx:id="tableColumn_character" editable="false" maxWidth="200.0" minWidth="200.0" prefWidth="200.0" resizable="false" sortable="false" text="Character" />
                   <TableColumn fx:id="tableColumn_include" maxWidth="200.0" minWidth="200.0" prefWidth="200.0" resizable="false" sortable="false" text="Include">
@@ -23,7 +23,7 @@
                <children>
                   <Separator prefWidth="300.0" />
                   <Button cancelButton="true" mnemonicParsing="false" onAction="#closeOnAction" text="Close" />
-                  <Button defaultButton="true" mnemonicParsing="false" onAction="#okOnAction" text="Ok" />
+                  <Button fx:id="button_ok" defaultButton="true" mnemonicParsing="false" onAction="#okOnAction" text="Ok" />
                </children>
             </HBox>
          </children>

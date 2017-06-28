@@ -46,11 +46,11 @@ public class Battle {
         currentCharacter = new SimpleObjectProperty<>(characters.stream().max(Comparator.comparingInt(Character::getInitiative)).get());
         host = new SimpleObjectProperty<>(new Host());
         currentCharacterProperty().addListener((observable, oldValue, newValue) -> {
-            if(oldValue != null) {
+            if (oldValue != null) {
                 oldValue.setSelected(false);
             }
-            if(newValue != null) {
-                oldValue.setSelected(true);
+            if (newValue != null) {
+                newValue.setSelected(true);
             }
         });
     }
@@ -100,7 +100,7 @@ public class Battle {
     }
 
     public List<Character> getCombatTurnCharacters() {
-        return characters.stream().filter(character -> character.getInitiative() >= iteration.get()).sorted(Comparator.comparingInt(Character::getInitiative).reversed()).collect(Collectors.toList());
+        return characters.stream().filter(character -> character.getInitiative() >= iteration.get() * 10).sorted(Comparator.comparingInt(Character::getInitiative).reversed()).collect(Collectors.toList());
     }
 
     public void updateCurrentCharacter() {
@@ -111,20 +111,21 @@ public class Battle {
     public void nextTurn() {
         List<Character> combatCharacters = getCombatTurnCharacters();
         combatTurn.set(getCombatTurn() + 1);
-        if (combatTurn.get() > combatCharacters.size()) {
+        if (combatTurn.get() >= combatCharacters.size()) {
             combatTurn.set(0);
             iteration.set(getIteration() + 1);
         }
 
         List<Character> combatCharactersFinal = getCombatTurnCharacters();
-        currentCharacter.setValue(combatCharactersFinal.get(combatTurn.get()));
-
+        if (!combatCharactersFinal.isEmpty()) {
+            currentCharacter.setValue(combatCharactersFinal.get(combatTurn.get()));
+        }
     }
 
-    public void previousturn() {
-        if(iteration.get() > 0) {
+    public void previousTurn() {
+        if (iteration.get() > 0) {
             combatTurn.set(getCombatTurn() - 1);
-            if(combatTurn.get() < 0) {
+            if (combatTurn.get() < 0) {
                 iteration.set(getIteration() - 1);
             }
             List<Character> combatCharactersFinal = getCombatTurnCharacters();
@@ -134,12 +135,13 @@ public class Battle {
 
     public void spawnICe(ICE ice, Integer initiative) {
         String UUIDs = UUID.randomUUID().toString();
-        LOG.info(UUIDs);
         Matcher matcher = UUID_GROUP_PATTERN.matcher(UUIDs);
         StringBuilder iceName = new StringBuilder();
         iceName.append(ice.getName());
-        iceName.append(" ");
-        iceName.append(matcher.group(1));
+        if (matcher.matches()) {
+            iceName.append(" ");
+            iceName.append(matcher.group(1));
+        }
         Character ic = new Character(iceName.toString(), initiative, World.MATRIX, true, getHost().getRating() / 2 + 8);
         characters.add(ic);
     }

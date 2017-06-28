@@ -50,11 +50,11 @@ public class BattleLogic {
 
     public void nextTurn() {
         getActiveBattle().nextTurn();
-        currentCharacterName.setValue(getActiveBattle().currentCharacterProperty().getName());
+        currentCharacterName.setValue(getActiveBattle().currentCharacterProperty().get().getName());
     }
 
     public void prevTurn() {
-        getActiveBattle().previousturn();
-        currentCharacterName.setValue(getActiveBattle().currentCharacterProperty().getName());
+        getActiveBattle().previousTurn();
+        currentCharacterName.setValue(getActiveBattle().currentCharacterProperty().get().getName());
     }
 }

@@ -286,7 +286,11 @@
                                                                   <Glyph fontFamily="FontAwesome" icon="MINUS" />
                                                                </graphic>
                                                             </Button>
-                                                            <Button mnemonicParsing="false" onAction="#overwatchScoreResetOnAction" text="Reset" />
+                                                            <Button mnemonicParsing="false" onAction="#overwatchScoreResetOnAction" text="Reset">
+                                                                <graphic>
+                                                                    <Glyph fontFamily="FontAwesome" icon="REFRESH" />
+                                                                </graphic>
+                                                            </Button>
                                                          </items>
                                                       </ToolBar>
                                                    </children>

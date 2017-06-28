@@ -1,13 +1,8 @@
 package org.shadowrun.controllers;
 
-import de.jensd.fx.glyphs.weathericons.WeatherIcon;
-import de.jensd.fx.glyphs.weathericons.WeatherIconView;
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
-import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -15,19 +10,13 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 import org.apache.commons.lang3.StringUtils;
-import org.controlsfx.glyphfont.FontAwesome;
-import org.controlsfx.glyphfont.Glyph;
-import org.controlsfx.glyphfont.GlyphFont;
 import org.shadowrun.common.ExceptionDialogFactory;
 import org.shadowrun.common.TurnTableCell;
 import org.shadowrun.common.Weather;
@@ -42,8 +31,6 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -241,6 +228,7 @@ public class ControllerMain {
             ICE ice = ICE.fromName(res.getKey().replaceAll("\\s+", "").toUpperCase());
             Integer initiativeInt = Integer.parseInt(res.getValue());
             battleLogic.getActiveBattle().spawnICe(ice, initiativeInt);
+            tableView_masterTable.refresh();
         });
     }
 
@@ -378,11 +366,13 @@ public class ControllerMain {
     @FXML
     private void nextTurnOnAction() {
         battleLogic.nextTurn();
+        tableView_masterTable.refresh();
     }
 
     @FXML
     private void prevTurnOnAction() {
         battleLogic.prevTurn();
+        tableView_masterTable.refresh();
     }
 
     @FXML
@@ -619,6 +609,7 @@ public class ControllerMain {
             result.ifPresent(initiative -> {
                 selectedChar.setInitiative(Integer.parseInt(initiative));
                 battleLogic.getActiveBattle().updateCurrentCharacter();
+                tableView_masterTable.refresh();
             });
         });
         MenuItem addCharacter = new MenuItem("Add character");

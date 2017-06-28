@@ -7,6 +7,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
@@ -57,6 +58,9 @@ public class ControllerNewBattle {
     private TableColumn<PickPlayer, Boolean> tableColumn_include;
 
     @FXML
+    private Button button_ok;
+
+    @FXML
     public void closeOnAction() {
         stage.close();
     }
@@ -75,6 +79,8 @@ public class ControllerNewBattle {
         tableView_players.setItems(this.players);
         tableColumn_character.setCellValueFactory(cellData -> cellData.getValue().getPlayerCharacter().nameProperty());
         tableColumn_include.setCellValueFactory(cellData -> cellData.getValue().checkedProperty());
+
+        button_ok.requestFocus();
     }
 
     public Optional<List<PlayerCharacter>> getIncludedPlayers() {
