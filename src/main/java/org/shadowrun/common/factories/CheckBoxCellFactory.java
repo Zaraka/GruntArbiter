@@ -1,4 +1,4 @@
-package org.shadowrun.common;
+package org.shadowrun.common.factories;
 
 import javafx.scene.control.TableCell;
 import javafx.scene.control.cell.CheckBoxTableCell;

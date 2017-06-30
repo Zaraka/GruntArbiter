@@ -1,6 +1,7 @@
 package org.shadowrun.models;
 
 import javafx.beans.property.*;
+import org.shadowrun.common.constants.World;
 
 public class Character {
 

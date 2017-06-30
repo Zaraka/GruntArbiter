@@ -1,4 +1,4 @@
-package org.shadowrun.common;
+package org.shadowrun.common.constants;
 
 
 import de.jensd.fx.glyphs.weathericons.WeatherIcon;

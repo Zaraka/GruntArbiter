@@ -6,7 +6,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 import org.shadowrun.models.Character;
-import org.shadowrun.models.World;
+import org.shadowrun.common.constants.World;
 
 import java.util.Optional;
 

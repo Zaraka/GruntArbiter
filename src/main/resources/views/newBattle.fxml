@@ -15,7 +15,7 @@
                 <TableColumn fx:id="tableColumn_character" editable="false" maxWidth="200.0" minWidth="200.0" prefWidth="200.0" resizable="false" sortable="false" text="Character" />
                   <TableColumn fx:id="tableColumn_include" maxWidth="200.0" minWidth="200.0" prefWidth="200.0" resizable="false" sortable="false" text="Include">
                       <cellValueFactory><PropertyValueFactory property="checked" /></cellValueFactory>
-                      <cellFactory><org.shadowrun.common.CheckBoxCellFactory /></cellFactory>
+                      <cellFactory><org.shadowrun.common.factories.CheckBoxCellFactory /></cellFactory>
                   </TableColumn>
               </columns>
             </TableView>

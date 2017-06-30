@@ -1,6 +1,7 @@
 package org.shadowrun.controllers;
 
 import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -17,15 +18,18 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 import org.apache.commons.lang3.StringUtils;
-import org.shadowrun.common.ExceptionDialogFactory;
+import org.shadowrun.common.IterationTimeConverter;
 import org.shadowrun.common.TurnTableCell;
-import org.shadowrun.common.Weather;
+import org.shadowrun.common.constants.ICE;
+import org.shadowrun.common.constants.Weather;
+import org.shadowrun.common.constants.World;
+import org.shadowrun.common.exceptions.NextIterationException;
+import org.shadowrun.common.factories.ExceptionDialogFactory;
+import org.shadowrun.common.factories.InitiativeDialogFactory;
 import org.shadowrun.logic.AppLogic;
 import org.shadowrun.logic.BattleLogic;
 import org.shadowrun.models.Character;
-import org.shadowrun.models.ICE;
 import org.shadowrun.models.PlayerCharacter;
-import org.shadowrun.models.World;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -116,6 +120,8 @@ public class ControllerMain {
     private VBox vbox_matrix;
     @FXML
     private VBox vbox_astralPlane;
+    @FXML
+    private VBox vbox_matrixProperties;
 
 
     @FXML
@@ -140,6 +146,8 @@ public class ControllerMain {
     private Label label_astral_backgroundCount;
     @FXML
     private Label label_overwatchScore;
+    @FXML
+    private Label label_time;
 
     @FXML
     private Button button_nextTurn;
@@ -284,7 +292,7 @@ public class ControllerMain {
 
     @FXML
     private void saveCampaignOnAction() {
-        if(appLogic.getCampaignFile() == null) {
+        if (appLogic.getCampaignFile() == null) {
             saveAsCampaignOnAction();
         } else {
             try {
@@ -307,7 +315,7 @@ public class ControllerMain {
         dialog.getExtensionFilters().add(new FileChooser.ExtensionFilter("Grunt campaign (.gra)", "*.gra"));
 
         File file = dialog.showSaveDialog(stage);
-        if(file != null) {
+        if (file != null) {
             try {
                 appLogic.saveAsCampaign(file);
             } catch (IOException e) {
@@ -341,6 +349,7 @@ public class ControllerMain {
             dialog.showAndWait();
             controllerNewBattle.getIncludedPlayers().ifPresent(playerCharacters -> {
                 battleLogic.createNewBattle(playerCharacters);
+                setNewInitiative();
                 addBattleHooks();
             });
 
@@ -365,13 +374,23 @@ public class ControllerMain {
 
     @FXML
     private void nextTurnOnAction() {
-        battleLogic.nextTurn();
+        try {
+            battleLogic.nextTurn();
+        } catch (NextIterationException e) {
+            setNewInitiative();
+            battleLogic.refreshTurn();
+        }
         tableView_masterTable.refresh();
     }
 
     @FXML
     private void prevTurnOnAction() {
-        battleLogic.prevTurn();
+        try {
+            battleLogic.prevTurn();
+        } catch (NextIterationException e) {
+            setNewInitiative();
+            battleLogic.refreshTurn();
+        }
         tableView_masterTable.refresh();
     }
 
@@ -422,7 +441,7 @@ public class ControllerMain {
     @FXML
     private void openRecentCampaign1OnAction() {
         try {
-            appLogic.openCampaign(((Path)menuItem_recentCampaign1.getUserData()).toFile());
+            appLogic.openCampaign(((Path) menuItem_recentCampaign1.getUserData()).toFile());
             addCampaignHooks();
         } catch (IOException e) {
             LOG.error("File doesn't exists");
@@ -432,7 +451,7 @@ public class ControllerMain {
     @FXML
     private void openRecentCampaign2OnAction() {
         try {
-            appLogic.openCampaign(((Path)menuItem_recentCampaign2.getUserData()).toFile());
+            appLogic.openCampaign(((Path) menuItem_recentCampaign2.getUserData()).toFile());
             addCampaignHooks();
         } catch (IOException e) {
             LOG.error("File doesn't exists");
@@ -442,7 +461,7 @@ public class ControllerMain {
     @FXML
     private void openRecentCampaign3OnAction() {
         try {
-            appLogic.openCampaign(((Path)menuItem_recentCampaign3.getUserData()).toFile());
+            appLogic.openCampaign(((Path) menuItem_recentCampaign3.getUserData()).toFile());
             addCampaignHooks();
         } catch (IOException e) {
             LOG.error("File doesn't exists");
@@ -455,7 +474,7 @@ public class ControllerMain {
     }
 
     private void addCampaignHooks() {
-        if(appLogic.getActiveCampaign() != null) {
+        if (appLogic.getActiveCampaign() != null) {
             //Items
             tableView_playerCharacters.setItems(appLogic.getActiveCampaign().getPlayers());
             //tab selection
@@ -478,8 +497,10 @@ public class ControllerMain {
         label_host_rating.textProperty().unbind();
         label_astral_backgroundCount.textProperty().unbind();
         label_overwatchScore.textProperty().unbind();
+        vbox_matrixProperties.visibleProperty().unbind();
+        label_time.textProperty().unbind();
 
-        if(battleLogic.getActiveBattle() != null) {
+        if (battleLogic.getActiveBattle() != null) {
             //binds
             label_iterationCounter.textProperty().bind(battleLogic.getActiveBattle().iterationProperty().asString());
             label_combatTurnsCounter.textProperty().bind(battleLogic.getActiveBattle().combatTurnProperty().asString());
@@ -491,6 +512,14 @@ public class ControllerMain {
             label_host_rating.textProperty().bind(battleLogic.getActiveBattle().getHost().ratingProperty().asString());
             label_astral_backgroundCount.textProperty().bind(battleLogic.getActiveBattle().backgroundCountProperty().asString());
             label_overwatchScore.textProperty().bind(battleLogic.getActiveBattle().getHost().overwatchScoreProperty().asString());
+            vbox_matrixProperties.visibleProperty().bind(battleLogic.getActiveBattle().getHost().isInitalized());
+            Bindings.bindBidirectional(label_time.textProperty(), battleLogic.getActiveBattle().iterationProperty(), new IterationTimeConverter());
+
+            battleLogic.getActiveBattle().currentCharacterProperty().addListener((observable, oldValue, newValue) -> {
+                if(newValue != null) {
+                    tableView_masterTable.getSelectionModel().select(newValue);
+                }
+            });
 
             //tab selection
             tabPane.getSelectionModel().select(tab_battle);
@@ -553,31 +582,27 @@ public class ControllerMain {
                 super.updateItem(item, empty);
                 if (!empty) {
                     tableView_masterTable.getSortOrder().setAll(tableColumn_masterTable_initiative);
-                    if(!item.isSelected()){
-                        switch (item.getWorld()) {
-                            case REAL:
-                                setStyle(null);
-                                break;
-                            case ASTRAL:
-                                setStyle("-fx-control-inner-background: tomato;");
-                                break;
-                            case MATRIX:
-                                setStyle("-fx-control-inner-background: springgreen;");
-                                break;
-                        }
-                    } else {
-                        setStyle("-fx-control-inner-background: dodgerblue;");
+                    switch (item.getWorld()) {
+                        case REAL:
+                            setStyle(null);
+                            break;
+                        case ASTRAL:
+                            setStyle("-fx-control-inner-background: tomato;");
+                            break;
+                        case MATRIX:
+                            setStyle("-fx-control-inner-background: springgreen;");
+                            break;
                     }
                 }
             }
         });
         tableView_masterTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if(oldValue != null) {
+            if (oldValue != null) {
                 textField_selected_physical.textProperty().unbind();
                 textField_selected_stun.textProperty().unbind();
             }
 
-            if(newValue == null) {
+            if (newValue == null) {
                 vbox_selected.setVisible(false);
             } else {
                 textField_selected_physical.textProperty().bind(newValue.physicalMonitorProperty().asString());
@@ -596,15 +621,7 @@ public class ControllerMain {
         MenuItem setInitiative = new MenuItem("Set initiative");
         setInitiative.setOnAction(event -> {
             Character selectedChar = tableView_masterTable.getSelectionModel().getSelectedItem();
-            TextInputDialog dialog = new TextInputDialog("0");
-            dialog.setTitle("Set initiative");
-            dialog.setHeaderText("Set initiative for " + selectedChar.getName());
-            dialog.setContentText("Please enter initative:");
-            dialog.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
-                if (!newValue.matches("\\d*")) {
-                    dialog.getEditor().setText(newValue.replaceAll("[^\\d]", ""));
-                }
-            });
+            TextInputDialog dialog = InitiativeDialogFactory.createDialog(selectedChar);
             Optional<String> result = dialog.showAndWait();
             result.ifPresent(initiative -> {
                 selectedChar.setInitiative(Integer.parseInt(initiative));
@@ -641,11 +658,11 @@ public class ControllerMain {
         vbox_selected.setVisible(false);
 
         label_overwatchScore.textProperty().addListener((observable, oldValue, newValue) -> {
-            if(StringUtils.isNotEmpty(newValue)) {
+            if (StringUtils.isNotEmpty(newValue)) {
                 Integer value = Integer.parseInt(newValue);
-                if(value >= 40) {
+                if (value >= 40) {
                     label_overwatchScore.setTextFill(Color.RED);
-                } else if(value >= 30) {
+                } else if (value >= 30) {
                     label_overwatchScore.setTextFill(Color.DARKORANGE);
                 } else if (value >= 20) {
                     label_overwatchScore.setTextFill(Color.ORANGE);
@@ -660,17 +677,17 @@ public class ControllerMain {
         checkMenuItem_realWorld.selectedProperty().bindBidirectional(appLogic.showRealWorldProperty());
 
         appLogic.showRealWorldProperty().addListener((observable, oldValue, newValue) -> {
-            if(newValue != null) {
+            if (newValue != null) {
                 vbox_realWorld.setVisible(newValue);
             }
         });
         appLogic.showAstralPlaneProperty().addListener((observable, oldValue, newValue) -> {
-            if(newValue != null) {
+            if (newValue != null) {
                 vbox_astralPlane.setVisible(newValue);
             }
         });
         appLogic.showMatrixProperty().addListener((observable, oldValue, newValue) -> {
-            if(newValue != null) {
+            if (newValue != null) {
                 vbox_matrix.setVisible(newValue);
             }
         });
@@ -687,12 +704,12 @@ public class ControllerMain {
         menuItems.add(menuItem_recentCampaign2);
         menuItems.add(menuItem_recentCampaign3);
         List<Path> recentCampaigns = appLogic.getConfig().getRecentFiles();
-        if(recentCampaigns.isEmpty()) {
+        if (recentCampaigns.isEmpty()) {
             menu_recentCampaigns.disableProperty().setValue(true);
         }
-        for(int i = 0; i < 3; i++) {
+        for (int i = 0; i < 3; i++) {
             MenuItem recentCampaignMenuItem = menuItems.get(i);
-            if(recentCampaigns.size() > i) {
+            if (recentCampaigns.size() > i) {
                 Path recentCampaignPath = recentCampaigns.get(i);
                 recentCampaignMenuItem.setUserData(recentCampaignPath);
                 recentCampaignMenuItem.textProperty().setValue(recentCampaignPath.getFileName().toString());
@@ -703,6 +720,19 @@ public class ControllerMain {
                 recentCampaignMenuItem.visibleProperty().setValue(false);
                 recentCampaignMenuItem.textProperty().setValue(StringUtils.EMPTY);
             }
+        }
+    }
+
+    private void setNewInitiative() {
+        for (Character character : battleLogic.getActiveBattle().getCharacters()) {
+            TextInputDialog dialog = InitiativeDialogFactory.createDialog(character);
+            Optional<String> result = dialog.showAndWait();
+            try {
+                character.setInitiative(result.map(Integer::parseInt).orElse(0));
+            } catch (NumberFormatException ex) {
+                character.setInitiative(0);
+            }
+
         }
     }
 }

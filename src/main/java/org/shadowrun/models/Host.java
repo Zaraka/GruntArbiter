@@ -1,5 +1,6 @@
 package org.shadowrun.models;
 
+import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
@@ -112,5 +113,9 @@ public class Host {
         sleeze.set(ratings.get(1));
         firewall.set(ratings.get(2));
         dataProcessing.set(ratings.get(3));
+    }
+
+    public BooleanBinding isInitalized() {
+        return rating.isEqualTo(0).not();
     }
 }

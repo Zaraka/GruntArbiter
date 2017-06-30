@@ -6,6 +6,9 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import org.shadowrun.common.constants.ICE;
+import org.shadowrun.common.constants.World;
+import org.shadowrun.common.exceptions.NextIterationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,7 +37,8 @@ public class Battle {
 
     private ObjectProperty<Character> currentCharacter;
 
-    private static final Function<PlayerCharacter, Character> player2Character = playerCharacter -> new Character(playerCharacter.getName(), 0, World.REAL);
+    private static final Function<PlayerCharacter, Character> player2Character =
+            playerCharacter -> new Character(playerCharacter.getName(), 0, World.REAL);
 
     private static final Pattern UUID_GROUP_PATTERN = Pattern.compile(".*-(.*)-.*");
 
@@ -42,8 +46,10 @@ public class Battle {
         backgroundCount = new SimpleIntegerProperty(0);
         iteration = new SimpleIntegerProperty(0);
         combatTurn = new SimpleIntegerProperty(0);
-        characters = FXCollections.observableArrayList(players.stream().map(player2Character).collect(Collectors.toList()));
-        currentCharacter = new SimpleObjectProperty<>(characters.stream().max(Comparator.comparingInt(Character::getInitiative)).get());
+        characters = FXCollections.observableArrayList(players.stream()
+                .map(player2Character).collect(Collectors.toList()));
+        currentCharacter = new SimpleObjectProperty<>(characters.stream()
+                .max(Comparator.comparingInt(Character::getInitiative)).get());
         host = new SimpleObjectProperty<>(new Host());
         currentCharacterProperty().addListener((observable, oldValue, newValue) -> {
             if (oldValue != null) {
@@ -100,7 +106,8 @@ public class Battle {
     }
 
     public List<Character> getCombatTurnCharacters() {
-        return characters.stream().filter(character -> character.getInitiative() >= iteration.get() * 10).sorted(Comparator.comparingInt(Character::getInitiative).reversed()).collect(Collectors.toList());
+        return characters.stream().filter(character -> character.getInitiative() >= iteration.get() * 10)
+                .sorted(Comparator.comparingInt(Character::getInitiative).reversed()).collect(Collectors.toList());
     }
 
     public void updateCurrentCharacter() {
@@ -108,7 +115,7 @@ public class Battle {
         current.ifPresent(character -> currentCharacter.setValue(character));
     }
 
-    public void nextTurn() {
+    public void nextTurn() throws NextIterationException {
         List<Character> combatCharacters = getCombatTurnCharacters();
         combatTurn.set(getCombatTurn() + 1);
         if (combatTurn.get() >= combatCharacters.size()) {
@@ -117,20 +124,28 @@ public class Battle {
         }
 
         List<Character> combatCharactersFinal = getCombatTurnCharacters();
-        if (!combatCharactersFinal.isEmpty()) {
-            currentCharacter.setValue(combatCharactersFinal.get(combatTurn.get()));
+        if (combatCharactersFinal.isEmpty()) {
+            throw new NextIterationException();
+        } else {
+            refreshTurn();
         }
     }
 
-    public void previousTurn() {
+    public void previousTurn() throws NextIterationException {
         if (iteration.get() > 0) {
             combatTurn.set(getCombatTurn() - 1);
             if (combatTurn.get() < 0) {
                 iteration.set(getIteration() - 1);
+                throw new NextIterationException();
             }
-            List<Character> combatCharactersFinal = getCombatTurnCharacters();
-            currentCharacter.setValue(combatCharactersFinal.get(combatTurn.get()));
+            refreshTurn();
         }
+    }
+
+    public void refreshTurn() {
+        List<Character> combatCharactersFinal = getCombatTurnCharacters();
+        if(!combatCharactersFinal.isEmpty())
+            currentCharacter.setValue(combatCharactersFinal.get(combatTurn.get()));
     }
 
     public void spawnICe(ICE ice, Integer initiative) {
@@ -142,7 +157,11 @@ public class Battle {
             iceName.append(" ");
             iceName.append(matcher.group(1));
         }
-        Character ic = new Character(iceName.toString(), initiative, World.MATRIX, true, getHost().getRating() / 2 + 8);
+        Character ic = new Character(iceName.toString(),
+                initiative,
+                World.MATRIX,
+                true,
+                getHost().getRating() / 2 + 8);
         characters.add(ic);
     }
 }

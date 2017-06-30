@@ -1,4 +1,4 @@
-package org.shadowrun.models;
+package org.shadowrun.common.constants;
 
 public enum ICE {
 
@@ -8,7 +8,7 @@ public enum ICE {
     BLASTER("Blaster"),
     CRASH("Crash"),
     JAMMER("Jammer"),
-    KILLEr("Killer"),
+    KILLER("Killer"),
     MARKER("Marker"),
     PATROL("Patrol"),
     PROBE("Probe"),

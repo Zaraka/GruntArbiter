@@ -1,4 +1,4 @@
-package org.shadowrun.models;
+package org.shadowrun.common.constants;
 
 public enum World {
     REAL,
