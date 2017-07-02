@@ -17,15 +17,18 @@ import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Pair;
+import javafx.util.converter.NumberStringConverter;
 import org.apache.commons.lang3.StringUtils;
 import org.shadowrun.common.IterationTimeConverter;
 import org.shadowrun.common.TurnTableCell;
+import org.shadowrun.common.WeatherCell;
 import org.shadowrun.common.constants.ICE;
 import org.shadowrun.common.constants.Weather;
 import org.shadowrun.common.constants.World;
 import org.shadowrun.common.exceptions.NextIterationException;
 import org.shadowrun.common.factories.ExceptionDialogFactory;
 import org.shadowrun.common.factories.InitiativeDialogFactory;
+import org.shadowrun.common.factories.WeatherCellFactory;
 import org.shadowrun.logic.AppLogic;
 import org.shadowrun.logic.BattleLogic;
 import org.shadowrun.models.Character;
@@ -97,12 +100,6 @@ public class ControllerMain {
     private MenuItem menuItem_recentCampaign2;
     @FXML
     private MenuItem menuItem_recentCampaign3;
-    @FXML
-    private CheckMenuItem checkMenuItem_realWorld;
-    @FXML
-    private CheckMenuItem checkMenuItem_astralPlane;
-    @FXML
-    private CheckMenuItem checkMenuItem_matrix;
 
 
     @FXML
@@ -143,11 +140,11 @@ public class ControllerMain {
     private Label label_host_dataProcessing;
 
     @FXML
-    private Label label_astral_backgroundCount;
-    @FXML
     private Label label_overwatchScore;
     @FXML
     private Label label_time;
+    @FXML
+    private Label label_selectedCharacter;
 
     @FXML
     private Button button_nextTurn;
@@ -158,6 +155,8 @@ public class ControllerMain {
     private TextField textField_selected_physical;
     @FXML
     private TextField textField_selected_stun;
+    @FXML
+    private TextField textField_backgroundCount;
 
     @FXML
     private ComboBox<Weather> comboBox_weather;
@@ -368,7 +367,7 @@ public class ControllerMain {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Grunt Arbiter");
         alert.setHeaderText("Grunt Arbiter alpha version");
-        alert.setContentText("Created by Zaraka.");
+        alert.setContentText("Created by Zaraka.\nhttp://www.github.com/zaraka/gruntarbiter");
         alert.showAndWait();
     }
 
@@ -430,12 +429,12 @@ public class ControllerMain {
 
     @FXML
     private void overwatchScorePlusOnAction() {
-        battleLogic.getActiveBattle().getHost().overwatchScoreProperty().set(battleLogic.getActiveBattle().getHost().getOverwatchScore() + 1);
+        battleLogic.raiseOverwatchScore();
     }
 
     @FXML
     private void overwatchScoreMinusOnAction() {
-        battleLogic.getActiveBattle().getHost().overwatchScoreProperty().set(battleLogic.getActiveBattle().getHost().getOverwatchScore() - 1);
+        battleLogic.decreaseOverwatchScore();
     }
 
     @FXML
@@ -470,7 +469,7 @@ public class ControllerMain {
 
     @FXML
     private void overwatchScoreResetOnAction() {
-        battleLogic.getActiveBattle().getHost().overwatchScoreProperty().setValue(0);
+        battleLogic.resetOverwatchScoore();
     }
 
     private void addCampaignHooks() {
@@ -495,10 +494,11 @@ public class ControllerMain {
         label_host_firewall.textProperty().unbind();
         label_host_dataProcessing.textProperty().unbind();
         label_host_rating.textProperty().unbind();
-        label_astral_backgroundCount.textProperty().unbind();
+        textField_backgroundCount.textProperty().unbind();
         label_overwatchScore.textProperty().unbind();
         vbox_matrixProperties.visibleProperty().unbind();
         label_time.textProperty().unbind();
+        button_prevTurn.disableProperty().unbind();
 
         if (battleLogic.getActiveBattle() != null) {
             //binds
@@ -510,7 +510,7 @@ public class ControllerMain {
             label_host_firewall.textProperty().bind(battleLogic.getActiveBattle().getHost().firewallProperty().asString());
             label_host_dataProcessing.textProperty().bind(battleLogic.getActiveBattle().getHost().dataProcessingProperty().asString());
             label_host_rating.textProperty().bind(battleLogic.getActiveBattle().getHost().ratingProperty().asString());
-            label_astral_backgroundCount.textProperty().bind(battleLogic.getActiveBattle().backgroundCountProperty().asString());
+            textField_backgroundCount.textProperty().bindBidirectional(battleLogic.getActiveBattle().backgroundCountProperty(), new NumberStringConverter());
             label_overwatchScore.textProperty().bind(battleLogic.getActiveBattle().getHost().overwatchScoreProperty().asString());
             vbox_matrixProperties.visibleProperty().bind(battleLogic.getActiveBattle().getHost().isInitalized());
             Bindings.bindBidirectional(label_time.textProperty(), battleLogic.getActiveBattle().iterationProperty(), new IterationTimeConverter());
@@ -520,6 +520,9 @@ public class ControllerMain {
                     tableView_masterTable.getSelectionModel().select(newValue);
                 }
             });
+
+            comboBox_weather.setItems(battleLogic.getActiveBattle().getWeatherList());
+            button_prevTurn.disableProperty().bind(battleLogic.getActiveBattle().iterationProperty().lessThan(1));
 
             //tab selection
             tabPane.getSelectionModel().select(tab_battle);
@@ -600,6 +603,7 @@ public class ControllerMain {
             if (oldValue != null) {
                 textField_selected_physical.textProperty().unbind();
                 textField_selected_stun.textProperty().unbind();
+                label_selectedCharacter.textProperty().unbind();
             }
 
             if (newValue == null) {
@@ -607,6 +611,7 @@ public class ControllerMain {
             } else {
                 textField_selected_physical.textProperty().bind(newValue.physicalMonitorProperty().asString());
                 textField_selected_stun.textProperty().bind(newValue.stunMonitorProperty().asString());
+                label_selectedCharacter.textProperty().bind(newValue.nameProperty());
                 vbox_selected.setVisible(true);
             }
         });
@@ -672,10 +677,6 @@ public class ControllerMain {
             }
         });
 
-        checkMenuItem_astralPlane.selectedProperty().bindBidirectional(appLogic.showAstralPlaneProperty());
-        checkMenuItem_matrix.selectedProperty().bindBidirectional(appLogic.showMatrixProperty());
-        checkMenuItem_realWorld.selectedProperty().bindBidirectional(appLogic.showRealWorldProperty());
-
         appLogic.showRealWorldProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 vbox_realWorld.setVisible(newValue);
@@ -691,6 +692,9 @@ public class ControllerMain {
                 vbox_matrix.setVisible(newValue);
             }
         });
+
+        comboBox_weather.setCellFactory(new WeatherCellFactory());
+        comboBox_weather.setButtonCell(new WeatherCell());
 
         loadRecentFiles();
     }

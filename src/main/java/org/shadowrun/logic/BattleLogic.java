@@ -63,4 +63,17 @@ public class BattleLogic {
         getActiveBattle().refreshTurn();
         currentCharacterName.setValue(getActiveBattle().currentCharacterProperty().get().getName());
     }
+
+    public void raiseOverwatchScore() {
+        getActiveBattle().getHost().overwatchScoreProperty().setValue(getActiveBattle().getHost().getOverwatchScore() + 1);
+    }
+
+    public void decreaseOverwatchScore() {
+        if (getActiveBattle().getHost().getOverwatchScore() > 0)
+            getActiveBattle().getHost().overwatchScoreProperty().setValue(getActiveBattle().getHost().getOverwatchScore() - 1);
+    }
+
+    public void resetOverwatchScoore() {
+        getActiveBattle().getHost().overwatchScoreProperty().setValue(0);
+    }
 }

@@ -7,6 +7,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.shadowrun.common.constants.ICE;
+import org.shadowrun.common.constants.Weather;
 import org.shadowrun.common.constants.World;
 import org.shadowrun.common.exceptions.NextIterationException;
 import org.slf4j.Logger;
@@ -37,6 +38,8 @@ public class Battle {
 
     private ObjectProperty<Character> currentCharacter;
 
+    private ObservableList<Weather> weatherList;
+
     private static final Function<PlayerCharacter, Character> player2Character =
             playerCharacter -> new Character(playerCharacter.getName(), 0, World.REAL);
 
@@ -48,6 +51,7 @@ public class Battle {
         combatTurn = new SimpleIntegerProperty(0);
         characters = FXCollections.observableArrayList(players.stream()
                 .map(player2Character).collect(Collectors.toList()));
+        weatherList = FXCollections.observableArrayList(Weather.values());
         currentCharacter = new SimpleObjectProperty<>(characters.stream()
                 .max(Comparator.comparingInt(Character::getInitiative)).get());
         host = new SimpleObjectProperty<>(new Host());
@@ -108,6 +112,10 @@ public class Battle {
     public List<Character> getCombatTurnCharacters() {
         return characters.stream().filter(character -> character.getInitiative() >= iteration.get() * 10)
                 .sorted(Comparator.comparingInt(Character::getInitiative).reversed()).collect(Collectors.toList());
+    }
+
+    public ObservableList<Weather> getWeatherList() {
+        return weatherList;
     }
 
     public void updateCurrentCharacter() {
