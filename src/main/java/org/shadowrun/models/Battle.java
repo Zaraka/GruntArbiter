@@ -155,7 +155,7 @@ public class Battle {
         if (getActionPhase() > combatCharacters.size()) {
             actionPhase.setValue(1);
             initiativePass.setValue(getInitiativePass() + 1);
-            if (getInitiativePass() > passLimit() + 1) {
+            if (getInitiativePass() > passLimit()) {
                 initiativePass.setValue(1);
                 combatTurn.setValue(getCombatTurn() + 1);
                 throw new NextTurnException();

@@ -21,7 +21,7 @@ public class IterationTimeConverter extends StringConverter<Number> {
         if (object == null) {
             stringBuilder.append("00:00:00");
         } else {
-            int current = startingTime + object.intValue() * 3;
+            int current = startingTime + (object.intValue() - 1) * 3;
             stringBuilder.append(String.format("%02d", current / 3600));
             stringBuilder.append(":");
             current %= 3600;
