@@ -25,7 +25,7 @@ import org.shadowrun.common.WeatherCell;
 import org.shadowrun.common.constants.ICE;
 import org.shadowrun.common.constants.Weather;
 import org.shadowrun.common.constants.World;
-import org.shadowrun.common.exceptions.NextIterationException;
+import org.shadowrun.common.exceptions.NextTurnException;
 import org.shadowrun.common.factories.ExceptionDialogFactory;
 import org.shadowrun.common.factories.InitiativeDialogFactory;
 import org.shadowrun.common.factories.WeatherCellFactory;
@@ -122,9 +122,11 @@ public class ControllerMain {
 
 
     @FXML
-    private Label label_iterationCounter;
+    private Label label_combatTurnCounter;
     @FXML
-    private Label label_combatTurnsCounter;
+    private Label label_intiativePassCounter;
+    @FXML
+    private Label label_actionPhaseCounter;
     @FXML
     private Label label_currentCharacter;
 
@@ -374,10 +376,10 @@ public class ControllerMain {
     @FXML
     private void nextTurnOnAction() {
         try {
-            battleLogic.nextTurn();
-        } catch (NextIterationException e) {
+            battleLogic.nextPhase();
+        } catch (NextTurnException e) {
             setNewInitiative();
-            battleLogic.refreshTurn();
+            battleLogic.refreshPhase();
         }
         tableView_masterTable.refresh();
     }
@@ -385,10 +387,10 @@ public class ControllerMain {
     @FXML
     private void prevTurnOnAction() {
         try {
-            battleLogic.prevTurn();
-        } catch (NextIterationException e) {
+            battleLogic.prevPhase();
+        } catch (NextTurnException e) {
             setNewInitiative();
-            battleLogic.refreshTurn();
+            battleLogic.refreshPhase();
         }
         tableView_masterTable.refresh();
     }
@@ -486,8 +488,9 @@ public class ControllerMain {
         tableView_masterTable.setItems(battleLogic.getActiveBattle().getCharacters());
 
         //unbinds
-        label_iterationCounter.textProperty().unbind();
-        label_combatTurnsCounter.textProperty().unbind();
+        label_combatTurnCounter.textProperty().unbind();
+        label_intiativePassCounter.textProperty().unbind();
+        label_actionPhaseCounter.textProperty().unbind();
         label_currentCharacter.textProperty().unbind();
         label_host_attack.textProperty().unbind();
         label_host_sleeze.textProperty().unbind();
@@ -502,8 +505,9 @@ public class ControllerMain {
 
         if (battleLogic.getActiveBattle() != null) {
             //binds
-            label_iterationCounter.textProperty().bind(battleLogic.getActiveBattle().iterationProperty().asString());
-            label_combatTurnsCounter.textProperty().bind(battleLogic.getActiveBattle().combatTurnProperty().asString());
+            label_combatTurnCounter.textProperty().bind(battleLogic.getActiveBattle().combatTurnProperty().asString());
+            label_intiativePassCounter.textProperty().bind(battleLogic.getActiveBattle().initiativePassProperty().asString());
+            label_actionPhaseCounter.textProperty().bind(battleLogic.getActiveBattle().actionPhaseProperty().asString());
             label_currentCharacter.textProperty().bind(battleLogic.currentCharacterNameProperty());
             label_host_attack.textProperty().bind(battleLogic.getActiveBattle().getHost().attackProperty().asString());
             label_host_sleeze.textProperty().bind(battleLogic.getActiveBattle().getHost().sleezeProperty().asString());
@@ -513,7 +517,7 @@ public class ControllerMain {
             textField_backgroundCount.textProperty().bindBidirectional(battleLogic.getActiveBattle().backgroundCountProperty(), new NumberStringConverter());
             label_overwatchScore.textProperty().bind(battleLogic.getActiveBattle().getHost().overwatchScoreProperty().asString());
             vbox_matrixProperties.visibleProperty().bind(battleLogic.getActiveBattle().getHost().isInitalized());
-            Bindings.bindBidirectional(label_time.textProperty(), battleLogic.getActiveBattle().iterationProperty(), new IterationTimeConverter());
+            Bindings.bindBidirectional(label_time.textProperty(), battleLogic.getActiveBattle().combatTurnProperty(), new IterationTimeConverter());
 
             battleLogic.getActiveBattle().currentCharacterProperty().addListener((observable, oldValue, newValue) -> {
                 if(newValue != null) {
@@ -522,7 +526,10 @@ public class ControllerMain {
             });
 
             comboBox_weather.setItems(battleLogic.getActiveBattle().getWeatherList());
-            button_prevTurn.disableProperty().bind(battleLogic.getActiveBattle().iterationProperty().lessThan(1));
+            button_prevTurn.disableProperty()
+                    .bind(battleLogic.getActiveBattle().actionPhaseProperty().greaterThan(1)
+                            .or(battleLogic.getActiveBattle().initiativePassProperty().greaterThan(1)
+                                    .or(battleLogic.getActiveBattle().combatTurnProperty().greaterThan(1))));
 
             //tab selection
             tabPane.getSelectionModel().select(tab_battle);

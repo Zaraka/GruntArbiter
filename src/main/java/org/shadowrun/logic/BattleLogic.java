@@ -5,7 +5,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import org.shadowrun.common.exceptions.NextIterationException;
+import org.shadowrun.common.exceptions.NextTurnException;
 import org.shadowrun.models.Battle;
 import org.shadowrun.models.PlayerCharacter;
 import org.slf4j.Logger;
@@ -49,18 +49,18 @@ public class BattleLogic {
         activeBattle.setValue(new Battle(playerCharacters));
     }
 
-    public void nextTurn() throws NextIterationException {
-        getActiveBattle().nextTurn();
+    public void nextPhase() throws NextTurnException {
+        getActiveBattle().nextPhase();
         currentCharacterName.setValue(getActiveBattle().currentCharacterProperty().get().getName());
     }
 
-    public void prevTurn() throws NextIterationException {
-        getActiveBattle().previousTurn();
+    public void prevPhase() throws NextTurnException {
+        getActiveBattle().previousPhase();
         currentCharacterName.setValue(getActiveBattle().currentCharacterProperty().get().getName());
     }
 
-    public void refreshTurn() {
-        getActiveBattle().refreshTurn();
+    public void refreshPhase() {
+        getActiveBattle().refreshPhase();
         currentCharacterName.setValue(getActiveBattle().currentCharacterProperty().get().getName());
     }
 

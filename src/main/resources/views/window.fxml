@@ -125,27 +125,38 @@
                                                     </tooltip>
                                                 </Button>
                                                 <Separator prefWidth="5.0" />
-                                                <Label text="Iteration">
-                                                    <font>
-                                                        <Font name="System Bold" size="18.0" />
-                                                    </font>
-                                                </Label>
-                                                <Label fx:id="label_iterationCounter" text="0">
-                                                    <font>
-                                                        <Font name="System Bold" size="18.0" />
-                                                    </font>
-                                                </Label>
-                                                <Separator prefWidth="5.0" />
                                                 <Label text="Combat turn">
                                                     <font>
                                                         <Font name="System Bold" size="18.0" />
                                                     </font>
                                                 </Label>
-                                                <Label fx:id="label_combatTurnsCounter" text="0">
+                                                <Label fx:id="label_combatTurnCounter" text="0">
                                                     <font>
                                                         <Font name="System Bold" size="18.0" />
                                                     </font>
                                                 </Label>
+                                                <Separator prefWidth="5.0" />
+                                                <Label text="Initative pass">
+                                                    <font>
+                                                        <Font name="System Bold" size="18.0" />
+                                                    </font>
+                                                </Label>
+                                                <Label fx:id="label_intiativePassCounter" text="0">
+                                                    <font>
+                                                        <Font name="System Bold" size="18.0" />
+                                                    </font>
+                                                </Label>
+                                    <Separator prefWidth="5.0" />
+                                    <Label text="Action phase">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="label_actionPhaseCounter" text="0">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                    </Label>
                                                 <Separator prefWidth="25.0" />
                                                 <Label text="Current ">
                                                     <font>
@@ -246,7 +257,7 @@
                                                                 </VBox>
                                                                 <VBox>
                                                                     <children>
-                                                                        <TitledPane animated="false" text="Real world">
+                                                                        <TitledPane animated="false" text="Meatspace">
                                                                             <content>
                                                                                 <AnchorPane>
                                                                                     <children>
