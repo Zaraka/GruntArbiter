@@ -349,7 +349,7 @@ public class ControllerMain {
             controllerNewBattle.onOpen(dialog, appLogic.getActiveCampaign().getPlayers());
             dialog.showAndWait();
             controllerNewBattle.getIncludedPlayers().ifPresent(playerCharacters -> {
-                battleLogic.createNewBattle(playerCharacters);
+                battleLogic.createNewBattle(playerCharacters, controllerNewBattle.getWeather(), controllerNewBattle.getTime());
                 setNewInitiative();
                 addBattleHooks();
             });
@@ -502,6 +502,7 @@ public class ControllerMain {
         vbox_matrixProperties.visibleProperty().unbind();
         label_time.textProperty().unbind();
         button_prevTurn.disableProperty().unbind();
+        comboBox_weather.valueProperty().unbind();
 
         if (battleLogic.getActiveBattle() != null) {
             //binds
@@ -517,7 +518,7 @@ public class ControllerMain {
             textField_backgroundCount.textProperty().bindBidirectional(battleLogic.getActiveBattle().backgroundCountProperty(), new NumberStringConverter());
             label_overwatchScore.textProperty().bind(battleLogic.getActiveBattle().getHost().overwatchScoreProperty().asString());
             vbox_matrixProperties.visibleProperty().bind(battleLogic.getActiveBattle().getHost().isInitalized());
-            Bindings.bindBidirectional(label_time.textProperty(), battleLogic.getActiveBattle().combatTurnProperty(), new IterationTimeConverter());
+            Bindings.bindBidirectional(label_time.textProperty(), battleLogic.getActiveBattle().combatTurnProperty(), new IterationTimeConverter(battleLogic.getActiveBattle().getTime()));
 
             battleLogic.getActiveBattle().currentCharacterProperty().addListener((observable, oldValue, newValue) -> {
                 if(newValue != null) {
@@ -525,7 +526,8 @@ public class ControllerMain {
                 }
             });
 
-            comboBox_weather.setItems(battleLogic.getActiveBattle().getWeatherList());
+            comboBox_weather.valueProperty().bindBidirectional(battleLogic.getActiveBattle().selectedWeatherProperty());
+
             button_prevTurn.disableProperty()
                     .bind(battleLogic.getActiveBattle().actionPhaseProperty().greaterThan(1)
                             .or(battleLogic.getActiveBattle().initiativePassProperty().greaterThan(1)
@@ -700,6 +702,7 @@ public class ControllerMain {
             }
         });
 
+        comboBox_weather.setItems(FXCollections.observableArrayList(Weather.values()));
         comboBox_weather.setCellFactory(new WeatherCellFactory());
         comboBox_weather.setButtonCell(new WeatherCell());
 

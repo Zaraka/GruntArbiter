@@ -36,25 +36,26 @@ public class Battle {
 
     private IntegerProperty actionPhase;
 
+    private IntegerProperty time;
+
     private ObservableList<Character> characters;
 
     private ObjectProperty<Character> currentCharacter;
 
-    private ObservableList<Weather> weatherList;
+    private ObjectProperty<Weather> selectedWeather;
 
     private static final Function<PlayerCharacter, Character> player2Character =
             playerCharacter -> new Character(playerCharacter.getName(), 0, World.REAL);
 
     private static final Pattern UUID_GROUP_PATTERN = Pattern.compile(".*-(.*)-.*");
 
-    public Battle(List<PlayerCharacter> players) {
+    public Battle(List<PlayerCharacter> players, Weather weather, Integer startingTime) {
         backgroundCount = new SimpleIntegerProperty(0);
         combatTurn = new SimpleIntegerProperty(1);
         initiativePass = new SimpleIntegerProperty(1);
         actionPhase = new SimpleIntegerProperty(1);
         characters = FXCollections.observableArrayList(players.stream()
                 .map(player2Character).collect(Collectors.toList()));
-        weatherList = FXCollections.observableArrayList(Weather.values());
         currentCharacter = new SimpleObjectProperty<>(characters.stream()
                 .max(Comparator.comparingInt(Character::getInitiative)).get());
         host = new SimpleObjectProperty<>(new Host());
@@ -66,6 +67,8 @@ public class Battle {
                 newValue.setSelected(true);
             }
         });
+        selectedWeather = new SimpleObjectProperty<>(weather);
+        time = new SimpleIntegerProperty(startingTime);
     }
 
     public Host getHost() {
@@ -125,8 +128,20 @@ public class Battle {
         return actionPhase;
     }
 
-    public ObservableList<Weather> getWeatherList() {
-        return weatherList;
+    public Weather getSelectedWeather() {
+        return selectedWeather.get();
+    }
+
+    public ObjectProperty<Weather> selectedWeatherProperty() {
+        return selectedWeather;
+    }
+
+    public int getTime() {
+        return time.get();
+    }
+
+    public IntegerProperty timeProperty() {
+        return time;
     }
 
     public void updateCurrentCharacter() {
@@ -140,7 +155,7 @@ public class Battle {
         if (getActionPhase() > combatCharacters.size()) {
             actionPhase.setValue(1);
             initiativePass.setValue(getInitiativePass() + 1);
-            if(getInitiativePass() > passLimit() + 1) {
+            if (getInitiativePass() > passLimit() + 1) {
                 initiativePass.setValue(1);
                 combatTurn.setValue(getCombatTurn() + 1);
                 throw new NextTurnException();
@@ -158,7 +173,7 @@ public class Battle {
     public void previousPhase() throws NextTurnException {
         if (combatTurn.get() > 1) {
             actionPhase.setValue(getActionPhase() - 1);
-            if(getActionPhase() > 1) {
+            if (getActionPhase() > 1) {
                 actionPhase.setValue(1);
                 initiativePass.setValue(getInitiativePass() - 1);
                 if (getInitiativePass() > 1) {
@@ -172,7 +187,7 @@ public class Battle {
 
     public void refreshPhase() {
         List<Character> combatCharactersFinal = getCombatTurnCharacters();
-        if(!combatCharactersFinal.isEmpty())
+        if (!combatCharactersFinal.isEmpty())
             currentCharacter.setValue(combatCharactersFinal.get(getActionPhase() - 1));
     }
 

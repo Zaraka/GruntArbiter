@@ -7,15 +7,28 @@ import java.util.List;
 
 public class IterationTimeConverter extends StringConverter<Number> {
 
+    private Integer startingTime;
+
+    public IterationTimeConverter(Integer startingTime) {
+        super();
+
+        this.startingTime = startingTime;
+    }
+
     @Override
     public String toString(Number object) {
         StringBuilder stringBuilder = new StringBuilder();
-        if(object == null) {
-            stringBuilder.append("00:00");
+        if (object == null) {
+            stringBuilder.append("00:00:00");
         } else {
-            stringBuilder.append(object.intValue() * 5 / 60);
+            int current = startingTime + object.intValue() * 3;
+            stringBuilder.append(String.format("%02d", current / 3600));
             stringBuilder.append(":");
-            stringBuilder.append(object.intValue() * 5 % 60);
+            current %= 3600;
+            stringBuilder.append(String.format("%02d", current / 60));
+            stringBuilder.append(":");
+            current %= 60;
+            stringBuilder.append(String.format("%02d", current));
         }
         return stringBuilder.toString();
     }
@@ -23,10 +36,13 @@ public class IterationTimeConverter extends StringConverter<Number> {
     @Override
     public Integer fromString(String string) {
         List<String> parts = Arrays.asList(string.trim().split(":"));
-        if(parts.isEmpty() || parts.size() < 2) {
+        if (parts.isEmpty() || parts.size() < 3) {
             return 0;
         } else {
-            return Integer.parseInt(parts.get(0)) * 12 + Integer.parseInt(parts.get(1)) / 5;
+            return ((
+                    Integer.parseInt(parts.get(0)) * 3600 +
+                            Integer.parseInt(parts.get(1)) * 60 +
+                            Integer.parseInt(parts.get(2))) - startingTime) / 3;
         }
     }
 }

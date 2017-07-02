@@ -5,6 +5,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import org.shadowrun.common.constants.Weather;
 import org.shadowrun.common.exceptions.NextTurnException;
 import org.shadowrun.models.Battle;
 import org.shadowrun.models.PlayerCharacter;
@@ -45,8 +46,8 @@ public class BattleLogic {
         return activeBattle;
     }
 
-    public void createNewBattle(List<PlayerCharacter> playerCharacters) {
-        activeBattle.setValue(new Battle(playerCharacters));
+    public void createNewBattle(List<PlayerCharacter> playerCharacters, Weather weather, Integer time) {
+        activeBattle.setValue(new Battle(playerCharacters, weather, time));
     }
 
     public void nextPhase() throws NextTurnException {
