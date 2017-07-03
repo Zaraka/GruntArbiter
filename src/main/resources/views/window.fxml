@@ -425,7 +425,8 @@
                                                                 <TableView id="tableView_turnTable" fx:id="tableView_masterTable" minWidth="250.0" prefHeight="200.0" prefWidth="250.0" VBox.vgrow="ALWAYS">
                                                                     <columns>
                                                                         <TableColumn fx:id="tableColumn_masterTable_character" prefWidth="145.0" sortable="false" text="Character" />
-                                                                        <TableColumn fx:id="tableColumn_masterTable_initiative" maxWidth="90.0" minWidth="90.0" prefWidth="90.0" resizable="false" sortType="DESCENDING" text="Initiative" />
+                                                      <TableColumn fx:id="tableColumn_masterTable_condition" editable="false" prefWidth="101.0" sortable="false" text="Condition" />
+                                                                        <TableColumn fx:id="tableColumn_masterTable_initiative" maxWidth="91.0" minWidth="51.0" prefWidth="90.0" resizable="false" sortType="DESCENDING" text="Initiative" />
                                                                         <TableColumn fx:id="tableColumn_masterTable_turn1" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" resizable="false" sortable="false" text="1" />
                                                                         <TableColumn fx:id="tableColumn_masterTable_turn2" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" resizable="false" sortable="false" text="2" />
                                                                         <TableColumn fx:id="tableColumn_masterTable_turn3" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" resizable="false" sortable="false" text="3" />

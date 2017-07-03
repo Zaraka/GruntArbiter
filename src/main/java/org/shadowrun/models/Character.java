@@ -13,7 +13,7 @@ public class Character {
 
     private BooleanProperty npc;
 
-    private BooleanProperty selected;
+    private BooleanProperty ice;
 
     private IntegerProperty physicalMonitor;    //or Matrix or whatever
 
@@ -30,19 +30,19 @@ public class Character {
         this.initiative = new SimpleIntegerProperty(initiative);
         this.world = new SimpleObjectProperty<>(world);
         this.npc = new SimpleBooleanProperty(false);
-        this.selected = new SimpleBooleanProperty(false);
+        this.ice = new SimpleBooleanProperty(false);
         this.physicalMonitor = new SimpleIntegerProperty(0);
         this.stunMonitor = new SimpleIntegerProperty(0);
     }
 
-    public Character(String name, int initiative, World world, boolean npc, int monitor) {
+    public Character(String name, int initiative, World world, boolean npc, boolean ice, int monitor) {
         this.name = new SimpleStringProperty(name);
         this.initiative = new SimpleIntegerProperty(initiative);
         this.world = new SimpleObjectProperty<>(world);
         this.npc = new SimpleBooleanProperty(npc);
-        this.selected = new SimpleBooleanProperty(false);
+        this.ice = new SimpleBooleanProperty(ice);
         this.physicalMonitor = new SimpleIntegerProperty(monitor);
-        this.stunMonitor = new SimpleIntegerProperty(monitor);
+        this.stunMonitor = new SimpleIntegerProperty((ice) ? 0 : monitor);
     }
 
 
@@ -90,22 +90,6 @@ public class Character {
         return npc;
     }
 
-    public boolean isSelected() {
-        return selected.get();
-    }
-
-    public BooleanProperty selectedProperty() {
-        return selected;
-    }
-
-    public void setNpc(boolean npc) {
-        this.npc.set(npc);
-    }
-
-    public void setSelected(boolean selected) {
-        this.selected.set(selected);
-    }
-
     public int countTurn(int turn) {
         return initiative.get() - (turn - 1) * 10;
     }
@@ -125,4 +109,14 @@ public class Character {
     public IntegerProperty stunMonitorProperty() {
         return stunMonitor;
     }
+
+    public boolean isIce() {
+        return ice.get();
+    }
+
+    public BooleanProperty iceProperty() {
+        return ice;
+    }
+
+
 }

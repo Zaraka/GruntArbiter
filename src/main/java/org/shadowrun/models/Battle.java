@@ -59,14 +59,6 @@ public class Battle {
         currentCharacter = new SimpleObjectProperty<>(characters.stream()
                 .max(Comparator.comparingInt(Character::getInitiative)).get());
         host = new SimpleObjectProperty<>(new Host());
-        currentCharacterProperty().addListener((observable, oldValue, newValue) -> {
-            if (oldValue != null) {
-                oldValue.setSelected(false);
-            }
-            if (newValue != null) {
-                newValue.setSelected(true);
-            }
-        });
         selectedWeather = new SimpleObjectProperty<>(weather);
         time = new SimpleIntegerProperty(startingTime);
     }
@@ -203,6 +195,7 @@ public class Battle {
         Character ic = new Character(iceName.toString(),
                 initiative,
                 World.MATRIX,
+                true,
                 true,
                 getHost().getRating() / 2 + 8);
         characters.add(ic);

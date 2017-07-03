@@ -1,7 +1,9 @@
 package org.shadowrun.controllers;
 
 import javafx.application.Platform;
+import javafx.beans.binding.Binding;
 import javafx.beans.binding.Bindings;
+import javafx.beans.binding.StringBinding;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -39,6 +41,7 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -58,6 +61,8 @@ public class ControllerMain {
     private TableView<Character> tableView_masterTable;
     @FXML
     private TableColumn<Character, String> tableColumn_masterTable_character;
+    @FXML
+    private TableColumn<Character, String> tableColumn_masterTable_condition;
     @FXML
     private TableColumn<Character, Integer> tableColumn_masterTable_initiative;
     @FXML
@@ -521,7 +526,7 @@ public class ControllerMain {
             Bindings.bindBidirectional(label_time.textProperty(), battleLogic.getActiveBattle().combatTurnProperty(), new IterationTimeConverter(battleLogic.getActiveBattle().getTime()));
 
             battleLogic.getActiveBattle().currentCharacterProperty().addListener((observable, oldValue, newValue) -> {
-                if(newValue != null) {
+                if (newValue != null) {
                     tableView_masterTable.getSelectionModel().select(newValue);
                 }
             });
@@ -572,6 +577,10 @@ public class ControllerMain {
         tableView_playerCharacters.setContextMenu(new ContextMenu(renamePlayer, deletePlayer));
 
         tableColumn_masterTable_character.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
+        tableColumn_masterTable_condition.setCellValueFactory(cellData -> Bindings.createStringBinding(
+                () -> MessageFormat.format("{0}/{1}", cellData.getValue().getPhysicalMonitor(), cellData.getValue().getStunMonitor()),
+                cellData.getValue().physicalMonitorProperty(),
+                cellData.getValue().stunMonitorProperty()));
         tableColumn_masterTable_initiative.setCellValueFactory(cellData -> cellData.getValue().initiativeProperty().asObject());
         tableColumn_masterTable_turn1.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue().countTurn(1)));
         tableColumn_masterTable_turn1.setCellFactory(param -> new TurnTableCell<Character, Integer>());
@@ -625,11 +634,11 @@ public class ControllerMain {
             }
         });
 
-        MenuItem moveToRealWorld = new MenuItem("Move to real world");
+        MenuItem moveToRealWorld = new MenuItem("Move to meatspace");
         moveToRealWorld.setOnAction(event -> tableView_masterTable.getSelectionModel().getSelectedItem().setWorld(World.REAL));
-        MenuItem moveToAstralPlane = new MenuItem("Move to astral plane");
+        MenuItem moveToAstralPlane = new MenuItem("Move to astral world");
         moveToAstralPlane.setOnAction(event -> tableView_masterTable.getSelectionModel().getSelectedItem().setWorld(World.ASTRAL));
-        MenuItem moveToMatrixSpace = new MenuItem("Move to matrix space");
+        MenuItem moveToMatrixSpace = new MenuItem("Move to matrix");
         moveToMatrixSpace.setOnAction(event -> tableView_masterTable.getSelectionModel().getSelectedItem().setWorld(World.MATRIX));
         SeparatorMenuItem separatorMenuItem = new SeparatorMenuItem();
         MenuItem setInitiative = new MenuItem("Set initiative");
@@ -658,13 +667,13 @@ public class ControllerMain {
                 removeCharacter));
 
         textField_selected_physical.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("\\d*")) {
+            if (!newValue.matches("-?\\d*")) {
                 textField_selected_physical.setText(newValue.replaceAll("[^\\d]", ""));
             }
         });
 
         textField_selected_stun.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("\\d*")) {
+            if (!newValue.matches("-?\\d*")) {
                 textField_selected_stun.setText(newValue.replaceAll("[^\\d]", ""));
             }
         });
