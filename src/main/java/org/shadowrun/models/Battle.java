@@ -6,7 +6,6 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import org.shadowrun.common.constants.ICE;
 import org.shadowrun.common.constants.Weather;
 import org.shadowrun.common.constants.World;
 import org.shadowrun.common.exceptions.NextTurnException;
@@ -16,15 +15,15 @@ import org.slf4j.LoggerFactory;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 import java.util.function.Function;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class Battle {
 
     private static final Logger LOG = LoggerFactory.getLogger(Battle.class);
+
+    private static final Function<PlayerCharacter, Character> player2Character =
+            playerCharacter -> new Character(playerCharacter.getName(), 0, World.REAL);
 
     private ObjectProperty<Host> host;
 
@@ -43,11 +42,6 @@ public class Battle {
     private ObjectProperty<Character> currentCharacter;
 
     private ObjectProperty<Weather> selectedWeather;
-
-    private static final Function<PlayerCharacter, Character> player2Character =
-            playerCharacter -> new Character(playerCharacter.getName(), 0, World.REAL);
-
-    private static final Pattern UUID_GROUP_PATTERN = Pattern.compile(".*-(.*)-.*");
 
     public Battle(List<PlayerCharacter> players, Weather weather, Integer startingTime) {
         backgroundCount = new SimpleIntegerProperty(0);
@@ -181,23 +175,5 @@ public class Battle {
         List<Character> combatCharactersFinal = getCombatTurnCharacters();
         if (!combatCharactersFinal.isEmpty())
             currentCharacter.setValue(combatCharactersFinal.get(getActionPhase() - 1));
-    }
-
-    public void spawnICe(ICE ice, Integer initiative) {
-        String UUIDs = UUID.randomUUID().toString();
-        Matcher matcher = UUID_GROUP_PATTERN.matcher(UUIDs);
-        StringBuilder iceName = new StringBuilder();
-        iceName.append(ice.getName());
-        if (matcher.matches()) {
-            iceName.append(" ");
-            iceName.append(matcher.group(1));
-        }
-        Character ic = new Character(iceName.toString(),
-                initiative,
-                World.MATRIX,
-                true,
-                true,
-                getHost().getRating() / 2 + 8);
-        characters.add(ic);
     }
 }

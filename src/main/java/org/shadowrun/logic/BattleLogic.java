@@ -5,17 +5,25 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import org.shadowrun.common.constants.ICE;
 import org.shadowrun.common.constants.Weather;
+import org.shadowrun.common.constants.World;
 import org.shadowrun.common.exceptions.NextTurnException;
 import org.shadowrun.models.Battle;
+import org.shadowrun.models.Character;
 import org.shadowrun.models.PlayerCharacter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class BattleLogic {
     private static final Logger LOG = LoggerFactory.getLogger(BattleLogic.class);
+
+    private static final Pattern UUID_GROUP_PATTERN = Pattern.compile(".*-(.*)-.*");
 
     private ObjectProperty<Battle> activeBattle;
 
@@ -76,5 +84,23 @@ public class BattleLogic {
 
     public void resetOverwatchScoore() {
         getActiveBattle().getHost().overwatchScoreProperty().setValue(0);
+    }
+
+    public void spawnICe(ICE ice, Integer initiative) {
+        String UUIDs = UUID.randomUUID().toString();
+        Matcher matcher = UUID_GROUP_PATTERN.matcher(UUIDs);
+        StringBuilder iceName = new StringBuilder();
+        iceName.append(ice.getName());
+        if (matcher.matches()) {
+            iceName.append(" ");
+            iceName.append(matcher.group(1));
+        }
+        Character ic = new Character(iceName.toString(),
+                initiative,
+                World.MATRIX,
+                true,
+                true,
+                getActiveBattle().getHost().getRating() / 2 + 8);
+        getActiveBattle().getCharacters().add(ic);
     }
 }

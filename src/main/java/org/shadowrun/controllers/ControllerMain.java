@@ -1,9 +1,7 @@
 package org.shadowrun.controllers;
 
 import javafx.application.Platform;
-import javafx.beans.binding.Binding;
 import javafx.beans.binding.Bindings;
-import javafx.beans.binding.StringBinding;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -241,7 +239,7 @@ public class ControllerMain {
         result.ifPresent(res -> {
             ICE ice = ICE.fromName(res.getKey().replaceAll("\\s+", "").toUpperCase());
             Integer initiativeInt = Integer.parseInt(res.getValue());
-            battleLogic.getActiveBattle().spawnICe(ice, initiativeInt);
+            battleLogic.spawnICe(ice, initiativeInt);
             tableView_masterTable.refresh();
         });
     }
@@ -614,6 +612,8 @@ public class ControllerMain {
                             setStyle("-fx-control-inner-background: springgreen;");
                             break;
                     }
+                } else {
+                    setStyle(null);
                 }
             }
         });
@@ -635,11 +635,20 @@ public class ControllerMain {
         });
 
         MenuItem moveToRealWorld = new MenuItem("Move to meatspace");
-        moveToRealWorld.setOnAction(event -> tableView_masterTable.getSelectionModel().getSelectedItem().setWorld(World.REAL));
+        moveToRealWorld.setOnAction(event -> {
+            tableView_masterTable.getSelectionModel().getSelectedItem().setWorld(World.REAL);
+            tableView_masterTable.refresh();
+        });
         MenuItem moveToAstralPlane = new MenuItem("Move to astral world");
-        moveToAstralPlane.setOnAction(event -> tableView_masterTable.getSelectionModel().getSelectedItem().setWorld(World.ASTRAL));
+        moveToAstralPlane.setOnAction(event -> {
+            tableView_masterTable.getSelectionModel().getSelectedItem().setWorld(World.ASTRAL);
+            tableView_masterTable.refresh();
+        });
         MenuItem moveToMatrixSpace = new MenuItem("Move to matrix");
-        moveToMatrixSpace.setOnAction(event -> tableView_masterTable.getSelectionModel().getSelectedItem().setWorld(World.MATRIX));
+        moveToMatrixSpace.setOnAction(event -> {
+            tableView_masterTable.getSelectionModel().getSelectedItem().setWorld(World.MATRIX);
+            tableView_masterTable.refresh();
+        });
         SeparatorMenuItem separatorMenuItem = new SeparatorMenuItem();
         MenuItem setInitiative = new MenuItem("Set initiative");
         setInitiative.setOnAction(event -> {
