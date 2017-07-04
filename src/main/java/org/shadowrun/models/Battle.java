@@ -153,7 +153,8 @@ public class Battle {
 
     private int passLimit() {
         Optional<Character> ch = characters.stream().max(Comparator.comparingInt(Character::getInitiative));
-        return ch.map(character -> character.getInitiative() / 10).orElse(0);
+
+        return (int)Math.ceil((double)ch.map(Character::getInitiative).orElse(0) / 10);
     }
 
     public void previousPhase() throws NextTurnException {
