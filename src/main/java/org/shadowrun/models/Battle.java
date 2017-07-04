@@ -176,4 +176,8 @@ public class Battle {
         if (!combatCharactersFinal.isEmpty())
             currentCharacter.setValue(combatCharactersFinal.get(getActionPhase() - 1));
     }
+
+    public List<Character> getICe() {
+        return characters.stream().filter(character -> character.isNpc() && character.isIce()).collect(Collectors.toList());
+    }
 }

@@ -192,6 +192,17 @@ public class ControllerMain {
 
     @FXML
     private void addICeOnAction() {
+        if(battleLogic.getActiveBattle().getICe().size() >= battleLogic.getActiveBattle().getHost().getRating()){
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Too much ICe");
+            alert.setHeaderText("ICe number exceeds host rating");
+            alert.setContentText("Spawn another anyway?");
+            Optional<ButtonType> result = alert.showAndWait();
+            if (!result.isPresent() || result.get() != ButtonType.OK) {
+                return;
+            }
+        }
+
         Dialog<Pair<String, String>> dialog = new Dialog<>();
         dialog.setTitle("ICe");
         dialog.setHeaderText("Create new ICe");
