@@ -9,13 +9,16 @@ public class NumericLimitListener implements ChangeListener<String> {
 
     private TextField hooked;
 
-    private int limit;
+    private Integer min;
 
-    public NumericLimitListener(TextField hooked, int limit) {
+    private Integer max;
+
+    public NumericLimitListener(TextField hooked, Integer min, Integer max) {
         super();
 
         this.hooked = hooked;
-        this.limit = limit;
+        this.min = min;
+        this.max = max;
     }
 
     @Override
@@ -31,8 +34,10 @@ public class NumericLimitListener implements ChangeListener<String> {
             value = 0;
         }
 
-        if(value > limit) {
-            hooked.setText(String.valueOf(limit));
+        if(min != null && value < min) {
+            hooked.setText(String.valueOf(min));
+        } else if (max != null && value > max) {
+            hooked.setText(String.valueOf(max));
         }
     }
 }

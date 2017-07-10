@@ -97,9 +97,9 @@ public class ControllerNewBattle {
         tableColumn_character.setCellValueFactory(cellData -> cellData.getValue().getPlayerCharacter().nameProperty());
         tableColumn_include.setCellValueFactory(cellData -> cellData.getValue().checkedProperty());
 
-        textField_hours.textProperty().addListener(new NumericLimitListener(textField_hours, 23));
-        textField_minutes.textProperty().addListener(new NumericLimitListener(textField_minutes, 59));
-        textField_seconds.textProperty().addListener(new NumericLimitListener(textField_seconds, 59));
+        textField_hours.textProperty().addListener(new NumericLimitListener(textField_hours, 0,23));
+        textField_minutes.textProperty().addListener(new NumericLimitListener(textField_minutes, 0,59));
+        textField_seconds.textProperty().addListener(new NumericLimitListener(textField_seconds, 0,59));
 
         comboBox_weather.setCellFactory(param -> new WeatherCell());
         comboBox_weather.setButtonCell(new WeatherCell());
