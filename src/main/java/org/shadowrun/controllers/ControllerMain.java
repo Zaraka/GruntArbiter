@@ -20,15 +20,15 @@ import javafx.util.Pair;
 import javafx.util.converter.NumberStringConverter;
 import org.apache.commons.lang3.StringUtils;
 import org.shadowrun.common.IterationTimeConverter;
-import org.shadowrun.common.TurnTableCell;
-import org.shadowrun.common.WeatherCell;
+import org.shadowrun.common.cells.CharacterCell;
+import org.shadowrun.common.cells.TurnTableCell;
+import org.shadowrun.common.cells.WeatherCell;
 import org.shadowrun.common.constants.ICE;
 import org.shadowrun.common.constants.Weather;
 import org.shadowrun.common.constants.World;
 import org.shadowrun.common.exceptions.NextTurnException;
 import org.shadowrun.common.factories.ExceptionDialogFactory;
 import org.shadowrun.common.factories.InitiativeDialogFactory;
-import org.shadowrun.common.factories.WeatherCellFactory;
 import org.shadowrun.logic.AppLogic;
 import org.shadowrun.logic.BattleLogic;
 import org.shadowrun.models.Character;
@@ -58,7 +58,7 @@ public class ControllerMain {
     @FXML
     private TableView<Character> tableView_masterTable;
     @FXML
-    private TableColumn<Character, String> tableColumn_masterTable_character;
+    private TableColumn<Character, Character> tableColumn_masterTable_character;
     @FXML
     private TableColumn<Character, String> tableColumn_masterTable_condition;
     @FXML
@@ -585,26 +585,27 @@ public class ControllerMain {
         deletePlayer.setOnAction(event -> tableView_playerCharacters.getItems().remove(tableView_playerCharacters.getSelectionModel().getSelectedIndex()));
         tableView_playerCharacters.setContextMenu(new ContextMenu(renamePlayer, deletePlayer));
 
-        tableColumn_masterTable_character.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
+        tableColumn_masterTable_character.setCellFactory(param -> new CharacterCell());
+        tableColumn_masterTable_character.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
         tableColumn_masterTable_condition.setCellValueFactory(cellData -> Bindings.createStringBinding(
                 () -> MessageFormat.format("{0}/{1}", cellData.getValue().getPhysicalMonitor(), cellData.getValue().getStunMonitor()),
                 cellData.getValue().physicalMonitorProperty(),
                 cellData.getValue().stunMonitorProperty()));
         tableColumn_masterTable_initiative.setCellValueFactory(cellData -> cellData.getValue().initiativeProperty().asObject());
+        tableColumn_masterTable_turn1.setCellFactory(param -> new TurnTableCell());
+        tableColumn_masterTable_turn2.setCellFactory(param -> new TurnTableCell());
+        tableColumn_masterTable_turn3.setCellFactory(param -> new TurnTableCell());
+        tableColumn_masterTable_turn4.setCellFactory(param -> new TurnTableCell());
+        tableColumn_masterTable_turn5.setCellFactory(param -> new TurnTableCell());
+        tableColumn_masterTable_turn6.setCellFactory(param -> new TurnTableCell());
+        tableColumn_masterTable_turn7.setCellFactory(param -> new TurnTableCell());
         tableColumn_masterTable_turn1.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue().countTurn(1)));
-        tableColumn_masterTable_turn1.setCellFactory(param -> new TurnTableCell<Character, Integer>());
         tableColumn_masterTable_turn2.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue().countTurn(2)));
-        tableColumn_masterTable_turn2.setCellFactory(param -> new TurnTableCell<Character, Integer>());
         tableColumn_masterTable_turn3.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue().countTurn(3)));
-        tableColumn_masterTable_turn3.setCellFactory(param -> new TurnTableCell<Character, Integer>());
         tableColumn_masterTable_turn4.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue().countTurn(4)));
-        tableColumn_masterTable_turn4.setCellFactory(param -> new TurnTableCell<Character, Integer>());
         tableColumn_masterTable_turn5.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue().countTurn(5)));
-        tableColumn_masterTable_turn5.setCellFactory(param -> new TurnTableCell<Character, Integer>());
         tableColumn_masterTable_turn6.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue().countTurn(6)));
-        tableColumn_masterTable_turn6.setCellFactory(param -> new TurnTableCell<Character, Integer>());
         tableColumn_masterTable_turn7.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue().countTurn(7)));
-        tableColumn_masterTable_turn7.setCellFactory(param -> new TurnTableCell<Character, Integer>());
 
         tableView_masterTable.setRowFactory(param -> new TableRow<Character>() {
             @Override
@@ -732,7 +733,7 @@ public class ControllerMain {
         });
 
         comboBox_weather.setItems(FXCollections.observableArrayList(Weather.values()));
-        comboBox_weather.setCellFactory(new WeatherCellFactory());
+        comboBox_weather.setCellFactory(param -> new WeatherCell());
         comboBox_weather.setButtonCell(new WeatherCell());
 
         loadRecentFiles();

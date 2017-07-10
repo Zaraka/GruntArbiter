@@ -10,9 +10,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import org.shadowrun.common.NumericLimitListener;
-import org.shadowrun.common.WeatherCell;
+import org.shadowrun.common.cells.WeatherCell;
 import org.shadowrun.common.constants.Weather;
-import org.shadowrun.common.factories.WeatherCellFactory;
 import org.shadowrun.models.PlayerCharacter;
 
 import java.util.List;
@@ -102,7 +101,7 @@ public class ControllerNewBattle {
         textField_minutes.textProperty().addListener(new NumericLimitListener(textField_minutes, 59));
         textField_seconds.textProperty().addListener(new NumericLimitListener(textField_seconds, 59));
 
-        comboBox_weather.setCellFactory(new WeatherCellFactory());
+        comboBox_weather.setCellFactory(param -> new WeatherCell());
         comboBox_weather.setButtonCell(new WeatherCell());
         comboBox_weather.setItems(FXCollections.observableArrayList(Weather.values()));
 
