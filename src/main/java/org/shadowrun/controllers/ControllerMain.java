@@ -21,6 +21,7 @@ import javafx.util.converter.NumberStringConverter;
 import org.apache.commons.lang3.StringUtils;
 import org.shadowrun.common.IterationTimeConverter;
 import org.shadowrun.common.cells.CharacterCell;
+import org.shadowrun.common.cells.ObjectCell;
 import org.shadowrun.common.cells.TurnTableCell;
 import org.shadowrun.common.cells.WeatherCell;
 import org.shadowrun.common.constants.ICE;
@@ -32,6 +33,7 @@ import org.shadowrun.common.factories.InitiativeDialogFactory;
 import org.shadowrun.logic.AppLogic;
 import org.shadowrun.logic.BattleLogic;
 import org.shadowrun.models.Character;
+import org.shadowrun.models.Object;
 import org.shadowrun.models.PlayerCharacter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -82,6 +84,15 @@ public class ControllerMain {
     private TableView<PlayerCharacter> tableView_playerCharacters;
     @FXML
     private TableColumn<PlayerCharacter, String> tableColumn_playerCharacters_character;
+
+    @FXML
+    private TableView<Object> tableView_objects;
+    @FXML
+    private TableColumn<Object, Object> tableColumn_objects_object;
+    @FXML
+    private TableColumn<Object, Integer> tableColumn_objects_structure;
+    @FXML
+    private TableColumn<Object, Integer> tableColumn_objects_armor;
 
     @FXML
     private Menu menu_campaign;
@@ -488,6 +499,25 @@ public class ControllerMain {
         battleLogic.resetOverwatchScoore();
     }
 
+    @FXML
+    private void addObjectOnAction() {
+        Parent root;
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("views/addObject.fxml"));
+            root = loader.load();
+            Stage dialog = new Stage();
+            dialog.setTitle("Create new object");
+            dialog.setScene(new Scene(root));
+            ControllerAddObject controllerAddObject = loader.getController();
+            controllerAddObject.onOpen(dialog);
+            dialog.showAndWait();
+            controllerAddObject.getObject().ifPresent(object -> battleLogic.getActiveBattle().getObjects().add(object));
+
+        } catch (IOException ex) {
+            LOG.error("Could not load addObject dialog: ", ex);
+        }
+    }
+
     private void addCampaignHooks() {
         if (appLogic.getActiveCampaign() != null) {
             //Items
@@ -500,6 +530,7 @@ public class ControllerMain {
     private void addBattleHooks() {
         //Items
         tableView_masterTable.setItems(battleLogic.getActiveBattle().getCharacters());
+        tableView_objects.setItems(battleLogic.getActiveBattle().getObjects());
 
         //unbinds
         label_combatTurnCounter.textProperty().unbind();
@@ -702,6 +733,11 @@ public class ControllerMain {
                 vbox_selected.setVisible(true);
             }
         });
+
+        tableColumn_objects_object.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
+        tableColumn_objects_object.setCellFactory(param -> new ObjectCell());
+        tableColumn_objects_armor.setCellValueFactory(param -> param.getValue().armorProperty().asObject());
+        tableColumn_objects_structure.setCellValueFactory(param -> param.getValue().structureProperty().asObject());
 
         textField_selected_physical.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.matches("-?\\d*")) {

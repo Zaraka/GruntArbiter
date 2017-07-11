@@ -39,6 +39,8 @@ public class Battle {
 
     private ObservableList<Character> characters;
 
+    private ObservableList<Object> objects;
+
     private ObjectProperty<Character> currentCharacter;
 
     private ObjectProperty<Weather> selectedWeather;
@@ -50,6 +52,7 @@ public class Battle {
         actionPhase = new SimpleIntegerProperty(1);
         characters = FXCollections.observableArrayList(players.stream()
                 .map(player2Character).collect(Collectors.toList()));
+        objects = FXCollections.observableArrayList();
         currentCharacter = new SimpleObjectProperty<>(characters.stream()
                 .max(Comparator.comparingInt(Character::getInitiative)).get());
         host = new SimpleObjectProperty<>(new Host());
@@ -128,6 +131,10 @@ public class Battle {
 
     public IntegerProperty timeProperty() {
         return time;
+    }
+
+    public ObservableList<Object> getObjects() {
+        return objects;
     }
 
     public void updateCurrentCharacter() {

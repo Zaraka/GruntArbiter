@@ -263,7 +263,16 @@
                                                                                     <children>
                                                                                         <VBox fx:id="vbox_realWorld" prefHeight="67.0" prefWidth="278.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                                             <children>
-                                                                                                  <ComboBox fx:id="comboBox_weather" minWidth="200.0" />
+                                                                        <ToolBar prefHeight="40.0" prefWidth="200.0">
+                                                                           <items>
+                                                                                                        <ComboBox fx:id="comboBox_weather" minWidth="200.0" />
+                                                                           </items>
+                                                                        </ToolBar>
+                                                                        <ToolBar prefHeight="40.0" prefWidth="200.0">
+                                                                          <items>
+                                                                            <Button mnemonicParsing="false" onAction="#addObjectOnAction" text="Add object" />
+                                                                          </items>
+                                                                        </ToolBar>
                                                                                             </children>
                                                                                         </VBox>
                                                                                     </children>
@@ -420,24 +429,39 @@
                                                 </AnchorPane>
                                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                                                     <children>
-                                                        <VBox prefHeight="707.0" prefWidth="713.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                                            <children>
-                                                                <TableView id="tableView_turnTable" fx:id="tableView_masterTable" minWidth="250.0" prefHeight="200.0" prefWidth="250.0" VBox.vgrow="ALWAYS">
-                                                                    <columns>
-                                                                        <TableColumn fx:id="tableColumn_masterTable_character" prefWidth="145.0" sortable="false" text="Character" />
-                                                      <TableColumn fx:id="tableColumn_masterTable_condition" editable="false" prefWidth="101.0" sortable="false" text="Condition" />
-                                                                        <TableColumn fx:id="tableColumn_masterTable_initiative" maxWidth="91.0" minWidth="51.0" prefWidth="90.0" resizable="false" sortType="DESCENDING" text="Initiative" />
-                                                                        <TableColumn fx:id="tableColumn_masterTable_turn1" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" resizable="false" sortable="false" text="1" />
-                                                                        <TableColumn fx:id="tableColumn_masterTable_turn2" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" resizable="false" sortable="false" text="2" />
-                                                                        <TableColumn fx:id="tableColumn_masterTable_turn3" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" resizable="false" sortable="false" text="3" />
-                                                                        <TableColumn fx:id="tableColumn_masterTable_turn4" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" resizable="false" sortable="false" text="4" />
-                                                                        <TableColumn fx:id="tableColumn_masterTable_turn5" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" resizable="false" sortable="false" text="5" />
-                                                                        <TableColumn fx:id="tableColumn_masterTable_turn6" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" resizable="false" sortable="false" text="6" />
-                                                                        <TableColumn fx:id="tableColumn_masterTable_turn7" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" resizable="false" sortable="false" text="7" />
-                                                                    </columns>
-                                                                </TableView>
-                                                            </children>
-                                                        </VBox>
+                                          <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="664.0" prefWidth="734.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                            <items>
+                                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                                                   <children>
+                                                                      <TableView id="tableView_turnTable" fx:id="tableView_masterTable" minWidth="250.0" prefHeight="327.0" prefWidth="732.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                                          <columns>
+                                                                              <TableColumn fx:id="tableColumn_masterTable_character" prefWidth="145.0" sortable="false" text="Character" />
+                                                            <TableColumn fx:id="tableColumn_masterTable_condition" editable="false" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" sortable="false" text="Condition" />
+                                                                              <TableColumn fx:id="tableColumn_masterTable_initiative" maxWidth="91.0" minWidth="51.0" prefWidth="90.0" resizable="false" sortType="DESCENDING" text="Initiative" />
+                                                                              <TableColumn fx:id="tableColumn_masterTable_turn1" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" resizable="false" sortable="false" text="1" />
+                                                                              <TableColumn fx:id="tableColumn_masterTable_turn2" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" resizable="false" sortable="false" text="2" />
+                                                                              <TableColumn fx:id="tableColumn_masterTable_turn3" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" resizable="false" sortable="false" text="3" />
+                                                                              <TableColumn fx:id="tableColumn_masterTable_turn4" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" resizable="false" sortable="false" text="4" />
+                                                                              <TableColumn fx:id="tableColumn_masterTable_turn5" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" resizable="false" sortable="false" text="5" />
+                                                                              <TableColumn fx:id="tableColumn_masterTable_turn6" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" resizable="false" sortable="false" text="6" />
+                                                                              <TableColumn fx:id="tableColumn_masterTable_turn7" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" resizable="false" sortable="false" text="7" />
+                                                                          </columns>
+                                                                      </TableView>
+                                                   </children>
+                                                </AnchorPane>
+                                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                                                   <children>
+                                                      <TableView fx:id="tableView_objects" prefHeight="327.0" prefWidth="732.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                        <columns>
+                                                          <TableColumn fx:id="tableColumn_objects_object" prefWidth="150.0" text="Object" />
+                                                          <TableColumn fx:id="tableColumn_objects_structure" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" text="Structure" />
+                                                            <TableColumn fx:id="tableColumn_objects_armor" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" text="Armor" />
+                                                        </columns>
+                                                      </TableView>
+                                                   </children>
+                                                </AnchorPane>
+                                            </items>
+                                          </SplitPane>
                                                     </children>
                                                 </AnchorPane>
                                             </items>

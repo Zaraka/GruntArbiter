@@ -14,7 +14,7 @@ import java.util.Optional;
 
 public class ControllerAddCharacter {
 
-    private Optional<Character> character;
+    private Character character;
     private Stage stage;
 
     @FXML
@@ -39,8 +39,8 @@ public class ControllerAddCharacter {
 
     @FXML
     public void okOnAction() {
-        character = Optional.of(new Character(textField_name.textProperty().get(), Integer.valueOf(textField_initiative.textProperty().get()),
-                (World)world.getSelectedToggle().getUserData(), checkbox_npc.isSelected(), false, Integer.parseInt(textField_conditionMonitor.textProperty().get())));
+        character = new Character(textField_name.textProperty().get(), Integer.valueOf(textField_initiative.textProperty().get()),
+                (World)world.getSelectedToggle().getUserData(), checkbox_npc.isSelected(), false, Integer.parseInt(textField_conditionMonitor.textProperty().get()));
         stage.close();
     }
 
@@ -52,7 +52,7 @@ public class ControllerAddCharacter {
 
     public void onOpen(Stage stage) {
         this.stage = stage;
-        this.character = Optional.empty();
+        this.character = null;
         textField_initiative.textProperty().addListener(new NumericLimitListener(textField_initiative, 0,null));
         textField_conditionMonitor.textProperty().addListener(new NumericLimitListener(textField_conditionMonitor, 0,null));
         radioButton_realWorld.setUserData(World.REAL);
@@ -61,6 +61,6 @@ public class ControllerAddCharacter {
     }
 
     public Optional<Character> getCharacter() {
-        return character;
+        return Optional.of(character);
     }
 }

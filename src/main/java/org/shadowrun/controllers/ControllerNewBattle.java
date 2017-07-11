@@ -48,7 +48,7 @@ public class ControllerNewBattle {
 
     private Stage stage;
     private ObservableList<PickPlayer> players;
-    private Optional<List<PlayerCharacter>> includedPlayers;
+    private List<PlayerCharacter> includedPlayers;
     private Weather weather;
     private Integer time;
 
@@ -79,7 +79,7 @@ public class ControllerNewBattle {
 
     @FXML
     public void okOnAction() {
-        includedPlayers = Optional.of(players.stream().filter(PickPlayer::getChecked).map(PickPlayer::getPlayerCharacter).collect(Collectors.toList()));
+        includedPlayers = players.stream().filter(PickPlayer::getChecked).map(PickPlayer::getPlayerCharacter).collect(Collectors.toList());
         time = Integer.parseInt(textField_hours.getText()) * 3600 +
                 Integer.parseInt(textField_minutes.getText()) * 60 +
                 Integer.parseInt(textField_seconds.getText());
@@ -90,7 +90,7 @@ public class ControllerNewBattle {
 
     public void onOpen(Stage stage, List<PlayerCharacter> players) {
         this.stage = stage;
-        this.includedPlayers = Optional.empty();
+        this.includedPlayers = null;
         this.players = FXCollections.observableArrayList(players.stream().map(PickPlayer::new).collect(Collectors.toList()));
 
         tableView_players.setItems(this.players);
@@ -109,7 +109,7 @@ public class ControllerNewBattle {
     }
 
     public Optional<List<PlayerCharacter>> getIncludedPlayers() {
-        return includedPlayers;
+        return Optional.of(includedPlayers);
     }
 
     public Weather getWeather() {
