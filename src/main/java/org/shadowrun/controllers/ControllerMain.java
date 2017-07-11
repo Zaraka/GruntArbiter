@@ -192,7 +192,7 @@ public class ControllerMain {
 
     @FXML
     private void addICeOnAction() {
-        if(battleLogic.getActiveBattle().getICe().size() >= battleLogic.getActiveBattle().getHost().getRating()){
+        if (battleLogic.getActiveBattle().getICe().size() >= battleLogic.getActiveBattle().getHost().getRating()) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Too much ICe");
             alert.setHeaderText("ICe number exceeds host rating");
@@ -570,20 +570,31 @@ public class ControllerMain {
 
         tableColumn_playerCharacters_character.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
 
-        MenuItem renamePlayer = new MenuItem("Rename player");
-        renamePlayer.setOnAction(event -> {
-            PlayerCharacter selected = tableView_playerCharacters.getSelectionModel().getSelectedItem();
-            TextInputDialog dialog = new TextInputDialog(selected.getName());
-            dialog.setTitle("Rename player");
-            dialog.setHeaderText("Rename player " + selected.getName());
-            dialog.setContentText("Please enter new name:");
-            Optional<String> result = dialog.showAndWait();
+        tableView_playerCharacters.setRowFactory(param -> {
+            TableRow<PlayerCharacter> tableRow = new TableRow<>();
 
-            result.ifPresent(selected::setName);
+            MenuItem renamePlayer = new MenuItem("Rename player");
+            renamePlayer.setOnAction(event -> {
+                PlayerCharacter selected = tableView_playerCharacters.getSelectionModel().getSelectedItem();
+                TextInputDialog dialog = new TextInputDialog(selected.getName());
+                dialog.setTitle("Rename player");
+                dialog.setHeaderText("Rename player " + selected.getName());
+                dialog.setContentText("Please enter new name:");
+                Optional<String> result = dialog.showAndWait();
+
+                result.ifPresent(selected::setName);
+            });
+            MenuItem deletePlayer = new MenuItem("Delete player");
+            deletePlayer.setOnAction(event -> tableView_playerCharacters.getItems().remove(tableView_playerCharacters.getSelectionModel().getSelectedIndex()));
+            MenuItem addPlayer = new MenuItem("Add player");
+            addPlayer.setOnAction(event -> addPlayerOnAction());
+            ContextMenu fullContextMenu = new ContextMenu(renamePlayer, deletePlayer, addPlayer);
+            ContextMenu emptyContextMenu = new ContextMenu(addPlayer);
+
+            tableRow.emptyProperty().addListener((observable, oldValue, newValue) ->
+                    tableRow.setContextMenu(newValue ? emptyContextMenu : fullContextMenu));
+            return  tableRow;
         });
-        MenuItem deletePlayer = new MenuItem("Delete player");
-        deletePlayer.setOnAction(event -> tableView_playerCharacters.getItems().remove(tableView_playerCharacters.getSelectionModel().getSelectedIndex()));
-        tableView_playerCharacters.setContextMenu(new ContextMenu(renamePlayer, deletePlayer));
 
         tableColumn_masterTable_character.setCellFactory(param -> new CharacterCell());
         tableColumn_masterTable_character.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
@@ -607,27 +618,73 @@ public class ControllerMain {
         tableColumn_masterTable_turn6.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue().countTurn(6)));
         tableColumn_masterTable_turn7.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue().countTurn(7)));
 
-        tableView_masterTable.setRowFactory(param -> new TableRow<Character>() {
-            @Override
-            protected void updateItem(Character item, boolean empty) {
-                super.updateItem(item, empty);
-                if (!empty) {
-                    tableView_masterTable.getSortOrder().setAll(tableColumn_masterTable_initiative);
-                    switch (item.getWorld()) {
-                        case REAL:
-                            setStyle(null);
-                            break;
-                        case ASTRAL:
-                            setStyle("-fx-control-inner-background: tomato;");
-                            break;
-                        case MATRIX:
-                            setStyle("-fx-control-inner-background: springgreen;");
-                            break;
+        tableView_masterTable.setRowFactory(param -> {
+            MenuItem moveToRealWorld = new MenuItem("Move to meatspace");
+            moveToRealWorld.setOnAction(event -> {
+                tableView_masterTable.getSelectionModel().getSelectedItem().setWorld(World.REAL);
+                tableView_masterTable.refresh();
+            });
+            MenuItem moveToAstralPlane = new MenuItem("Move to astral world");
+            moveToAstralPlane.setOnAction(event -> {
+                tableView_masterTable.getSelectionModel().getSelectedItem().setWorld(World.ASTRAL);
+                tableView_masterTable.refresh();
+            });
+            MenuItem moveToMatrixSpace = new MenuItem("Move to matrix");
+            moveToMatrixSpace.setOnAction(event -> {
+                tableView_masterTable.getSelectionModel().getSelectedItem().setWorld(World.MATRIX);
+                tableView_masterTable.refresh();
+            });
+            SeparatorMenuItem separatorMenuItem = new SeparatorMenuItem();
+            MenuItem setInitiative = new MenuItem("Set initiative");
+            setInitiative.setOnAction(event -> {
+                Character selectedChar = tableView_masterTable.getSelectionModel().getSelectedItem();
+                TextInputDialog dialog = InitiativeDialogFactory.createDialog(selectedChar);
+                Optional<String> result = dialog.showAndWait();
+                result.ifPresent(initiative -> {
+                    selectedChar.setInitiative(Integer.parseInt(initiative));
+                    battleLogic.getActiveBattle().updateCurrentCharacter();
+                    tableView_masterTable.refresh();
+                });
+            });
+            MenuItem addCharacter = new MenuItem("Add character");
+            addCharacter.setOnAction(event -> addCharacterOnAction());
+            MenuItem removeCharacter = new MenuItem("Remove character");
+            removeCharacter.setOnAction(event -> battleLogic.getActiveBattle().getCharacters()
+                    .remove(tableView_masterTable.getSelectionModel().getSelectedItem()));
+            ContextMenu fullContextMenu = new ContextMenu(
+                    moveToRealWorld,
+                    moveToMatrixSpace,
+                    moveToAstralPlane,
+                    separatorMenuItem,
+                    setInitiative,
+                    addCharacter,
+                    removeCharacter);
+            ContextMenu emptyContextMenu = new ContextMenu(addCharacter);
+            TableRow<Character> tableRow = new TableRow<Character>() {
+                @Override
+                protected void updateItem(Character item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (!empty) {
+                        tableView_masterTable.getSortOrder().setAll(tableColumn_masterTable_initiative);
+                        switch (item.getWorld()) {
+                            case REAL:
+                                setStyle(null);
+                                break;
+                            case ASTRAL:
+                                setStyle("-fx-control-inner-background: tomato;");
+                                break;
+                            case MATRIX:
+                                setStyle("-fx-control-inner-background: springgreen;");
+                                break;
+                        }
+                    } else {
+                        setStyle(null);
                     }
-                } else {
-                    setStyle(null);
                 }
-            }
+            };
+            tableRow.emptyProperty().addListener((observable, oldValue, newValue) ->
+                    tableRow.setContextMenu(newValue ? emptyContextMenu : fullContextMenu));
+            return tableRow;
         });
         tableView_masterTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (oldValue != null) {
@@ -645,47 +702,6 @@ public class ControllerMain {
                 vbox_selected.setVisible(true);
             }
         });
-
-        MenuItem moveToRealWorld = new MenuItem("Move to meatspace");
-        moveToRealWorld.setOnAction(event -> {
-            tableView_masterTable.getSelectionModel().getSelectedItem().setWorld(World.REAL);
-            tableView_masterTable.refresh();
-        });
-        MenuItem moveToAstralPlane = new MenuItem("Move to astral world");
-        moveToAstralPlane.setOnAction(event -> {
-            tableView_masterTable.getSelectionModel().getSelectedItem().setWorld(World.ASTRAL);
-            tableView_masterTable.refresh();
-        });
-        MenuItem moveToMatrixSpace = new MenuItem("Move to matrix");
-        moveToMatrixSpace.setOnAction(event -> {
-            tableView_masterTable.getSelectionModel().getSelectedItem().setWorld(World.MATRIX);
-            tableView_masterTable.refresh();
-        });
-        SeparatorMenuItem separatorMenuItem = new SeparatorMenuItem();
-        MenuItem setInitiative = new MenuItem("Set initiative");
-        setInitiative.setOnAction(event -> {
-            Character selectedChar = tableView_masterTable.getSelectionModel().getSelectedItem();
-            TextInputDialog dialog = InitiativeDialogFactory.createDialog(selectedChar);
-            Optional<String> result = dialog.showAndWait();
-            result.ifPresent(initiative -> {
-                selectedChar.setInitiative(Integer.parseInt(initiative));
-                battleLogic.getActiveBattle().updateCurrentCharacter();
-                tableView_masterTable.refresh();
-            });
-        });
-        MenuItem addCharacter = new MenuItem("Add character");
-        addCharacter.setOnAction(event -> addCharacterOnAction());
-        MenuItem removeCharacter = new MenuItem("Remove character");
-        removeCharacter.setOnAction(event -> battleLogic.getActiveBattle().getCharacters()
-                .remove(tableView_masterTable.getSelectionModel().getSelectedItem()));
-        tableView_masterTable.setContextMenu(new ContextMenu(
-                moveToRealWorld,
-                moveToMatrixSpace,
-                moveToAstralPlane,
-                separatorMenuItem,
-                setInitiative,
-                addCharacter,
-                removeCharacter));
 
         textField_selected_physical.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.matches("-?\\d*")) {
