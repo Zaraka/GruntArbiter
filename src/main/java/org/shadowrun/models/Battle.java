@@ -53,8 +53,10 @@ public class Battle {
         characters = FXCollections.observableArrayList(players.stream()
                 .map(player2Character).collect(Collectors.toList()));
         objects = FXCollections.observableArrayList();
-        currentCharacter = new SimpleObjectProperty<>(characters.stream()
-                .max(Comparator.comparingInt(Character::getInitiative)).get());
+        currentCharacter = new SimpleObjectProperty<>(null);
+        characters.stream()
+                .max(Comparator.comparingInt(Character::getInitiative))
+                .ifPresent(character -> currentCharacter.setValue(character));
         host = new SimpleObjectProperty<>(new Host());
         selectedWeather = new SimpleObjectProperty<>(weather);
         time = new SimpleIntegerProperty(startingTime);
@@ -161,7 +163,7 @@ public class Battle {
     private int passLimit() {
         Optional<Character> ch = characters.stream().max(Comparator.comparingInt(Character::getInitiative));
 
-        return (int)Math.ceil((double)ch.map(Character::getInitiative).orElse(0) / 10);
+        return (int) Math.ceil((double) ch.map(Character::getInitiative).orElse(0) / 10);
     }
 
     public void previousPhase() throws NextTurnException {
