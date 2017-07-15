@@ -422,12 +422,23 @@ public class ControllerMain {
 
     @FXML
     private void generateHostOnAction() {
-        TextInputDialog dialog = new TextInputDialog("3");
-        dialog.setTitle("Generate host");
-        dialog.setHeaderText("Attributes will be randomized");
-        dialog.setContentText("Please enter host ratting:");
-        Optional<String> result = dialog.showAndWait();
-        result.ifPresent(rating -> battleLogic.getActiveBattle().getHost().randomize(Integer.parseInt(rating.replaceAll("[^\\d.]", ""))));
+        Parent root;
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("views/addHost.fxml"));
+            root = loader.load();
+            Stage dialog = new Stage();
+            dialog.setTitle("Generate new host");
+            dialog.setScene(new Scene(root));
+            ControllerAddHost controllerAddHost = loader.getController();
+            controllerAddHost.onOpen(dialog);
+            dialog.showAndWait();
+            controllerAddHost.getHost().ifPresent(host -> {
+                battleLogic.setHost(host);
+            });
+
+        } catch (IOException ex) {
+            LOG.error("Could not load addCharacter dialog: ", ex);
+        }
     }
 
     @FXML

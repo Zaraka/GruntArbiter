@@ -11,6 +11,7 @@ import org.shadowrun.common.constants.World;
 import org.shadowrun.common.exceptions.NextTurnException;
 import org.shadowrun.models.Battle;
 import org.shadowrun.models.Character;
+import org.shadowrun.models.Host;
 import org.shadowrun.models.PlayerCharacter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -102,5 +103,14 @@ public class BattleLogic {
                 true,
                 getActiveBattle().getHost().getRating() / 2 + 8);
         getActiveBattle().getCharacters().add(ic);
+    }
+
+    public void setHost(Host host) {
+        getActiveBattle().getHost().setRating(host.getRating());
+        getActiveBattle().getHost().setAttack(host.getAttack());
+        getActiveBattle().getHost().setSleeze(host.getSleeze());
+        getActiveBattle().getHost().setFirewall(host.getFirewall());
+        getActiveBattle().getHost().setDataProcessing(host.getDataProcessing());
+
     }
 }
