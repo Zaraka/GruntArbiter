@@ -32,8 +32,8 @@ import org.shadowrun.common.factories.ExceptionDialogFactory;
 import org.shadowrun.common.factories.InitiativeDialogFactory;
 import org.shadowrun.logic.AppLogic;
 import org.shadowrun.logic.BattleLogic;
+import org.shadowrun.models.Barrier;
 import org.shadowrun.models.Character;
-import org.shadowrun.models.Object;
 import org.shadowrun.models.PlayerCharacter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -86,13 +86,13 @@ public class ControllerMain {
     private TableColumn<PlayerCharacter, String> tableColumn_playerCharacters_character;
 
     @FXML
-    private TableView<Object> tableView_objects;
+    private TableView<Barrier> tableView_objects;
     @FXML
-    private TableColumn<Object, Object> tableColumn_objects_object;
+    private TableColumn<Barrier, Barrier> tableColumn_objects_object;
     @FXML
-    private TableColumn<Object, Integer> tableColumn_objects_structure;
+    private TableColumn<Barrier, Integer> tableColumn_objects_structure;
     @FXML
-    private TableColumn<Object, Integer> tableColumn_objects_armor;
+    private TableColumn<Barrier, Integer> tableColumn_objects_armor;
 
     @FXML
     private Menu menu_campaign;
@@ -514,15 +514,15 @@ public class ControllerMain {
     private void addObjectOnAction() {
         Parent root;
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("views/addObject.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("views/addBarrier.fxml"));
             root = loader.load();
             Stage dialog = new Stage();
             dialog.setTitle("Create new object");
             dialog.setScene(new Scene(root));
-            ControllerAddObject controllerAddObject = loader.getController();
-            controllerAddObject.onOpen(dialog);
+            ControllerAddBarrier controllerAddBarrier = loader.getController();
+            controllerAddBarrier.onOpen(dialog);
             dialog.showAndWait();
-            controllerAddObject.getObject().ifPresent(object -> battleLogic.getActiveBattle().getObjects().add(object));
+            controllerAddBarrier.getBarrier().ifPresent(barrier -> battleLogic.getActiveBattle().getBarriers().add(barrier));
 
         } catch (IOException ex) {
             LOG.error("Could not load addObject dialog: ", ex);
@@ -541,7 +541,7 @@ public class ControllerMain {
     private void addBattleHooks() {
         //Items
         tableView_masterTable.setItems(battleLogic.getActiveBattle().getCharacters());
-        tableView_objects.setItems(battleLogic.getActiveBattle().getObjects());
+        tableView_objects.setItems(battleLogic.getActiveBattle().getBarriers());
 
         //unbinds
         label_combatTurnCounter.textProperty().unbind();

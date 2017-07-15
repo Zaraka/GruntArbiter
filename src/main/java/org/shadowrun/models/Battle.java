@@ -39,7 +39,7 @@ public class Battle {
 
     private ObservableList<Character> characters;
 
-    private ObservableList<Object> objects;
+    private ObservableList<Barrier> barriers;
 
     private ObjectProperty<Character> currentCharacter;
 
@@ -52,7 +52,7 @@ public class Battle {
         actionPhase = new SimpleIntegerProperty(1);
         characters = FXCollections.observableArrayList(players.stream()
                 .map(player2Character).collect(Collectors.toList()));
-        objects = FXCollections.observableArrayList();
+        barriers = FXCollections.observableArrayList();
         currentCharacter = new SimpleObjectProperty<>(null);
         characters.stream()
                 .max(Comparator.comparingInt(Character::getInitiative))
@@ -135,8 +135,8 @@ public class Battle {
         return time;
     }
 
-    public ObservableList<Object> getObjects() {
-        return objects;
+    public ObservableList<Barrier> getBarriers() {
+        return barriers;
     }
 
     public void updateCurrentCharacter() {
@@ -188,6 +188,7 @@ public class Battle {
     }
 
     public List<Character> getICe() {
-        return characters.stream().filter(character -> character.isNpc() && character.isIce()).collect(Collectors.toList());
+        return characters.stream().filter(character -> character.isNpc() && character.isIce())
+                .collect(Collectors.toList());
     }
 }

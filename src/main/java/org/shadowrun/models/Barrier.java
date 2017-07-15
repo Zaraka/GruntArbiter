@@ -5,7 +5,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class Object {
+public class Barrier {
 
     private StringProperty name;
 
@@ -13,7 +13,7 @@ public class Object {
 
     private IntegerProperty armor;
 
-    public Object(String name, Integer structure, Integer armor) {
+    public Barrier(String name, Integer structure, Integer armor) {
         this.name = new SimpleStringProperty(name);
         this.structure = new SimpleIntegerProperty(structure);
         this.armor = new SimpleIntegerProperty(armor);

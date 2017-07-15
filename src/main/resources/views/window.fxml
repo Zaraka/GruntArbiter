@@ -270,7 +270,7 @@
                                                                         </ToolBar>
                                                                         <ToolBar prefHeight="40.0" prefWidth="200.0">
                                                                           <items>
-                                                                            <Button mnemonicParsing="false" onAction="#addObjectOnAction" text="Add object" />
+                                                                            <Button mnemonicParsing="false" onAction="#addObjectOnAction" text="Add barrier" />
                                                                           </items>
                                                                         </ToolBar>
                                                                                             </children>

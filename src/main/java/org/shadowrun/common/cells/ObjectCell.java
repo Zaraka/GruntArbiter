@@ -1,12 +1,12 @@
 package org.shadowrun.common.cells;
 
 import javafx.scene.control.TableCell;
-import org.shadowrun.models.Object;
+import org.shadowrun.models.Barrier;
 
-public class ObjectCell extends TableCell<Object, Object> {
+public class ObjectCell extends TableCell<Barrier, Barrier> {
 
     @Override
-    protected void updateItem(Object item, boolean empty) {
+    protected void updateItem(Barrier item, boolean empty) {
         super.updateItem(item, empty);
 
         if (empty) {
