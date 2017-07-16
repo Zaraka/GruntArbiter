@@ -6,6 +6,7 @@ Handy lightweight app for tracking your battles in Shadowrun 5e. Grunt Arbiter w
   * Manage PC and NPCs though battle. Keep track whom turn it is, who is going next and in which space are they located.
   * Manage hosts with ease. Randomly create host attributes. spawn ICe, keep track of Overwatch score. Have decker who just love to invade every host on his way? Good, give him hell.
   * Manage barriers structural condition and armor.
+  * Manage matrix devices.
   * Keep track of time spent in a battle, weather condition, astral background count and more!
   
 Grunt arbiter (GA) is inteded to be simple app for GMs with laptops. Shadowrun itself is complex enough, so GA should only provide the simplest of controls to balance the weight.

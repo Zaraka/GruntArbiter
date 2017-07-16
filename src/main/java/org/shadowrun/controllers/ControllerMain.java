@@ -38,9 +38,8 @@ import org.shadowrun.common.factories.ExceptionDialogFactory;
 import org.shadowrun.common.factories.InitiativeDialogFactory;
 import org.shadowrun.logic.AppLogic;
 import org.shadowrun.logic.BattleLogic;
-import org.shadowrun.models.Barrier;
+import org.shadowrun.models.*;
 import org.shadowrun.models.Character;
-import org.shadowrun.models.PlayerCharacter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -101,6 +100,23 @@ public class ControllerMain {
     private TableColumn<Barrier, Integer> tableColumn_barrier_armor;
 
     @FXML
+    private TableView<Device> tableView_devices;
+    @FXML
+    private TableColumn<Device, String> tableColumn_device_device;
+    @FXML
+    private TableColumn<Device, Integer> tableColumn_device_condition;
+    @FXML
+    private TableColumn<Device, Integer> tableColumn_device_rating;
+    @FXML
+    private TableColumn<Device, Integer> tableColumn_device_attack;
+    @FXML
+    private TableColumn<Device, Integer> tableColumn_device_sleeze;
+    @FXML
+    private TableColumn<Device, Integer> tableColumn_device_firewall;
+    @FXML
+    private TableColumn<Device, Integer> tableColumn_device_dataProcessing;
+
+    @FXML
     private Menu menu_campaign;
     @FXML
     private MenuItem menuItem_addPlayer;
@@ -146,6 +162,8 @@ public class ControllerMain {
     private HBox hbox_selected_barrier;
     @FXML
     private HBox hbox_selected_glyph;
+    @FXML
+    private HBox hbox_selected_device;
 
 
     @FXML
@@ -188,6 +206,8 @@ public class ControllerMain {
     private TextField textField_selected_structure;
     @FXML
     private TextField textField_selected_armor;
+    @FXML
+    private TextField textField_selected_condition;
     @FXML
     private TextField textField_backgroundCount;
 
@@ -512,6 +532,18 @@ public class ControllerMain {
         barrier.armorProperty().setValue(barrier.getArmor() - 1);
     }
 
+    @FXML
+    private void conditionPlusOnAction() {
+        Device device = tableView_devices.getSelectionModel().getSelectedItem();
+        device.conditionProperty().setValue(device.getCondition() + 1);
+    }
+
+    @FXML
+    private void conditionMinusOnAction() {
+        Device device = tableView_devices.getSelectionModel().getSelectedItem();
+        device.conditionProperty().setValue(device.getCondition() - 1);
+    }
+
 
     @FXML
     private void overwatchScorePlusOnAction() {
@@ -565,15 +597,35 @@ public class ControllerMain {
             FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("views/addBarrier.fxml"));
             root = loader.load();
             Stage dialog = new Stage();
-            dialog.setTitle("Create new object");
+            dialog.setTitle("Create new barrier");
             dialog.setScene(new Scene(root));
             ControllerAddBarrier controllerAddBarrier = loader.getController();
             controllerAddBarrier.onOpen(dialog);
             dialog.showAndWait();
-            controllerAddBarrier.getBarrier().ifPresent(barrier -> battleLogic.getActiveBattle().getBarriers().add(barrier));
+            controllerAddBarrier.getBarrier()
+                    .ifPresent(barrier -> battleLogic.getActiveBattle().getBarriers().add(barrier));
 
         } catch (IOException ex) {
-            LOG.error("Could not load addObject dialog: ", ex);
+            LOG.error("Could not load addBarier dialog: ", ex);
+        }
+    }
+
+    @FXML
+    private void addDeviceOnAction() {
+        Parent root;
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("views/addDevice.fxml"));
+            root = loader.load();
+            Stage dialog = new Stage();
+            dialog.setTitle("Create new device");
+            dialog.setScene(new Scene(root));
+            ControllerAddDevice controllerAddDevice = loader.getController();
+            controllerAddDevice.onOpen(dialog);
+            dialog.showAndWait();
+            controllerAddDevice.getDevice().ifPresent(device -> battleLogic.getActiveBattle().getDevices().add(device));
+
+        } catch (IOException ex) {
+            LOG.error("Could not load addDevice dialog: ", ex);
         }
     }
 
@@ -587,9 +639,12 @@ public class ControllerMain {
     }
 
     private void addBattleHooks() {
+        Battle battle = battleLogic.getActiveBattle();
+        
         //Items
-        tableView_masterTable.setItems(battleLogic.getActiveBattle().getCharacters());
-        tableView_barrier.setItems(battleLogic.getActiveBattle().getBarriers());
+        tableView_masterTable.setItems(battle.getCharacters());
+        tableView_barrier.setItems(battle.getBarriers());
+        tableView_devices.setItems(battle.getDevices());
 
         //unbinds
         label_combatTurnCounter.textProperty().unbind();
@@ -608,34 +663,34 @@ public class ControllerMain {
         button_prevTurn.disableProperty().unbind();
         comboBox_weather.valueProperty().unbind();
 
-        if (battleLogic.getActiveBattle() != null) {
+        if (battle != null) {
             //binds
-            label_combatTurnCounter.textProperty().bind(battleLogic.getActiveBattle().combatTurnProperty().asString());
-            label_intiativePassCounter.textProperty().bind(battleLogic.getActiveBattle().initiativePassProperty().asString());
-            label_actionPhaseCounter.textProperty().bind(battleLogic.getActiveBattle().actionPhaseProperty().asString());
+            label_combatTurnCounter.textProperty().bind(battle.combatTurnProperty().asString());
+            label_intiativePassCounter.textProperty().bind(battle.initiativePassProperty().asString());
+            label_actionPhaseCounter.textProperty().bind(battle.actionPhaseProperty().asString());
             label_currentCharacter.textProperty().bind(battleLogic.currentCharacterNameProperty());
-            label_host_attack.textProperty().bind(battleLogic.getActiveBattle().getHost().attackProperty().asString());
-            label_host_sleeze.textProperty().bind(battleLogic.getActiveBattle().getHost().sleezeProperty().asString());
-            label_host_firewall.textProperty().bind(battleLogic.getActiveBattle().getHost().firewallProperty().asString());
-            label_host_dataProcessing.textProperty().bind(battleLogic.getActiveBattle().getHost().dataProcessingProperty().asString());
-            label_host_rating.textProperty().bind(battleLogic.getActiveBattle().getHost().ratingProperty().asString());
-            textField_backgroundCount.textProperty().bindBidirectional(battleLogic.getActiveBattle().backgroundCountProperty(), new NumberStringConverter());
-            label_overwatchScore.textProperty().bind(battleLogic.getActiveBattle().getHost().overwatchScoreProperty().asString());
-            vbox_matrixProperties.visibleProperty().bind(battleLogic.getActiveBattle().getHost().isInitalized());
-            Bindings.bindBidirectional(label_time.textProperty(), battleLogic.getActiveBattle().combatTurnProperty(), new IterationTimeConverter(battleLogic.getActiveBattle().getTime()));
+            label_host_attack.textProperty().bind(battle.getHost().attackProperty().asString());
+            label_host_sleeze.textProperty().bind(battle.getHost().sleezeProperty().asString());
+            label_host_firewall.textProperty().bind(battle.getHost().firewallProperty().asString());
+            label_host_dataProcessing.textProperty().bind(battle.getHost().dataProcessingProperty().asString());
+            label_host_rating.textProperty().bind(battle.getHost().ratingProperty().asString());
+            textField_backgroundCount.textProperty().bindBidirectional(battle.backgroundCountProperty(), new NumberStringConverter());
+            label_overwatchScore.textProperty().bind(battle.getHost().overwatchScoreProperty().asString());
+            vbox_matrixProperties.visibleProperty().bind(battle.getHost().isInitalized());
+            Bindings.bindBidirectional(label_time.textProperty(), battle.combatTurnProperty(), new IterationTimeConverter(battle.getTime()));
 
-            battleLogic.getActiveBattle().currentCharacterProperty().addListener((observable, oldValue, newValue) -> {
+            battle.currentCharacterProperty().addListener((observable, oldValue, newValue) -> {
                 if (newValue != null) {
                     tableView_masterTable.getSelectionModel().select(newValue);
                 }
             });
 
-            comboBox_weather.valueProperty().bindBidirectional(battleLogic.getActiveBattle().selectedWeatherProperty());
+            comboBox_weather.valueProperty().bindBidirectional(battle.selectedWeatherProperty());
 
             button_prevTurn.disableProperty()
-                    .bind(battleLogic.getActiveBattle().actionPhaseProperty().greaterThan(1)
-                            .or(battleLogic.getActiveBattle().initiativePassProperty().greaterThan(1)
-                                    .or(battleLogic.getActiveBattle().combatTurnProperty().greaterThan(1))));
+                    .bind(battle.actionPhaseProperty().greaterThan(1)
+                            .or(battle.initiativePassProperty().greaterThan(1)
+                                    .or(battle.combatTurnProperty().greaterThan(1))));
 
             //tab selection
             tabPane.getSelectionModel().select(tab_battle);
@@ -675,7 +730,8 @@ public class ControllerMain {
                 result.ifPresent(selected::setName);
             });
             MenuItem deletePlayer = new MenuItem("Delete player");
-            deletePlayer.setOnAction(event -> tableView_playerCharacters.getItems().remove(tableView_playerCharacters.getSelectionModel().getSelectedIndex()));
+            deletePlayer.setOnAction(event -> tableView_playerCharacters.getItems()
+                    .remove(tableView_playerCharacters.getSelectionModel().getSelectedIndex()));
             MenuItem addPlayer = new MenuItem("Add player");
             addPlayer.setOnAction(event -> addPlayerOnAction());
             ContextMenu fullContextMenu = new ContextMenu(renamePlayer, deletePlayer, addPlayer);
@@ -700,13 +756,20 @@ public class ControllerMain {
         tableColumn_masterTable_turn5.setCellFactory(param -> new TurnTableCell());
         tableColumn_masterTable_turn6.setCellFactory(param -> new TurnTableCell());
         tableColumn_masterTable_turn7.setCellFactory(param -> new TurnTableCell());
-        tableColumn_masterTable_turn1.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue().countTurn(1)));
-        tableColumn_masterTable_turn2.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue().countTurn(2)));
-        tableColumn_masterTable_turn3.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue().countTurn(3)));
-        tableColumn_masterTable_turn4.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue().countTurn(4)));
-        tableColumn_masterTable_turn5.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue().countTurn(5)));
-        tableColumn_masterTable_turn6.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue().countTurn(6)));
-        tableColumn_masterTable_turn7.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue().countTurn(7)));
+        tableColumn_masterTable_turn1
+                .setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue().countTurn(1)));
+        tableColumn_masterTable_turn2
+                .setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue().countTurn(2)));
+        tableColumn_masterTable_turn3
+                .setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue().countTurn(3)));
+        tableColumn_masterTable_turn4
+                .setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue().countTurn(4)));
+        tableColumn_masterTable_turn5
+                .setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue().countTurn(5)));
+        tableColumn_masterTable_turn6
+                .setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue().countTurn(6)));
+        tableColumn_masterTable_turn7
+                .setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue().countTurn(7)));
 
         tableView_masterTable.setRowFactory(param -> {
             MenuItem moveToRealWorld = new MenuItem("Move to meatspace");
@@ -785,6 +848,7 @@ public class ControllerMain {
                 cleanSelectedPane();
             } else {
                 tableView_barrier.getSelectionModel().clearSelection();
+                tableView_devices.getSelectionModel().clearSelection();
 
                 CharacterIconFactory.createIcon(newValue).ifPresent(fontAwesomeIcon -> {
                     fontAwesomeIcon_selected.setIcon(fontAwesomeIcon);
@@ -843,6 +907,7 @@ public class ControllerMain {
                 cleanSelectedPane();
             } else {
                 tableView_masterTable.getSelectionModel().clearSelection();
+                tableView_devices.getSelectionModel().clearSelection();
 
                 fontAwesomeIcon_selected.setIcon(FontAwesomeIcon.SQUARE);
 
@@ -858,14 +923,72 @@ public class ControllerMain {
             }
         });
 
+        tableColumn_device_device.setCellValueFactory(param -> param.getValue().nameProperty());
+        tableColumn_device_rating.setCellValueFactory(param -> param.getValue().ratingProperty().asObject());
+        tableColumn_device_attack.setCellValueFactory(param -> param.getValue().attackProperty().asObject());
+        tableColumn_device_sleeze.setCellValueFactory(param -> param.getValue().sleezeProperty().asObject());
+        tableColumn_device_firewall.setCellValueFactory(param -> param.getValue().firewallProperty().asObject());
+        tableColumn_device_dataProcessing.setCellValueFactory(param -> param.getValue().dataProcessingProperty().asObject());
+        tableColumn_device_condition.setCellValueFactory(param -> param.getValue().conditionProperty().asObject());
+
+        tableView_devices.setRowFactory(param -> {
+            TableRow<Device> tableRow = new TableRow<>();
+
+            MenuItem renameDevice = new MenuItem("Rename device");
+            renameDevice.setOnAction(event -> {
+                Device selected = tableView_devices.getSelectionModel().getSelectedItem();
+                TextInputDialog dialog = new TextInputDialog(selected.getName());
+                dialog.setTitle("Rename device");
+                dialog.setHeaderText("Rename device " + selected.getName());
+                dialog.setContentText("Please enter new name:");
+                Optional<String> result = dialog.showAndWait();
+
+                result.ifPresent(selected::setName);
+            });
+            MenuItem deleteDevice = new MenuItem("Delete device");
+            deleteDevice.setOnAction(event -> tableView_devices.getItems()
+                    .remove(tableView_devices.getSelectionModel().getSelectedIndex()));
+            MenuItem addDevice = new MenuItem("Add device");
+            addDevice.setOnAction(event -> addDeviceOnAction());
+            ContextMenu fullContextMenu = new ContextMenu(addDevice, deleteDevice, renameDevice);
+            ContextMenu emptyContextMenu = new ContextMenu(addDevice);
+
+            tableRow.emptyProperty().addListener((observable, oldValue, newValue) ->
+                    tableRow.setContextMenu(newValue ? emptyContextMenu : fullContextMenu));
+            return tableRow;
+        });
+
+        tableView_devices.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (oldValue != null) {
+                cleanSelectedPane();
+            }
+
+            if (newValue == null) {
+                cleanSelectedPane();
+            } else {
+                tableView_masterTable.getSelectionModel().clearSelection();
+                tableView_barrier.getSelectionModel().clearSelection();
+
+                fontAwesomeIcon_selected.setIcon(FontAwesomeIcon.LAPTOP);
+
+                textField_selected_condition.textProperty()
+                        .bindBidirectional(newValue.conditionProperty(), new NumberStringConverter());
+                label_selectedCharacter.textProperty().bind(newValue.nameProperty());
+
+                hbox_selected_glyph.setVisible(true);
+                hbox_selected_device.setVisible(true);
+                anchorPane_selected.setVisible(true);
+            }
+        });
+
         textField_selected_physical.textProperty()
                 .addListener(new NumericLimitListener(textField_selected_physical, -100, 100));
         textField_selected_stun.textProperty()
                 .addListener(new NumericLimitListener(textField_selected_stun, -100, 100));
         textField_selected_structure.textProperty()
-                .addListener(new NumericLimitListener(textField_selected_structure, -100, 100));
+                .addListener(new NumericLimitListener(textField_selected_structure, 0, 100));
         textField_selected_armor.textProperty()
-                .addListener(new NumericLimitListener(textField_selected_armor, -100, 100));
+                .addListener(new NumericLimitListener(textField_selected_armor, 0, 100));
 
         hbox_selected_barrier.managedProperty().bind(hbox_selected_barrier.visibleProperty());
         hbox_selected_character.managedProperty().bind(hbox_selected_character.visibleProperty());
@@ -958,11 +1081,13 @@ public class ControllerMain {
         textField_selected_stun.textProperty().unbind();
         textField_selected_armor.textProperty().unbind();
         textField_selected_structure.textProperty().unbind();
+        textField_selected_condition.textProperty().unbind();
         label_selectedCharacter.textProperty().unbind();
 
         hbox_selected_glyph.setVisible(false);
         hbox_selected_character.setVisible(false);
         hbox_selected_barrier.setVisible(false);
+        hbox_selected_device.setVisible(false);
         anchorPane_selected.setVisible(false);
     }
 }

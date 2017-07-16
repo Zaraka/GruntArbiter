@@ -41,6 +41,8 @@ public class Battle {
 
     private ObservableList<Barrier> barriers;
 
+    private ObservableList<Device> devices;
+
     private ObjectProperty<Character> currentCharacter;
 
     private ObjectProperty<Weather> selectedWeather;
@@ -53,6 +55,7 @@ public class Battle {
         characters = FXCollections.observableArrayList(players.stream()
                 .map(player2Character).collect(Collectors.toList()));
         barriers = FXCollections.observableArrayList();
+        devices = FXCollections.observableArrayList();
         currentCharacter = new SimpleObjectProperty<>(null);
         characters.stream()
                 .max(Comparator.comparingInt(Character::getInitiative))
@@ -137,6 +140,10 @@ public class Battle {
 
     public ObservableList<Barrier> getBarriers() {
         return barriers;
+    }
+
+    public ObservableList<Device> getDevices() {
+        return devices;
     }
 
     public void updateCurrentCharacter() {

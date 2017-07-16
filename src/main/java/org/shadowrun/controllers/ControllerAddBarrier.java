@@ -37,7 +37,7 @@ public class ControllerAddBarrier {
     private Button button_ok;
 
     @FXML
-    public void okOnAction() {
+    private void okOnAction() {
         barrier = new Barrier(textField_name.textProperty().get(),
                 Integer.parseInt(textField_structure.textProperty().get()),
                 Integer.parseInt(textField_armor.textProperty().get()));
@@ -45,7 +45,7 @@ public class ControllerAddBarrier {
     }
 
     @FXML
-    public void cancelOnAction() {
+    private void cancelOnAction() {
         stage.close();
     }
 

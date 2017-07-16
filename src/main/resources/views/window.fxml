@@ -28,7 +28,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.shadowrun.controllers.ControllerMain">
+<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.shadowrun.controllers.ControllerMain">
     <children>
         <MenuBar>
             <menus>
@@ -221,6 +221,7 @@
                                                                                                 <ToolBar prefHeight="40.0" prefWidth="200.0">
                                                                                                     <items>
                                                                                                         <Button fx:id="button_generateHost" mnemonicParsing="false" onAction="#generateHostOnAction" text="Generate Host" />
+                                                                              <Button mnemonicParsing="false" onAction="#addDeviceOnAction" text="Add device" />
                                                                                                     </items>
                                                                                                 </ToolBar>
                                                                                                 <VBox fx:id="vbox_matrixProperties">
@@ -384,13 +385,36 @@
                                                 </AnchorPane>
                                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                                                    <children>
-                                                      <TableView fx:id="tableView_barrier" prefHeight="327.0" prefWidth="732.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                                        <columns>
-                                                          <TableColumn fx:id="tableColumn_barrier_object" prefWidth="150.0" text="Object" />
-                                                          <TableColumn fx:id="tableColumn_barrier_structure" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" text="Structure" />
-                                                            <TableColumn fx:id="tableColumn_barrier_armor" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" text="Armor" />
-                                                        </columns>
-                                                      </TableView>
+                                                      <SplitPane dividerPositions="0.4" prefHeight="327.0" prefWidth="474.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                        <items>
+                                                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                                               <children>
+                                                                  <TableView fx:id="tableView_barrier" prefHeight="327.0" prefWidth="732.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                                    <columns>
+                                                                      <TableColumn fx:id="tableColumn_barrier_object" editable="false" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" text="Barrier" />
+                                                                      <TableColumn fx:id="tableColumn_barrier_structure" editable="false" maxWidth="80.0" minWidth="80.0" text="Structure" />
+                                                                        <TableColumn fx:id="tableColumn_barrier_armor" editable="false" maxWidth="80.0" minWidth="80.0" text="Armor" />
+                                                                    </columns>
+                                                                  </TableView>
+                                                               </children>
+                                                            </AnchorPane>
+                                                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                                               <children>
+                                                                  <TableView fx:id="tableView_devices" prefHeight="325.0" prefWidth="327.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                                    <columns>
+                                                                      <TableColumn fx:id="tableColumn_device_device" editable="false" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" text="Device" />
+                                                                        <TableColumn fx:id="tableColumn_device_condition" editable="false" maxWidth="80.0" minWidth="80.0" text="Condition" />
+                                                                        <TableColumn fx:id="tableColumn_device_rating" editable="false" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" text="R" />
+                                                                      <TableColumn fx:id="tableColumn_device_attack" editable="false" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" text="A" />
+                                                                        <TableColumn fx:id="tableColumn_device_sleeze" editable="false" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" text="S" />
+                                                                        <TableColumn fx:id="tableColumn_device_firewall" editable="false" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" text="F" />
+                                                                        <TableColumn fx:id="tableColumn_device_dataProcessing" editable="false" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" text="DP" />
+                                                                    </columns>
+                                                                  </TableView>
+                                                               </children>
+                                                            </AnchorPane>
+                                                        </items>
+                                                      </SplitPane>
                                                    </children>
                                                 </AnchorPane>
                                             </items>
@@ -512,6 +536,41 @@
                                                                </tooltip>
                                                             </Button>
                                                             <Button mnemonicParsing="false" onAction="#armorMinusOnAction" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                                                               <graphic>
+                                                                  <FontAwesomeIconView glyphName="MINUS" />
+                                                               </graphic>
+                                                               <tooltip>
+                                                                  <Tooltip text="Decrease condition" />
+                                                               </tooltip>
+                                                            </Button>
+                                                         </children>
+                                                      </GridPane>
+                                                   </children>
+                                                </HBox>
+                                                <HBox fx:id="hbox_selected_device" alignment="CENTER" layoutX="10.0" layoutY="140.0">
+                                                   <children>
+                                                      <GridPane>
+                                                         <columnConstraints>
+                                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="75.0" minWidth="75.0" prefWidth="75.0" />
+                                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
+                                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="25.0" minWidth="25.0" prefWidth="25.0" />
+                                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="25.0" minWidth="25.0" prefWidth="25.0" />
+                                                         </columnConstraints>
+                                                         <rowConstraints>
+                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                         </rowConstraints>
+                                                         <children>
+                                                            <Label text="Condition" />
+                                                            <TextField fx:id="textField_selected_condition" GridPane.columnIndex="1" />
+                                                            <Button mnemonicParsing="false" onAction="#conditionPlusOnAction" GridPane.columnIndex="2">
+                                                               <graphic>
+                                                                  <FontAwesomeIconView glyphName="PLUS" />
+                                                               </graphic>
+                                                               <tooltip>
+                                                                  <Tooltip text="Increase condition" />
+                                                               </tooltip>
+                                                            </Button>
+                                                            <Button mnemonicParsing="false" onAction="#conditionMinusOnAction" GridPane.columnIndex="3">
                                                                <graphic>
                                                                   <FontAwesomeIconView glyphName="MINUS" />
                                                                </graphic>

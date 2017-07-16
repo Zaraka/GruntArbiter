@@ -38,7 +38,7 @@ public class ControllerAddHost {
     private RadioButton radioButton_automatic;
 
     @FXML
-    public void okOnAction() {
+    private void okOnAction() {
         if (radioButton_automatic.isSelected()) {
             host = new Host();
             host.randomize(getRating());
@@ -70,7 +70,7 @@ public class ControllerAddHost {
     }
 
     @FXML
-    public void cancelOnAction() {
+    private void cancelOnAction() {
         stage.close();
     }
 

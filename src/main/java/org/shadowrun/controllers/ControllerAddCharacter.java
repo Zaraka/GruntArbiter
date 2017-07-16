@@ -38,7 +38,7 @@ public class ControllerAddCharacter {
     private Button button_ok;
 
     @FXML
-    public void okOnAction() {
+    private void okOnAction() {
         character = new Character(
                 textField_name.textProperty().get(),
                 getInitative(),
@@ -50,7 +50,7 @@ public class ControllerAddCharacter {
     }
 
     @FXML
-    public void cancelOnAction() {
+    private void cancelOnAction() {
         stage.close();
     }
 

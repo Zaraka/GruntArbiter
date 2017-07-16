@@ -73,12 +73,12 @@ public class ControllerNewBattle {
     private Button button_ok;
 
     @FXML
-    public void closeOnAction() {
+    private void closeOnAction() {
         stage.close();
     }
 
     @FXML
-    public void okOnAction() {
+    private void okOnAction() {
         includedPlayers = players.stream().filter(PickPlayer::getChecked).map(PickPlayer::getPlayerCharacter).collect(Collectors.toList());
         time = Integer.parseInt(textField_hours.getText()) * 3600 +
                 Integer.parseInt(textField_minutes.getText()) * 60 +
@@ -109,7 +109,7 @@ public class ControllerNewBattle {
     }
 
     public Optional<List<PlayerCharacter>> getIncludedPlayers() {
-        return Optional.of(includedPlayers);
+        return Optional.ofNullable(includedPlayers);
     }
 
     public Weather getWeather() {
