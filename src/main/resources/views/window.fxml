@@ -177,84 +177,17 @@
                                                 <Pane HBox.hgrow="ALWAYS" />
                                             </items>
                                         </ToolBar>
-                                        <HBox>
-                                            <children>
-                                                <HBox />
-                                            </children>
-                                        </HBox>
-                                        <SplitPane dividerPositions="0.3" prefHeight="160.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                                        <SplitPane dividerPositions="0.3, 0.5" prefHeight="160.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                                             <items>
                                                 <AnchorPane maxWidth="280.0" minWidth="280.0" prefWidth="280.0">
                                                     <children>
                                                         <VBox prefHeight="707.0" prefWidth="301.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                             <children>
-                                                                <HBox />
                                                                 <ToolBar prefHeight="40.0" prefWidth="200.0">
                                                                     <items>
                                                                         <Button mnemonicParsing="false" onAction="#addCharacterOnAction" text="Spawn character" />
                                                                     </items>
                                                                 </ToolBar>
-                                                                <VBox fx:id="vbox_selected">
-                                                                    <children>
-                                                                        <Label fx:id="label_selectedCharacter" text="Selected">
-                                                                            <font>
-                                                                                <Font name="System Bold" size="17.0" />
-                                                                            </font>
-                                                                        </Label>
-                                                                        <HBox />
-                                                                        <HBox layoutX="10.0" layoutY="31.0" />
-                                                                        <GridPane>
-                                                                            <columnConstraints>
-                                                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="75.0" minWidth="75.0" prefWidth="75.0" />
-                                                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
-                                                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="25.0" minWidth="25.0" prefWidth="25.0" />
-                                                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="25.0" minWidth="25.0" prefWidth="25.0" />
-                                                                            </columnConstraints>
-                                                                            <rowConstraints>
-                                                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                                            </rowConstraints>
-                                                                            <children>
-                                                                                <Label text="Physical" />
-                                                                                <TextField fx:id="textField_selected_physical" GridPane.columnIndex="1" />
-                                                                                <Button mnemonicParsing="false" onAction="#physicalPlusOnAction" GridPane.columnIndex="2">
-                                                                                    <graphic>
-                                                                                        <FontAwesomeIconView glyphName="PLUS" />
-                                                                                    </graphic>
-                                                                                    <tooltip>
-                                                                                        <Tooltip text="Increase condition" />
-                                                                                    </tooltip>
-                                                                                </Button>
-                                                                                <Button mnemonicParsing="false" onAction="#physicalMinusOnAction" GridPane.columnIndex="3">
-                                                                                    <graphic>
-                                                                                        <FontAwesomeIconView glyphName="MINUS" />
-                                                                                    </graphic>
-                                                                                    <tooltip>
-                                                                                        <Tooltip text="Decrease condition" />
-                                                                                    </tooltip>
-                                                                                </Button>
-                                                                                <TextField fx:id="textField_selected_stun" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                                                <Label text="Stun" GridPane.rowIndex="1" />
-                                                                                <Button mnemonicParsing="false" onAction="#stunPlusOnAction" GridPane.columnIndex="2" GridPane.rowIndex="1">
-                                                                                    <graphic>
-                                                                                        <FontAwesomeIconView glyphName="PLUS" />
-                                                                                    </graphic>
-                                                                                    <tooltip>
-                                                                                        <Tooltip text="Increase condition" />
-                                                                                    </tooltip>
-                                                                                </Button>
-                                                                                <Button mnemonicParsing="false" onAction="#stunMinusOnAction" GridPane.columnIndex="3" GridPane.rowIndex="1">
-                                                                                    <graphic>
-                                                                                        <FontAwesomeIconView glyphName="MINUS" />
-                                                                                    </graphic>
-                                                                                    <tooltip>
-                                                                                        <Tooltip text="Decrease condition" />
-                                                                                    </tooltip>
-                                                                                </Button>
-                                                                            </children>
-                                                                        </GridPane>
-                                                                    </children>
-                                                                </VBox>
                                                                 <VBox>
                                                                     <children>
                                                                         <TitledPane animated="false" text="Meatspace">
@@ -270,7 +203,7 @@
                                                                         </ToolBar>
                                                                         <ToolBar prefHeight="40.0" prefWidth="200.0">
                                                                           <items>
-                                                                            <Button mnemonicParsing="false" onAction="#addObjectOnAction" text="Add barrier" />
+                                                                            <Button mnemonicParsing="false" onAction="#addBarrierOnAction" text="Add barrier" />
                                                                           </items>
                                                                         </ToolBar>
                                                                                             </children>
@@ -451,11 +384,11 @@
                                                 </AnchorPane>
                                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                                                    <children>
-                                                      <TableView fx:id="tableView_objects" prefHeight="327.0" prefWidth="732.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                      <TableView fx:id="tableView_barrier" prefHeight="327.0" prefWidth="732.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                         <columns>
-                                                          <TableColumn fx:id="tableColumn_objects_object" prefWidth="150.0" text="Object" />
-                                                          <TableColumn fx:id="tableColumn_objects_structure" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" text="Structure" />
-                                                            <TableColumn fx:id="tableColumn_objects_armor" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" text="Armor" />
+                                                          <TableColumn fx:id="tableColumn_barrier_object" prefWidth="150.0" text="Object" />
+                                                          <TableColumn fx:id="tableColumn_barrier_structure" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" text="Structure" />
+                                                            <TableColumn fx:id="tableColumn_barrier_armor" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" text="Armor" />
                                                         </columns>
                                                       </TableView>
                                                    </children>
@@ -464,6 +397,136 @@
                                           </SplitPane>
                                                     </children>
                                                 </AnchorPane>
+                                    <AnchorPane fx:id="anchorPane_selected" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="250.0">
+                                       <children>
+                                          <VBox prefHeight="664.0" prefWidth="250.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0">
+                                             <children>
+                                                <HBox fx:id="hbox_selected_glyph" alignment="CENTER">
+                                                   <children>
+                                                      <FontAwesomeIconView fx:id="fontAwesomeIcon_selected" size="48.0" />
+                                                   </children>
+                                                </HBox>
+                                                <HBox alignment="CENTER">
+                                                   <children>
+                                                      <Label fx:id="label_selectedCharacter" contentDisplay="CENTER" text="Selected" textAlignment="CENTER" wrapText="true">
+                                                         <font>
+                                                            <Font name="System Bold" size="17.0" />
+                                                         </font>
+                                                      </Label>
+                                                   </children>
+                                                </HBox>
+                                                <HBox fx:id="hbox_selected_character" alignment="CENTER">
+                                                   <children>
+                                                      <GridPane>
+                                                         <columnConstraints>
+                                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="75.0" minWidth="75.0" prefWidth="75.0" />
+                                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
+                                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="25.0" minWidth="25.0" prefWidth="25.0" />
+                                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="25.0" minWidth="25.0" prefWidth="25.0" />
+                                                         </columnConstraints>
+                                                         <rowConstraints>
+                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                         </rowConstraints>
+                                                         <children>
+                                                            <Label text="Physical" />
+                                                            <TextField fx:id="textField_selected_physical" GridPane.columnIndex="1" />
+                                                            <Button mnemonicParsing="false" onAction="#physicalPlusOnAction" GridPane.columnIndex="2">
+                                                               <graphic>
+                                                                  <FontAwesomeIconView glyphName="PLUS" />
+                                                               </graphic>
+                                                               <tooltip>
+                                                                  <Tooltip text="Increase condition" />
+                                                               </tooltip>
+                                                            </Button>
+                                                            <Button mnemonicParsing="false" onAction="#physicalMinusOnAction" GridPane.columnIndex="3">
+                                                               <graphic>
+                                                                  <FontAwesomeIconView glyphName="MINUS" />
+                                                               </graphic>
+                                                               <tooltip>
+                                                                  <Tooltip text="Decrease condition" />
+                                                               </tooltip>
+                                                            </Button>
+                                                            <TextField fx:id="textField_selected_stun" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                            <Label text="Stun" GridPane.rowIndex="1" />
+                                                            <Button mnemonicParsing="false" onAction="#stunPlusOnAction" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                                               <graphic>
+                                                                  <FontAwesomeIconView glyphName="PLUS" />
+                                                               </graphic>
+                                                               <tooltip>
+                                                                  <Tooltip text="Increase condition" />
+                                                               </tooltip>
+                                                            </Button>
+                                                            <Button mnemonicParsing="false" onAction="#stunMinusOnAction" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                                                               <graphic>
+                                                                  <FontAwesomeIconView glyphName="MINUS" />
+                                                               </graphic>
+                                                               <tooltip>
+                                                                  <Tooltip text="Decrease condition" />
+                                                               </tooltip>
+                                                            </Button>
+                                                         </children>
+                                                      </GridPane>
+                                                   </children>
+                                                </HBox>
+                                                <HBox fx:id="hbox_selected_barrier" alignment="CENTER" layoutX="10.0" layoutY="31.0">
+                                                   <children>
+                                                      <GridPane>
+                                                         <columnConstraints>
+                                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="75.0" minWidth="75.0" prefWidth="75.0" />
+                                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
+                                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="25.0" minWidth="25.0" prefWidth="25.0" />
+                                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="25.0" minWidth="25.0" prefWidth="25.0" />
+                                                         </columnConstraints>
+                                                         <rowConstraints>
+                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                         </rowConstraints>
+                                                         <children>
+                                                            <Label text="Structure" />
+                                                            <TextField fx:id="textField_selected_structure" GridPane.columnIndex="1" />
+                                                            <Button mnemonicParsing="false" onAction="#structurePlusOnAction" GridPane.columnIndex="2">
+                                                               <graphic>
+                                                                  <FontAwesomeIconView glyphName="PLUS" />
+                                                               </graphic>
+                                                               <tooltip>
+                                                                  <Tooltip text="Increase condition" />
+                                                               </tooltip>
+                                                            </Button>
+                                                            <Button mnemonicParsing="false" onAction="#structureMinusOnAction" GridPane.columnIndex="3">
+                                                               <graphic>
+                                                                  <FontAwesomeIconView glyphName="MINUS" />
+                                                               </graphic>
+                                                               <tooltip>
+                                                                  <Tooltip text="Decrease condition" />
+                                                               </tooltip>
+                                                            </Button>
+                                                            <TextField fx:id="textField_selected_armor" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                            <Label text="Armor" GridPane.rowIndex="1" />
+                                                            <Button mnemonicParsing="false" onAction="#armorPlusOnAction" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                                               <graphic>
+                                                                  <FontAwesomeIconView glyphName="PLUS" />
+                                                               </graphic>
+                                                               <tooltip>
+                                                                  <Tooltip text="Increase condition" />
+                                                               </tooltip>
+                                                            </Button>
+                                                            <Button mnemonicParsing="false" onAction="#armorMinusOnAction" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                                                               <graphic>
+                                                                  <FontAwesomeIconView glyphName="MINUS" />
+                                                               </graphic>
+                                                               <tooltip>
+                                                                  <Tooltip text="Decrease condition" />
+                                                               </tooltip>
+                                                            </Button>
+                                                         </children>
+                                                      </GridPane>
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </AnchorPane>
                                             </items>
                                         </SplitPane>
                                     </children>

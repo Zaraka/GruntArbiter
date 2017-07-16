@@ -68,7 +68,7 @@ public class ControllerAddCharacter {
     }
 
     public Optional<Character> getCharacter() {
-        return Optional.of(character);
+        return Optional.ofNullable(character);
     }
 
     private int getInitative() {

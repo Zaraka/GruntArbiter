@@ -1,5 +1,7 @@
 package org.shadowrun.controllers;
 
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.ReadOnlyObjectWrapper;
@@ -11,7 +13,9 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
@@ -20,6 +24,7 @@ import javafx.util.Pair;
 import javafx.util.converter.NumberStringConverter;
 import org.apache.commons.lang3.StringUtils;
 import org.shadowrun.common.IterationTimeConverter;
+import org.shadowrun.common.NumericLimitListener;
 import org.shadowrun.common.cells.CharacterCell;
 import org.shadowrun.common.cells.ObjectCell;
 import org.shadowrun.common.cells.TurnTableCell;
@@ -28,6 +33,7 @@ import org.shadowrun.common.constants.ICE;
 import org.shadowrun.common.constants.Weather;
 import org.shadowrun.common.constants.World;
 import org.shadowrun.common.exceptions.NextTurnException;
+import org.shadowrun.common.factories.CharacterIconFactory;
 import org.shadowrun.common.factories.ExceptionDialogFactory;
 import org.shadowrun.common.factories.InitiativeDialogFactory;
 import org.shadowrun.logic.AppLogic;
@@ -86,13 +92,13 @@ public class ControllerMain {
     private TableColumn<PlayerCharacter, String> tableColumn_playerCharacters_character;
 
     @FXML
-    private TableView<Barrier> tableView_objects;
+    private TableView<Barrier> tableView_barrier;
     @FXML
-    private TableColumn<Barrier, Barrier> tableColumn_objects_object;
+    private TableColumn<Barrier, Barrier> tableColumn_barrier_object;
     @FXML
-    private TableColumn<Barrier, Integer> tableColumn_objects_structure;
+    private TableColumn<Barrier, Integer> tableColumn_barrier_structure;
     @FXML
-    private TableColumn<Barrier, Integer> tableColumn_objects_armor;
+    private TableColumn<Barrier, Integer> tableColumn_barrier_armor;
 
     @FXML
     private Menu menu_campaign;
@@ -123,8 +129,7 @@ public class ControllerMain {
     @FXML
     private Tab tab_battle;
 
-    @FXML
-    private VBox vbox_selected;
+
     @FXML
     private VBox vbox_realWorld;
     @FXML
@@ -133,6 +138,14 @@ public class ControllerMain {
     private VBox vbox_astralPlane;
     @FXML
     private VBox vbox_matrixProperties;
+
+
+    @FXML
+    private HBox hbox_selected_character;
+    @FXML
+    private HBox hbox_selected_barrier;
+    @FXML
+    private HBox hbox_selected_glyph;
 
 
     @FXML
@@ -172,10 +185,20 @@ public class ControllerMain {
     @FXML
     private TextField textField_selected_stun;
     @FXML
+    private TextField textField_selected_structure;
+    @FXML
+    private TextField textField_selected_armor;
+    @FXML
     private TextField textField_backgroundCount;
 
     @FXML
     private ComboBox<Weather> comboBox_weather;
+
+    @FXML
+    private AnchorPane anchorPane_selected;
+
+    @FXML
+    private FontAwesomeIconView fontAwesomeIcon_selected;
 
 
     //------------------------method hooks
@@ -444,26 +467,51 @@ public class ControllerMain {
     @FXML
     private void physicalPlusOnAction() {
         Character character = tableView_masterTable.getSelectionModel().getSelectedItem();
-        character.physicalMonitorProperty().set(character.getPhysicalMonitor() + 1);
+        character.physicalMonitorProperty().setValue(character.getPhysicalMonitor() + 1);
     }
 
     @FXML
     private void physicalMinusOnAction() {
         Character character = tableView_masterTable.getSelectionModel().getSelectedItem();
-        character.physicalMonitorProperty().set(character.getPhysicalMonitor() - 1);
+        character.physicalMonitorProperty().setValue(character.getPhysicalMonitor() - 1);
     }
 
     @FXML
     private void stunPlusOnAction() {
         Character character = tableView_masterTable.getSelectionModel().getSelectedItem();
-        character.stunMonitorProperty().set(character.getStunMonitor() + 1);
+        character.stunMonitorProperty().setValue(character.getStunMonitor() + 1);
     }
 
     @FXML
     private void stunMinusOnAction() {
         Character character = tableView_masterTable.getSelectionModel().getSelectedItem();
-        character.stunMonitorProperty().set(character.getStunMonitor() - 1);
+        character.stunMonitorProperty().setValue(character.getStunMonitor() - 1);
     }
+
+    @FXML
+    private void structurePlusOnAction() {
+        Barrier barrier = tableView_barrier.getSelectionModel().getSelectedItem();
+        barrier.structureProperty().setValue(barrier.getStructure() + 1);
+    }
+
+    @FXML
+    private void structureMinusOnAction() {
+        Barrier barrier = tableView_barrier.getSelectionModel().getSelectedItem();
+        barrier.structureProperty().setValue(barrier.getStructure() - 1);
+    }
+
+    @FXML
+    private void armorPlusOnAction() {
+        Barrier barrier = tableView_barrier.getSelectionModel().getSelectedItem();
+        barrier.armorProperty().setValue(barrier.getArmor() + 1);
+    }
+
+    @FXML
+    private void armorMinusOnAction() {
+        Barrier barrier = tableView_barrier.getSelectionModel().getSelectedItem();
+        barrier.armorProperty().setValue(barrier.getArmor() - 1);
+    }
+
 
     @FXML
     private void overwatchScorePlusOnAction() {
@@ -511,7 +559,7 @@ public class ControllerMain {
     }
 
     @FXML
-    private void addObjectOnAction() {
+    private void addBarrierOnAction() {
         Parent root;
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("views/addBarrier.fxml"));
@@ -541,7 +589,7 @@ public class ControllerMain {
     private void addBattleHooks() {
         //Items
         tableView_masterTable.setItems(battleLogic.getActiveBattle().getCharacters());
-        tableView_objects.setItems(battleLogic.getActiveBattle().getBarriers());
+        tableView_barrier.setItems(battleLogic.getActiveBattle().getBarriers());
 
         //unbinds
         label_combatTurnCounter.textProperty().unbind();
@@ -635,7 +683,7 @@ public class ControllerMain {
 
             tableRow.emptyProperty().addListener((observable, oldValue, newValue) ->
                     tableRow.setContextMenu(newValue ? emptyContextMenu : fullContextMenu));
-            return  tableRow;
+            return tableRow;
         });
 
         tableColumn_masterTable_character.setCellFactory(param -> new CharacterCell());
@@ -730,39 +778,101 @@ public class ControllerMain {
         });
         tableView_masterTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (oldValue != null) {
-                textField_selected_physical.textProperty().unbind();
-                textField_selected_stun.textProperty().unbind();
-                label_selectedCharacter.textProperty().unbind();
+                cleanSelectedPane();
             }
 
             if (newValue == null) {
-                vbox_selected.setVisible(false);
+                cleanSelectedPane();
             } else {
-                textField_selected_physical.textProperty().bind(newValue.physicalMonitorProperty().asString());
-                textField_selected_stun.textProperty().bind(newValue.stunMonitorProperty().asString());
+                tableView_barrier.getSelectionModel().clearSelection();
+
+                CharacterIconFactory.createIcon(newValue).ifPresent(fontAwesomeIcon -> {
+                    fontAwesomeIcon_selected.setIcon(fontAwesomeIcon);
+                    hbox_selected_glyph.setVisible(true);
+                });
+
+                textField_selected_physical.textProperty()
+                        .bindBidirectional(newValue.physicalMonitorProperty(), new NumberStringConverter());
+                textField_selected_stun.textProperty()
+                        .bindBidirectional(newValue.stunMonitorProperty(), new NumberStringConverter());
                 label_selectedCharacter.textProperty().bind(newValue.nameProperty());
-                vbox_selected.setVisible(true);
+
+                hbox_selected_character.setVisible(true);
+                anchorPane_selected.setVisible(true);
             }
         });
 
-        tableColumn_objects_object.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
-        tableColumn_objects_object.setCellFactory(param -> new ObjectCell());
-        tableColumn_objects_armor.setCellValueFactory(param -> param.getValue().armorProperty().asObject());
-        tableColumn_objects_structure.setCellValueFactory(param -> param.getValue().structureProperty().asObject());
+        tableColumn_barrier_object.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
+        tableColumn_barrier_object.setCellFactory(param -> new ObjectCell());
+        tableColumn_barrier_armor.setCellValueFactory(param -> param.getValue().armorProperty().asObject());
+        tableColumn_barrier_structure.setCellValueFactory(param -> param.getValue().structureProperty().asObject());
 
-        textField_selected_physical.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("-?\\d*")) {
-                textField_selected_physical.setText(newValue.replaceAll("[^\\d]", ""));
+        tableView_barrier.setRowFactory(param -> {
+            TableRow<Barrier> tableRow = new TableRow<>();
+
+            MenuItem renameBarrier = new MenuItem("Rename barrier");
+            renameBarrier.setOnAction(event -> {
+                Barrier selected = tableView_barrier.getSelectionModel().getSelectedItem();
+                TextInputDialog dialog = new TextInputDialog(selected.getName());
+                dialog.setTitle("Rename barrier");
+                dialog.setHeaderText("Rename barrier " + selected.getName());
+                dialog.setContentText("Please enter new name:");
+                Optional<String> result = dialog.showAndWait();
+
+                result.ifPresent(selected::setName);
+            });
+            MenuItem deleteBarrier = new MenuItem("Delete barrier");
+            deleteBarrier.setOnAction(event -> tableView_barrier.getItems()
+                    .remove(tableView_barrier.getSelectionModel().getSelectedIndex()));
+            MenuItem addBarrier = new MenuItem("Add barrier");
+            addBarrier.setOnAction(event -> addBarrierOnAction());
+            ContextMenu fullContextMenu = new ContextMenu(addBarrier, deleteBarrier, renameBarrier);
+            ContextMenu emptyContextMenu = new ContextMenu(addBarrier);
+
+            tableRow.emptyProperty().addListener((observable, oldValue, newValue) ->
+                    tableRow.setContextMenu(newValue ? emptyContextMenu : fullContextMenu));
+            return tableRow;
+        });
+
+        tableView_barrier.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (oldValue != null) {
+                cleanSelectedPane();
+            }
+
+            if (newValue == null) {
+                cleanSelectedPane();
+            } else {
+                tableView_masterTable.getSelectionModel().clearSelection();
+
+                fontAwesomeIcon_selected.setIcon(FontAwesomeIcon.SQUARE);
+
+                textField_selected_structure.textProperty()
+                        .bindBidirectional(newValue.structureProperty(), new NumberStringConverter());
+                textField_selected_armor.textProperty()
+                        .bindBidirectional(newValue.armorProperty(), new NumberStringConverter());
+                label_selectedCharacter.textProperty().bind(newValue.nameProperty());
+
+                hbox_selected_barrier.setVisible(true);
+                hbox_selected_glyph.setVisible(true);
+                anchorPane_selected.setVisible(true);
             }
         });
 
-        textField_selected_stun.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("-?\\d*")) {
-                textField_selected_stun.setText(newValue.replaceAll("[^\\d]", ""));
-            }
-        });
+        textField_selected_physical.textProperty()
+                .addListener(new NumericLimitListener(textField_selected_physical, -100, 100));
+        textField_selected_stun.textProperty()
+                .addListener(new NumericLimitListener(textField_selected_stun, -100, 100));
+        textField_selected_structure.textProperty()
+                .addListener(new NumericLimitListener(textField_selected_structure, -100, 100));
+        textField_selected_armor.textProperty()
+                .addListener(new NumericLimitListener(textField_selected_armor, -100, 100));
 
-        vbox_selected.setVisible(false);
+        hbox_selected_barrier.managedProperty().bind(hbox_selected_barrier.visibleProperty());
+        hbox_selected_character.managedProperty().bind(hbox_selected_character.visibleProperty());
+        hbox_selected_glyph.managedProperty().bind(hbox_selected_glyph.visibleProperty());
+        anchorPane_selected.managedProperty().bind(anchorPane_selected.visibleProperty());
+
+        cleanSelectedPane();
 
         label_overwatchScore.textProperty().addListener((observable, oldValue, newValue) -> {
             if (StringUtils.isNotEmpty(newValue)) {
@@ -841,5 +951,18 @@ public class ControllerMain {
             }
 
         }
+    }
+
+    private void cleanSelectedPane() {
+        textField_selected_physical.textProperty().unbind();
+        textField_selected_stun.textProperty().unbind();
+        textField_selected_armor.textProperty().unbind();
+        textField_selected_structure.textProperty().unbind();
+        label_selectedCharacter.textProperty().unbind();
+
+        hbox_selected_glyph.setVisible(false);
+        hbox_selected_character.setVisible(false);
+        hbox_selected_barrier.setVisible(false);
+        anchorPane_selected.setVisible(false);
     }
 }

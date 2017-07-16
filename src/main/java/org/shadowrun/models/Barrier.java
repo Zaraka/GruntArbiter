@@ -42,4 +42,8 @@ public class Barrier {
     public IntegerProperty armorProperty() {
         return armor;
     }
+
+    public void setName(String name) {
+        this.name.set(name);
+    }
 }

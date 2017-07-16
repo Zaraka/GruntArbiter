@@ -73,6 +73,6 @@ public class ControllerAddBarrier {
     }
 
     public Optional<Barrier> getBarrier() {
-        return Optional.of(barrier);
+        return Optional.ofNullable(barrier);
     }
 }

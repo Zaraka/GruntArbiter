@@ -107,7 +107,7 @@ public class ControllerAddHost {
     }
 
     public Optional<Host> getHost() {
-        return Optional.of(host);
+        return Optional.ofNullable(host);
     }
 
     private int getRating() {
