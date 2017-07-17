@@ -236,7 +236,7 @@ public class ControllerMain {
             dialog.showAndWait();
             controllerAddCharacter.getCharacter().ifPresent(playerCharacter -> {
                 battleLogic.getActiveBattle().getCharacters().add(playerCharacter);
-                addBattleHooks();
+                tableView_masterTable.refresh();
             });
 
         } catch (IOException ex) {
