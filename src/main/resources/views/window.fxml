@@ -334,19 +334,33 @@
                                                                                             <children>
                                                                         <GridPane>
                                                                           <columnConstraints>
-                                                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="150.0" prefWidth="150.0" />
+                                                                            <ColumnConstraints hgrow="SOMETIMES" />
                                                                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="25.0" minWidth="25.0" prefWidth="25.0" />
+                                                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="25.0" minWidth="25.0" prefWidth="100.0" />
                                                                           </columnConstraints>
                                                                           <rowConstraints>
                                                                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                                           </rowConstraints>
                                                                            <children>
-                                                                                                        <Label text="Background count">
-                                                                                                            <font>
-                                                                                                                <Font name="System Bold" size="13.0" />
-                                                                                                            </font>
-                                                                                                        </Label>
+                                                                              <Label text="Background count" />
                                                                               <TextField fx:id="textField_backgroundCount" GridPane.columnIndex="1" />
+                                                                              <Button mnemonicParsing="false" onAction="#backgroundCountPlusOnAction" GridPane.columnIndex="2">
+                                                                                 <graphic>
+                                                                                    <FontAwesomeIconView glyphName="PLUS" />
+                                                                                 </graphic>
+                                                                                 <tooltip>
+                                                                                    <Tooltip text="Increase astral background count" />
+                                                                                 </tooltip>
+                                                                              </Button>
+                                                                              <Button layoutX="229.0" layoutY="12.0" mnemonicParsing="false" onAction="#backgroundCountMinusOnAction" GridPane.columnIndex="3">
+                                                                                 <graphic>
+                                                                                    <FontAwesomeIconView glyphName="MINUS"/>
+                                                                                 </graphic>
+                                                                                 <tooltip>
+                                                                                    <Tooltip text="Decrease astral background count" />
+                                                                                 </tooltip>
+                                                                              </Button>
                                                                            </children>
                                                                         </GridPane>
                                                                                             </children>

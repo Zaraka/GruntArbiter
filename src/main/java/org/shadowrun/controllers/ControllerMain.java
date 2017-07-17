@@ -544,6 +544,15 @@ public class ControllerMain {
         device.conditionProperty().setValue(device.getCondition() - 1);
     }
 
+    @FXML
+    private void backgroundCountPlusOnAction() {
+        battleLogic.raiseBackgroundCount();
+    }
+
+    @FXML
+    private void backgroundCountMinusOnAction() {
+        battleLogic.decreaseBackgroundCount();
+    }
 
     @FXML
     private void overwatchScorePlusOnAction() {

@@ -87,6 +87,20 @@ public class BattleLogic {
         getActiveBattle().getHost().overwatchScoreProperty().setValue(0);
     }
 
+    public void raiseBackgroundCount() {
+        getActiveBattle().backgroundCountProperty().setValue(
+                getActiveBattle().getBackgroundCount() + 1
+        );
+    }
+
+    public void decreaseBackgroundCount() {
+        if (getActiveBattle().getBackgroundCount() > 0) {
+            getActiveBattle().backgroundCountProperty().setValue(
+                    getActiveBattle().getBackgroundCount() - 1
+            );
+        }
+    }
+
     public void spawnICe(ICE ice, Integer initiative) {
         String UUIDs = UUID.randomUUID().toString();
         Matcher matcher = UUID_GROUP_PATTERN.matcher(UUIDs);
