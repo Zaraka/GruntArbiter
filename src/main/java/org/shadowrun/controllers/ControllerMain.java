@@ -119,8 +119,6 @@ public class ControllerMain {
     @FXML
     private Menu menu_campaign;
     @FXML
-    private MenuItem menuItem_addPlayer;
-    @FXML
     private MenuItem menuItem_newBattle;
     @FXML
     private MenuItem menuItem_saveCampaign;
@@ -136,6 +134,8 @@ public class ControllerMain {
     private MenuItem menuItem_recentCampaign2;
     @FXML
     private MenuItem menuItem_recentCampaign3;
+    @FXML
+    private Menu menu_battle;
 
 
     @FXML
@@ -718,6 +718,7 @@ public class ControllerMain {
         menuItem_closeCampaign.disableProperty().bind(appLogic.hasCampaign());
         tab_characters.disableProperty().bind(appLogic.hasCampaign());
 
+        menu_battle.disableProperty().bind(battleLogic.hasBattle());
         tab_battle.disableProperty().bind(battleLogic.hasBattle());
         button_nextTurn.disableProperty().bind(battleLogic.hasBattle());
         button_prevTurn.disableProperty().bind(battleLogic.hasBattle());
