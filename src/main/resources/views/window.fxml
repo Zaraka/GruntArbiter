@@ -103,6 +103,7 @@
                                 <TableView fx:id="tableView_playerCharacters" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                     <columns>
                                         <TableColumn fx:id="tableColumn_playerCharacters_character" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="500.0" resizable="false" text="Character" />
+                              <TableColumn fx:id="tableColumn_playerCharacters_condition" prefWidth="137.0" text="Condition" />
                                     </columns>
                                 </TableView>
                             </children>

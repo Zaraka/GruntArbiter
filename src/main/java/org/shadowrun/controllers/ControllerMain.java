@@ -89,6 +89,8 @@ public class ControllerMain {
     private TableView<PlayerCharacter> tableView_playerCharacters;
     @FXML
     private TableColumn<PlayerCharacter, String> tableColumn_playerCharacters_character;
+    @FXML
+    private TableColumn<PlayerCharacter, Integer> tableColumn_playerCharacters_condition;
 
     @FXML
     private TableView<Barrier> tableView_barrier;
@@ -738,6 +740,7 @@ public class ControllerMain {
         button_prevTurn.disableProperty().bind(battleLogic.hasBattle());
 
         tableColumn_playerCharacters_character.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
+        tableColumn_playerCharacters_condition.setCellValueFactory(param -> param.getValue().conditionProperty().asObject());
 
         tableView_playerCharacters.setRowFactory(param -> {
             TableRow<PlayerCharacter> tableRow = new TableRow<>();
@@ -753,12 +756,28 @@ public class ControllerMain {
 
                 result.ifPresent(selected::setName);
             });
+            MenuItem setCondition = new MenuItem("Set condition");
+            setCondition.setOnAction(event -> {
+                PlayerCharacter selected = tableView_playerCharacters.getSelectionModel().getSelectedItem();
+                TextInputDialog dialog = new TextInputDialog(String.valueOf(selected.getCondition()));
+                dialog.setTitle("Set condition");
+                dialog.setHeaderText("Set " + selected.getName() + " condition.");
+                dialog.setContentText("Please enter new max base condition monitor:");
+                Optional<String> result = dialog.showAndWait();
+
+                result.ifPresent(s -> selected.setCondition(Integer.parseInt(s)));
+            });
             MenuItem deletePlayer = new MenuItem("Delete player");
             deletePlayer.setOnAction(event -> tableView_playerCharacters.getItems()
                     .remove(tableView_playerCharacters.getSelectionModel().getSelectedIndex()));
             MenuItem addPlayer = new MenuItem("Add player");
             addPlayer.setOnAction(event -> addPlayerOnAction());
-            ContextMenu fullContextMenu = new ContextMenu(renamePlayer, deletePlayer, addPlayer);
+            ContextMenu fullContextMenu = new ContextMenu(
+                    renamePlayer,
+                    setCondition,
+                    new SeparatorMenuItem(),
+                    deletePlayer,
+                    addPlayer);
             ContextMenu emptyContextMenu = new ContextMenu(addPlayer);
 
             tableRow.emptyProperty().addListener((observable, oldValue, newValue) ->
