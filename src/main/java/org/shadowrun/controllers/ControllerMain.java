@@ -203,6 +203,8 @@ public class ControllerMain {
     @FXML
     private TextField textField_selected_stun;
     @FXML
+    private TextField textField_selected_initiative;
+    @FXML
     private TextField textField_selected_structure;
     @FXML
     private TextField textField_selected_armor;
@@ -506,6 +508,18 @@ public class ControllerMain {
     private void stunMinusOnAction() {
         Character character = tableView_masterTable.getSelectionModel().getSelectedItem();
         character.stunMonitorProperty().setValue(character.getStunMonitor() - 1);
+    }
+
+    @FXML
+    private void initiativePlusOnAction() {
+        Character character = tableView_masterTable.getSelectionModel().getSelectedItem();
+        character.initiativeProperty().setValue(character.getInitiative() + 1);
+    }
+
+    @FXML
+    private void initiativeMinusOnAction() {
+        Character character = tableView_masterTable.getSelectionModel().getSelectedItem();
+        character.initiativeProperty().setValue(character.getInitiative() - 1);
     }
 
     @FXML
@@ -869,6 +883,8 @@ public class ControllerMain {
                         .bindBidirectional(newValue.physicalMonitorProperty(), new NumberStringConverter());
                 textField_selected_stun.textProperty()
                         .bindBidirectional(newValue.stunMonitorProperty(), new NumberStringConverter());
+                textField_selected_initiative.textProperty()
+                        .bindBidirectional(newValue.initiativeProperty(), new NumberStringConverter());
                 label_selectedCharacter.textProperty().bind(newValue.nameProperty());
 
                 hbox_selected_character.setVisible(true);
@@ -995,6 +1011,8 @@ public class ControllerMain {
                 .addListener(new NumericLimitListener(textField_selected_physical, -100, 100));
         textField_selected_stun.textProperty()
                 .addListener(new NumericLimitListener(textField_selected_stun, -100, 100));
+        textField_selected_initiative.textProperty()
+                .addListener(new NumericLimitListener(textField_selected_initiative, -100, 100));
         textField_selected_structure.textProperty()
                 .addListener(new NumericLimitListener(textField_selected_structure, 0, 100));
         textField_selected_armor.textProperty()
