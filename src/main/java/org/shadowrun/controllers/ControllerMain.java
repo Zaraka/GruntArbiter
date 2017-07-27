@@ -25,10 +25,7 @@ import javafx.util.converter.NumberStringConverter;
 import org.apache.commons.lang3.StringUtils;
 import org.shadowrun.common.IterationTimeConverter;
 import org.shadowrun.common.NumericLimitListener;
-import org.shadowrun.common.cells.CharacterCell;
-import org.shadowrun.common.cells.ObjectCell;
-import org.shadowrun.common.cells.TurnTableCell;
-import org.shadowrun.common.cells.WeatherCell;
+import org.shadowrun.common.cells.*;
 import org.shadowrun.common.constants.ICE;
 import org.shadowrun.common.constants.Weather;
 import org.shadowrun.common.constants.World;
@@ -67,7 +64,7 @@ public class ControllerMain {
     @FXML
     private TableColumn<Character, Character> tableColumn_masterTable_character;
     @FXML
-    private TableColumn<Character, String> tableColumn_masterTable_condition;
+    private TableColumn<Character, Character> tableColumn_masterTable_condition;
     @FXML
     private TableColumn<Character, Integer> tableColumn_masterTable_initiative;
     @FXML
@@ -488,24 +485,28 @@ public class ControllerMain {
     private void physicalPlusOnAction() {
         Character character = tableView_masterTable.getSelectionModel().getSelectedItem();
         character.physicalMonitorProperty().setValue(character.getPhysicalMonitor() + 1);
+        tableView_masterTable.refresh();
     }
 
     @FXML
     private void physicalMinusOnAction() {
         Character character = tableView_masterTable.getSelectionModel().getSelectedItem();
         character.physicalMonitorProperty().setValue(character.getPhysicalMonitor() - 1);
+        tableView_masterTable.refresh();
     }
 
     @FXML
     private void stunPlusOnAction() {
         Character character = tableView_masterTable.getSelectionModel().getSelectedItem();
         character.stunMonitorProperty().setValue(character.getStunMonitor() + 1);
+        tableView_masterTable.refresh();
     }
 
     @FXML
     private void stunMinusOnAction() {
         Character character = tableView_masterTable.getSelectionModel().getSelectedItem();
         character.stunMonitorProperty().setValue(character.getStunMonitor() - 1);
+        tableView_masterTable.refresh();
     }
 
     @FXML
@@ -754,10 +755,8 @@ public class ControllerMain {
 
         tableColumn_masterTable_character.setCellFactory(param -> new CharacterCell());
         tableColumn_masterTable_character.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
-        tableColumn_masterTable_condition.setCellValueFactory(cellData -> Bindings.createStringBinding(
-                () -> MessageFormat.format("{0}/{1}", cellData.getValue().getPhysicalMonitor(), cellData.getValue().getStunMonitor()),
-                cellData.getValue().physicalMonitorProperty(),
-                cellData.getValue().stunMonitorProperty()));
+        tableColumn_masterTable_condition.setCellFactory(param -> new CharacterConditionCell());
+        tableColumn_masterTable_condition.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
         tableColumn_masterTable_initiative.setCellValueFactory(cellData -> cellData.getValue().initiativeProperty().asObject());
         tableColumn_masterTable_turn1.setCellFactory(param -> new TurnTableCell());
         tableColumn_masterTable_turn2.setCellFactory(param -> new TurnTableCell());
