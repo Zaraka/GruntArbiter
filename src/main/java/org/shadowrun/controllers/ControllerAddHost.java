@@ -102,8 +102,6 @@ public class ControllerAddHost {
         comboBox_sleeze.disableProperty().bind(radioButton_manual.selectedProperty().not());
         comboBox_firewall.disableProperty().bind(radioButton_manual.selectedProperty().not());
         comboBox_dataProcessing.disableProperty().bind(radioButton_manual.selectedProperty().not());
-
-        button_ok.requestFocus();
     }
 
     public Optional<Host> getHost() {

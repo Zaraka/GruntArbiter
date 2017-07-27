@@ -54,8 +54,6 @@ public class ControllerAddDevice {
         textField_sleeze.textProperty().addListener(new NumericLimitListener(textField_sleeze, 0, null));
         textField_firewall.textProperty().addListener(new NumericLimitListener(textField_firewall, 0, null));
         textField_dataProcessing.textProperty().addListener(new NumericLimitListener(textField_dataProcessing, 0, null));
-
-        button_ok.requestFocus();
     }
 
     public Optional<Device> getDevice() {

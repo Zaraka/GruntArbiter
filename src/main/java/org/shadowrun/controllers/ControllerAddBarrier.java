@@ -68,8 +68,6 @@ public class ControllerAddBarrier {
                 label_description.textProperty().setValue(newValue.getDescription());
             }
         });
-
-        button_ok.requestFocus();
     }
 
     public Optional<Barrier> getBarrier() {
