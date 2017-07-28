@@ -68,6 +68,11 @@ public class ControllerAddBarrier {
                 label_description.textProperty().setValue(newValue.getDescription());
             }
         });
+
+        button_ok.disableProperty().bind(
+                textField_armor.textProperty().isEmpty().or(
+                        textField_name.textProperty().isEmpty().or(
+                                textField_structure.textProperty().isEmpty())));
     }
 
     public Optional<Barrier> getBarrier() {
