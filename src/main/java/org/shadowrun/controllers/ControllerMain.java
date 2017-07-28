@@ -43,7 +43,6 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -666,7 +665,7 @@ public class ControllerMain {
 
     private void addBattleHooks() {
         Battle battle = battleLogic.getActiveBattle();
-        
+
         //Items
         tableView_masterTable.setItems(battle.getCharacters());
         tableView_barrier.setItems(battle.getBarriers());
@@ -883,12 +882,14 @@ public class ControllerMain {
         });
         tableView_masterTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (oldValue != null) {
-                cleanSelectedPane();
+                textField_selected_physical.textProperty().unbindBidirectional(oldValue.physicalMonitorProperty());
+                textField_selected_stun.textProperty().unbindBidirectional(oldValue.stunMonitorProperty());
+                textField_selected_initiative.textProperty().unbindBidirectional(oldValue.initiativeProperty());
             }
 
-            if (newValue == null) {
-                cleanSelectedPane();
-            } else {
+            cleanSelectedPane();
+
+            if (newValue != null) {
                 tableView_barrier.getSelectionModel().clearSelection();
                 tableView_devices.getSelectionModel().clearSelection();
 
@@ -944,12 +945,13 @@ public class ControllerMain {
 
         tableView_barrier.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (oldValue != null) {
-                cleanSelectedPane();
+                textField_selected_armor.textProperty().unbindBidirectional(oldValue.armorProperty());
+                textField_selected_structure.textProperty().unbindBidirectional(oldValue.structureProperty());
             }
 
-            if (newValue == null) {
-                cleanSelectedPane();
-            } else {
+            cleanSelectedPane();
+
+            if (newValue != null) {
                 tableView_masterTable.getSelectionModel().clearSelection();
                 tableView_devices.getSelectionModel().clearSelection();
 
@@ -1004,12 +1006,12 @@ public class ControllerMain {
 
         tableView_devices.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (oldValue != null) {
-                cleanSelectedPane();
+                textField_selected_condition.textProperty().unbindBidirectional(oldValue.conditionProperty());
             }
 
-            if (newValue == null) {
-                cleanSelectedPane();
-            } else {
+            cleanSelectedPane();
+
+            if (newValue != null) {
                 tableView_masterTable.getSelectionModel().clearSelection();
                 tableView_barrier.getSelectionModel().clearSelection();
 
@@ -1123,11 +1125,6 @@ public class ControllerMain {
     }
 
     private void cleanSelectedPane() {
-        textField_selected_physical.textProperty().unbind();
-        textField_selected_stun.textProperty().unbind();
-        textField_selected_armor.textProperty().unbind();
-        textField_selected_structure.textProperty().unbind();
-        textField_selected_condition.textProperty().unbind();
         label_selectedCharacter.textProperty().unbind();
 
         hbox_selected_glyph.setVisible(false);
