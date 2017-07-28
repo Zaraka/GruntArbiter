@@ -69,7 +69,10 @@ public class ControllerAddBarrier {
             }
         });
 
-        button_ok.requestFocus();
+        button_ok.disableProperty().bind(
+                textField_armor.textProperty().isEmpty().or(
+                        textField_name.textProperty().isEmpty().or(
+                                textField_structure.textProperty().isEmpty())));
     }
 
     public Optional<Barrier> getBarrier() {

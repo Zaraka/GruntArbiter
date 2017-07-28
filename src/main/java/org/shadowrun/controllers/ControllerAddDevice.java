@@ -55,7 +55,14 @@ public class ControllerAddDevice {
         textField_firewall.textProperty().addListener(new NumericLimitListener(textField_firewall, 0, null));
         textField_dataProcessing.textProperty().addListener(new NumericLimitListener(textField_dataProcessing, 0, null));
 
-        button_ok.requestFocus();
+        button_ok.disableProperty().bind(
+                textField_rating.textProperty().isEmpty().or(
+                        textField_attack.textProperty().isEmpty().or(
+                                textField_sleeze.textProperty().isEmpty().or(
+                                        textField_firewall.textProperty().isEmpty().or(
+                                                textField_dataProcessing.textProperty().isEmpty().or(
+                                                        textField_name.textProperty().isEmpty()
+                                                ))))));
     }
 
     public Optional<Device> getDevice() {

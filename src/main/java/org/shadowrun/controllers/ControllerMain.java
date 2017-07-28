@@ -86,6 +86,8 @@ public class ControllerMain {
     private TableView<PlayerCharacter> tableView_playerCharacters;
     @FXML
     private TableColumn<PlayerCharacter, String> tableColumn_playerCharacters_character;
+    @FXML
+    private TableColumn<PlayerCharacter, Integer> tableColumn_playerCharacters_condition;
 
     @FXML
     private TableView<Barrier> tableView_barrier;
@@ -199,6 +201,8 @@ public class ControllerMain {
     private TextField textField_selected_physical;
     @FXML
     private TextField textField_selected_stun;
+    @FXML
+    private TextField textField_selected_initiative;
     @FXML
     private TextField textField_selected_structure;
     @FXML
@@ -510,6 +514,18 @@ public class ControllerMain {
     }
 
     @FXML
+    private void initiativePlusOnAction() {
+        Character character = tableView_masterTable.getSelectionModel().getSelectedItem();
+        character.initiativeProperty().setValue(character.getInitiative() + 1);
+    }
+
+    @FXML
+    private void initiativeMinusOnAction() {
+        Character character = tableView_masterTable.getSelectionModel().getSelectedItem();
+        character.initiativeProperty().setValue(character.getInitiative() - 1);
+    }
+
+    @FXML
     private void structurePlusOnAction() {
         Barrier barrier = tableView_barrier.getSelectionModel().getSelectedItem();
         barrier.structureProperty().setValue(barrier.getStructure() + 1);
@@ -725,6 +741,7 @@ public class ControllerMain {
         button_prevTurn.disableProperty().bind(battleLogic.hasBattle());
 
         tableColumn_playerCharacters_character.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
+        tableColumn_playerCharacters_condition.setCellValueFactory(param -> param.getValue().conditionProperty().asObject());
 
         tableView_playerCharacters.setRowFactory(param -> {
             TableRow<PlayerCharacter> tableRow = new TableRow<>();
@@ -740,12 +757,28 @@ public class ControllerMain {
 
                 result.ifPresent(selected::setName);
             });
+            MenuItem setCondition = new MenuItem("Set condition");
+            setCondition.setOnAction(event -> {
+                PlayerCharacter selected = tableView_playerCharacters.getSelectionModel().getSelectedItem();
+                TextInputDialog dialog = new TextInputDialog(String.valueOf(selected.getCondition()));
+                dialog.setTitle("Set condition");
+                dialog.setHeaderText("Set " + selected.getName() + " condition.");
+                dialog.setContentText("Please enter new max base condition monitor:");
+                Optional<String> result = dialog.showAndWait();
+
+                result.ifPresent(s -> selected.setCondition(Integer.parseInt(s)));
+            });
             MenuItem deletePlayer = new MenuItem("Delete player");
             deletePlayer.setOnAction(event -> tableView_playerCharacters.getItems()
                     .remove(tableView_playerCharacters.getSelectionModel().getSelectedIndex()));
             MenuItem addPlayer = new MenuItem("Add player");
             addPlayer.setOnAction(event -> addPlayerOnAction());
-            ContextMenu fullContextMenu = new ContextMenu(renamePlayer, deletePlayer, addPlayer);
+            ContextMenu fullContextMenu = new ContextMenu(
+                    renamePlayer,
+                    setCondition,
+                    new SeparatorMenuItem(),
+                    deletePlayer,
+                    addPlayer);
             ContextMenu emptyContextMenu = new ContextMenu(addPlayer);
 
             tableRow.emptyProperty().addListener((observable, oldValue, newValue) ->
@@ -868,6 +901,8 @@ public class ControllerMain {
                         .bindBidirectional(newValue.physicalMonitorProperty(), new NumberStringConverter());
                 textField_selected_stun.textProperty()
                         .bindBidirectional(newValue.stunMonitorProperty(), new NumberStringConverter());
+                textField_selected_initiative.textProperty()
+                        .bindBidirectional(newValue.initiativeProperty(), new NumberStringConverter());
                 label_selectedCharacter.textProperty().bind(newValue.nameProperty());
 
                 hbox_selected_character.setVisible(true);
@@ -994,6 +1029,8 @@ public class ControllerMain {
                 .addListener(new NumericLimitListener(textField_selected_physical, -100, 100));
         textField_selected_stun.textProperty()
                 .addListener(new NumericLimitListener(textField_selected_stun, -100, 100));
+        textField_selected_initiative.textProperty()
+                .addListener(new NumericLimitListener(textField_selected_initiative, -100, 100));
         textField_selected_structure.textProperty()
                 .addListener(new NumericLimitListener(textField_selected_structure, 0, 100));
         textField_selected_armor.textProperty()

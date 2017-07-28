@@ -28,87 +28,68 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity"
-      prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="org.shadowrun.controllers.ControllerMain">
+<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.shadowrun.controllers.ControllerMain">
     <children>
         <MenuBar>
             <menus>
                 <Menu mnemonicParsing="false" text="File">
                     <items>
-                        <MenuItem mnemonicParsing="false" onAction="#newCampaignOnAction" text="New campaign"/>
+                        <MenuItem mnemonicParsing="false" onAction="#newCampaignOnAction" text="New campaign" />
                         <MenuItem mnemonicParsing="false" onAction="#openCampaignOnAction" text="Open campaign">
                             <accelerator>
-                                <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP"
-                                                    shortcut="UP"/>
+                                <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                             </accelerator>
                         </MenuItem>
                         <Menu fx:id="menu_recentCampaigns" mnemonicParsing="false" text="Recent campaigns">
                             <items>
-                                <MenuItem fx:id="menuItem_recentCampaign1" mnemonicParsing="false"
-                                          onAction="#openRecentCampaign1OnAction" text="recent1"/>
-                                <MenuItem fx:id="menuItem_recentCampaign2" mnemonicParsing="false"
-                                          onAction="#openRecentCampaign2OnAction" text="recent2"/>
-                                <MenuItem fx:id="menuItem_recentCampaign3" mnemonicParsing="false"
-                                          onAction="#openRecentCampaign3OnAction" text="recent3"/>
+                                <MenuItem fx:id="menuItem_recentCampaign1" mnemonicParsing="false" onAction="#openRecentCampaign1OnAction" text="recent1" />
+                                <MenuItem fx:id="menuItem_recentCampaign2" mnemonicParsing="false" onAction="#openRecentCampaign2OnAction" text="recent2" />
+                                <MenuItem fx:id="menuItem_recentCampaign3" mnemonicParsing="false" onAction="#openRecentCampaign3OnAction" text="recent3" />
                             </items>
                         </Menu>
-                        <SeparatorMenuItem mnemonicParsing="false"/>
-                        <MenuItem fx:id="menuItem_saveCampaign" mnemonicParsing="false" onAction="#saveCampaignOnAction"
-                                  text="Save campaign">
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem fx:id="menuItem_saveCampaign" mnemonicParsing="false" onAction="#saveCampaignOnAction" text="Save campaign">
                             <accelerator>
-                                <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP"
-                                                    shortcut="UP"/>
+                                <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                             </accelerator>
                         </MenuItem>
-                        <MenuItem fx:id="menuItem_saveAsCampaign" mnemonicParsing="false"
-                                  onAction="#saveAsCampaignOnAction" text="Save As campaign">
+                        <MenuItem fx:id="menuItem_saveAsCampaign" mnemonicParsing="false" onAction="#saveAsCampaignOnAction" text="Save As campaign">
                             <accelerator>
-                                <KeyCodeCombination alt="DOWN" code="S" control="DOWN" meta="UP" shift="UP"
-                                                    shortcut="UP"/>
+                                <KeyCodeCombination alt="DOWN" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                             </accelerator>
                         </MenuItem>
-                        <MenuItem fx:id="menuItem_closeCampaign" mnemonicParsing="false"
-                                  onAction="#closeCampaignOnAction" text="Close campaign">
+                        <MenuItem fx:id="menuItem_closeCampaign" mnemonicParsing="false" onAction="#closeCampaignOnAction" text="Close campaign">
                             <accelerator>
-                                <KeyCodeCombination alt="UP" code="Q" control="DOWN" meta="UP" shift="UP"
-                                                    shortcut="UP"/>
+                                <KeyCodeCombination alt="UP" code="Q" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                             </accelerator>
                         </MenuItem>
-                        <SeparatorMenuItem mnemonicParsing="false"/>
-                        <MenuItem mnemonicParsing="false" onAction="#closeAppOnAction" text="Close GruntArbiter"/>
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" onAction="#closeAppOnAction" text="Close GruntArbiter" />
                     </items>
                 </Menu>
                 <Menu fx:id="menu_campaign" mnemonicParsing="false" text="Campaign">
                     <items>
-                        <MenuItem fx:id="menuItem_addPlayer" mnemonicParsing="false" onAction="#addPlayerOnAction"
-                                  text="Add player"/>
-                        <SeparatorMenuItem mnemonicParsing="false"/>
-                        <MenuItem fx:id="menuItem_newBattle" mnemonicParsing="false" onAction="#newBattleOnAction"
-                                  text="New battle">
+                        <MenuItem fx:id="menuItem_addPlayer" mnemonicParsing="false" onAction="#addPlayerOnAction" text="Add player" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem fx:id="menuItem_newBattle" mnemonicParsing="false" onAction="#newBattleOnAction" text="New battle">
                             <accelerator>
-                                <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP"
-                                                    shortcut="UP"/>
+                                <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                             </accelerator>
                         </MenuItem>
                     </items>
                 </Menu>
                 <Menu fx:id="menu_battle" mnemonicParsing="false" text="Battle">
                     <items>
-                        <MenuItem mnemonicParsing="false" onAction="#addCharacterOnAction"
-                                  text="Add character"/>
-                        <MenuItem mnemonicParsing="false" onAction="#addBarrierOnAction"
-                                  text="Add barrier"/>
-                        <MenuItem mnemonicParsing="false" onAction="#addDeviceOnAction"
-                                  text="Add device"/>
-                        <SeparatorMenuItem mnemonicParsing="false"/>
-                        <MenuItem mnemonicParsing="false" onAction="#generateHostOnAction"
-                                  text="Generate host"/>
+                        <MenuItem mnemonicParsing="false" onAction="#addCharacterOnAction" text="Add character" />
+                        <MenuItem mnemonicParsing="false" onAction="#addBarrierOnAction" text="Add barrier" />
+                        <MenuItem mnemonicParsing="false" onAction="#addDeviceOnAction" text="Add device" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" onAction="#generateHostOnAction" text="Generate host" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Help">
                     <items>
-                        <MenuItem mnemonicParsing="false" onAction="#aboutOnAction" text="About"/>
+                        <MenuItem mnemonicParsing="false" onAction="#aboutOnAction" text="About" />
                     </items>
                 </Menu>
             </menus>
@@ -119,13 +100,10 @@
                     <content>
                         <AnchorPane minHeight="-Infinity" minWidth="-Infinity">
                             <children>
-                                <TableView fx:id="tableView_playerCharacters" AnchorPane.bottomAnchor="0.0"
-                                           AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                                           AnchorPane.topAnchor="0.0">
+                                <TableView fx:id="tableView_playerCharacters" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                     <columns>
-                                        <TableColumn fx:id="tableColumn_playerCharacters_character"
-                                                     maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="500.0"
-                                                     resizable="false" text="Character"/>
+                                        <TableColumn fx:id="tableColumn_playerCharacters_character" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="500.0" resizable="false" text="Character" />
+                              <TableColumn fx:id="tableColumn_playerCharacters_condition" prefWidth="137.0" text="Condition" />
                                     </columns>
                                 </TableView>
                             </children>
@@ -136,97 +114,88 @@
                     <content>
                         <AnchorPane minHeight="-Infinity" minWidth="-Infinity">
                             <children>
-                                <VBox prefHeight="167.0" prefWidth="1024.0" AnchorPane.bottomAnchor="0.0"
-                                      AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                                      AnchorPane.topAnchor="0.0">
+                                <VBox prefHeight="167.0" prefWidth="1024.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                     <children>
                                         <ToolBar prefHeight="40.0" prefWidth="200.0">
                                             <items>
-                                                <Button fx:id="button_prevTurn" mnemonicParsing="false"
-                                                        onAction="#prevTurnOnAction">
+                                                <Button fx:id="button_prevTurn" mnemonicParsing="false" onAction="#prevTurnOnAction">
                                                     <graphic>
-                                                        <FontAwesomeIconView glyphName="CHEVRON_LEFT"/>
+                                                        <FontAwesomeIconView glyphName="CHEVRON_LEFT" />
                                                     </graphic>
                                                     <tooltip>
-                                                        <Tooltip text="Previous turn"/>
+                                                        <Tooltip text="Previous turn" />
                                                     </tooltip>
                                                 </Button>
-                                                <Button fx:id="button_nextTurn" mnemonicParsing="false"
-                                                        onAction="#nextTurnOnAction">
+                                                <Button fx:id="button_nextTurn" mnemonicParsing="false" onAction="#nextTurnOnAction">
                                                     <graphic>
-                                                        <FontAwesomeIconView glyphName="CHEVRON_RIGHT" text=""/>
+                                                        <FontAwesomeIconView glyphName="CHEVRON_RIGHT" text="" />
                                                     </graphic>
                                                     <tooltip>
-                                                        <Tooltip text="Next turn"/>
+                                                        <Tooltip text="Next turn" />
                                                     </tooltip>
                                                 </Button>
-                                                <Separator prefWidth="5.0"/>
+                                                <Separator prefWidth="5.0" />
                                                 <Label text="Combat turn">
                                                     <font>
-                                                        <Font name="System Bold" size="18.0"/>
+                                                        <Font name="System Bold" size="18.0" />
                                                     </font>
                                                 </Label>
                                                 <Label fx:id="label_combatTurnCounter" text="0">
                                                     <font>
-                                                        <Font name="System Bold" size="18.0"/>
+                                                        <Font name="System Bold" size="18.0" />
                                                     </font>
                                                 </Label>
-                                                <Separator prefWidth="5.0"/>
+                                                <Separator prefWidth="5.0" />
                                                 <Label text="Initative pass">
                                                     <font>
-                                                        <Font name="System Bold" size="18.0"/>
+                                                        <Font name="System Bold" size="18.0" />
                                                     </font>
                                                 </Label>
                                                 <Label fx:id="label_intiativePassCounter" text="0">
                                                     <font>
-                                                        <Font name="System Bold" size="18.0"/>
+                                                        <Font name="System Bold" size="18.0" />
                                                     </font>
                                                 </Label>
-                                                <Separator prefWidth="5.0"/>
+                                                <Separator prefWidth="5.0" />
                                                 <Label text="Action phase">
                                                     <font>
-                                                        <Font name="System Bold" size="18.0"/>
+                                                        <Font name="System Bold" size="18.0" />
                                                     </font>
                                                 </Label>
                                                 <Label fx:id="label_actionPhaseCounter" text="0">
                                                     <font>
-                                                        <Font name="System Bold" size="18.0"/>
+                                                        <Font name="System Bold" size="18.0" />
                                                     </font>
                                                 </Label>
-                                                <Separator prefWidth="25.0"/>
+                                                <Separator prefWidth="25.0" />
                                                 <Label text="Current ">
                                                     <font>
-                                                        <Font name="System Bold" size="18.0"/>
+                                                        <Font name="System Bold" size="18.0" />
                                                     </font>
                                                 </Label>
                                                 <Label fx:id="label_currentCharacter" text="john doe">
                                                     <font>
-                                                        <Font name="System Bold" size="18.0"/>
+                                                        <Font name="System Bold" size="18.0" />
                                                     </font>
                                                 </Label>
-                                                <Separator layoutX="192.0" layoutY="10.0" prefWidth="5.0"/>
+                                                <Separator layoutX="192.0" layoutY="10.0" prefWidth="5.0" />
                                                 <Label fx:id="label_time" text="00:00">
                                                     <font>
-                                                        <Font size="16.0"/>
+                                                        <Font size="16.0" />
                                                     </font>
                                                 </Label>
-                                                <Pane HBox.hgrow="ALWAYS"/>
+                                                <Pane HBox.hgrow="ALWAYS" />
                                             </items>
                                         </ToolBar>
-                                        <SplitPane dividerPositions="0.3, 0.5" prefHeight="160.0" prefWidth="200.0"
-                                                   VBox.vgrow="ALWAYS">
+                                        <SplitPane dividerPositions="0.3, 0.5" prefHeight="160.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                                             <items>
                                                 <AnchorPane maxWidth="280.0" minWidth="280.0" prefWidth="280.0">
                                                     <children>
-                                                        <VBox prefHeight="707.0" prefWidth="301.0"
-                                                              AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                                                              AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                        <VBox prefHeight="707.0" prefWidth="301.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                             <children>
                                                                 <ToolBar prefHeight="40.0" prefWidth="200.0">
                                                                     <items>
-                                                                        <Button mnemonicParsing="false"
-                                                                                onAction="#addCharacterOnAction"
-                                                                                text="Spawn character"/>
+                                                                        <Button mnemonicParsing="false" onAction="#addCharacterOnAction" text="Spawn character" />
                                                                     </items>
                                                                 </ToolBar>
                                                                 <VBox>
@@ -235,30 +204,16 @@
                                                                             <content>
                                                                                 <AnchorPane>
                                                                                     <children>
-                                                                                        <VBox fx:id="vbox_realWorld"
-                                                                                              prefHeight="67.0"
-                                                                                              prefWidth="278.0"
-                                                                                              AnchorPane.bottomAnchor="0.0"
-                                                                                              AnchorPane.leftAnchor="0.0"
-                                                                                              AnchorPane.rightAnchor="0.0"
-                                                                                              AnchorPane.topAnchor="0.0">
+                                                                                        <VBox fx:id="vbox_realWorld" prefHeight="67.0" prefWidth="278.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                                             <children>
-                                                                                                <ToolBar
-                                                                                                        prefHeight="40.0"
-                                                                                                        prefWidth="200.0">
+                                                                                                <ToolBar prefHeight="40.0" prefWidth="200.0">
                                                                                                     <items>
-                                                                                                        <ComboBox
-                                                                                                                fx:id="comboBox_weather"
-                                                                                                                minWidth="200.0"/>
+                                                                                                        <ComboBox fx:id="comboBox_weather" minWidth="200.0" />
                                                                                                     </items>
                                                                                                 </ToolBar>
-                                                                                                <ToolBar
-                                                                                                        prefHeight="40.0"
-                                                                                                        prefWidth="200.0">
+                                                                                                <ToolBar prefHeight="40.0" prefWidth="200.0">
                                                                                                     <items>
-                                                                                                        <Button mnemonicParsing="false"
-                                                                                                                onAction="#addBarrierOnAction"
-                                                                                                                text="Add barrier"/>
+                                                                                                        <Button mnemonicParsing="false" onAction="#addBarrierOnAction" text="Add barrier" />
                                                                                                     </items>
                                                                                                 </ToolBar>
                                                                                             </children>
@@ -271,153 +226,104 @@
                                                                             <content>
                                                                                 <AnchorPane>
                                                                                     <children>
-                                                                                        <VBox fx:id="vbox_matrix"
-                                                                                              prefHeight="141.0"
-                                                                                              prefWidth="278.0"
-                                                                                              AnchorPane.bottomAnchor="0.0"
-                                                                                              AnchorPane.leftAnchor="0.0"
-                                                                                              AnchorPane.rightAnchor="0.0"
-                                                                                              AnchorPane.topAnchor="0.0">
+                                                                                        <VBox fx:id="vbox_matrix" prefHeight="141.0" prefWidth="278.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                                             <children>
-                                                                                                <ToolBar
-                                                                                                        prefHeight="40.0"
-                                                                                                        prefWidth="200.0">
+                                                                                                <ToolBar prefHeight="40.0" prefWidth="200.0">
                                                                                                     <items>
-                                                                                                        <Button fx:id="button_generateHost"
-                                                                                                                mnemonicParsing="false"
-                                                                                                                onAction="#generateHostOnAction"
-                                                                                                                text="Generate Host"/>
-                                                                                                        <Button mnemonicParsing="false"
-                                                                                                                onAction="#addDeviceOnAction"
-                                                                                                                text="Add device"/>
+                                                                                                        <Button fx:id="button_generateHost" mnemonicParsing="false" onAction="#generateHostOnAction" text="Generate Host" />
+                                                                                                        <Button mnemonicParsing="false" onAction="#addDeviceOnAction" text="Add device" />
                                                                                                     </items>
                                                                                                 </ToolBar>
                                                                                                 <VBox fx:id="vbox_matrixProperties">
                                                                                                     <children>
-                                                                                                        <ToolBar
-                                                                                                                prefHeight="40.0"
-                                                                                                                prefWidth="200.0">
+                                                                                                        <ToolBar prefHeight="40.0" prefWidth="200.0">
                                                                                                             <items>
                                                                                                                 <Label text="R">
                                                                                                                     <font>
-                                                                                                                        <Font name="System Bold"
-                                                                                                                              size="13.0"/>
+                                                                                                                        <Font name="System Bold" size="13.0" />
                                                                                                                     </font>
                                                                                                                     <tooltip>
-                                                                                                                        <Tooltip
-                                                                                                                                text="Host rating"/>
+                                                                                                                        <Tooltip text="Host rating" />
                                                                                                                     </tooltip>
                                                                                                                 </Label>
-                                                                                                                <Label fx:id="label_host_rating"
-                                                                                                                       text="1"/>
-                                                                                                                <Separator
-                                                                                                                        prefWidth="3.0"/>
+                                                                                                                <Label fx:id="label_host_rating" text="1" />
+                                                                                                                <Separator prefWidth="3.0" />
                                                                                                                 <Label text="A">
                                                                                                                     <font>
-                                                                                                                        <Font name="System Bold"
-                                                                                                                              size="13.0"/>
+                                                                                                                        <Font name="System Bold" size="13.0" />
                                                                                                                     </font>
                                                                                                                     <tooltip>
-                                                                                                                        <Tooltip
-                                                                                                                                text="Host attack"/>
+                                                                                                                        <Tooltip text="Host attack" />
                                                                                                                     </tooltip>
                                                                                                                 </Label>
-                                                                                                                <Label fx:id="label_host_attack"
-                                                                                                                       text="2"/>
+                                                                                                                <Label fx:id="label_host_attack" text="2" />
                                                                                                                 <Label text="S">
                                                                                                                     <font>
-                                                                                                                        <Font name="System Bold"
-                                                                                                                              size="13.0"/>
+                                                                                                                        <Font name="System Bold" size="13.0" />
                                                                                                                     </font>
                                                                                                                     <tooltip>
-                                                                                                                        <Tooltip
-                                                                                                                                text="Host sleeze"/>
+                                                                                                                        <Tooltip text="Host sleeze" />
                                                                                                                     </tooltip>
                                                                                                                 </Label>
-                                                                                                                <Label fx:id="label_host_sleeze"
-                                                                                                                       text="3"/>
+                                                                                                                <Label fx:id="label_host_sleeze" text="3" />
                                                                                                                 <Label text="F">
                                                                                                                     <font>
-                                                                                                                        <Font name="System Bold"
-                                                                                                                              size="13.0"/>
+                                                                                                                        <Font name="System Bold" size="13.0" />
                                                                                                                     </font>
                                                                                                                     <tooltip>
-                                                                                                                        <Tooltip
-                                                                                                                                text="Host firewall"/>
+                                                                                                                        <Tooltip text="Host firewall" />
                                                                                                                     </tooltip>
                                                                                                                 </Label>
-                                                                                                                <Label fx:id="label_host_firewall"
-                                                                                                                       text="4"/>
+                                                                                                                <Label fx:id="label_host_firewall" text="4" />
                                                                                                                 <Label text="DP">
                                                                                                                     <font>
-                                                                                                                        <Font name="System Bold"
-                                                                                                                              size="13.0"/>
+                                                                                                                        <Font name="System Bold" size="13.0" />
                                                                                                                     </font>
                                                                                                                     <tooltip>
-                                                                                                                        <Tooltip
-                                                                                                                                text="Host data processing"/>
+                                                                                                                        <Tooltip text="Host data processing" />
                                                                                                                     </tooltip>
                                                                                                                 </Label>
-                                                                                                                <Label fx:id="label_host_dataProcessing"
-                                                                                                                       text="5"/>
-                                                                                                                <Button mnemonicParsing="false"
-                                                                                                                        onAction="#addICeOnAction"
-                                                                                                                        text="Add ICe"/>
+                                                                                                                <Label fx:id="label_host_dataProcessing" text="5" />
+                                                                                                                <Button mnemonicParsing="false" onAction="#addICeOnAction" text="Add ICe" />
                                                                                                             </items>
                                                                                                         </ToolBar>
-                                                                                                        <ToolBar
-                                                                                                                prefHeight="40.0"
-                                                                                                                prefWidth="200.0">
+                                                                                                        <ToolBar prefHeight="40.0" prefWidth="200.0">
                                                                                                             <items>
                                                                                                                 <Label text="OS">
                                                                                                                     <font>
-                                                                                                                        <Font name="System Bold"
-                                                                                                                              size="15.0"/>
+                                                                                                                        <Font name="System Bold" size="15.0" />
                                                                                                                     </font>
                                                                                                                 </Label>
-                                                                                                                <Label fx:id="label_overwatchScore"
-                                                                                                                       text="0">
+                                                                                                                <Label fx:id="label_overwatchScore" text="0">
                                                                                                                     <font>
-                                                                                                                        <Font name="System Bold"
-                                                                                                                              size="15.0"/>
+                                                                                                                        <Font name="System Bold" size="15.0" />
                                                                                                                     </font>
                                                                                                                     <tooltip>
-                                                                                                                        <Tooltip
-                                                                                                                                text="Overwatch score"/>
+                                                                                                                        <Tooltip text="Overwatch score" />
                                                                                                                     </tooltip>
                                                                                                                 </Label>
-                                                                                                                <Button mnemonicParsing="false"
-                                                                                                                        onAction="#overwatchScorePlusOnAction">
+                                                                                                                <Button mnemonicParsing="false" onAction="#overwatchScorePlusOnAction">
                                                                                                                     <graphic>
-                                                                                                                        <FontAwesomeIconView
-                                                                                                                                glyphName="PLUS"/>
+                                                                                                                        <FontAwesomeIconView glyphName="PLUS" />
                                                                                                                     </graphic>
                                                                                                                     <tooltip>
-                                                                                                                        <Tooltip
-                                                                                                                                text="Increase overwatch score"/>
+                                                                                                                        <Tooltip text="Increase overwatch score" />
                                                                                                                     </tooltip>
                                                                                                                 </Button>
-                                                                                                                <Button mnemonicParsing="false"
-                                                                                                                        onAction="#overwatchScoreMinusOnAction">
+                                                                                                                <Button mnemonicParsing="false" onAction="#overwatchScoreMinusOnAction">
                                                                                                                     <graphic>
-                                                                                                                        <FontAwesomeIconView
-                                                                                                                                glyphName="MINUS"/>
+                                                                                                                        <FontAwesomeIconView glyphName="MINUS" />
                                                                                                                     </graphic>
                                                                                                                     <tooltip>
-                                                                                                                        <Tooltip
-                                                                                                                                text="Decrease overwatch score"/>
+                                                                                                                        <Tooltip text="Decrease overwatch score" />
                                                                                                                     </tooltip>
                                                                                                                 </Button>
-                                                                                                                <Button mnemonicParsing="false"
-                                                                                                                        onAction="#overwatchScoreResetOnAction"
-                                                                                                                        text="Reset">
+                                                                                                                <Button mnemonicParsing="false" onAction="#overwatchScoreResetOnAction" text="Reset">
                                                                                                                     <graphic>
-                                                                                                                        <FontAwesomeIconView
-                                                                                                                                glyphName="REFRESH"/>
+                                                                                                                        <FontAwesomeIconView glyphName="REFRESH" />
                                                                                                                     </graphic>
                                                                                                                     <tooltip>
-                                                                                                                        <Tooltip
-                                                                                                                                text="Reset overwatch score"/>
+                                                                                                                        <Tooltip text="Reset overwatch score" />
                                                                                                                     </tooltip>
                                                                                                                 </Button>
                                                                                                             </items>
@@ -430,8 +336,7 @@
                                                                                 </AnchorPane>
                                                                             </content>
                                                                         </TitledPane>
-                                                                        <TitledPane animated="false"
-                                                                                    text="Astral space">
+                                                                        <TitledPane animated="false" text="Astral space">
                                                                             <content>
                                                                                 <AnchorPane>
                                                                                     <children>
@@ -439,58 +344,31 @@
                                                                                             <children>
                                                                                                 <GridPane>
                                                                                                     <columnConstraints>
-                                                                                                        <ColumnConstraints
-                                                                                                                hgrow="SOMETIMES"/>
-                                                                                                        <ColumnConstraints
-                                                                                                                hgrow="SOMETIMES"
-                                                                                                                minWidth="10.0"
-                                                                                                                prefWidth="100.0"/>
-                                                                                                        <ColumnConstraints
-                                                                                                                hgrow="SOMETIMES"
-                                                                                                                maxWidth="25.0"
-                                                                                                                minWidth="25.0"
-                                                                                                                prefWidth="25.0"/>
-                                                                                                        <ColumnConstraints
-                                                                                                                hgrow="SOMETIMES"
-                                                                                                                maxWidth="25.0"
-                                                                                                                minWidth="25.0"
-                                                                                                                prefWidth="100.0"/>
+                                                                                                        <ColumnConstraints hgrow="SOMETIMES" />
+                                                                                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                                                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="25.0" minWidth="25.0" prefWidth="25.0" />
+                                                                                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="25.0" minWidth="25.0" prefWidth="100.0" />
                                                                                                     </columnConstraints>
                                                                                                     <rowConstraints>
-                                                                                                        <RowConstraints
-                                                                                                                minHeight="10.0"
-                                                                                                                prefHeight="30.0"
-                                                                                                                vgrow="SOMETIMES"/>
+                                                                                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                                                                     </rowConstraints>
                                                                                                     <children>
-                                                                                                        <Label text="Background count"/>
-                                                                                                        <TextField
-                                                                                                                fx:id="textField_backgroundCount"
-                                                                                                                GridPane.columnIndex="1"/>
-                                                                                                        <Button mnemonicParsing="false"
-                                                                                                                onAction="#backgroundCountPlusOnAction"
-                                                                                                                GridPane.columnIndex="2">
+                                                                                                        <Label text="Background count" />
+                                                                                                        <TextField fx:id="textField_backgroundCount" GridPane.columnIndex="1" />
+                                                                                                        <Button mnemonicParsing="false" onAction="#backgroundCountPlusOnAction" GridPane.columnIndex="2">
                                                                                                             <graphic>
-                                                                                                                <FontAwesomeIconView
-                                                                                                                        glyphName="PLUS"/>
+                                                                                                                <FontAwesomeIconView glyphName="PLUS" />
                                                                                                             </graphic>
                                                                                                             <tooltip>
-                                                                                                                <Tooltip
-                                                                                                                        text="Increase astral background count"/>
+                                                                                                                <Tooltip text="Increase astral background count" />
                                                                                                             </tooltip>
                                                                                                         </Button>
-                                                                                                        <Button layoutX="229.0"
-                                                                                                                layoutY="12.0"
-                                                                                                                mnemonicParsing="false"
-                                                                                                                onAction="#backgroundCountMinusOnAction"
-                                                                                                                GridPane.columnIndex="3">
+                                                                                                        <Button layoutX="229.0" layoutY="12.0" mnemonicParsing="false" onAction="#backgroundCountMinusOnAction" GridPane.columnIndex="3">
                                                                                                             <graphic>
-                                                                                                                <FontAwesomeIconView
-                                                                                                                        glyphName="MINUS"/>
+                                                                                                                <FontAwesomeIconView glyphName="MINUS" />
                                                                                                             </graphic>
                                                                                                             <tooltip>
-                                                                                                                <Tooltip
-                                                                                                                        text="Decrease astral background count"/>
+                                                                                                                <Tooltip text="Decrease astral background count" />
                                                                                                             </tooltip>
                                                                                                         </Button>
                                                                                                     </children>
@@ -507,203 +385,54 @@
                                                         </VBox>
                                                     </children>
                                                 </AnchorPane>
-                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0"
-                                                            prefWidth="100.0">
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                                                     <children>
-                                                        <SplitPane dividerPositions="0.5" orientation="VERTICAL"
-                                                                   prefHeight="664.0" prefWidth="734.0"
-                                                                   AnchorPane.bottomAnchor="0.0"
-                                                                   AnchorPane.leftAnchor="0.0"
-                                                                   AnchorPane.rightAnchor="0.0"
-                                                                   AnchorPane.topAnchor="0.0">
+                                                        <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="664.0" prefWidth="734.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                             <items>
-                                                                <AnchorPane minHeight="0.0" minWidth="0.0"
-                                                                            prefHeight="100.0" prefWidth="160.0">
+                                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                                                                     <children>
-                                                                        <TableView id="tableView_turnTable"
-                                                                                   fx:id="tableView_masterTable"
-                                                                                   minWidth="250.0" prefHeight="327.0"
-                                                                                   prefWidth="732.0"
-                                                                                   AnchorPane.bottomAnchor="0.0"
-                                                                                   AnchorPane.leftAnchor="0.0"
-                                                                                   AnchorPane.rightAnchor="0.0"
-                                                                                   AnchorPane.topAnchor="0.0">
+                                                                        <TableView id="tableView_turnTable" fx:id="tableView_masterTable" minWidth="250.0" prefHeight="327.0" prefWidth="732.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                             <columns>
-                                                                                <TableColumn
-                                                                                        fx:id="tableColumn_masterTable_character"
-                                                                                        prefWidth="145.0"
-                                                                                        sortable="false"
-                                                                                        text="Character"/>
-                                                                                <TableColumn
-                                                                                        fx:id="tableColumn_masterTable_condition"
-                                                                                        editable="false"
-                                                                                        maxWidth="100.0"
-                                                                                        minWidth="100.0"
-                                                                                        prefWidth="100.0"
-                                                                                        sortable="false"
-                                                                                        text="Condition"/>
-                                                                                <TableColumn
-                                                                                        fx:id="tableColumn_masterTable_initiative"
-                                                                                        maxWidth="91.0" minWidth="51.0"
-                                                                                        prefWidth="90.0"
-                                                                                        resizable="false"
-                                                                                        sortType="DESCENDING"
-                                                                                        text="Initiative"/>
-                                                                                <TableColumn
-                                                                                        fx:id="tableColumn_masterTable_turn1"
-                                                                                        maxWidth="50.0" minWidth="50.0"
-                                                                                        prefWidth="50.0"
-                                                                                        resizable="false"
-                                                                                        sortable="false" text="1"/>
-                                                                                <TableColumn
-                                                                                        fx:id="tableColumn_masterTable_turn2"
-                                                                                        maxWidth="50.0" minWidth="50.0"
-                                                                                        prefWidth="50.0"
-                                                                                        resizable="false"
-                                                                                        sortable="false" text="2"/>
-                                                                                <TableColumn
-                                                                                        fx:id="tableColumn_masterTable_turn3"
-                                                                                        maxWidth="50.0" minWidth="50.0"
-                                                                                        prefWidth="50.0"
-                                                                                        resizable="false"
-                                                                                        sortable="false" text="3"/>
-                                                                                <TableColumn
-                                                                                        fx:id="tableColumn_masterTable_turn4"
-                                                                                        maxWidth="50.0" minWidth="50.0"
-                                                                                        prefWidth="50.0"
-                                                                                        resizable="false"
-                                                                                        sortable="false" text="4"/>
-                                                                                <TableColumn
-                                                                                        fx:id="tableColumn_masterTable_turn5"
-                                                                                        maxWidth="50.0" minWidth="50.0"
-                                                                                        prefWidth="50.0"
-                                                                                        resizable="false"
-                                                                                        sortable="false" text="5"/>
-                                                                                <TableColumn
-                                                                                        fx:id="tableColumn_masterTable_turn6"
-                                                                                        maxWidth="50.0" minWidth="50.0"
-                                                                                        prefWidth="50.0"
-                                                                                        resizable="false"
-                                                                                        sortable="false" text="6"/>
-                                                                                <TableColumn
-                                                                                        fx:id="tableColumn_masterTable_turn7"
-                                                                                        maxWidth="50.0" minWidth="50.0"
-                                                                                        prefWidth="50.0"
-                                                                                        resizable="false"
-                                                                                        sortable="false" text="7"/>
+                                                                                <TableColumn fx:id="tableColumn_masterTable_character" prefWidth="145.0" sortable="false" text="Character" />
+                                                                                <TableColumn fx:id="tableColumn_masterTable_condition" editable="false" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" sortable="false" text="Condition" />
+                                                                                <TableColumn fx:id="tableColumn_masterTable_initiative" maxWidth="91.0" minWidth="51.0" prefWidth="90.0" resizable="false" sortType="DESCENDING" text="Initiative" />
+                                                                                <TableColumn fx:id="tableColumn_masterTable_turn1" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" resizable="false" sortable="false" text="1" />
+                                                                                <TableColumn fx:id="tableColumn_masterTable_turn2" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" resizable="false" sortable="false" text="2" />
+                                                                                <TableColumn fx:id="tableColumn_masterTable_turn3" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" resizable="false" sortable="false" text="3" />
+                                                                                <TableColumn fx:id="tableColumn_masterTable_turn4" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" resizable="false" sortable="false" text="4" />
+                                                                                <TableColumn fx:id="tableColumn_masterTable_turn5" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" resizable="false" sortable="false" text="5" />
+                                                                                <TableColumn fx:id="tableColumn_masterTable_turn6" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" resizable="false" sortable="false" text="6" />
+                                                                                <TableColumn fx:id="tableColumn_masterTable_turn7" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" resizable="false" sortable="false" text="7" />
                                                                             </columns>
                                                                         </TableView>
                                                                     </children>
                                                                 </AnchorPane>
-                                                                <AnchorPane minHeight="0.0" minWidth="0.0"
-                                                                            prefHeight="100.0" prefWidth="160.0">
+                                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                                                                     <children>
-                                                                        <SplitPane dividerPositions="0.4"
-                                                                                   prefHeight="327.0" prefWidth="474.0"
-                                                                                   AnchorPane.bottomAnchor="0.0"
-                                                                                   AnchorPane.leftAnchor="0.0"
-                                                                                   AnchorPane.rightAnchor="0.0"
-                                                                                   AnchorPane.topAnchor="0.0">
+                                                                        <SplitPane dividerPositions="0.4" prefHeight="327.0" prefWidth="474.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                             <items>
-                                                                                <AnchorPane minHeight="0.0"
-                                                                                            minWidth="0.0"
-                                                                                            prefHeight="160.0"
-                                                                                            prefWidth="100.0">
+                                                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                                                                                     <children>
-                                                                                        <TableView
-                                                                                                fx:id="tableView_barrier"
-                                                                                                prefHeight="327.0"
-                                                                                                prefWidth="732.0"
-                                                                                                AnchorPane.bottomAnchor="0.0"
-                                                                                                AnchorPane.leftAnchor="0.0"
-                                                                                                AnchorPane.rightAnchor="0.0"
-                                                                                                AnchorPane.topAnchor="0.0">
+                                                                                        <TableView fx:id="tableView_barrier" prefHeight="327.0" prefWidth="732.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                                             <columns>
-                                                                                                <TableColumn
-                                                                                                        fx:id="tableColumn_barrier_object"
-                                                                                                        editable="false"
-                                                                                                        maxWidth="150.0"
-                                                                                                        minWidth="150.0"
-                                                                                                        prefWidth="150.0"
-                                                                                                        text="Barrier"/>
-                                                                                                <TableColumn
-                                                                                                        fx:id="tableColumn_barrier_structure"
-                                                                                                        editable="false"
-                                                                                                        maxWidth="80.0"
-                                                                                                        minWidth="80.0"
-                                                                                                        text="Structure"/>
-                                                                                                <TableColumn
-                                                                                                        fx:id="tableColumn_barrier_armor"
-                                                                                                        editable="false"
-                                                                                                        maxWidth="80.0"
-                                                                                                        minWidth="80.0"
-                                                                                                        text="Armor"/>
+                                                                                                <TableColumn fx:id="tableColumn_barrier_object" editable="false" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" text="Barrier" />
+                                                                                                <TableColumn fx:id="tableColumn_barrier_structure" editable="false" maxWidth="80.0" minWidth="80.0" text="Structure" />
+                                                                                                <TableColumn fx:id="tableColumn_barrier_armor" editable="false" maxWidth="80.0" minWidth="80.0" text="Armor" />
                                                                                             </columns>
                                                                                         </TableView>
                                                                                     </children>
                                                                                 </AnchorPane>
-                                                                                <AnchorPane minHeight="0.0"
-                                                                                            minWidth="0.0"
-                                                                                            prefHeight="160.0"
-                                                                                            prefWidth="100.0">
+                                                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                                                                                     <children>
-                                                                                        <TableView
-                                                                                                fx:id="tableView_devices"
-                                                                                                prefHeight="325.0"
-                                                                                                prefWidth="327.0"
-                                                                                                AnchorPane.bottomAnchor="0.0"
-                                                                                                AnchorPane.leftAnchor="0.0"
-                                                                                                AnchorPane.rightAnchor="0.0"
-                                                                                                AnchorPane.topAnchor="0.0">
+                                                                                        <TableView fx:id="tableView_devices" prefHeight="325.0" prefWidth="327.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                                             <columns>
-                                                                                                <TableColumn
-                                                                                                        fx:id="tableColumn_device_device"
-                                                                                                        editable="false"
-                                                                                                        maxWidth="150.0"
-                                                                                                        minWidth="150.0"
-                                                                                                        prefWidth="150.0"
-                                                                                                        text="Device"/>
-                                                                                                <TableColumn
-                                                                                                        fx:id="tableColumn_device_condition"
-                                                                                                        editable="false"
-                                                                                                        maxWidth="80.0"
-                                                                                                        minWidth="80.0"
-                                                                                                        text="Condition"/>
-                                                                                                <TableColumn
-                                                                                                        fx:id="tableColumn_device_rating"
-                                                                                                        editable="false"
-                                                                                                        maxWidth="50.0"
-                                                                                                        minWidth="50.0"
-                                                                                                        prefWidth="50.0"
-                                                                                                        text="R"/>
-                                                                                                <TableColumn
-                                                                                                        fx:id="tableColumn_device_attack"
-                                                                                                        editable="false"
-                                                                                                        maxWidth="50.0"
-                                                                                                        minWidth="50.0"
-                                                                                                        prefWidth="50.0"
-                                                                                                        text="A"/>
-                                                                                                <TableColumn
-                                                                                                        fx:id="tableColumn_device_sleeze"
-                                                                                                        editable="false"
-                                                                                                        maxWidth="50.0"
-                                                                                                        minWidth="50.0"
-                                                                                                        prefWidth="50.0"
-                                                                                                        text="S"/>
-                                                                                                <TableColumn
-                                                                                                        fx:id="tableColumn_device_firewall"
-                                                                                                        editable="false"
-                                                                                                        maxWidth="50.0"
-                                                                                                        minWidth="50.0"
-                                                                                                        prefWidth="50.0"
-                                                                                                        text="F"/>
-                                                                                                <TableColumn
-                                                                                                        fx:id="tableColumn_device_dataProcessing"
-                                                                                                        editable="false"
-                                                                                                        maxWidth="50.0"
-                                                                                                        minWidth="50.0"
-                                                                                                        prefWidth="50.0"
-                                                                                                        text="DP"/>
+                                                                                                <TableColumn fx:id="tableColumn_device_device" editable="false" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" text="Device" />
+                                                                                                <TableColumn fx:id="tableColumn_device_condition" editable="false" maxWidth="80.0" minWidth="80.0" text="Condition" />
+                                                                                                <TableColumn fx:id="tableColumn_device_rating" editable="false" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" text="R" />
+                                                                                                <TableColumn fx:id="tableColumn_device_attack" editable="false" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" text="A" />
+                                                                                                <TableColumn fx:id="tableColumn_device_sleeze" editable="false" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" text="S" />
+                                                                                                <TableColumn fx:id="tableColumn_device_firewall" editable="false" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" text="F" />
+                                                                                                <TableColumn fx:id="tableColumn_device_dataProcessing" editable="false" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" text="DP" />
                                                                                             </columns>
                                                                                         </TableView>
                                                                                     </children>
@@ -716,275 +445,180 @@
                                                         </SplitPane>
                                                     </children>
                                                 </AnchorPane>
-                                                <AnchorPane fx:id="anchorPane_selected" maxWidth="-Infinity"
-                                                            minWidth="-Infinity" prefWidth="250.0">
+                                                <AnchorPane fx:id="anchorPane_selected" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="250.0">
                                                     <children>
-                                                        <VBox prefHeight="664.0" prefWidth="250.0"
-                                                              AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                                                              AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0">
+                                                        <VBox prefHeight="664.0" prefWidth="250.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0">
                                                             <children>
                                                                 <HBox fx:id="hbox_selected_glyph" alignment="CENTER">
                                                                     <children>
-                                                                        <FontAwesomeIconView
-                                                                                fx:id="fontAwesomeIcon_selected"
-                                                                                size="48.0"/>
+                                                                        <FontAwesomeIconView fx:id="fontAwesomeIcon_selected" size="48.0" />
                                                                     </children>
                                                                 </HBox>
                                                                 <HBox alignment="CENTER">
                                                                     <children>
-                                                                        <Label fx:id="label_selectedCharacter"
-                                                                               contentDisplay="CENTER" text="Selected"
-                                                                               textAlignment="CENTER" wrapText="true">
+                                                                        <Label fx:id="label_selectedCharacter" contentDisplay="CENTER" text="Selected" textAlignment="CENTER" wrapText="true">
                                                                             <font>
-                                                                                <Font name="System Bold" size="17.0"/>
+                                                                                <Font name="System Bold" size="17.0" />
                                                                             </font>
                                                                         </Label>
                                                                     </children>
                                                                 </HBox>
-                                                                <HBox fx:id="hbox_selected_character"
-                                                                      alignment="CENTER">
+                                                                <HBox fx:id="hbox_selected_character" alignment="CENTER">
                                                                     <children>
                                                                         <GridPane>
                                                                             <columnConstraints>
-                                                                                <ColumnConstraints hgrow="SOMETIMES"
-                                                                                                   maxWidth="75.0"
-                                                                                                   minWidth="75.0"
-                                                                                                   prefWidth="75.0"/>
-                                                                                <ColumnConstraints hgrow="SOMETIMES"
-                                                                                                   maxWidth="100.0"
-                                                                                                   minWidth="100.0"
-                                                                                                   prefWidth="100.0"/>
-                                                                                <ColumnConstraints hgrow="SOMETIMES"
-                                                                                                   maxWidth="25.0"
-                                                                                                   minWidth="25.0"
-                                                                                                   prefWidth="25.0"/>
-                                                                                <ColumnConstraints hgrow="SOMETIMES"
-                                                                                                   maxWidth="25.0"
-                                                                                                   minWidth="25.0"
-                                                                                                   prefWidth="25.0"/>
+                                                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="75.0" minWidth="75.0" prefWidth="75.0" />
+                                                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
+                                                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="25.0" minWidth="25.0" prefWidth="25.0" />
+                                                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="25.0" minWidth="25.0" prefWidth="25.0" />
                                                                             </columnConstraints>
                                                                             <rowConstraints>
-                                                                                <RowConstraints minHeight="10.0"
-                                                                                                prefHeight="30.0"
-                                                                                                vgrow="SOMETIMES"/>
-                                                                                <RowConstraints minHeight="10.0"
-                                                                                                prefHeight="30.0"
-                                                                                                vgrow="SOMETIMES"/>
+                                                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                                             </rowConstraints>
                                                                             <children>
-                                                                                <Label text="Physical"/>
-                                                                                <TextField
-                                                                                        fx:id="textField_selected_physical"
-                                                                                        GridPane.columnIndex="1"/>
-                                                                                <Button mnemonicParsing="false"
-                                                                                        onAction="#physicalPlusOnAction"
-                                                                                        GridPane.columnIndex="2">
+                                                                                <Label text="Physical" />
+                                                                                <TextField fx:id="textField_selected_physical" GridPane.columnIndex="1" />
+                                                                                <Button mnemonicParsing="false" onAction="#physicalPlusOnAction" GridPane.columnIndex="2">
                                                                                     <graphic>
-                                                                                        <FontAwesomeIconView
-                                                                                                glyphName="PLUS"/>
+                                                                                        <FontAwesomeIconView glyphName="PLUS" />
                                                                                     </graphic>
                                                                                     <tooltip>
-                                                                                        <Tooltip
-                                                                                                text="Increase condition"/>
+                                                                                        <Tooltip text="Increase condition" />
                                                                                     </tooltip>
                                                                                 </Button>
-                                                                                <Button mnemonicParsing="false"
-                                                                                        onAction="#physicalMinusOnAction"
-                                                                                        GridPane.columnIndex="3">
+                                                                                <Button mnemonicParsing="false" onAction="#physicalMinusOnAction" GridPane.columnIndex="3">
                                                                                     <graphic>
-                                                                                        <FontAwesomeIconView
-                                                                                                glyphName="MINUS"/>
+                                                                                        <FontAwesomeIconView glyphName="MINUS" />
                                                                                     </graphic>
                                                                                     <tooltip>
-                                                                                        <Tooltip
-                                                                                                text="Decrease condition"/>
+                                                                                        <Tooltip text="Decrease condition" />
                                                                                     </tooltip>
                                                                                 </Button>
-                                                                                <TextField
-                                                                                        fx:id="textField_selected_stun"
-                                                                                        GridPane.columnIndex="1"
-                                                                                        GridPane.rowIndex="1"/>
-                                                                                <Label text="Stun"
-                                                                                       GridPane.rowIndex="1"/>
-                                                                                <Button mnemonicParsing="false"
-                                                                                        onAction="#stunPlusOnAction"
-                                                                                        GridPane.columnIndex="2"
-                                                                                        GridPane.rowIndex="1">
+                                                                                <TextField fx:id="textField_selected_stun" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                                                <Label text="Stun" GridPane.rowIndex="1" />
+                                                                                <Button mnemonicParsing="false" onAction="#stunPlusOnAction" GridPane.columnIndex="2" GridPane.rowIndex="1">
                                                                                     <graphic>
-                                                                                        <FontAwesomeIconView
-                                                                                                glyphName="PLUS"/>
+                                                                                        <FontAwesomeIconView glyphName="PLUS" />
                                                                                     </graphic>
                                                                                     <tooltip>
-                                                                                        <Tooltip
-                                                                                                text="Increase stun condition"/>
+                                                                                        <Tooltip text="Increase stun condition" />
                                                                                     </tooltip>
                                                                                 </Button>
-                                                                                <Button mnemonicParsing="false"
-                                                                                        onAction="#stunMinusOnAction"
-                                                                                        GridPane.columnIndex="3"
-                                                                                        GridPane.rowIndex="1">
+                                                                                <Button mnemonicParsing="false" onAction="#stunMinusOnAction" GridPane.columnIndex="3" GridPane.rowIndex="1">
                                                                                     <graphic>
-                                                                                        <FontAwesomeIconView
-                                                                                                glyphName="MINUS"/>
+                                                                                        <FontAwesomeIconView glyphName="MINUS" />
                                                                                     </graphic>
                                                                                     <tooltip>
-                                                                                        <Tooltip
-                                                                                                text="Decrease stun condition"/>
+                                                                                        <Tooltip text="Decrease stun condition" />
+                                                                                    </tooltip>
+                                                                                </Button>
+                                                            <Label text="Initiative" GridPane.rowIndex="2" />
+                                                            <TextField fx:id="textField_selected_initiative" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                            <Button layoutX="185.0" layoutY="42.0" mnemonicParsing="false" onAction="#initiativePlusOnAction" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                                                               <graphic>
+                                                                  <FontAwesomeIconView glyphName="PLUS" />
+                                                               </graphic>
+                                                               <tooltip>
+                                                                  <Tooltip text="Increase stun condition" />
+                                                               </tooltip>
+                                                            </Button>
+                                                            <Button layoutX="210.0" layoutY="42.0" mnemonicParsing="false" onAction="#initiativeMinusOnAction" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                                                               <graphic>
+                                                                  <FontAwesomeIconView glyphName="MINUS" />
+                                                               </graphic>
+                                                               <tooltip>
+                                                                  <Tooltip text="Decrease stun condition" />
+                                                               </tooltip>
+                                                            </Button>
+                                                                            </children>
+                                                                        </GridPane>
+                                                                    </children>
+                                                                </HBox>
+                                                                <HBox fx:id="hbox_selected_barrier" alignment="CENTER" layoutX="10.0" layoutY="31.0">
+                                                                    <children>
+                                                                        <GridPane>
+                                                                            <columnConstraints>
+                                                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="75.0" minWidth="75.0" prefWidth="75.0" />
+                                                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
+                                                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="25.0" minWidth="25.0" prefWidth="25.0" />
+                                                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="25.0" minWidth="25.0" prefWidth="25.0" />
+                                                                            </columnConstraints>
+                                                                            <rowConstraints>
+                                                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                            </rowConstraints>
+                                                                            <children>
+                                                                                <Label text="Structure" />
+                                                                                <TextField fx:id="textField_selected_structure" GridPane.columnIndex="1" />
+                                                                                <Button mnemonicParsing="false" onAction="#structurePlusOnAction" GridPane.columnIndex="2">
+                                                                                    <graphic>
+                                                                                        <FontAwesomeIconView glyphName="PLUS" />
+                                                                                    </graphic>
+                                                                                    <tooltip>
+                                                                                        <Tooltip text="Increase structure" />
+                                                                                    </tooltip>
+                                                                                </Button>
+                                                                                <Button mnemonicParsing="false" onAction="#structureMinusOnAction" GridPane.columnIndex="3">
+                                                                                    <graphic>
+                                                                                        <FontAwesomeIconView glyphName="MINUS" />
+                                                                                    </graphic>
+                                                                                    <tooltip>
+                                                                                        <Tooltip text="Decrease structure" />
+                                                                                    </tooltip>
+                                                                                </Button>
+                                                                                <TextField fx:id="textField_selected_armor" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                                                <Label text="Armor" GridPane.rowIndex="1" />
+                                                                                <Button mnemonicParsing="false" onAction="#armorPlusOnAction" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                                                                    <graphic>
+                                                                                        <FontAwesomeIconView glyphName="PLUS" />
+                                                                                    </graphic>
+                                                                                    <tooltip>
+                                                                                        <Tooltip text="Increase armor" />
+                                                                                    </tooltip>
+                                                                                </Button>
+                                                                                <Button mnemonicParsing="false" onAction="#armorMinusOnAction" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                                                                                    <graphic>
+                                                                                        <FontAwesomeIconView glyphName="MINUS" />
+                                                                                    </graphic>
+                                                                                    <tooltip>
+                                                                                        <Tooltip text="Decrease armor" />
                                                                                     </tooltip>
                                                                                 </Button>
                                                                             </children>
                                                                         </GridPane>
                                                                     </children>
                                                                 </HBox>
-                                                                <HBox fx:id="hbox_selected_barrier" alignment="CENTER"
-                                                                      layoutX="10.0" layoutY="31.0">
+                                                                <HBox fx:id="hbox_selected_device" alignment="CENTER" layoutX="10.0" layoutY="140.0">
                                                                     <children>
                                                                         <GridPane>
                                                                             <columnConstraints>
-                                                                                <ColumnConstraints hgrow="SOMETIMES"
-                                                                                                   maxWidth="75.0"
-                                                                                                   minWidth="75.0"
-                                                                                                   prefWidth="75.0"/>
-                                                                                <ColumnConstraints hgrow="SOMETIMES"
-                                                                                                   maxWidth="100.0"
-                                                                                                   minWidth="100.0"
-                                                                                                   prefWidth="100.0"/>
-                                                                                <ColumnConstraints hgrow="SOMETIMES"
-                                                                                                   maxWidth="25.0"
-                                                                                                   minWidth="25.0"
-                                                                                                   prefWidth="25.0"/>
-                                                                                <ColumnConstraints hgrow="SOMETIMES"
-                                                                                                   maxWidth="25.0"
-                                                                                                   minWidth="25.0"
-                                                                                                   prefWidth="25.0"/>
+                                                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="75.0" minWidth="75.0" prefWidth="75.0" />
+                                                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
+                                                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="25.0" minWidth="25.0" prefWidth="25.0" />
+                                                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="25.0" minWidth="25.0" prefWidth="25.0" />
                                                                             </columnConstraints>
                                                                             <rowConstraints>
-                                                                                <RowConstraints minHeight="10.0"
-                                                                                                prefHeight="30.0"
-                                                                                                vgrow="SOMETIMES"/>
-                                                                                <RowConstraints minHeight="10.0"
-                                                                                                prefHeight="30.0"
-                                                                                                vgrow="SOMETIMES"/>
+                                                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                                             </rowConstraints>
                                                                             <children>
-                                                                                <Label text="Structure"/>
-                                                                                <TextField
-                                                                                        fx:id="textField_selected_structure"
-                                                                                        GridPane.columnIndex="1"/>
-                                                                                <Button mnemonicParsing="false"
-                                                                                        onAction="#structurePlusOnAction"
-                                                                                        GridPane.columnIndex="2">
+                                                                                <Label text="Condition" />
+                                                                                <TextField fx:id="textField_selected_condition" GridPane.columnIndex="1" />
+                                                                                <Button mnemonicParsing="false" onAction="#conditionPlusOnAction" GridPane.columnIndex="2">
                                                                                     <graphic>
-                                                                                        <FontAwesomeIconView
-                                                                                                glyphName="PLUS"/>
+                                                                                        <FontAwesomeIconView glyphName="PLUS" />
                                                                                     </graphic>
                                                                                     <tooltip>
-                                                                                        <Tooltip
-                                                                                                text="Increase structure"/>
+                                                                                        <Tooltip text="Increase condition" />
                                                                                     </tooltip>
                                                                                 </Button>
-                                                                                <Button mnemonicParsing="false"
-                                                                                        onAction="#structureMinusOnAction"
-                                                                                        GridPane.columnIndex="3">
+                                                                                <Button mnemonicParsing="false" onAction="#conditionMinusOnAction" GridPane.columnIndex="3">
                                                                                     <graphic>
-                                                                                        <FontAwesomeIconView
-                                                                                                glyphName="MINUS"/>
+                                                                                        <FontAwesomeIconView glyphName="MINUS" />
                                                                                     </graphic>
                                                                                     <tooltip>
-                                                                                        <Tooltip
-                                                                                                text="Decrease structure"/>
-                                                                                    </tooltip>
-                                                                                </Button>
-                                                                                <TextField
-                                                                                        fx:id="textField_selected_armor"
-                                                                                        GridPane.columnIndex="1"
-                                                                                        GridPane.rowIndex="1"/>
-                                                                                <Label text="Armor"
-                                                                                       GridPane.rowIndex="1"/>
-                                                                                <Button mnemonicParsing="false"
-                                                                                        onAction="#armorPlusOnAction"
-                                                                                        GridPane.columnIndex="2"
-                                                                                        GridPane.rowIndex="1">
-                                                                                    <graphic>
-                                                                                        <FontAwesomeIconView
-                                                                                                glyphName="PLUS"/>
-                                                                                    </graphic>
-                                                                                    <tooltip>
-                                                                                        <Tooltip
-                                                                                                text="Increase armor"/>
-                                                                                    </tooltip>
-                                                                                </Button>
-                                                                                <Button mnemonicParsing="false"
-                                                                                        onAction="#armorMinusOnAction"
-                                                                                        GridPane.columnIndex="3"
-                                                                                        GridPane.rowIndex="1">
-                                                                                    <graphic>
-                                                                                        <FontAwesomeIconView
-                                                                                                glyphName="MINUS"/>
-                                                                                    </graphic>
-                                                                                    <tooltip>
-                                                                                        <Tooltip
-                                                                                                text="Decrease armor"/>
-                                                                                    </tooltip>
-                                                                                </Button>
-                                                                            </children>
-                                                                        </GridPane>
-                                                                    </children>
-                                                                </HBox>
-                                                                <HBox fx:id="hbox_selected_device" alignment="CENTER"
-                                                                      layoutX="10.0" layoutY="140.0">
-                                                                    <children>
-                                                                        <GridPane>
-                                                                            <columnConstraints>
-                                                                                <ColumnConstraints hgrow="SOMETIMES"
-                                                                                                   maxWidth="75.0"
-                                                                                                   minWidth="75.0"
-                                                                                                   prefWidth="75.0"/>
-                                                                                <ColumnConstraints hgrow="SOMETIMES"
-                                                                                                   maxWidth="100.0"
-                                                                                                   minWidth="100.0"
-                                                                                                   prefWidth="100.0"/>
-                                                                                <ColumnConstraints hgrow="SOMETIMES"
-                                                                                                   maxWidth="25.0"
-                                                                                                   minWidth="25.0"
-                                                                                                   prefWidth="25.0"/>
-                                                                                <ColumnConstraints hgrow="SOMETIMES"
-                                                                                                   maxWidth="25.0"
-                                                                                                   minWidth="25.0"
-                                                                                                   prefWidth="25.0"/>
-                                                                            </columnConstraints>
-                                                                            <rowConstraints>
-                                                                                <RowConstraints minHeight="10.0"
-                                                                                                prefHeight="30.0"
-                                                                                                vgrow="SOMETIMES"/>
-                                                                            </rowConstraints>
-                                                                            <children>
-                                                                                <Label text="Condition"/>
-                                                                                <TextField
-                                                                                        fx:id="textField_selected_condition"
-                                                                                        GridPane.columnIndex="1"/>
-                                                                                <Button mnemonicParsing="false"
-                                                                                        onAction="#conditionPlusOnAction"
-                                                                                        GridPane.columnIndex="2">
-                                                                                    <graphic>
-                                                                                        <FontAwesomeIconView
-                                                                                                glyphName="PLUS"/>
-                                                                                    </graphic>
-                                                                                    <tooltip>
-                                                                                        <Tooltip
-                                                                                                text="Increase condition"/>
-                                                                                    </tooltip>
-                                                                                </Button>
-                                                                                <Button mnemonicParsing="false"
-                                                                                        onAction="#conditionMinusOnAction"
-                                                                                        GridPane.columnIndex="3">
-                                                                                    <graphic>
-                                                                                        <FontAwesomeIconView
-                                                                                                glyphName="MINUS"/>
-                                                                                    </graphic>
-                                                                                    <tooltip>
-                                                                                        <Tooltip
-                                                                                                text="Decrease condition"/>
+                                                                                        <Tooltip text="Decrease condition" />
                                                                                     </tooltip>
                                                                                 </Button>
                                                                             </children>

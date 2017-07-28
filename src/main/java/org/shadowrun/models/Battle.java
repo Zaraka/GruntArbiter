@@ -23,7 +23,12 @@ public class Battle {
     private static final Logger LOG = LoggerFactory.getLogger(Battle.class);
 
     private static final Function<PlayerCharacter, Character> player2Character =
-            playerCharacter -> new Character(playerCharacter.getName(), 0, World.REAL);
+            playerCharacter -> new Character(
+                    playerCharacter.getName(),
+                    0, World.REAL,
+                    false,
+                    false,
+                    playerCharacter.getCondition());
 
     private ObjectProperty<Host> host;
 
