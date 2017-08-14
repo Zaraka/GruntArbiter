@@ -691,6 +691,14 @@ public class ControllerMain {
         button_prevTurn.disableProperty().unbind();
         comboBox_weather.valueProperty().unbind();
 
+        tableColumn_masterTable_turn1.visibleProperty().unbind();
+        tableColumn_masterTable_turn2.visibleProperty().unbind();
+        tableColumn_masterTable_turn3.visibleProperty().unbind();
+        tableColumn_masterTable_turn4.visibleProperty().unbind();
+        tableColumn_masterTable_turn5.visibleProperty().unbind();
+        tableColumn_masterTable_turn6.visibleProperty().unbind();
+        tableColumn_masterTable_turn7.visibleProperty().unbind();
+
         if (battle != null) {
             //binds
             label_combatTurnCounter.textProperty().bind(battle.combatTurnProperty().asString());
@@ -719,6 +727,35 @@ public class ControllerMain {
                     .bind(battle.actionPhaseProperty().greaterThan(1).not()
                             .or(battle.initiativePassProperty().greaterThan(1).not()
                                     .or(battle.combatTurnProperty().greaterThan(1)).not()));
+
+            battle.maxInitiativeBinding().greaterThan(0).addListener((observable, oldValue, newValue) ->
+                    tableColumn_masterTable_turn1.setVisible(newValue));
+            battle.maxInitiativeBinding().greaterThan(10).addListener((observable, oldValue, newValue) ->
+                    tableColumn_masterTable_turn2.setVisible(newValue));
+            battle.maxInitiativeBinding().greaterThan(20).addListener((observable, oldValue, newValue) ->
+                    tableColumn_masterTable_turn3.setVisible(newValue));
+            battle.maxInitiativeBinding().greaterThan(30).addListener((observable, oldValue, newValue) ->
+                    tableColumn_masterTable_turn4.setVisible(newValue));
+            battle.maxInitiativeBinding().greaterThan(40).addListener((observable, oldValue, newValue) ->
+                    tableColumn_masterTable_turn5.setVisible(newValue));
+            battle.maxInitiativeBinding().greaterThan(50).addListener((observable, oldValue, newValue) ->
+                    tableColumn_masterTable_turn6.setVisible(newValue));
+            battle.maxInitiativeBinding().greaterThan(60).addListener((observable, oldValue, newValue) ->
+                    tableColumn_masterTable_turn7.setVisible(newValue));
+
+            /*
+            Cannot use this due to JavaFX bug
+            https://stackoverflow.com/questions/40625086/treetablecolumn-visible-a-bound-value-cannot-be-set
+            tableColumn_masterTable_turn1.visibleProperty().bind(battle.maxInitiativeBinding().greaterThan(0));
+            tableColumn_masterTable_turn2.visibleProperty().bind(battle.maxInitiativeBinding().greaterThan(10));
+            tableColumn_masterTable_turn3.visibleProperty().bind(battle.maxInitiativeBinding().greaterThan(20));
+            tableColumn_masterTable_turn4.visibleProperty().bind(battle.maxInitiativeBinding().greaterThan(30));
+            tableColumn_masterTable_turn5.visibleProperty().bind(battle.maxInitiativeBinding().greaterThan(40));
+            tableColumn_masterTable_turn6.visibleProperty().bind(battle.maxInitiativeBinding().greaterThan(50));
+            tableColumn_masterTable_turn7.visibleProperty().bind(battle.maxInitiativeBinding().greaterThan(60));*/
+
+
+
 
             //tab selection
             tabPane.getSelectionModel().select(tab_battle);

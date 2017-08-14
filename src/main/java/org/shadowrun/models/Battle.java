@@ -1,10 +1,15 @@
 package org.shadowrun.models;
 
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.NumberBinding;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import org.shadowrun.common.constants.Weather;
 import org.shadowrun.common.constants.World;
@@ -12,6 +17,7 @@ import org.shadowrun.common.exceptions.NextTurnException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.swing.text.html.Option;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -52,6 +58,8 @@ public class Battle {
 
     private ObjectProperty<Weather> selectedWeather;
 
+    private NumberBinding maxInitiative;
+
     public Battle(List<PlayerCharacter> players, Weather weather, Integer startingTime) {
         backgroundCount = new SimpleIntegerProperty(0);
         combatTurn = new SimpleIntegerProperty(1);
@@ -68,6 +76,11 @@ public class Battle {
         host = new SimpleObjectProperty<>(new Host());
         selectedWeather = new SimpleObjectProperty<>(weather);
         time = new SimpleIntegerProperty(startingTime);
+        maxInitiative = Bindings.createIntegerBinding(() -> characters.stream()
+                .max(Character::compareTo).map(Character::getInitiative).orElse(0));
+
+        //characters.addListener((ListChangeListener<Character>) c -> maxInitiative.invalidate());
+        characters.addListener((InvalidationListener) observable -> maxInitiative.invalidate());
     }
 
     public Host getHost() {
@@ -203,5 +216,9 @@ public class Battle {
     public List<Character> getICe() {
         return characters.stream().filter(character -> character.isNpc() && character.isIce())
                 .collect(Collectors.toList());
+    }
+
+    public NumberBinding maxInitiativeBinding() {
+        return maxInitiative;
     }
 }
