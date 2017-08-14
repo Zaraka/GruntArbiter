@@ -26,10 +26,7 @@ import javafx.util.converter.NumberStringConverter;
 import org.apache.commons.lang3.StringUtils;
 import org.shadowrun.common.IterationTimeConverter;
 import org.shadowrun.common.NumericLimitListener;
-import org.shadowrun.common.cells.CharacterCell;
-import org.shadowrun.common.cells.ObjectCell;
-import org.shadowrun.common.cells.TurnTableCell;
-import org.shadowrun.common.cells.WeatherCell;
+import org.shadowrun.common.cells.*;
 import org.shadowrun.common.constants.ICE;
 import org.shadowrun.common.constants.Weather;
 import org.shadowrun.common.constants.World;
@@ -48,10 +45,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class ControllerMain {
@@ -672,8 +666,8 @@ public class ControllerMain {
         Battle battle = battleLogic.getActiveBattle();
 
         //Items
-        SortedList<Character> sortedCharacters = new SortedList<>(battle.getCharacters());
-        sortedCharacters.setComparator(Comparator.comparing(Character::getInitiative));
+        SortedList<Character> sortedCharacters = new SortedList<>(battle.getCharacters(),
+                Comparator.comparingInt(Character::getInitiative).reversed()).sorted();
         tableView_masterTable.setItems(sortedCharacters);
         sortedCharacters.comparatorProperty().bind(tableView_masterTable.comparatorProperty());
         tableView_masterTable.sort();
