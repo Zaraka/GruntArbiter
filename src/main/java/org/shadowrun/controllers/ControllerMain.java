@@ -48,7 +48,10 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.text.MessageFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class ControllerMain {
@@ -65,7 +68,7 @@ public class ControllerMain {
     @FXML
     private TableColumn<Character, Character> tableColumn_masterTable_character;
     @FXML
-    private TableColumn<Character, String> tableColumn_masterTable_condition;
+    private TableColumn<Character, Character> tableColumn_masterTable_condition;
     @FXML
     private TableColumn<Character, Integer> tableColumn_masterTable_initiative;
     @FXML
@@ -490,24 +493,28 @@ public class ControllerMain {
     private void physicalPlusOnAction() {
         Character character = tableView_masterTable.getSelectionModel().getSelectedItem();
         character.physicalMonitorProperty().setValue(character.getPhysicalMonitor() + 1);
+        tableView_masterTable.refresh();
     }
 
     @FXML
     private void physicalMinusOnAction() {
         Character character = tableView_masterTable.getSelectionModel().getSelectedItem();
         character.physicalMonitorProperty().setValue(character.getPhysicalMonitor() - 1);
+        tableView_masterTable.refresh();
     }
 
     @FXML
     private void stunPlusOnAction() {
         Character character = tableView_masterTable.getSelectionModel().getSelectedItem();
         character.stunMonitorProperty().setValue(character.getStunMonitor() + 1);
+        tableView_masterTable.refresh();
     }
 
     @FXML
     private void stunMinusOnAction() {
         Character character = tableView_masterTable.getSelectionModel().getSelectedItem();
         character.stunMonitorProperty().setValue(character.getStunMonitor() - 1);
+        tableView_masterTable.refresh();
     }
 
     @FXML
@@ -663,7 +670,7 @@ public class ControllerMain {
 
     private void addBattleHooks() {
         Battle battle = battleLogic.getActiveBattle();
-        
+
         //Items
         SortedList<Character> sortedCharacters = new SortedList<>(battle.getCharacters());
         sortedCharacters.setComparator(Comparator.comparing(Character::getInitiative));
@@ -706,11 +713,11 @@ public class ControllerMain {
             vbox_matrixProperties.visibleProperty().bind(battle.getHost().isInitalized());
             Bindings.bindBidirectional(label_time.textProperty(), battle.combatTurnProperty(), new IterationTimeConverter(battle.getTime()));
 
-            /*battle.currentCharacterProperty().addListener((observable, oldValue, newValue) -> {
+            battle.currentCharacterProperty().addListener((observable, oldValue, newValue) -> {
                 if (newValue != null) {
                     tableView_masterTable.getSelectionModel().select(newValue);
                 }
-            });*/
+            });
 
             comboBox_weather.valueProperty().bindBidirectional(battle.selectedWeatherProperty());
 
@@ -789,10 +796,8 @@ public class ControllerMain {
 
         tableColumn_masterTable_character.setCellFactory(param -> new CharacterCell());
         tableColumn_masterTable_character.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
-        tableColumn_masterTable_condition.setCellValueFactory(cellData -> Bindings.createStringBinding(
-                () -> MessageFormat.format("{0}/{1}", cellData.getValue().getPhysicalMonitor(), cellData.getValue().getStunMonitor()),
-                cellData.getValue().physicalMonitorProperty(),
-                cellData.getValue().stunMonitorProperty()));
+        tableColumn_masterTable_condition.setCellFactory(param -> new CharacterConditionCell());
+        tableColumn_masterTable_condition.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
         tableColumn_masterTable_initiative.setCellValueFactory(cellData -> cellData.getValue().initiativeProperty().asObject());
         tableColumn_masterTable_turn1.setCellFactory(param -> new TurnTableCell());
         tableColumn_masterTable_turn2.setCellFactory(param -> new TurnTableCell());
@@ -889,12 +894,14 @@ public class ControllerMain {
         });
         tableView_masterTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (oldValue != null) {
-                cleanSelectedPane();
+                textField_selected_physical.textProperty().unbindBidirectional(oldValue.physicalMonitorProperty());
+                textField_selected_stun.textProperty().unbindBidirectional(oldValue.stunMonitorProperty());
+                textField_selected_initiative.textProperty().unbindBidirectional(oldValue.initiativeProperty());
             }
 
-            if (newValue == null) {
-                cleanSelectedPane();
-            } else {
+            cleanSelectedPane();
+
+            if (newValue != null) {
                 tableView_barrier.getSelectionModel().clearSelection();
                 tableView_devices.getSelectionModel().clearSelection();
 
@@ -950,12 +957,13 @@ public class ControllerMain {
 
         tableView_barrier.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (oldValue != null) {
-                cleanSelectedPane();
+                textField_selected_armor.textProperty().unbindBidirectional(oldValue.armorProperty());
+                textField_selected_structure.textProperty().unbindBidirectional(oldValue.structureProperty());
             }
 
-            if (newValue == null) {
-                cleanSelectedPane();
-            } else {
+            cleanSelectedPane();
+
+            if (newValue != null) {
                 tableView_masterTable.getSelectionModel().clearSelection();
                 tableView_devices.getSelectionModel().clearSelection();
 
@@ -1010,12 +1018,12 @@ public class ControllerMain {
 
         tableView_devices.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (oldValue != null) {
-                cleanSelectedPane();
+                textField_selected_condition.textProperty().unbindBidirectional(oldValue.conditionProperty());
             }
 
-            if (newValue == null) {
-                cleanSelectedPane();
-            } else {
+            cleanSelectedPane();
+
+            if (newValue != null) {
                 tableView_masterTable.getSelectionModel().clearSelection();
                 tableView_barrier.getSelectionModel().clearSelection();
 
@@ -1129,11 +1137,6 @@ public class ControllerMain {
     }
 
     private void cleanSelectedPane() {
-        textField_selected_physical.textProperty().unbind();
-        textField_selected_stun.textProperty().unbind();
-        textField_selected_armor.textProperty().unbind();
-        textField_selected_structure.textProperty().unbind();
-        textField_selected_condition.textProperty().unbind();
         label_selectedCharacter.textProperty().unbind();
 
         hbox_selected_glyph.setVisible(false);

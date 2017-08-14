@@ -18,7 +18,7 @@
 
 <GridPane hgap="14.0" maxHeight="+Infinity" maxWidth="+Infinity" minHeight="-Infinity" minWidth="-Infinity" vgap="20.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.shadowrun.controllers.ControllerAddHost">
     <children>
-        <FontAwesomeIconView glyphName="CONNECTDEVELOP" size="48" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.valignment="TOP" />
+        <FontAwesomeIconView glyphName="DATABASE" size="48" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.valignment="TOP" />
         <VBox maxHeight="+Infinity" maxWidth="+Infinity" minHeight="-Infinity" prefWidth="400.0" spacing="7.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
             <children>
                 <Label text="Generate Host" textAlignment="LEFT" wrapText="true">

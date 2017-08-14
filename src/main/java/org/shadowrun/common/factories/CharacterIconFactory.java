@@ -10,7 +10,7 @@ public class CharacterIconFactory {
         if(!character.isNpc()) {
             return Optional.of(FontAwesomeIcon.USER);
         } else if (character.isIce()) {
-            return Optional.of(FontAwesomeIcon.CONNECTDEVELOP);
+            return Optional.of(FontAwesomeIcon.DATABASE);
         } else {
             return Optional.empty();
         }
