@@ -391,18 +391,18 @@
                                                             <items>
                                                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                                                                     <children>
-                                                                        <TableView id="tableView_turnTable" fx:id="tableView_masterTable" minWidth="250.0" prefHeight="327.0" prefWidth="732.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                                        <TableView id="tableView_turnTable" fx:id="tableView_masterTable" minWidth="250.0" prefHeight="327.0" prefWidth="732.0" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                             <columns>
-                                                                                <TableColumn fx:id="tableColumn_masterTable_character" prefWidth="145.0" sortable="false" text="Character" />
+                                                                                <TableColumn fx:id="tableColumn_masterTable_character" editable="false" prefWidth="145.0" sortable="false" text="Character" />
                                                                                 <TableColumn fx:id="tableColumn_masterTable_condition" editable="false" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" sortable="false" text="Condition" />
-                                                                                <TableColumn fx:id="tableColumn_masterTable_initiative" maxWidth="91.0" minWidth="51.0" prefWidth="90.0" resizable="false" sortType="DESCENDING" text="Initiative" />
-                                                                                <TableColumn fx:id="tableColumn_masterTable_turn1" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" resizable="false" sortable="false" text="1" />
-                                                                                <TableColumn fx:id="tableColumn_masterTable_turn2" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" resizable="false" sortable="false" text="2" />
-                                                                                <TableColumn fx:id="tableColumn_masterTable_turn3" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" resizable="false" sortable="false" text="3" />
-                                                                                <TableColumn fx:id="tableColumn_masterTable_turn4" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" resizable="false" sortable="false" text="4" />
-                                                                                <TableColumn fx:id="tableColumn_masterTable_turn5" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" resizable="false" sortable="false" text="5" />
-                                                                                <TableColumn fx:id="tableColumn_masterTable_turn6" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" resizable="false" sortable="false" text="6" />
-                                                                                <TableColumn fx:id="tableColumn_masterTable_turn7" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" resizable="false" sortable="false" text="7" />
+                                                                                <TableColumn fx:id="tableColumn_masterTable_initiative" editable="false" maxWidth="91.0" minWidth="51.0" prefWidth="90.0" resizable="false" sortType="DESCENDING" sortable="false" text="Initiative" />
+                                                                                <TableColumn fx:id="tableColumn_masterTable_turn1" editable="false" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" resizable="false" sortable="false" text="1" />
+                                                                                <TableColumn fx:id="tableColumn_masterTable_turn2" editable="false" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" resizable="false" sortable="false" text="2" />
+                                                                                <TableColumn fx:id="tableColumn_masterTable_turn3" editable="false" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" resizable="false" sortable="false" text="3" />
+                                                                                <TableColumn fx:id="tableColumn_masterTable_turn4" editable="false" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" resizable="false" sortable="false" text="4" />
+                                                                                <TableColumn fx:id="tableColumn_masterTable_turn5" editable="false" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" resizable="false" sortable="false" text="5" />
+                                                                                <TableColumn fx:id="tableColumn_masterTable_turn6" editable="false" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" resizable="false" sortable="false" text="6" />
+                                                                                <TableColumn fx:id="tableColumn_masterTable_turn7" editable="false" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" resizable="false" sortable="false" text="7" />
                                                                             </columns>
                                                                         </TableView>
                                                                     </children>

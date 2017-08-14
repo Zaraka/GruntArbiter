@@ -3,7 +3,7 @@ package org.shadowrun.models;
 import javafx.beans.property.*;
 import org.shadowrun.common.constants.World;
 
-public class Character {
+public class Character implements Comparable<Character> {
 
     private StringProperty name;
 
@@ -119,4 +119,8 @@ public class Character {
     }
 
 
+    @Override
+    public int compareTo(Character o) {
+        return (o == null) ? 0 : this.getInitiative() - o.getInitiative();
+    }
 }

@@ -6,6 +6,7 @@ import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -47,10 +48,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class ControllerMain {
@@ -667,7 +665,11 @@ public class ControllerMain {
         Battle battle = battleLogic.getActiveBattle();
         
         //Items
-        tableView_masterTable.setItems(battle.getCharacters());
+        SortedList<Character> sortedCharacters = new SortedList<>(battle.getCharacters());
+        sortedCharacters.setComparator(Comparator.comparing(Character::getInitiative));
+        tableView_masterTable.setItems(sortedCharacters);
+        sortedCharacters.comparatorProperty().bind(tableView_masterTable.comparatorProperty());
+        tableView_masterTable.sort();
         tableView_barrier.setItems(battle.getBarriers());
         tableView_devices.setItems(battle.getDevices());
 
@@ -704,18 +706,18 @@ public class ControllerMain {
             vbox_matrixProperties.visibleProperty().bind(battle.getHost().isInitalized());
             Bindings.bindBidirectional(label_time.textProperty(), battle.combatTurnProperty(), new IterationTimeConverter(battle.getTime()));
 
-            battle.currentCharacterProperty().addListener((observable, oldValue, newValue) -> {
+            /*battle.currentCharacterProperty().addListener((observable, oldValue, newValue) -> {
                 if (newValue != null) {
                     tableView_masterTable.getSelectionModel().select(newValue);
                 }
-            });
+            });*/
 
             comboBox_weather.valueProperty().bindBidirectional(battle.selectedWeatherProperty());
 
             button_prevTurn.disableProperty()
-                    .bind(battle.actionPhaseProperty().greaterThan(1)
-                            .or(battle.initiativePassProperty().greaterThan(1)
-                                    .or(battle.combatTurnProperty().greaterThan(1))));
+                    .bind(battle.actionPhaseProperty().greaterThan(1).not()
+                            .or(battle.initiativePassProperty().greaterThan(1).not()
+                                    .or(battle.combatTurnProperty().greaterThan(1)).not()));
 
             //tab selection
             tabPane.getSelectionModel().select(tab_battle);
@@ -814,6 +816,7 @@ public class ControllerMain {
         tableColumn_masterTable_turn7
                 .setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue().countTurn(7)));
 
+        tableView_masterTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         tableView_masterTable.setRowFactory(param -> {
             MenuItem moveToRealWorld = new MenuItem("Move to meatspace");
             moveToRealWorld.setOnAction(event -> {
@@ -861,7 +864,6 @@ public class ControllerMain {
                 protected void updateItem(Character item, boolean empty) {
                     super.updateItem(item, empty);
                     if (!empty) {
-                        tableView_masterTable.getSortOrder().setAll(tableColumn_masterTable_initiative);
                         switch (item.getWorld()) {
                             case REAL:
                                 setStyle(null);
@@ -876,6 +878,9 @@ public class ControllerMain {
                     } else {
                         setStyle(null);
                     }
+                    //tableView_masterTable.sort();
+                    tableView_masterTable.getSortOrder().clear();
+                    tableView_masterTable.getSortOrder().add(tableColumn_masterTable_initiative);
                 }
             };
             tableRow.emptyProperty().addListener((observable, oldValue, newValue) ->

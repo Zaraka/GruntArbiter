@@ -179,12 +179,13 @@ public class Battle {
     }
 
     public void previousPhase() throws NextTurnException {
-        if (combatTurn.get() > 1) {
+        if (combatTurn.get() > 1 || actionPhase.get() > 1 || initiativePass.get() > 1) {
             actionPhase.setValue(getActionPhase() - 1);
-            if (getActionPhase() > 1) {
+            if (getActionPhase() < 1) {
                 actionPhase.setValue(1);
                 initiativePass.setValue(getInitiativePass() - 1);
-                if (getInitiativePass() > 1) {
+                if (getInitiativePass() < 1) {
+                    initiativePass.setValue(1);
                     combatTurn.setValue(getCombatTurn() - 1);
                     throw new NextTurnException();
                 }
