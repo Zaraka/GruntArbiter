@@ -1,10 +1,7 @@
 package org.shadowrun.logic;
 
 import javafx.beans.binding.BooleanBinding;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 import org.shadowrun.common.constants.ICE;
 import org.shadowrun.common.constants.Weather;
 import org.shadowrun.common.constants.World;
@@ -30,13 +27,24 @@ public class BattleLogic {
 
     private StringProperty currentCharacterName;
 
+    private BooleanProperty hasHost;
+
     public BattleLogic() {
         activeBattle = new SimpleObjectProperty<>(null);
         currentCharacterName = new SimpleStringProperty();
+        hasHost = new SimpleBooleanProperty(false);
     }
 
     public BooleanBinding hasBattle() {
         return activeBattle.isNull();
+    }
+
+    public boolean hasHost() {
+        return hasHost.get();
+    }
+
+    public BooleanProperty hasHostProperty() {
+        return hasHost;
     }
 
     public Battle getActiveBattle() {
@@ -120,11 +128,22 @@ public class BattleLogic {
     }
 
     public void setHost(Host host) {
-        getActiveBattle().getHost().setRating(host.getRating());
-        getActiveBattle().getHost().setAttack(host.getAttack());
-        getActiveBattle().getHost().setSleeze(host.getSleeze());
-        getActiveBattle().getHost().setFirewall(host.getFirewall());
-        getActiveBattle().getHost().setDataProcessing(host.getDataProcessing());
+        Host activeHost = getActiveBattle().getHost();
+        activeHost.setRating(host.getRating());
+        activeHost.setAttack(host.getAttack());
+        activeHost.setSleeze(host.getSleeze());
+        activeHost.setFirewall(host.getFirewall());
+        activeHost.setDataProcessing(host.getDataProcessing());
+        hasHost.setValue(true);
+    }
 
+    public void disconectFromHost() {
+        Host activeHost = getActiveBattle().getHost();
+        activeHost.setRating(0);
+        activeHost.setAttack(0);
+        activeHost.setSleeze(0);
+        activeHost.setFirewall(0);
+        activeHost.setDataProcessing(0);
+        hasHost.setValue(false);
     }
 }

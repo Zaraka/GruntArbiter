@@ -84,7 +84,7 @@
                         <MenuItem mnemonicParsing="false" onAction="#addBarrierOnAction" text="Add barrier" />
                         <MenuItem mnemonicParsing="false" onAction="#addDeviceOnAction" text="Add device" />
                         <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" onAction="#generateHostOnAction" text="Generate host" />
+                        <MenuItem mnemonicParsing="false" onAction="#hostActionOnAction" text="Generate host" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Help">
@@ -230,7 +230,7 @@
                                                                                             <children>
                                                                                                 <ToolBar prefHeight="40.0" prefWidth="200.0">
                                                                                                     <items>
-                                                                                                        <Button fx:id="button_generateHost" mnemonicParsing="false" onAction="#generateHostOnAction" text="Generate Host" />
+                                                                                                        <Button fx:id="button_hostAction" mnemonicParsing="false" onAction="#hostActionOnAction" text="Generate Host" />
                                                                                                         <Button mnemonicParsing="false" onAction="#addDeviceOnAction" text="Add device" />
                                                                                                     </items>
                                                                                                 </ToolBar>

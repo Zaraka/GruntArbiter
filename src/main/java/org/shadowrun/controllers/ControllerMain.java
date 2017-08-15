@@ -44,13 +44,15 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.text.MessageFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class ControllerMain {
 
     private static final Logger LOG = LoggerFactory.getLogger(ControllerMain.class);
+
+    private static final String LABEL_DISCONNECT = "Disconnect";
+    private static final String LABEL_GENERATE_HOST = "Generate Host";
 
     private AppLogic appLogic;
     private BattleLogic battleLogic;
@@ -194,6 +196,8 @@ public class ControllerMain {
     private Button button_nextTurn;
     @FXML
     private Button button_prevTurn;
+    @FXML
+    private Button button_hostAction;
 
     @FXML
     private TextField textField_selected_physical;
@@ -463,23 +467,28 @@ public class ControllerMain {
     }
 
     @FXML
-    private void generateHostOnAction() {
-        Parent root;
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("views/addHost.fxml"));
-            root = loader.load();
-            Stage dialog = new Stage();
-            dialog.setTitle("Generate new host");
-            dialog.setScene(new Scene(root));
-            ControllerAddHost controllerAddHost = loader.getController();
-            controllerAddHost.onOpen(dialog);
-            dialog.showAndWait();
-            controllerAddHost.getHost().ifPresent(host -> {
-                battleLogic.setHost(host);
-            });
+    private void hostActionOnAction() {
 
-        } catch (IOException ex) {
-            LOG.error("Could not load addCharacter dialog: ", ex);
+        if (battleLogic.hasHost()) {
+            battleLogic.disconectFromHost();
+        } else {
+            Parent root;
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("views/addHost.fxml"));
+                root = loader.load();
+                Stage dialog = new Stage();
+                dialog.setTitle("Generate new host");
+                dialog.setScene(new Scene(root));
+                ControllerAddHost controllerAddHost = loader.getController();
+                controllerAddHost.onOpen(dialog);
+                dialog.showAndWait();
+                controllerAddHost.getHost().ifPresent(host -> {
+                    battleLogic.setHost(host);
+                });
+
+            } catch (IOException ex) {
+                LOG.error("Could not load addCharacter dialog: ", ex);
+            }
         }
     }
 
@@ -714,6 +723,13 @@ public class ControllerMain {
             label_overwatchScore.textProperty().bind(battle.getHost().overwatchScoreProperty().asString());
             vbox_matrixProperties.visibleProperty().bind(battle.getHost().isInitalized());
             Bindings.bindBidirectional(label_time.textProperty(), battle.combatTurnProperty(), new IterationTimeConverter(battle.getTime()));
+            battleLogic.hasHostProperty().addListener((observable, oldValue, newValue) -> {
+                if(newValue) {
+                    button_hostAction.textProperty().setValue(LABEL_DISCONNECT);
+                } else {
+                    button_hostAction.textProperty().setValue(LABEL_GENERATE_HOST);
+                }
+            });
 
             battle.currentCharacterProperty().addListener((observable, oldValue, newValue) -> {
                 if (newValue != null) {
@@ -753,8 +769,6 @@ public class ControllerMain {
             tableColumn_masterTable_turn5.visibleProperty().bind(battle.maxInitiativeBinding().greaterThan(40));
             tableColumn_masterTable_turn6.visibleProperty().bind(battle.maxInitiativeBinding().greaterThan(50));
             tableColumn_masterTable_turn7.visibleProperty().bind(battle.maxInitiativeBinding().greaterThan(60));*/
-
-
 
 
             //tab selection
