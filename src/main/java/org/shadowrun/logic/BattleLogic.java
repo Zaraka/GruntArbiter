@@ -144,6 +144,8 @@ public class BattleLogic {
         activeHost.setSleeze(0);
         activeHost.setFirewall(0);
         activeHost.setDataProcessing(0);
+
+        getActiveBattle().getCharacters().removeIf(Character::isIce);
         hasHost.setValue(false);
     }
 }
