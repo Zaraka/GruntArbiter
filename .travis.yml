@@ -11,3 +11,10 @@ addons:
   apt:
     packages:
       - oracle-java8-installer
+
+deploy:
+  provider: releases
+  file: "FILE TO UPLOAD"
+  skip_cleanup: true
+  on:
+    tags: true
