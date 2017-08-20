@@ -4,7 +4,7 @@
 
     <groupId>org.shadowrun</groupId>
     <artifactId>GruntArbiter</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.1.0</version>
     <packaging>jar</packaging>
 
     <name>GruntArbiter</name>
@@ -100,7 +100,16 @@
                     </arguments>
                 </configuration>
             </plugin>
-
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.0.0</version>
+                <configuration>
+                    <descriptors>
+                        <descriptor>src/main/assembly/linux-native.xml</descriptor>
+                    </descriptors>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
+
 </project>
