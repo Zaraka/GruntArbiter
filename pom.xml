@@ -105,7 +105,7 @@
                 <version>3.0.0</version>
                 <configuration>
                     <descriptors>
-                        <descriptor>src/main/assembly/linux-native.xml</descriptor>
+                        <descriptor>src/main/assembly/os-native.xml</descriptor>
                     </descriptors>
                 </configuration>
             </plugin>

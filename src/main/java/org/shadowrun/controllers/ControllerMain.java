@@ -239,7 +239,6 @@ public class ControllerMain {
             dialog.showAndWait();
             controllerAddCharacter.getCharacter().ifPresent(playerCharacter -> {
                 battleLogic.getActiveBattle().getCharacters().add(playerCharacter);
-                tableView_masterTable.refresh();
             });
 
         } catch (IOException ex) {
@@ -308,7 +307,6 @@ public class ControllerMain {
             ICE ice = ICE.fromName(res.getKey().replaceAll("\\s+", "").toUpperCase());
             Integer initiativeInt = Integer.parseInt(res.getValue());
             battleLogic.spawnICe(ice, initiativeInt);
-            tableView_masterTable.refresh();
         });
     }
 
@@ -452,7 +450,7 @@ public class ControllerMain {
             setNewInitiative();
             battleLogic.refreshPhase();
         }
-        tableView_masterTable.refresh();
+        tableView_masterTable.sort();
     }
 
     @FXML
@@ -463,7 +461,7 @@ public class ControllerMain {
             setNewInitiative();
             battleLogic.refreshPhase();
         }
-        tableView_masterTable.refresh();
+        tableView_masterTable.sort();
     }
 
     @FXML
@@ -487,7 +485,7 @@ public class ControllerMain {
                 });
 
             } catch (IOException ex) {
-                LOG.error("Could not load addCharacter dialog: ", ex);
+                LOG.error("Could not load addHost dialog: ", ex);
             }
         }
     }
