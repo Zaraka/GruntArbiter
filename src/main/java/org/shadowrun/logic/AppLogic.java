@@ -52,7 +52,7 @@ public class AppLogic {
     }
 
     public void newCharacter(String name) {
-        activeCampaign.get().getPlayers().add(new PlayerCharacter(name, 0));
+        activeCampaign.get().getPlayers().add(new PlayerCharacter(name, 10, 0));
     }
 
     public void openCampaign(File file) throws IOException {

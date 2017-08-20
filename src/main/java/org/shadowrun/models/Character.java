@@ -19,23 +19,9 @@ public class Character implements Comparable<Character> {
 
     private IntegerProperty stunMonitor;
 
-    /**
-     * For creating players
-     * @param name
-     * @param initiative
-     * @param world
-     */
-    public Character(String name, int initiative, World world) {
-        this.name = new SimpleStringProperty(name);
-        this.initiative = new SimpleIntegerProperty(initiative);
-        this.world = new SimpleObjectProperty<>(world);
-        this.npc = new SimpleBooleanProperty(false);
-        this.ice = new SimpleBooleanProperty(false);
-        this.physicalMonitor = new SimpleIntegerProperty(0);
-        this.stunMonitor = new SimpleIntegerProperty(0);
-    }
+    private ObjectProperty<PlayerCharacter> player;
 
-    public Character(String name, int initiative, World world, boolean npc, boolean ice, int monitor) {
+    public Character(String name, int initiative, World world, boolean npc, boolean ice, int monitor, PlayerCharacter player) {
         this.name = new SimpleStringProperty(name);
         this.initiative = new SimpleIntegerProperty(initiative);
         this.world = new SimpleObjectProperty<>(world);
@@ -43,6 +29,7 @@ public class Character implements Comparable<Character> {
         this.ice = new SimpleBooleanProperty(ice);
         this.physicalMonitor = new SimpleIntegerProperty(monitor);
         this.stunMonitor = new SimpleIntegerProperty((ice) ? 0 : monitor);
+        this.player = new SimpleObjectProperty<>(player);
     }
 
 
@@ -118,6 +105,13 @@ public class Character implements Comparable<Character> {
         return ice;
     }
 
+    public PlayerCharacter getPlayer() {
+        return player.get();
+    }
+
+    public ObjectProperty<PlayerCharacter> playerProperty() {
+        return player;
+    }
 
     @Override
     public int compareTo(Character o) {

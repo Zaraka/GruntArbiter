@@ -1,4 +1,4 @@
-package org.shadowrun.common;
+package org.shadowrun.common.converters;
 
 import javafx.util.StringConverter;
 

@@ -12,9 +12,12 @@ public class PlayerCharacter {
 
     private IntegerProperty condition;
 
-    public PlayerCharacter(String name, int condition) {
+    private IntegerProperty spiritIndex;
+
+    public PlayerCharacter(String name, int condition, int spiritIndex) {
         this.name = new SimpleStringProperty(name);
         this.condition = new SimpleIntegerProperty(condition);
+        this.spiritIndex = new SimpleIntegerProperty(spiritIndex);
     }
 
     public String getName() {
@@ -39,5 +42,17 @@ public class PlayerCharacter {
 
     public void setCondition(int condition) {
         this.condition.set(condition);
+    }
+
+    public int getSpiritIndex() {
+        return spiritIndex.get();
+    }
+
+    public IntegerProperty spiritIndexProperty() {
+        return spiritIndex;
+    }
+
+    public void setSpiritIndex(int spiritIndex) {
+        this.spiritIndex.set(spiritIndex);
     }
 }

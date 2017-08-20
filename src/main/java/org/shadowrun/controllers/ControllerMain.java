@@ -24,12 +24,13 @@ import javafx.stage.Stage;
 import javafx.util.Pair;
 import javafx.util.converter.NumberStringConverter;
 import org.apache.commons.lang3.StringUtils;
-import org.shadowrun.common.IterationTimeConverter;
+import org.shadowrun.common.converters.IterationTimeConverter;
 import org.shadowrun.common.NumericLimitListener;
 import org.shadowrun.common.cells.*;
 import org.shadowrun.common.constants.ICE;
 import org.shadowrun.common.constants.Weather;
 import org.shadowrun.common.constants.World;
+import org.shadowrun.common.converters.SpiritIndexReputationConverter;
 import org.shadowrun.common.exceptions.NextTurnException;
 import org.shadowrun.common.factories.CharacterIconFactory;
 import org.shadowrun.common.factories.ExceptionDialogFactory;
@@ -88,6 +89,8 @@ public class ControllerMain {
     private TableColumn<PlayerCharacter, String> tableColumn_playerCharacters_character;
     @FXML
     private TableColumn<PlayerCharacter, Integer> tableColumn_playerCharacters_condition;
+    @FXML
+    private TableColumn<PlayerCharacter, Integer> tableColumn_playerCharacters_spiritIndex;
 
     @FXML
     private TableView<Barrier> tableView_barrier;
@@ -153,6 +156,8 @@ public class ControllerMain {
     private VBox vbox_astralPlane;
     @FXML
     private VBox vbox_matrixProperties;
+    @FXML
+    private VBox vbox_selected_player;
 
 
     @FXML
@@ -191,6 +196,8 @@ public class ControllerMain {
     private Label label_time;
     @FXML
     private Label label_selectedCharacter;
+    @FXML
+    private Label label_selected_astralReputation;
 
     @FXML
     private Button button_nextTurn;
@@ -211,6 +218,8 @@ public class ControllerMain {
     private TextField textField_selected_armor;
     @FXML
     private TextField textField_selected_condition;
+    @FXML
+    private TextField textField_selected_spiritIndex;
     @FXML
     private TextField textField_backgroundCount;
 
@@ -567,6 +576,18 @@ public class ControllerMain {
     }
 
     @FXML
+    private void spiritIndexPlusOnAction() {
+        Character character = tableView_masterTable.getSelectionModel().getSelectedItem();
+        character.getPlayer().setSpiritIndex(character.getPlayer().getSpiritIndex() + 1);
+    }
+
+    @FXML
+    private void spiritIndexMinusOnAction() {
+        Character character = tableView_masterTable.getSelectionModel().getSelectedItem();
+        character.getPlayer().setSpiritIndex(character.getPlayer().getSpiritIndex() - 1);
+    }
+
+    @FXML
     private void backgroundCountPlusOnAction() {
         battleLogic.raiseBackgroundCount();
     }
@@ -792,7 +813,10 @@ public class ControllerMain {
         button_prevTurn.disableProperty().bind(battleLogic.hasBattle());
 
         tableColumn_playerCharacters_character.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
-        tableColumn_playerCharacters_condition.setCellValueFactory(param -> param.getValue().conditionProperty().asObject());
+        tableColumn_playerCharacters_condition
+                .setCellValueFactory(param -> param.getValue().conditionProperty().asObject());
+        tableColumn_playerCharacters_spiritIndex
+                .setCellValueFactory(param -> param.getValue().spiritIndexProperty().asObject());
 
         tableView_playerCharacters.setRowFactory(param -> {
             TableRow<PlayerCharacter> tableRow = new TableRow<>();
@@ -940,6 +964,12 @@ public class ControllerMain {
                 textField_selected_physical.textProperty().unbindBidirectional(oldValue.physicalMonitorProperty());
                 textField_selected_stun.textProperty().unbindBidirectional(oldValue.stunMonitorProperty());
                 textField_selected_initiative.textProperty().unbindBidirectional(oldValue.initiativeProperty());
+                if(oldValue.playerProperty().isNotNull().get()) {
+                    textField_selected_spiritIndex.textProperty()
+                            .unbindBidirectional(oldValue.getPlayer().spiritIndexProperty());
+                    label_selected_astralReputation.textProperty()
+                            .unbindBidirectional(oldValue.getPlayer().spiritIndexProperty());
+                }
             }
 
             cleanSelectedPane();
@@ -960,8 +990,15 @@ public class ControllerMain {
                 textField_selected_initiative.textProperty()
                         .bindBidirectional(newValue.initiativeProperty(), new NumberStringConverter());
                 label_selectedCharacter.textProperty().bind(newValue.nameProperty());
+                if(newValue.playerProperty().isNotNull().get()) {
+                    textField_selected_spiritIndex.textProperty()
+                            .bindBidirectional(newValue.getPlayer().spiritIndexProperty(), new NumberStringConverter());
+                    label_selected_astralReputation.textProperty()
+                            .bindBidirectional(newValue.getPlayer().spiritIndexProperty(), new SpiritIndexReputationConverter());
+                }
 
                 hbox_selected_character.setVisible(true);
+                vbox_selected_player.setVisible(true);
                 anchorPane_selected.setVisible(true);
             }
         });
@@ -1095,6 +1132,7 @@ public class ControllerMain {
 
         hbox_selected_barrier.managedProperty().bind(hbox_selected_barrier.visibleProperty());
         hbox_selected_character.managedProperty().bind(hbox_selected_character.visibleProperty());
+        vbox_selected_player.managedProperty().bind(vbox_selected_player.visibleProperty());
         hbox_selected_glyph.managedProperty().bind(hbox_selected_glyph.visibleProperty());
         anchorPane_selected.managedProperty().bind(anchorPane_selected.visibleProperty());
 

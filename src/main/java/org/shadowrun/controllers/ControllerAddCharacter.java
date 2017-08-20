@@ -45,7 +45,8 @@ public class ControllerAddCharacter {
                 (World) world.getSelectedToggle().getUserData(),
                 checkbox_npc.isSelected(),
                 false,
-                getConditionMonitor());
+                getConditionMonitor(),
+                null);
         stage.close();
     }
 

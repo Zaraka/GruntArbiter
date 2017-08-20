@@ -31,10 +31,12 @@ public class Battle {
     private static final Function<PlayerCharacter, Character> player2Character =
             playerCharacter -> new Character(
                     playerCharacter.getName(),
-                    0, World.REAL,
+                    0,
+                    World.REAL,
                     false,
                     false,
-                    playerCharacter.getCondition());
+                    playerCharacter.getCondition(),
+                    playerCharacter);
 
     private ObjectProperty<Host> host;
 

@@ -123,7 +123,8 @@ public class BattleLogic {
                 World.MATRIX,
                 true,
                 true,
-                getActiveBattle().getHost().getRating() / 2 + 8);
+                getActiveBattle().getHost().getRating() / 2 + 8,
+                null);
         getActiveBattle().getCharacters().add(ic);
     }
 

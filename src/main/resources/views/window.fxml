@@ -104,6 +104,7 @@
                                     <columns>
                                         <TableColumn fx:id="tableColumn_playerCharacters_character" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="500.0" resizable="false" text="Character" />
                               <TableColumn fx:id="tableColumn_playerCharacters_condition" prefWidth="137.0" text="Condition" />
+                              <TableColumn fx:id="tableColumn_playerCharacters_spiritIndex" prefWidth="137.0" text="Spirit index" />
                                     </columns>
                                 </TableView>
                             </children>
@@ -467,8 +468,8 @@
                                                                     <children>
                                                                         <GridPane>
                                                                             <columnConstraints>
-                                                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="75.0" minWidth="75.0" prefWidth="75.0" />
-                                                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
+                                                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="100.0" />
+                                                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="75.0" />
                                                                                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="25.0" minWidth="25.0" prefWidth="25.0" />
                                                                                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="25.0" minWidth="25.0" prefWidth="25.0" />
                                                                             </columnConstraints>
@@ -536,12 +537,55 @@
                                                                         </GridPane>
                                                                     </children>
                                                                 </HBox>
+                                                <VBox fx:id="vbox_selected_player">
+                                                   <children>
+                                                      <HBox alignment="CENTER" />
+                                                      <HBox alignment="CENTER">
+                                                         <children>
+                                                            <GridPane>
+                                                               <columnConstraints>
+                                                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="100.0" />
+                                                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="75.0" />
+                                                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="25.0" minWidth="25.0" prefWidth="25.0" />
+                                                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="25.0" minWidth="25.0" prefWidth="25.0" />
+                                                               </columnConstraints>
+                                                               <rowConstraints>
+                                                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                               </rowConstraints>
+                                                               <children>
+                                                                  <Label text="Spirit Index" GridPane.rowIndex="1" />
+                                                                  <TextField fx:id="textField_selected_spiritIndex" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                                  <Button mnemonicParsing="false" onAction="#spiritIndexPlusOnAction" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                                                     <graphic>
+                                                                        <FontAwesomeIconView glyphName="PLUS" />
+                                                                     </graphic>
+                                                                     <tooltip>
+                                                                        <Tooltip text="Increase condition" />
+                                                                     </tooltip>
+                                                                  </Button>
+                                                                  <Button mnemonicParsing="false" onAction="#spiritIndexMinusOnAction" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                                                                     <graphic>
+                                                                        <FontAwesomeIconView glyphName="MINUS" />
+                                                                     </graphic>
+                                                                     <tooltip>
+                                                                        <Tooltip text="Decrease condition" />
+                                                                     </tooltip>
+                                                                  </Button>
+                                                                  <Label text="Astral rep" />
+                                                                  <Label fx:id="label_selected_astralReputation" text="1" GridPane.columnIndex="1" />
+                                                               </children>
+                                                            </GridPane>
+                                                         </children>
+                                                      </HBox>
+                                                   </children>
+                                                </VBox>
                                                                 <HBox fx:id="hbox_selected_barrier" alignment="CENTER" layoutX="10.0" layoutY="31.0">
                                                                     <children>
                                                                         <GridPane>
                                                                             <columnConstraints>
-                                                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="75.0" minWidth="75.0" prefWidth="75.0" />
-                                                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
+                                                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="100.0" />
+                                                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="75.0" />
                                                                                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="25.0" minWidth="25.0" prefWidth="25.0" />
                                                                                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="25.0" minWidth="25.0" prefWidth="25.0" />
                                                                             </columnConstraints>
@@ -594,8 +638,8 @@
                                                                     <children>
                                                                         <GridPane>
                                                                             <columnConstraints>
-                                                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="75.0" minWidth="75.0" prefWidth="75.0" />
-                                                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
+                                                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="100.0" />
+                                                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="75.0" />
                                                                                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="25.0" minWidth="25.0" prefWidth="25.0" />
                                                                                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="25.0" minWidth="25.0" prefWidth="25.0" />
                                                                             </columnConstraints>
