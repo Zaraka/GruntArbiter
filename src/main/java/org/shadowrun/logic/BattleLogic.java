@@ -124,6 +124,7 @@ public class BattleLogic {
                 true,
                 true,
                 getActiveBattle().getHost().getRating() / 2 + 8,
+                0,
                 null);
         getActiveBattle().getCharacters().add(ic);
     }

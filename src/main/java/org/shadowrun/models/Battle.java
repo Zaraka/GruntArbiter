@@ -36,6 +36,7 @@ public class Battle {
                     false,
                     false,
                     playerCharacter.getCondition(),
+                    playerCharacter.getCondition(),
                     playerCharacter);
 
     private ObjectProperty<Host> host;

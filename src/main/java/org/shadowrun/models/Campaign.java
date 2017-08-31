@@ -11,9 +11,12 @@ public class Campaign {
 
     private ObservableList<PlayerCharacter> players;
 
+    private ObservableList<Character> characterPresets;
+
     public Campaign(String name) {
         this.name = new SimpleStringProperty(name);
         this.players = FXCollections.observableArrayList();
+        this.characterPresets = FXCollections.observableArrayList();
     }
 
     public String getName() {
@@ -34,5 +37,13 @@ public class Campaign {
 
     public void setPlayers(ObservableList<PlayerCharacter> players) {
         this.players = players;
+    }
+
+    public ObservableList<Character> getCharacterPresets() {
+        return characterPresets;
+    }
+
+    public void setCharacterPresets(ObservableList<Character> characterPresets) {
+        this.characterPresets = characterPresets;
     }
 }

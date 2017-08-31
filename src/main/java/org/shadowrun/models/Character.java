@@ -21,14 +21,15 @@ public class Character implements Comparable<Character> {
 
     private ObjectProperty<PlayerCharacter> player;
 
-    public Character(String name, int initiative, World world, boolean npc, boolean ice, int monitor, PlayerCharacter player) {
+    public Character(String name, int initiative, World world, boolean npc, boolean ice, int physicalMonitor,
+            int stunMonitor, PlayerCharacter player) {
         this.name = new SimpleStringProperty(name);
         this.initiative = new SimpleIntegerProperty(initiative);
         this.world = new SimpleObjectProperty<>(world);
         this.npc = new SimpleBooleanProperty(npc);
         this.ice = new SimpleBooleanProperty(ice);
-        this.physicalMonitor = new SimpleIntegerProperty(monitor);
-        this.stunMonitor = new SimpleIntegerProperty((ice) ? 0 : monitor);
+        this.physicalMonitor = new SimpleIntegerProperty(physicalMonitor);
+        this.stunMonitor = new SimpleIntegerProperty((ice) ? 0 : stunMonitor);
         this.player = new SimpleObjectProperty<>(player);
     }
 

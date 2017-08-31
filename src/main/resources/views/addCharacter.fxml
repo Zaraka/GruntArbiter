@@ -4,11 +4,11 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleGroup?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
@@ -19,11 +19,7 @@
 
 <GridPane hgap="14.0" maxHeight="+Infinity" maxWidth="+Infinity" minHeight="-Infinity" minWidth="-Infinity" vgap="20.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.shadowrun.controllers.ControllerAddCharacter">
   <children>
-    <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="TOP">
-      <image>
-        <!-- place holder -->
-      </image>
-    </ImageView>
+      <FontAwesomeIconView glyphName="MALE" size="48" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.valignment="TOP" />
     <VBox maxHeight="+Infinity" maxWidth="+Infinity" minHeight="-Infinity" prefWidth="400.0" spacing="7.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
       <children>
         <Label fx:id="messageLabel" text="Add new character" textAlignment="LEFT" wrapText="true">
@@ -33,29 +29,35 @@
         </Label>
             <GridPane>
               <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="150.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
               </columnConstraints>
               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label fx:id="detailsLabel" text="Name" textAlignment="LEFT" wrapText="true">
+                  <Label fx:id="detailsLabel" text="Name" textAlignment="LEFT" wrapText="true" GridPane.rowIndex="1">
                      <font>
                         <Font size="12.0" />
                      </font>
                   </Label>
-                  <TextField id="textField_name" fx:id="textField_name" GridPane.columnIndex="1" />
-                  <Label fx:id="detailsLabel1" text="Initiative" textAlignment="LEFT" wrapText="true" GridPane.rowIndex="1">
+                  <TextField id="textField_name" fx:id="textField_name" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Label fx:id="detailsLabel1" text="Initiative" textAlignment="LEFT" wrapText="true" GridPane.rowIndex="2">
                      <font>
                         <Font size="12.0" />
                      </font>
                   </Label>
-                  <TextField id="textField_initiative" fx:id="textField_initiative" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Label text="Condition monitor" GridPane.rowIndex="2" />
-                  <TextField fx:id="textField_conditionMonitor" text="10" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <TextField id="textField_initiative" fx:id="textField_initiative" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Label text="Physical C. monitor" GridPane.rowIndex="3" />
+                  <TextField fx:id="textField_physicalConditionMonitor" text="10" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <Label text="Preset" />
+                  <ComboBox fx:id="comboBox_preset" GridPane.columnIndex="1" />
+                  <Label text="Stun C. monitor" GridPane.rowIndex="4" />
+                  <TextField fx:id="textField_stunConditionMonitor" layoutX="160.0" layoutY="102.0" text="10" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                </children>
             </GridPane>
             <HBox>
@@ -91,7 +93,14 @@
             <Insets />
           </HBox.margin>
         </HBox>
-        <Pane maxWidth="+Infinity" HBox.hgrow="ALWAYS" />
+        <Pane maxWidth="+Infinity" HBox.hgrow="ALWAYS">
+               <children>
+                  <Button layoutX="-8.0" mnemonicParsing="false" onAction="#savePresetOnAction" text="Save Preset">
+                     <graphic>
+                        <FontAwesomeIconView glyphName="SAVE" />
+                     </graphic>
+                  </Button>
+               </children></Pane>
         <Button fx:id="cancelButton" cancelButton="true" minWidth="80.0" mnemonicParsing="false" onAction="#cancelOnAction" text="Cancel" HBox.hgrow="NEVER">
           <HBox.margin>
             <Insets />

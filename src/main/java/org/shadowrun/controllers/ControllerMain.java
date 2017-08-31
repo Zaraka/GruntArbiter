@@ -244,7 +244,7 @@ public class ControllerMain {
             dialog.setTitle("Create new character");
             dialog.setScene(new Scene(root));
             ControllerAddCharacter controllerAddCharacter = loader.getController();
-            controllerAddCharacter.onOpen(dialog);
+            controllerAddCharacter.onOpen(dialog, appLogic.getActiveCampaign());
             dialog.showAndWait();
             controllerAddCharacter.getCharacter().ifPresent(playerCharacter -> {
                 battleLogic.getActiveBattle().getCharacters().add(playerCharacter);
