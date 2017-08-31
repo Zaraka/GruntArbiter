@@ -55,7 +55,7 @@
                   </Label>
                   <TextField id="textField_initiative" fx:id="textField_initiative" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <Label text="Condition monitor" GridPane.rowIndex="2" />
-                  <TextField fx:id="textField_conditionMonitor" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <TextField fx:id="textField_conditionMonitor" text="10" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                </children>
             </GridPane>
             <HBox>
