@@ -3,6 +3,7 @@ package org.shadowrun.controllers;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import org.apache.commons.lang3.StringUtils;
 import org.shadowrun.common.NumericLimitListener;
 import org.shadowrun.common.cells.CharacterPresetCell;
 import org.shadowrun.models.Campaign;
@@ -45,6 +46,8 @@ public class ControllerAddCharacter {
 
     @FXML
     private Button button_ok;
+    @FXML
+    private Button button_deletePreset;
 
     @FXML
     private void okOnAction() {
@@ -61,9 +64,19 @@ public class ControllerAddCharacter {
     private void savePresetOnAction() {
         campaign.getCharacterPresets()
                 .removeIf(character1 -> Objects.equals(character1.getName(), textField_name.getText()));
-        campaign.getCharacterPresets().add(createCharacter());
+        Character character = createCharacter();
+        campaign.getCharacterPresets().add(character);
+        comboBox_preset.getSelectionModel().select(character);
     }
 
+    @FXML
+    private void deletePresetOnAction() {
+        campaign.getCharacterPresets().remove(comboBox_preset.getSelectionModel().getSelectedItem());
+        textField_name.setText(StringUtils.EMPTY);
+        textField_stunConditionMonitor.setText("10");
+        textField_physicalConditionMonitor.setText("10");
+        textField_initiative.setText(StringUtils.EMPTY);
+    }
 
     public void onOpen(Stage stage, Campaign campaign) {
         this.stage = stage;
@@ -105,6 +118,8 @@ public class ControllerAddCharacter {
                     }
                 }
         );
+
+        button_deletePreset.disableProperty().bind(comboBox_preset.getSelectionModel().selectedItemProperty().isNull());
 
         button_ok.disableProperty().bind(textField_name.textProperty().isEmpty());
     }

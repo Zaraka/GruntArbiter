@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane hgap="14.0" maxHeight="+Infinity" maxWidth="+Infinity" minHeight="-Infinity" minWidth="-Infinity" vgap="20.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.shadowrun.controllers.ControllerAddCharacter">
+<GridPane hgap="14.0" maxHeight="Infinity" maxWidth="Infinity" minHeight="-Infinity" minWidth="-Infinity" vgap="20.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.shadowrun.controllers.ControllerAddCharacter">
   <children>
       <FontAwesomeIconView glyphName="MALE" size="48" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.valignment="TOP" />
     <VBox maxHeight="+Infinity" maxWidth="+Infinity" minHeight="-Infinity" prefWidth="400.0" spacing="7.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
@@ -95,11 +95,20 @@
         </HBox>
         <Pane maxWidth="+Infinity" HBox.hgrow="ALWAYS">
                <children>
-                  <Button layoutX="-8.0" mnemonicParsing="false" onAction="#savePresetOnAction" text="Save Preset">
-                     <graphic>
-                        <FontAwesomeIconView glyphName="SAVE" />
-                     </graphic>
-                  </Button>
+                  <HBox>
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#savePresetOnAction" text="Save Preset">
+                           <graphic>
+                              <FontAwesomeIconView glyphName="SAVE" />
+                           </graphic>
+                        </Button>
+                        <Button fx:id="button_deletePreset" mnemonicParsing="false" onAction="#deletePresetOnAction" text="Delete Preset">
+                           <graphic>
+                              <FontAwesomeIconView glyphName="TRASH" />
+                           </graphic>
+                        </Button>
+                     </children>
+                  </HBox>
                </children></Pane>
         <Button fx:id="cancelButton" cancelButton="true" minWidth="80.0" mnemonicParsing="false" onAction="#cancelOnAction" text="Cancel" HBox.hgrow="NEVER">
           <HBox.margin>
