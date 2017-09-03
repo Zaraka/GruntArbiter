@@ -509,8 +509,10 @@ public class ControllerMain {
     @FXML
     private void physicalMinusOnAction() {
         Character character = tableView_masterTable.getSelectionModel().getSelectedItem();
-        character.physicalMonitorProperty().setValue(character.getPhysicalMonitor() - 1);
-        tableView_masterTable.refresh();
+        if (character.getPhysicalMonitor() > 0) {
+            character.physicalMonitorProperty().setValue(character.getPhysicalMonitor() - 1);
+            tableView_masterTable.refresh();
+        }
     }
 
     @FXML
@@ -523,8 +525,10 @@ public class ControllerMain {
     @FXML
     private void stunMinusOnAction() {
         Character character = tableView_masterTable.getSelectionModel().getSelectedItem();
-        character.stunMonitorProperty().setValue(character.getStunMonitor() - 1);
-        tableView_masterTable.refresh();
+        if (character.getStunMonitor() > 0) {
+            character.stunMonitorProperty().setValue(character.getStunMonitor() - 1);
+            tableView_masterTable.refresh();
+        }
     }
 
     @FXML
@@ -536,7 +540,9 @@ public class ControllerMain {
     @FXML
     private void initiativeMinusOnAction() {
         Character character = tableView_masterTable.getSelectionModel().getSelectedItem();
-        character.initiativeProperty().setValue(character.getInitiative() - 1);
+        if (character.getInitiative() > 0) {
+            character.initiativeProperty().setValue(character.getInitiative() - 1);
+        }
     }
 
     @FXML
@@ -548,7 +554,9 @@ public class ControllerMain {
     @FXML
     private void structureMinusOnAction() {
         Barrier barrier = tableView_barrier.getSelectionModel().getSelectedItem();
-        barrier.structureProperty().setValue(barrier.getStructure() - 1);
+        if (barrier.getStructure() > 0) {
+            barrier.structureProperty().setValue(barrier.getStructure() - 1);
+        }
     }
 
     @FXML
@@ -560,7 +568,9 @@ public class ControllerMain {
     @FXML
     private void armorMinusOnAction() {
         Barrier barrier = tableView_barrier.getSelectionModel().getSelectedItem();
-        barrier.armorProperty().setValue(barrier.getArmor() - 1);
+        if (barrier.getArmor() > 0) {
+            barrier.armorProperty().setValue(barrier.getArmor() - 1);
+        }
     }
 
     @FXML
@@ -572,7 +582,9 @@ public class ControllerMain {
     @FXML
     private void conditionMinusOnAction() {
         Device device = tableView_devices.getSelectionModel().getSelectedItem();
-        device.conditionProperty().setValue(device.getCondition() - 1);
+        if (device.getCondition() > 0) {
+            device.conditionProperty().setValue(device.getCondition() - 1);
+        }
     }
 
     @FXML
@@ -583,8 +595,10 @@ public class ControllerMain {
 
     @FXML
     private void spiritIndexMinusOnAction() {
-        Character character = tableView_masterTable.getSelectionModel().getSelectedItem();
-        character.getPlayer().setSpiritIndex(character.getPlayer().getSpiritIndex() - 1);
+        PlayerCharacter player = tableView_masterTable.getSelectionModel().getSelectedItem().getPlayer();
+        if (player.getSpiritIndex() > 0) {
+            player.setSpiritIndex(player.getSpiritIndex() - 1);
+        }
     }
 
     @FXML
@@ -743,7 +757,7 @@ public class ControllerMain {
             vbox_matrixProperties.visibleProperty().bind(battle.getHost().isInitalized());
             Bindings.bindBidirectional(label_time.textProperty(), battle.combatTurnProperty(), new IterationTimeConverter(battle.getTime()));
             battleLogic.hasHostProperty().addListener((observable, oldValue, newValue) -> {
-                if(newValue) {
+                if (newValue) {
                     button_hostAction.textProperty().setValue(LABEL_DISCONNECT);
                 } else {
                     button_hostAction.textProperty().setValue(LABEL_GENERATE_HOST);
@@ -964,7 +978,7 @@ public class ControllerMain {
                 textField_selected_physical.textProperty().unbindBidirectional(oldValue.physicalMonitorProperty());
                 textField_selected_stun.textProperty().unbindBidirectional(oldValue.stunMonitorProperty());
                 textField_selected_initiative.textProperty().unbindBidirectional(oldValue.initiativeProperty());
-                if(oldValue.playerProperty().isNotNull().get()) {
+                if (oldValue.playerProperty().isNotNull().get()) {
                     textField_selected_spiritIndex.textProperty()
                             .unbindBidirectional(oldValue.getPlayer().spiritIndexProperty());
                     label_selected_astralReputation.textProperty()
@@ -990,7 +1004,7 @@ public class ControllerMain {
                 textField_selected_initiative.textProperty()
                         .bindBidirectional(newValue.initiativeProperty(), new NumberStringConverter());
                 label_selectedCharacter.textProperty().bind(newValue.nameProperty());
-                if(newValue.playerProperty().isNotNull().get()) {
+                if (newValue.playerProperty().isNotNull().get()) {
                     textField_selected_spiritIndex.textProperty()
                             .bindBidirectional(newValue.getPlayer().spiritIndexProperty(), new NumberStringConverter());
                     label_selected_astralReputation.textProperty()
