@@ -24,12 +24,12 @@ import javafx.stage.Stage;
 import javafx.util.Pair;
 import javafx.util.converter.NumberStringConverter;
 import org.apache.commons.lang3.StringUtils;
-import org.shadowrun.common.converters.IterationTimeConverter;
 import org.shadowrun.common.NumericLimitListener;
 import org.shadowrun.common.cells.*;
 import org.shadowrun.common.constants.ICE;
 import org.shadowrun.common.constants.Weather;
 import org.shadowrun.common.constants.World;
+import org.shadowrun.common.converters.IterationTimeConverter;
 import org.shadowrun.common.converters.SpiritIndexReputationConverter;
 import org.shadowrun.common.exceptions.NextTurnException;
 import org.shadowrun.common.factories.CharacterIconFactory;
@@ -66,6 +66,8 @@ public class ControllerMain {
     private TableColumn<Character, Character> tableColumn_masterTable_character;
     @FXML
     private TableColumn<Character, Character> tableColumn_masterTable_condition;
+    @FXML
+    private TableColumn<Character, Character> tableColumn_masterTable_woundModifier;
     @FXML
     private TableColumn<Character, Integer> tableColumn_masterTable_initiative;
     @FXML
@@ -228,6 +230,12 @@ public class ControllerMain {
 
     @FXML
     private AnchorPane anchorPane_selected;
+    @FXML
+    private AnchorPane anchorPane_barriers;
+    @FXML
+    private AnchorPane anchorPane_devices;
+    @FXML
+    private AnchorPane anchorPane_bottomTables;
 
     @FXML
     private FontAwesomeIconView fontAwesomeIcon_selected;
@@ -502,32 +510,74 @@ public class ControllerMain {
     @FXML
     private void physicalPlusOnAction() {
         Character character = tableView_masterTable.getSelectionModel().getSelectedItem();
-        character.physicalMonitorProperty().setValue(character.getPhysicalMonitor() + 1);
+        character.getPhysicalMonitor().increase(1);
         tableView_masterTable.refresh();
     }
 
     @FXML
     private void physicalMinusOnAction() {
         Character character = tableView_masterTable.getSelectionModel().getSelectedItem();
-        if (character.getPhysicalMonitor() > 0) {
-            character.physicalMonitorProperty().setValue(character.getPhysicalMonitor() - 1);
-            tableView_masterTable.refresh();
+        character.getPhysicalMonitor().decrease(1);
+        tableView_masterTable.refresh();
+    }
+
+    @FXML
+    private void physicalMonitorSettingsOnAction() {
+        Character character = tableView_masterTable.getSelectionModel().getSelectedItem();
+        Parent root;
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("views/monitorSettings.fxml"));
+            root = loader.load();
+            Stage dialog = new Stage();
+            dialog.setTitle("Physical monitor settings");
+            dialog.setScene(new Scene(root));
+            ControllerMonitorSettings controllerMonitorSettings = loader.getController();
+            controllerMonitorSettings.onOpen(dialog, character.getPhysicalMonitor(), "Physical monitor");
+            dialog.showAndWait();
+            controllerMonitorSettings.getMonitor().ifPresent(monitor -> {
+                character.getPhysicalMonitor().maxProperty().setValue(monitor.getMax());
+                character.getPhysicalMonitor().currentProperty().setValue(monitor.getCurrent());
+            });
+
+        } catch (IOException ex) {
+            LOG.error("Could not load momnitorSettings dialog: ", ex);
         }
     }
 
     @FXML
     private void stunPlusOnAction() {
         Character character = tableView_masterTable.getSelectionModel().getSelectedItem();
-        character.stunMonitorProperty().setValue(character.getStunMonitor() + 1);
+        character.getStunMonitor().increase(1);
         tableView_masterTable.refresh();
     }
 
     @FXML
     private void stunMinusOnAction() {
         Character character = tableView_masterTable.getSelectionModel().getSelectedItem();
-        if (character.getStunMonitor() > 0) {
-            character.stunMonitorProperty().setValue(character.getStunMonitor() - 1);
-            tableView_masterTable.refresh();
+        character.getStunMonitor().decrease(1);
+        tableView_masterTable.refresh();
+    }
+
+    @FXML
+    private void stunMonitorSettingsOnAction() {
+        Character character = tableView_masterTable.getSelectionModel().getSelectedItem();
+        Parent root;
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("views/monitorSettings.fxml"));
+            root = loader.load();
+            Stage dialog = new Stage();
+            dialog.setTitle("Stun monitor settings");
+            dialog.setScene(new Scene(root));
+            ControllerMonitorSettings controllerMonitorSettings = loader.getController();
+            controllerMonitorSettings.onOpen(dialog, character.getStunMonitor(), "Stun monitor");
+            dialog.showAndWait();
+            controllerMonitorSettings.getMonitor().ifPresent(monitor -> {
+                character.getStunMonitor().maxProperty().setValue(monitor.getMax());
+                character.getStunMonitor().currentProperty().setValue(monitor.getCurrent());
+            });
+
+        } catch (IOException ex) {
+            LOG.error("Could not load momnitorSettings dialog: ", ex);
         }
     }
 
@@ -548,16 +598,38 @@ public class ControllerMain {
     @FXML
     private void structurePlusOnAction() {
         Barrier barrier = tableView_barrier.getSelectionModel().getSelectedItem();
-        barrier.structureProperty().setValue(barrier.getStructure() + 1);
+        barrier.getStructureMonitor().increase(1);
     }
 
     @FXML
     private void structureMinusOnAction() {
         Barrier barrier = tableView_barrier.getSelectionModel().getSelectedItem();
-        if (barrier.getStructure() > 0) {
-            barrier.structureProperty().setValue(barrier.getStructure() - 1);
+        barrier.getStructureMonitor().decrease(1);
+    }
+
+    @FXML
+    private void structureMonitorSettingsOnAction() {
+        Barrier barrier = tableView_barrier.getSelectionModel().getSelectedItem();
+        Parent root;
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("views/monitorSettings.fxml"));
+            root = loader.load();
+            Stage dialog = new Stage();
+            dialog.setTitle("Structure monitor settings");
+            dialog.setScene(new Scene(root));
+            ControllerMonitorSettings controllerMonitorSettings = loader.getController();
+            controllerMonitorSettings.onOpen(dialog, barrier.getStructureMonitor(), "Structure monitor");
+            dialog.showAndWait();
+            controllerMonitorSettings.getMonitor().ifPresent(monitor -> {
+                barrier.getStructureMonitor().maxProperty().setValue(monitor.getMax());
+                barrier.getStructureMonitor().currentProperty().setValue(monitor.getCurrent());
+            });
+
+        } catch (IOException ex) {
+            LOG.error("Could not load momnitorSettings dialog: ", ex);
         }
     }
+
 
     @FXML
     private void armorPlusOnAction() {
@@ -732,6 +804,9 @@ public class ControllerMain {
         label_time.textProperty().unbind();
         button_prevTurn.disableProperty().unbind();
         comboBox_weather.valueProperty().unbind();
+        anchorPane_devices.visibleProperty().unbind();
+        anchorPane_barriers.visibleProperty().unbind();
+        anchorPane_bottomTables.visibleProperty().unbind();
 
         tableColumn_masterTable_turn1.visibleProperty().unbind();
         tableColumn_masterTable_turn2.visibleProperty().unbind();
@@ -803,6 +878,11 @@ public class ControllerMain {
             tableColumn_masterTable_turn6.visibleProperty().bind(battle.maxInitiativeBinding().greaterThan(50));
             tableColumn_masterTable_turn7.visibleProperty().bind(battle.maxInitiativeBinding().greaterThan(60));*/
 
+
+            anchorPane_barriers.visibleProperty().bind(Bindings.isEmpty(tableView_barrier.getItems()).not());
+            anchorPane_devices.visibleProperty().bind(Bindings.isEmpty(tableView_devices.getItems()).not());
+            anchorPane_bottomTables.visibleProperty().bind(anchorPane_barriers.visibleProperty()
+                    .or(anchorPane_devices.visibleProperty()));
 
             //tab selection
             tabPane.getSelectionModel().select(tab_battle);
@@ -879,6 +959,8 @@ public class ControllerMain {
         tableColumn_masterTable_character.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
         tableColumn_masterTable_condition.setCellFactory(param -> new CharacterConditionCell());
         tableColumn_masterTable_condition.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
+        tableColumn_masterTable_woundModifier.setCellFactory(param -> new CharacterWoundModifierCell());
+        tableColumn_masterTable_woundModifier.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
         tableColumn_masterTable_initiative.setCellValueFactory(cellData -> cellData.getValue().initiativeProperty().asObject());
         tableColumn_masterTable_turn1.setCellFactory(param -> new TurnTableCell());
         tableColumn_masterTable_turn2.setCellFactory(param -> new TurnTableCell());
@@ -975,8 +1057,10 @@ public class ControllerMain {
         });
         tableView_masterTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (oldValue != null) {
-                textField_selected_physical.textProperty().unbindBidirectional(oldValue.physicalMonitorProperty());
-                textField_selected_stun.textProperty().unbindBidirectional(oldValue.stunMonitorProperty());
+                textField_selected_physical.textProperty()
+                        .unbindBidirectional(oldValue.getPhysicalMonitor().currentProperty());
+                textField_selected_stun.textProperty()
+                        .unbindBidirectional(oldValue.getStunMonitor().currentProperty());
                 textField_selected_initiative.textProperty().unbindBidirectional(oldValue.initiativeProperty());
                 if (oldValue.playerProperty().isNotNull().get()) {
                     textField_selected_spiritIndex.textProperty()
@@ -998,9 +1082,9 @@ public class ControllerMain {
                 });
 
                 textField_selected_physical.textProperty()
-                        .bindBidirectional(newValue.physicalMonitorProperty(), new NumberStringConverter());
+                        .bindBidirectional(newValue.getPhysicalMonitor().currentProperty(), new NumberStringConverter());
                 textField_selected_stun.textProperty()
-                        .bindBidirectional(newValue.stunMonitorProperty(), new NumberStringConverter());
+                        .bindBidirectional(newValue.getStunMonitor().currentProperty(), new NumberStringConverter());
                 textField_selected_initiative.textProperty()
                         .bindBidirectional(newValue.initiativeProperty(), new NumberStringConverter());
                 label_selectedCharacter.textProperty().bind(newValue.nameProperty());
@@ -1020,7 +1104,8 @@ public class ControllerMain {
         tableColumn_barrier_object.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
         tableColumn_barrier_object.setCellFactory(param -> new ObjectCell());
         tableColumn_barrier_armor.setCellValueFactory(param -> param.getValue().armorProperty().asObject());
-        tableColumn_barrier_structure.setCellValueFactory(param -> param.getValue().structureProperty().asObject());
+        tableColumn_barrier_structure.setCellValueFactory(param -> param.getValue()
+                .getStructureMonitor().currentProperty().asObject());
 
         tableView_barrier.setRowFactory(param -> {
             TableRow<Barrier> tableRow = new TableRow<>();
@@ -1051,8 +1136,10 @@ public class ControllerMain {
 
         tableView_barrier.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (oldValue != null) {
-                textField_selected_armor.textProperty().unbindBidirectional(oldValue.armorProperty());
-                textField_selected_structure.textProperty().unbindBidirectional(oldValue.structureProperty());
+                textField_selected_armor.textProperty()
+                        .unbindBidirectional(oldValue.armorProperty());
+                textField_selected_structure.textProperty()
+                        .unbindBidirectional(oldValue.getStructureMonitor().currentProperty());
             }
 
             cleanSelectedPane();
@@ -1064,7 +1151,7 @@ public class ControllerMain {
                 fontAwesomeIcon_selected.setIcon(FontAwesomeIcon.SQUARE);
 
                 textField_selected_structure.textProperty()
-                        .bindBidirectional(newValue.structureProperty(), new NumberStringConverter());
+                        .bindBidirectional(newValue.getStructureMonitor().currentProperty(), new NumberStringConverter());
                 textField_selected_armor.textProperty()
                         .bindBidirectional(newValue.armorProperty(), new NumberStringConverter());
                 label_selectedCharacter.textProperty().bind(newValue.nameProperty());
@@ -1187,6 +1274,10 @@ public class ControllerMain {
         comboBox_weather.setCellFactory(param -> new WeatherCell());
         comboBox_weather.setButtonCell(new WeatherCell());
 
+        anchorPane_barriers.managedProperty().bind(anchorPane_barriers.visibleProperty());
+        anchorPane_devices.managedProperty().bind(anchorPane_devices.visibleProperty());
+        anchorPane_bottomTables.managedProperty().bind(anchorPane_bottomTables.visibleProperty());
+
         loadRecentFiles();
     }
 
@@ -1238,6 +1329,7 @@ public class ControllerMain {
         hbox_selected_character.setVisible(false);
         hbox_selected_barrier.setVisible(false);
         hbox_selected_device.setVisible(false);
+        vbox_selected_player.setVisible(false);
         anchorPane_selected.setVisible(false);
     }
 }

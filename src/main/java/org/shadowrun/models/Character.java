@@ -15,9 +15,9 @@ public class Character implements Comparable<Character> {
 
     private BooleanProperty ice;
 
-    private IntegerProperty physicalMonitor;    //or Matrix or whatever
+    private Monitor physicalMonitor;    //or Matrix or whatever
 
-    private IntegerProperty stunMonitor;
+    private Monitor stunMonitor;
 
     private ObjectProperty<PlayerCharacter> player;
 
@@ -28,8 +28,8 @@ public class Character implements Comparable<Character> {
         this.world = new SimpleObjectProperty<>(world);
         this.npc = new SimpleBooleanProperty(npc);
         this.ice = new SimpleBooleanProperty(ice);
-        this.physicalMonitor = new SimpleIntegerProperty(physicalMonitor);
-        this.stunMonitor = new SimpleIntegerProperty((ice) ? 0 : stunMonitor);
+        this.physicalMonitor = new Monitor(physicalMonitor);
+        this.stunMonitor = new Monitor((ice) ? 0 : stunMonitor);
         this.player = new SimpleObjectProperty<>(player);
     }
 
@@ -82,19 +82,11 @@ public class Character implements Comparable<Character> {
         return initiative.get() - (turn - 1) * 10;
     }
 
-    public int getPhysicalMonitor() {
-        return physicalMonitor.get();
-    }
-
-    public IntegerProperty physicalMonitorProperty() {
+    public Monitor getPhysicalMonitor() {
         return physicalMonitor;
     }
 
-    public int getStunMonitor() {
-        return stunMonitor.get();
-    }
-
-    public IntegerProperty stunMonitorProperty() {
+    public Monitor getStunMonitor() {
         return stunMonitor;
     }
 

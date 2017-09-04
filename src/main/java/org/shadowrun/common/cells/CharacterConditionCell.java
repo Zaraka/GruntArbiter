@@ -13,9 +13,9 @@ public class CharacterConditionCell extends TableCell<Character, Character> {
         setGraphic(null);
         StringBuilder builder = new StringBuilder(StringUtils.EMPTY);
         if (!empty) {
-            builder.append(item.getStunMonitor());
+            builder.append(item.getStunMonitor().currentProperty().get());
             builder.append("/");
-            builder.append(item.getPhysicalMonitor());
+            builder.append(item.getPhysicalMonitor().currentProperty().get());
         }
 
         setText(builder.toString());

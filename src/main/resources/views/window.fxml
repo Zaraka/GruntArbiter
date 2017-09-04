@@ -396,6 +396,7 @@
                                                                             <columns>
                                                                                 <TableColumn fx:id="tableColumn_masterTable_character" editable="false" prefWidth="145.0" sortable="false" text="Character" />
                                                                                 <TableColumn fx:id="tableColumn_masterTable_condition" editable="false" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" sortable="false" text="Condition" />
+                                                            <TableColumn fx:id="tableColumn_masterTable_woundModifier" editable="false" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" sortable="false" text="Wound Modif." />
                                                                                 <TableColumn fx:id="tableColumn_masterTable_initiative" editable="false" maxWidth="91.0" minWidth="51.0" prefWidth="90.0" resizable="false" sortType="DESCENDING" sortable="false" text="Initiative" />
                                                                                 <TableColumn fx:id="tableColumn_masterTable_turn1" editable="false" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" resizable="false" sortable="false" text="1" />
                                                                                 <TableColumn fx:id="tableColumn_masterTable_turn2" editable="false" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" resizable="false" sortable="false" text="2" />
@@ -408,11 +409,11 @@
                                                                         </TableView>
                                                                     </children>
                                                                 </AnchorPane>
-                                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                                                                <AnchorPane fx:id="anchorPane_bottomTables" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                                                                     <children>
                                                                         <SplitPane dividerPositions="0.4" prefHeight="327.0" prefWidth="474.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                             <items>
-                                                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                                                                <AnchorPane fx:id="anchorPane_barriers" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                                                                                     <children>
                                                                                         <TableView fx:id="tableView_barrier" prefHeight="327.0" prefWidth="732.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                                             <columns>
@@ -423,7 +424,7 @@
                                                                                         </TableView>
                                                                                     </children>
                                                                                 </AnchorPane>
-                                                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                                                                <AnchorPane fx:id="anchorPane_devices" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                                                                                     <children>
                                                                                         <TableView fx:id="tableView_devices" prefHeight="325.0" prefWidth="327.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                                             <columns>
@@ -446,7 +447,7 @@
                                                         </SplitPane>
                                                     </children>
                                                 </AnchorPane>
-                                                <AnchorPane fx:id="anchorPane_selected" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="250.0">
+                                                <AnchorPane fx:id="anchorPane_selected" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="270.0">
                                                     <children>
                                                         <VBox prefHeight="664.0" prefWidth="250.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0">
                                                             <children>
@@ -472,6 +473,7 @@
                                                                                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="75.0" />
                                                                                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="25.0" minWidth="25.0" prefWidth="25.0" />
                                                                                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="25.0" minWidth="25.0" prefWidth="25.0" />
+                                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="25.0" minWidth="25.0" prefWidth="100.0" />
                                                                             </columnConstraints>
                                                                             <rowConstraints>
                                                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -480,7 +482,6 @@
                                                                             </rowConstraints>
                                                                             <children>
                                                                                 <Label text="Physical" />
-                                                                                <TextField fx:id="textField_selected_physical" GridPane.columnIndex="1" />
                                                                                 <Button mnemonicParsing="false" onAction="#physicalPlusOnAction" GridPane.columnIndex="2">
                                                                                     <graphic>
                                                                                         <FontAwesomeIconView glyphName="PLUS" />
@@ -533,13 +534,33 @@
                                                                   <Tooltip text="Decrease stun condition" />
                                                                </tooltip>
                                                             </Button>
+                                                            <Button layoutX="210.0" layoutY="12.0" mnemonicParsing="false" onAction="#physicalMonitorSettingsOnAction" GridPane.columnIndex="4">
+                                                               <graphic>
+                                                                  <FontAwesomeIconView glyphName="COG" />
+                                                               </graphic>
+                                                               <tooltip>
+                                                                  <Tooltip text="Decrease condition" />
+                                                               </tooltip>
+                                                            </Button>
+                                                            <Button layoutX="235.0" layoutY="12.0" mnemonicParsing="false" onAction="#stunMonitorSettingsOnAction" GridPane.columnIndex="4" GridPane.rowIndex="1">
+                                                               <graphic>
+                                                                  <FontAwesomeIconView glyphName="COG" />
+                                                               </graphic>
+                                                               <tooltip>
+                                                                  <Tooltip text="Decrease condition" />
+                                                               </tooltip>
+                                                            </Button>
+                                                            <HBox GridPane.columnIndex="1">
+                                                               <children>
+                                                                                      <TextField fx:id="textField_selected_physical" />
+                                                               </children>
+                                                            </HBox>
                                                                             </children>
                                                                         </GridPane>
                                                                     </children>
                                                                 </HBox>
                                                 <VBox fx:id="vbox_selected_player">
                                                    <children>
-                                                      <HBox alignment="CENTER" />
                                                       <HBox alignment="CENTER">
                                                          <children>
                                                             <GridPane>
@@ -548,6 +569,7 @@
                                                                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="75.0" />
                                                                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="25.0" minWidth="25.0" prefWidth="25.0" />
                                                                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="25.0" minWidth="25.0" prefWidth="25.0" />
+                                                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="25.0" minWidth="25.0" prefWidth="100.0" />
                                                                </columnConstraints>
                                                                <rowConstraints>
                                                                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -588,6 +610,7 @@
                                                                                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="75.0" />
                                                                                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="25.0" minWidth="25.0" prefWidth="25.0" />
                                                                                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="25.0" minWidth="25.0" prefWidth="25.0" />
+                                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="25.0" minWidth="25.0" prefWidth="100.0" />
                                                                             </columnConstraints>
                                                                             <rowConstraints>
                                                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -630,6 +653,14 @@
                                                                                         <Tooltip text="Decrease armor" />
                                                                                     </tooltip>
                                                                                 </Button>
+                                                            <Button layoutX="210.0" layoutY="12.0" mnemonicParsing="false" onAction="#structureMonitorSettingsOnAction" GridPane.columnIndex="4">
+                                                               <graphic>
+                                                                  <FontAwesomeIconView glyphName="COG" />
+                                                               </graphic>
+                                                               <tooltip>
+                                                                  <Tooltip text="Decrease structure" />
+                                                               </tooltip>
+                                                            </Button>
                                                                             </children>
                                                                         </GridPane>
                                                                     </children>
@@ -642,6 +673,7 @@
                                                                                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="75.0" />
                                                                                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="25.0" minWidth="25.0" prefWidth="25.0" />
                                                                                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="25.0" minWidth="25.0" prefWidth="25.0" />
+                                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="25.0" minWidth="25.0" prefWidth="100.0" />
                                                                             </columnConstraints>
                                                                             <rowConstraints>
                                                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />

@@ -9,13 +9,13 @@ public class Barrier {
 
     private StringProperty name;
 
-    private IntegerProperty structure;
+    private Monitor structureMonitor;
 
     private IntegerProperty armor;
 
     public Barrier(String name, Integer structure, Integer armor) {
         this.name = new SimpleStringProperty(name);
-        this.structure = new SimpleIntegerProperty(structure);
+        this.structureMonitor = new Monitor(structure);
         this.armor = new SimpleIntegerProperty(armor);
     }
 
@@ -27,12 +27,8 @@ public class Barrier {
         return name;
     }
 
-    public int getStructure() {
-        return structure.get();
-    }
-
-    public IntegerProperty structureProperty() {
-        return structure;
+    public Monitor getStructureMonitor() {
+        return structureMonitor;
     }
 
     public int getArmor() {
