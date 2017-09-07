@@ -56,7 +56,6 @@ public class ControllerBattle {
     private AppLogic appLogic;
     private BattleLogic battleLogic;
     private Battle battle;
-    private SortedList<Character> sortedCharacters;
 
     @FXML
     private TableView<Character> tableView_masterTable;
@@ -277,16 +276,6 @@ public class ControllerBattle {
             battleLogic.refreshPhase();
         }
 
-        tableView_masterTable.refresh();
-    }
-
-    @FXML
-    private void sort() {
-        tableView_masterTable.sort();
-    }
-
-    @FXML
-    private void refresh() {
         tableView_masterTable.refresh();
     }
 
