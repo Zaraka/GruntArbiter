@@ -34,12 +34,13 @@
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
               </columnConstraints>
               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label text="Time" />
-                  <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
+                  <Label text="Time" GridPane.rowIndex="1" />
+                  <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <children>
                         <TextField fx:id="textField_hours" prefHeight="26.0" prefWidth="51.0" text="12" />
                         <Label text=":" />
@@ -48,8 +49,10 @@
                         <TextField fx:id="textField_seconds" layoutX="10.0" layoutY="10.0" prefHeight="26.0" prefWidth="51.0" text="00" />
                      </children>
                   </HBox>
-                  <Label text="Weather" GridPane.rowIndex="1" />
-                  <ComboBox fx:id="comboBox_weather" prefHeight="26.0" prefWidth="175.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Label text="Weather" GridPane.rowIndex="2" />
+                  <ComboBox fx:id="comboBox_weather" prefHeight="26.0" prefWidth="175.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Label text="Name" />
+                  <TextField fx:id="textField_name" GridPane.columnIndex="1" />
                </children>
             </GridPane>
             <HBox>

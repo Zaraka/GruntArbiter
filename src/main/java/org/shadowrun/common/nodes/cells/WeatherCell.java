@@ -1,4 +1,4 @@
-package org.shadowrun.common.cells;
+package org.shadowrun.common.nodes.cells;
 
 import de.jensd.fx.glyphs.weathericons.WeatherIconView;
 import javafx.scene.control.ListCell;

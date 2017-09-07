@@ -4,10 +4,7 @@ import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.NumberBinding;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -63,7 +60,9 @@ public class Battle {
 
     private NumberBinding maxInitiative;
 
-    public Battle(List<PlayerCharacter> players, Weather weather, Integer startingTime) {
+    private StringProperty name;
+
+    public Battle(String name, List<PlayerCharacter> players, Weather weather, Integer startingTime) {
         backgroundCount = new SimpleIntegerProperty(0);
         combatTurn = new SimpleIntegerProperty(1);
         initiativePass = new SimpleIntegerProperty(1);
@@ -79,8 +78,8 @@ public class Battle {
         host = new SimpleObjectProperty<>(new Host());
         selectedWeather = new SimpleObjectProperty<>(weather);
         time = new SimpleIntegerProperty(startingTime);
-        maxInitiative = Bindings.createIntegerBinding(() -> characters.stream()
-                .max(Character::compareTo).map(Character::getInitiative).orElse(0));
+        maxInitiative = null;
+        this.name = new SimpleStringProperty(name);
 
         //characters.addListener((ListChangeListener<Character>) c -> maxInitiative.invalidate());
         characters.addListener((InvalidationListener) observable -> maxInitiative.invalidate());
@@ -167,6 +166,14 @@ public class Battle {
         return devices;
     }
 
+    public String getName() {
+        return name.get();
+    }
+
+    public StringProperty nameProperty() {
+        return name;
+    }
+
     public void updateCurrentCharacter() {
         Optional<Character> current = characters.stream().max(Comparator.comparingInt(Character::getInitiative));
         current.ifPresent(character -> currentCharacter.setValue(character));
@@ -222,6 +229,10 @@ public class Battle {
     }
 
     public NumberBinding maxInitiativeBinding() {
+        if(maxInitiative == null) {
+            maxInitiative = Bindings.createIntegerBinding(() -> characters.stream()
+                    .max(Character::compareTo).map(Character::getInitiative).orElse(0));
+        }
         return maxInitiative;
     }
 }

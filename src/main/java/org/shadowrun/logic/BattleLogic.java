@@ -63,10 +63,6 @@ public class BattleLogic {
         return activeBattle;
     }
 
-    public void createNewBattle(List<PlayerCharacter> playerCharacters, Weather weather, Integer time) {
-        activeBattle.setValue(new Battle(playerCharacters, weather, time));
-    }
-
     public void nextPhase() throws NextTurnException {
         getActiveBattle().nextPhase();
         currentCharacterName.setValue(getActiveBattle().currentCharacterProperty().get().getName());

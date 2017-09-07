@@ -8,7 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.shadowrun.common.NumericLimitListener;
-import org.shadowrun.common.cells.BarrierPresetCell;
+import org.shadowrun.common.nodes.cells.BarrierPresetCell;
 import org.shadowrun.common.constants.BarrierPreset;
 import org.shadowrun.models.Barrier;
 

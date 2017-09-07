@@ -1,4 +1,4 @@
-package org.shadowrun.common.cells;
+package org.shadowrun.common.nodes.cells;
 
 import javafx.scene.control.ListCell;
 import org.shadowrun.models.Character;

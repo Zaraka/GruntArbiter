@@ -10,7 +10,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import org.shadowrun.common.NumericLimitListener;
-import org.shadowrun.common.cells.WeatherCell;
+import org.shadowrun.common.nodes.cells.WeatherCell;
 import org.shadowrun.common.constants.Weather;
 import org.shadowrun.models.PlayerCharacter;
 
@@ -65,6 +65,8 @@ public class ControllerNewBattle {
     private TextField textField_minutes;
     @FXML
     private TextField textField_seconds;
+    @FXML
+    private TextField textField_name;
 
     @FXML
     private ComboBox<Weather> comboBox_weather;
@@ -88,7 +90,7 @@ public class ControllerNewBattle {
         stage.close();
     }
 
-    public void onOpen(Stage stage, List<PlayerCharacter> players) {
+    public void onOpen(Stage stage, String initialName, List<PlayerCharacter> players) {
         this.stage = stage;
         this.includedPlayers = null;
         this.players = FXCollections.observableArrayList(players.stream().map(PickPlayer::new).collect(Collectors.toList()));
@@ -105,6 +107,11 @@ public class ControllerNewBattle {
         comboBox_weather.setButtonCell(new WeatherCell());
         comboBox_weather.setItems(FXCollections.observableArrayList(Weather.values()));
 
+        textField_name.setText(initialName);
+        textField_name.selectAll();
+
+        button_ok.disableProperty().bind(textField_name.textProperty().isEmpty());
+
         button_ok.requestFocus();
     }
 
@@ -118,5 +125,9 @@ public class ControllerNewBattle {
 
     public Integer getTime() {
         return time;
+    }
+
+    public String getName() {
+        return textField_name.getText();
     }
 }

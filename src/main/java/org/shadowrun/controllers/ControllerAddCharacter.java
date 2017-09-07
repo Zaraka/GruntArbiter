@@ -5,7 +5,7 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import org.apache.commons.lang3.StringUtils;
 import org.shadowrun.common.NumericLimitListener;
-import org.shadowrun.common.cells.CharacterPresetCell;
+import org.shadowrun.common.nodes.cells.CharacterPresetCell;
 import org.shadowrun.models.Campaign;
 import org.shadowrun.models.Character;
 import org.shadowrun.common.constants.World;
