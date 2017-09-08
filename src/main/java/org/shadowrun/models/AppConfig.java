@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.prefs.Preferences;
+import java.util.stream.Collectors;
 
 public class AppConfig {
     private Preferences preferences;
@@ -32,5 +33,9 @@ public class AppConfig {
         for(int i = 0; i < paths.size(); i++) {
             preferences.put("recentFile" + i, paths.get(i).toUri().toString());
         }
+    }
+
+    public void validateRecentFiles() {
+        setRecentFiles(getRecentFiles().stream().filter(path -> path.toFile().exists()).collect(Collectors.toList()));
     }
 }

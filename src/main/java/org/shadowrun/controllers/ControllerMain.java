@@ -25,6 +25,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class ControllerMain {
 
@@ -171,7 +172,7 @@ public class ControllerMain {
                 toDelete.add(tab);
             }
         }
-        for(Tab tab : toDelete) {
+        for (Tab tab : toDelete) {
             tabPane.getTabs().remove(tab);
         }
 
@@ -331,9 +332,9 @@ public class ControllerMain {
             return tableRow;
         });
         tabPane.getSelectionModel().selectedItemProperty().addListener((observable, oldTab, newTab) -> {
-            if(newTab != null) {
+            if (newTab != null) {
                 Object userData = newTab.getUserData();
-                if(userData != null && userData.getClass() == ControllerBattle.class) {
+                if (userData != null && userData.getClass() == ControllerBattle.class) {
                     ControllerBattle controllerBattle = (ControllerBattle) userData;
                     battleLogic.activeBattleProperty().setValue(controllerBattle.getBattle());
                 }
@@ -351,19 +352,25 @@ public class ControllerMain {
         menuItems.add(menuItem_recentCampaign1);
         menuItems.add(menuItem_recentCampaign2);
         menuItems.add(menuItem_recentCampaign3);
+
+        appLogic.getConfig().validateRecentFiles();
         List<Path> recentCampaigns = appLogic.getConfig().getRecentFiles();
+
         if (recentCampaigns.isEmpty()) {
             menu_recentCampaigns.disableProperty().setValue(true);
-        }
-        for (int i = 0; i < 3; i++) {
-            MenuItem recentCampaignMenuItem = menuItems.get(i);
-            if (recentCampaigns.size() > i) {
-                Path recentCampaignPath = recentCampaigns.get(i);
-                recentCampaignMenuItem.setUserData(recentCampaignPath);
-                recentCampaignMenuItem.textProperty().setValue(recentCampaignPath.getFileName().toString());
+        } else {
+            int itemIndex = 0;
+            for (Path recentCampaign : recentCampaigns) {
+                MenuItem recentCampaignMenuItem = menuItems.get(itemIndex);
+                recentCampaignMenuItem.setUserData(recentCampaign);
+                recentCampaignMenuItem.textProperty().setValue(recentCampaign.getFileName().toString());
                 recentCampaignMenuItem.disableProperty().setValue(false);
                 recentCampaignMenuItem.visibleProperty().setValue(true);
-            } else {
+                itemIndex++;
+            }
+
+            for (; itemIndex < 3; itemIndex++) {
+                MenuItem recentCampaignMenuItem = menuItems.get(itemIndex);
                 recentCampaignMenuItem.disableProperty().setValue(true);
                 recentCampaignMenuItem.visibleProperty().setValue(false);
                 recentCampaignMenuItem.textProperty().setValue(StringUtils.EMPTY);
