@@ -78,7 +78,6 @@ public class Battle {
         maxInitiative = null;
         this.name = new SimpleStringProperty(name);
 
-        //characters.addListener((ListChangeListener<Character>) c -> maxInitiative.invalidate());
         characters.addListener((InvalidationListener) observable -> maxInitiative.invalidate());
     }
 
@@ -229,6 +228,7 @@ public class Battle {
         if(maxInitiative == null) {
             maxInitiative = Bindings.createIntegerBinding(() -> characters.stream()
                     .max(Character::compareTo).map(Character::getInitiative).orElse(0));
+            characters.addListener((InvalidationListener) observable -> maxInitiative.invalidate());
         }
         return maxInitiative;
     }

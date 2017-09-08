@@ -276,7 +276,7 @@ public class ControllerBattle {
             battleLogic.refreshPhase();
         }
 
-        tableView_masterTable.sort();
+        tableView_masterTable.refresh();
     }
 
     @FXML
@@ -287,7 +287,7 @@ public class ControllerBattle {
             setNewInitiative();
             battleLogic.refreshPhase();
         }
-        tableView_masterTable.sort();
+        tableView_masterTable.refresh();
     }
 
     @FXML
