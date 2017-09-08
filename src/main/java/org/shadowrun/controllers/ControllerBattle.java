@@ -726,8 +726,8 @@ public class ControllerBattle {
                         setStyle(null);
                     }
                     //tableView_masterTable.sort();
-                    tableView_masterTable.getSortOrder().clear();
-                    tableView_masterTable.getSortOrder().add(tableColumn_masterTable_initiative);
+                    //tableView_masterTable.getSortOrder().clear();
+                    //tableView_masterTable.getSortOrder().add(tableColumn_masterTable_initiative);
                 }
             };
             tableRow.emptyProperty().addListener((observable, oldValue, newValue) ->
