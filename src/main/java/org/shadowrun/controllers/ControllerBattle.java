@@ -4,6 +4,7 @@ import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.transformation.SortedList;
@@ -54,6 +55,8 @@ public class ControllerBattle {
     private AppLogic appLogic;
     private BattleLogic battleLogic;
     private Battle battle;
+
+    private BooleanBinding allPlayersIncluded;
 
     @FXML
     private TableView<Character> tableView_masterTable;
@@ -588,6 +591,7 @@ public class ControllerBattle {
                                 .collect(Collectors.toList()).get(0);
                 playerCharacterComboBox.setCellFactory(param -> new PlayerCell());
                 playerCharacterComboBox.setButtonCell(new PlayerCell());
+                allPlayersIncluded.invalidate();
             } catch (ClassCastException ex) {
                 LOG.error("CastException: ", ex);
             }
@@ -695,8 +699,11 @@ public class ControllerBattle {
             MenuItem addCharacter = new MenuItem("Add character");
             addCharacter.setOnAction(event -> addCharacterOnAction());
             MenuItem removeCharacter = new MenuItem("Remove character");
-            removeCharacter.setOnAction(event -> battle.getCharacters()
-                    .remove(tableView_masterTable.getSelectionModel().getSelectedItem()));
+            removeCharacter.setOnAction(event -> {
+                battle.getCharacters()
+                        .remove(tableView_masterTable.getSelectionModel().getSelectedItem());
+                allPlayersIncluded.invalidate();
+            });
             ContextMenu fullContextMenu = new ContextMenu(
                     moveToRealWorld,
                     moveToMatrixSpace,
@@ -1026,6 +1033,12 @@ public class ControllerBattle {
                 });
             }
         });
+
+        allPlayersIncluded = Bindings.createBooleanBinding(() ->
+                appLogic.getActiveCampaign().getPlayers().size() <=
+                        battle.getCharacters().stream().filter(character -> character.getPlayer() != null).count());
+
+        button_spawnPlayer.disableProperty().bind(allPlayersIncluded);
 
         if(!loaded) {
             setNewInitiative();
