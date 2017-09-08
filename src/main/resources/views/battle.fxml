@@ -105,8 +105,7 @@
                               <ToolBar prefHeight="40.0" prefWidth="200.0">
                                  <items>
                                     <Button mnemonicParsing="false" onAction="#addCharacterOnAction" text="Spawn character" />
-                                    <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#sort" text="Sort" />
-                                    <Button layoutX="142.0" layoutY="10.0" mnemonicParsing="false" onAction="#refresh" text="Refresh" />
+                                    <Button fx:id="button_spawnPlayer" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#addPlayerOnAction" text="Spawn player" />
                                  </items>
                               </ToolBar>
                               <VBox>

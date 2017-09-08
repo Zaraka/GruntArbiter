@@ -1,12 +1,10 @@
 package org.shadowrun.models;
 
 import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.NumberBinding;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import org.shadowrun.common.constants.Weather;
 import org.shadowrun.common.constants.World;
@@ -14,7 +12,6 @@ import org.shadowrun.common.exceptions.NextTurnException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.swing.text.html.Option;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -234,5 +231,9 @@ public class Battle {
                     .max(Character::compareTo).map(Character::getInitiative).orElse(0));
         }
         return maxInitiative;
+    }
+
+    public void insertPlayer(PlayerCharacter playerCharacter) {
+        characters.add(player2Character.apply(playerCharacter));
     }
 }

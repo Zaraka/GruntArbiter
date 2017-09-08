@@ -41,9 +41,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class ControllerBattle {
@@ -165,6 +163,8 @@ public class ControllerBattle {
     private Button button_prevTurn;
     @FXML
     private Button button_hostAction;
+    @FXML
+    private Button button_spawnPlayer;
 
     @FXML
     private TextField textField_selected_physical;
@@ -276,7 +276,7 @@ public class ControllerBattle {
             battleLogic.refreshPhase();
         }
 
-        tableView_masterTable.refresh();
+        tableView_masterTable.sort();
     }
 
     @FXML
@@ -287,7 +287,7 @@ public class ControllerBattle {
             setNewInitiative();
             battleLogic.refreshPhase();
         }
-        tableView_masterTable.refresh();
+        tableView_masterTable.sort();
     }
 
     @FXML
@@ -567,6 +567,42 @@ public class ControllerBattle {
         }
     }
 
+    @FXML
+    private void addPlayerOnAction() {
+        Set<PlayerCharacter> playersInThisBattle = battle.getCharacters().stream()
+                .filter(character -> character.getPlayer() != null)
+                .map(Character::getPlayer).collect(Collectors.toSet());
+
+        List<PlayerCharacter> availablePlayers =
+                appLogic.getActiveCampaign().getPlayers().stream()
+                        .filter(playerCharacter -> !playersInThisBattle.contains(playerCharacter))
+                        .collect(Collectors.toList());
+
+        if(!availablePlayers.isEmpty()) {
+            ChoiceDialog<PlayerCharacter> dialog = new ChoiceDialog<>(availablePlayers.get(0), availablePlayers);
+            GridPane gridPane = (GridPane) dialog.getDialogPane().getContent();
+            ComboBox<PlayerCharacter> playerCharacterComboBox;
+            try {
+                playerCharacterComboBox = (ComboBox<PlayerCharacter>) gridPane.getChildren().stream()
+                                .filter(node -> node.getClass() == ComboBox.class)
+                                .collect(Collectors.toList()).get(0);
+                playerCharacterComboBox.setCellFactory(param -> new PlayerCell());
+                playerCharacterComboBox.setButtonCell(new PlayerCell());
+            } catch (ClassCastException ex) {
+                LOG.error("CastException: ", ex);
+            }
+
+
+            dialog.setTitle("Add player");
+            dialog.setHeaderText("Add player");
+            dialog.setContentText("Choose player:");
+
+            Optional<PlayerCharacter> result = dialog.showAndWait();
+
+            result.ifPresent(playerCharacter -> battle.insertPlayer(playerCharacter));
+        }
+    }
+
     private void setNewInitiative() {
         for (Character character : battle.getCharacters()) {
             TextInputDialog dialog = InitiativeDialogFactory.createDialog(character);
@@ -690,8 +726,8 @@ public class ControllerBattle {
                         setStyle(null);
                     }
                     //tableView_masterTable.sort();
-                    //tableView_masterTable.getSortOrder().clear();
-                    //tableView_masterTable.getSortOrder().add(tableColumn_masterTable_initiative);
+                    tableView_masterTable.getSortOrder().clear();
+                    tableView_masterTable.getSortOrder().add(tableColumn_masterTable_initiative);
                 }
             };
             tableRow.emptyProperty().addListener((observable, oldValue, newValue) ->
@@ -923,11 +959,10 @@ public class ControllerBattle {
 
         //Items
         SortedList<Character> sortedCharacters = new SortedList<>(battle.getCharacters(),
-                Comparator.comparingInt(Character::getInitiative).reversed())
-                .sorted(Comparator.comparingInt(Character::getInitiative).reversed());
-        tableView_masterTable.setItems(sortedCharacters);
+                Comparator.comparingInt(Character::getInitiative).reversed()).sorted();
         sortedCharacters.comparatorProperty().bind(tableView_masterTable.comparatorProperty());
-        //tableView_masterTable.sort();
+        tableView_masterTable.setItems(sortedCharacters);
+        tableView_masterTable.sort();
         tableView_barrier.setItems(battle.getBarriers());
         tableView_devices.setItems(battle.getDevices());
 
