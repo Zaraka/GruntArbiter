@@ -394,6 +394,7 @@ public class ControllerMain {
         if (file != null) {
             try {
                 appLogic.openCampaign(file);
+                addCampaignHooks();
             } catch (IOException e) {
                 LOG.error(e.getMessage());
                 Alert alert = ExceptionDialogFactory.createExceptionDialog(
