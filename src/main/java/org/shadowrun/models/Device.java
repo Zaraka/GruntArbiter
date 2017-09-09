@@ -19,7 +19,7 @@ public class Device {
 
     private IntegerProperty dataProcessing;
 
-    private IntegerProperty condition;
+    private Monitor conditionMonitor;
 
     public Device(String name, int rating, int attack, int sleeze, int firewall, int dataProcessing) {
         this.name = new SimpleStringProperty(name);
@@ -28,7 +28,7 @@ public class Device {
         this.sleeze = new SimpleIntegerProperty(sleeze);
         this.firewall = new SimpleIntegerProperty(firewall);
         this.dataProcessing = new SimpleIntegerProperty(dataProcessing);
-        this.condition = new SimpleIntegerProperty(8 + (rating / 2));
+        this.conditionMonitor = new Monitor(8 + (rating / 2));
     }
 
     public String getName() {
@@ -83,11 +83,7 @@ public class Device {
         return dataProcessing;
     }
 
-    public int getCondition() {
-        return condition.get();
-    }
-
-    public IntegerProperty conditionProperty() {
-        return condition;
+    public Monitor getConditionMonitor() {
+        return conditionMonitor;
     }
 }

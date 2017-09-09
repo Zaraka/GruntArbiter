@@ -159,6 +159,16 @@ public class ControllerBattle {
     private Label label_selectedCharacter;
     @FXML
     private Label label_selected_astralReputation;
+    @FXML
+    private Label label_selected_physical;
+    @FXML
+    private Label label_selected_stun;
+    @FXML
+    private Label label_selected_structure;
+    @FXML
+    private Label label_selected_armor;
+    @FXML
+    private Label label_selected_condition;
 
     @FXML
     private Button button_nextTurn;
@@ -170,17 +180,7 @@ public class ControllerBattle {
     private Button button_spawnPlayer;
 
     @FXML
-    private TextField textField_selected_physical;
-    @FXML
-    private TextField textField_selected_stun;
-    @FXML
     private TextField textField_selected_initiative;
-    @FXML
-    private TextField textField_selected_structure;
-    @FXML
-    private TextField textField_selected_armor;
-    @FXML
-    private TextField textField_selected_condition;
     @FXML
     private TextField textField_selected_spiritIndex;
     @FXML
@@ -460,16 +460,38 @@ public class ControllerBattle {
     @FXML
     private void conditionPlusOnAction() {
         Device device = tableView_devices.getSelectionModel().getSelectedItem();
-        device.conditionProperty().setValue(device.getCondition() + 1);
+        device.getConditionMonitor().increase(1);
     }
 
     @FXML
     private void conditionMinusOnAction() {
         Device device = tableView_devices.getSelectionModel().getSelectedItem();
-        if (device.getCondition() > 0) {
-            device.conditionProperty().setValue(device.getCondition() - 1);
+        device.getConditionMonitor().decrease(1);
+    }
+
+    @FXML
+    private void conditionMonitorSettingsOnAction() {
+        Device device = tableView_devices.getSelectionModel().getSelectedItem();
+        Parent root;
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("views/monitorSettings.fxml"));
+            root = loader.load();
+            Stage dialog = new Stage();
+            dialog.setTitle("Condition monitor settings");
+            dialog.setScene(new Scene(root));
+            ControllerMonitorSettings controllerMonitorSettings = loader.getController();
+            controllerMonitorSettings.onOpen(dialog, device.getConditionMonitor(), "Condition monitor");
+            dialog.showAndWait();
+            controllerMonitorSettings.getMonitor().ifPresent(monitor -> {
+                device.getConditionMonitor().maxProperty().setValue(monitor.getMax());
+                device.getConditionMonitor().currentProperty().setValue(monitor.getCurrent());
+            });
+
+        } catch (IOException ex) {
+            LOG.error("Could not load momnitorSettings dialog: ", ex);
         }
     }
+
 
     @FXML
     private void spiritIndexPlusOnAction() {
@@ -743,10 +765,8 @@ public class ControllerBattle {
         });
         tableView_masterTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (oldValue != null) {
-                textField_selected_physical.textProperty()
-                        .unbindBidirectional(oldValue.getPhysicalMonitor().currentProperty());
-                textField_selected_stun.textProperty()
-                        .unbindBidirectional(oldValue.getStunMonitor().currentProperty());
+                label_selected_physical.textProperty().unbind();
+                label_selected_stun.textProperty().unbind();
                 textField_selected_initiative.textProperty().unbindBidirectional(oldValue.initiativeProperty());
                 if (oldValue.playerProperty().isNotNull().get()) {
                     textField_selected_spiritIndex.textProperty()
@@ -767,10 +787,17 @@ public class ControllerBattle {
                     hbox_selected_glyph.setVisible(true);
                 });
 
-                textField_selected_physical.textProperty()
-                        .bindBidirectional(newValue.getPhysicalMonitor().currentProperty(), new NumberStringConverter());
-                textField_selected_stun.textProperty()
-                        .bindBidirectional(newValue.getStunMonitor().currentProperty(), new NumberStringConverter());
+                label_selected_physical.textProperty().bind(Bindings.concat(
+                        newValue.getPhysicalMonitor().currentProperty(),
+                        "/",
+                        newValue.getPhysicalMonitor().maxProperty()
+                ));
+
+                label_selected_stun.textProperty().bind(Bindings.concat(
+                        newValue.getStunMonitor().currentProperty(),
+                        "/",
+                        newValue.getStunMonitor().maxProperty()
+                ));
                 textField_selected_initiative.textProperty()
                         .bindBidirectional(newValue.initiativeProperty(), new NumberStringConverter());
                 label_selectedCharacter.textProperty().bind(newValue.nameProperty());
@@ -822,10 +849,8 @@ public class ControllerBattle {
 
         tableView_barrier.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (oldValue != null) {
-                textField_selected_armor.textProperty()
-                        .unbindBidirectional(oldValue.armorProperty());
-                textField_selected_structure.textProperty()
-                        .unbindBidirectional(oldValue.getStructureMonitor().currentProperty());
+                label_selected_armor.textProperty().unbind();
+                label_selected_structure.textProperty().unbind();
             }
 
             cleanSelectedPane();
@@ -836,10 +861,13 @@ public class ControllerBattle {
 
                 fontAwesomeIcon_selected.setIcon(FontAwesomeIcon.SQUARE);
 
-                textField_selected_structure.textProperty()
-                        .bindBidirectional(newValue.getStructureMonitor().currentProperty(), new NumberStringConverter());
-                textField_selected_armor.textProperty()
-                        .bindBidirectional(newValue.armorProperty(), new NumberStringConverter());
+                label_selected_armor.textProperty().bind(newValue.armorProperty().asString());
+
+                label_selected_structure.textProperty().bind(Bindings.concat(
+                        newValue.getStructureMonitor().currentProperty(),
+                        "/",
+                        newValue.getStructureMonitor().maxProperty()
+                ));
                 label_selectedCharacter.textProperty().bind(newValue.nameProperty());
 
                 hbox_selected_barrier.setVisible(true);
@@ -853,8 +881,10 @@ public class ControllerBattle {
         tableColumn_device_attack.setCellValueFactory(param -> param.getValue().attackProperty().asObject());
         tableColumn_device_sleeze.setCellValueFactory(param -> param.getValue().sleezeProperty().asObject());
         tableColumn_device_firewall.setCellValueFactory(param -> param.getValue().firewallProperty().asObject());
-        tableColumn_device_dataProcessing.setCellValueFactory(param -> param.getValue().dataProcessingProperty().asObject());
-        tableColumn_device_condition.setCellValueFactory(param -> param.getValue().conditionProperty().asObject());
+        tableColumn_device_dataProcessing.setCellValueFactory(
+                param -> param.getValue().dataProcessingProperty().asObject());
+        tableColumn_device_condition.setCellValueFactory(
+                param -> param.getValue().getConditionMonitor().currentProperty().asObject());
 
         tableView_devices.setRowFactory(param -> {
             TableRow<Device> tableRow = new TableRow<>();
@@ -885,7 +915,7 @@ public class ControllerBattle {
 
         tableView_devices.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (oldValue != null) {
-                textField_selected_condition.textProperty().unbindBidirectional(oldValue.conditionProperty());
+                label_selected_condition.textProperty().unbind();
             }
 
             cleanSelectedPane();
@@ -896,8 +926,11 @@ public class ControllerBattle {
 
                 fontAwesomeIcon_selected.setIcon(FontAwesomeIcon.LAPTOP);
 
-                textField_selected_condition.textProperty()
-                        .bindBidirectional(newValue.conditionProperty(), new NumberStringConverter());
+                label_selected_condition.textProperty().bind(Bindings.concat(
+                        newValue.getConditionMonitor().currentProperty(),
+                        "/",
+                        newValue.getConditionMonitor().maxProperty()
+                ));
                 label_selectedCharacter.textProperty().bind(newValue.nameProperty());
 
                 hbox_selected_glyph.setVisible(true);
@@ -906,16 +939,8 @@ public class ControllerBattle {
             }
         });
 
-        textField_selected_physical.textProperty()
-                .addListener(new NumericLimitListener(textField_selected_physical, -100, 100));
-        textField_selected_stun.textProperty()
-                .addListener(new NumericLimitListener(textField_selected_stun, -100, 100));
         textField_selected_initiative.textProperty()
                 .addListener(new NumericLimitListener(textField_selected_initiative, -100, 100));
-        textField_selected_structure.textProperty()
-                .addListener(new NumericLimitListener(textField_selected_structure, 0, 100));
-        textField_selected_armor.textProperty()
-                .addListener(new NumericLimitListener(textField_selected_armor, 0, 100));
 
         hbox_selected_barrier.managedProperty().bind(hbox_selected_barrier.visibleProperty());
         hbox_selected_character.managedProperty().bind(hbox_selected_character.visibleProperty());
