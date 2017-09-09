@@ -1,5 +1,7 @@
 package org.shadowrun.models;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
@@ -9,14 +11,17 @@ public class Campaign {
 
     private StringProperty name;
 
+    private ObjectProperty<SemanticVersion> version;
+
     private ObservableList<PlayerCharacter> players;
 
     private ObservableList<Character> characterPresets;
 
     private ObservableList<Battle> battles;
 
-    public Campaign(String name) {
+    public Campaign(String name, SemanticVersion version) {
         this.name = new SimpleStringProperty(name);
+        this.version = new SimpleObjectProperty<>(version);
         this.players = FXCollections.observableArrayList();
         this.characterPresets = FXCollections.observableArrayList();
         this.battles = FXCollections.observableArrayList();
@@ -52,5 +57,13 @@ public class Campaign {
 
     public ObservableList<Battle> getBattles() {
         return battles;
+    }
+
+    public SemanticVersion getVersion() {
+        return version.get();
+    }
+
+    public ObjectProperty<SemanticVersion> versionProperty() {
+        return version;
     }
 }

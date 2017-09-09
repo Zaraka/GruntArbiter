@@ -10,6 +10,7 @@ import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.apache.commons.lang3.StringUtils;
+import org.shadowrun.common.exceptions.IncompatibleVersionsException;
 import org.shadowrun.common.factories.ExceptionDialogFactory;
 import org.shadowrun.logic.AppLogic;
 import org.shadowrun.logic.BattleLogic;
@@ -108,17 +109,7 @@ public class ControllerMain {
 
         File file = dialog.showOpenDialog(stage);
         if (file != null) {
-            try {
-                appLogic.openCampaign(file);
-            } catch (IOException e) {
-                LOG.error(e.getMessage());
-                Alert alert = ExceptionDialogFactory.createExceptionDialog(
-                        "Error!",
-                        "Error occured while opening campaign file.",
-                        "I/O exception", e);
-                alert.showAndWait();
-            }
-            addCampaignHooks();
+            openCampaign(file);
         }
     }
 
@@ -221,8 +212,8 @@ public class ControllerMain {
     @FXML
     private void aboutOnAction() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Grunt Arbiter");
-        alert.setHeaderText("Grunt Arbiter alpha version");
+        alert.setTitle("About Grunt Arbiter");
+        alert.setHeaderText("Grunt Arbiter version: " + appLogic.getConfig().getVersion().toString());
         alert.setContentText("Created by Zaraka.\nhttp://www.github.com/zaraka/gruntarbiter");
         alert.showAndWait();
     }
@@ -230,32 +221,17 @@ public class ControllerMain {
 
     @FXML
     private void openRecentCampaign1OnAction() {
-        try {
-            appLogic.openCampaign(((Path) menuItem_recentCampaign1.getUserData()).toFile());
-            addCampaignHooks();
-        } catch (IOException e) {
-            LOG.error("File doesn't exists");
-        }
+        openCampaign(((Path) menuItem_recentCampaign1.getUserData()).toFile());
     }
 
     @FXML
     private void openRecentCampaign2OnAction() {
-        try {
-            appLogic.openCampaign(((Path) menuItem_recentCampaign2.getUserData()).toFile());
-            addCampaignHooks();
-        } catch (IOException e) {
-            LOG.error("File doesn't exists");
-        }
+        openCampaign(((Path) menuItem_recentCampaign2.getUserData()).toFile());
     }
 
     @FXML
     private void openRecentCampaign3OnAction() {
-        try {
-            appLogic.openCampaign(((Path) menuItem_recentCampaign3.getUserData()).toFile());
-            addCampaignHooks();
-        } catch (IOException e) {
-            LOG.error("File doesn't exists");
-        }
+        openCampaign(((Path) menuItem_recentCampaign3.getUserData()).toFile());
     }
 
     private void addCampaignHooks() {
@@ -411,6 +387,34 @@ public class ControllerMain {
             tabPane.getSelectionModel().select(battleTab);
         } catch (IOException ex) {
             LOG.error("Error while loading battle tab ", ex);
+        }
+    }
+
+    private void openCampaign(File file) {
+        if (file != null) {
+            try {
+                appLogic.openCampaign(file);
+            } catch (IOException e) {
+                LOG.error(e.getMessage());
+                Alert alert = ExceptionDialogFactory.createExceptionDialog(
+                        "Error!",
+                        "Error occured while opening campaign file.",
+                        "You campaign file could not be read", e);
+                alert.showAndWait();
+            } catch (IncompatibleVersionsException ex) {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Oh, drek!");
+                alert.setHeaderText("Version of campaign you are trying to load is incompoatible with app version");
+                alert.setContentText("This means, that loading this campaign could crash or corrupt campaign file.\ndo you still want to load?");
+
+                Optional<ButtonType> result = alert.showAndWait();
+                result.ifPresent(buttonType -> {
+                    if(buttonType == ButtonType.OK) {
+                        appLogic.loadCampaign(file, ex.getCampaign());
+                        addCampaignHooks();
+                    }
+                });
+            }
         }
     }
 }

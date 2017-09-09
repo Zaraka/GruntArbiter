@@ -7,6 +7,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import org.hildan.fxgson.FxGson;
+import org.shadowrun.common.exceptions.IncompatibleVersionsException;
 import org.shadowrun.models.AppConfig;
 import org.shadowrun.models.Campaign;
 import org.shadowrun.models.PlayerCharacter;
@@ -16,9 +17,6 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class AppLogic {
 
@@ -49,21 +47,26 @@ public class AppLogic {
     }
 
     public void newCampaign(String name) {
-        activeCampaign.setValue(new Campaign(name));
+        activeCampaign.setValue(new Campaign(name, config.getVersion()));
     }
 
     public void newCharacter(String name) {
         activeCampaign.get().getPlayers().add(new PlayerCharacter(name, 10, 10, 0));
     }
 
-    public void openCampaign(File file) throws IOException {
+    public void loadCampaign(File file, Campaign campaign) {
         campaignFile.set(file);
-        Campaign campaign = gson.fromJson(Files.newBufferedReader(getCampaignFile().toPath()), Campaign.class);
-        if(campaign != null){
-            activeCampaign.setValue(campaign);
+        activeCampaign.setValue(campaign);
+        getConfig().insertOrRefreshRecentCampaign(getCampaignFile().toPath());
+    }
 
-            getConfig().insertOrRefreshRecentCampaign(getCampaignFile().toPath());
+    public void openCampaign(File file) throws IOException, IncompatibleVersionsException {
+        Campaign campaign = gson.fromJson(Files.newBufferedReader(file.toPath()), Campaign.class);
+
+        if(!campaign.getVersion().isCompatible(config.getVersion())) {
+            throw new IncompatibleVersionsException(campaign);
         }
+        loadCampaign(file, campaign);
     }
 
     public void saveCampaign() throws IOException {

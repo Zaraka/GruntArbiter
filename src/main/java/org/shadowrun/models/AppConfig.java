@@ -3,12 +3,14 @@ package org.shadowrun.models;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.net.URI;
 import java.nio.file.FileSystemNotFoundException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import java.util.prefs.Preferences;
 import java.util.stream.Collectors;
 
@@ -18,8 +20,19 @@ public class AppConfig {
 
     private Preferences preferences;
 
+    private Properties properties;
+
+    private SemanticVersion version;
+
     public AppConfig() {
         preferences = Preferences.userNodeForPackage(AppConfig.class);
+        properties = new Properties();
+        try {
+            properties.load(getClass().getClassLoader().getResourceAsStream(".properties"));
+            version = new SemanticVersion(properties.getProperty("app.version"));
+        } catch (IOException ex) {
+            LOG.error("Cant load maven properties: ", ex);
+        }
     }
 
     public List<Path> getRecentFiles() {
@@ -59,5 +72,9 @@ public class AppConfig {
         recentCampaigns.add(0, campaign);
 
         setRecentFiles(recentCampaigns);
+    }
+
+    public SemanticVersion getVersion() {
+        return version;
     }
 }
