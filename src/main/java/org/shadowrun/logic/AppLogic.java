@@ -61,21 +61,15 @@ public class AppLogic {
         Campaign campaign = gson.fromJson(Files.newBufferedReader(getCampaignFile().toPath()), Campaign.class);
         if(campaign != null){
             activeCampaign.setValue(campaign);
+
+            getConfig().insertOrRefreshRecentCampaign(getCampaignFile().toPath());
         }
     }
 
     public void saveCampaign() throws IOException {
         Files.write(getCampaignFile().toPath(), gson.toJson(getActiveCampaign()).getBytes());
 
-        List<Path> recentFiles = config.getRecentFiles();
-        Path currentFile = getCampaignFile().toPath();
-        if(!recentFiles.contains(currentFile)) {
-            recentFiles.add(0, currentFile);
-            if(recentFiles.size() > 3) {
-                recentFiles.remove(recentFiles.size() - 1);
-            }
-            config.setRecentFiles(recentFiles);
-        }
+        getConfig().insertOrRefreshRecentCampaign(getCampaignFile().toPath());
     }
 
     public void saveAsCampaign(File file) throws IOException {
