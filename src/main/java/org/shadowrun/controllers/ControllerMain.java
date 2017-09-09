@@ -25,7 +25,6 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class ControllerMain {
 
@@ -41,7 +40,9 @@ public class ControllerMain {
     @FXML
     private TableColumn<PlayerCharacter, String> tableColumn_playerCharacters_character;
     @FXML
-    private TableColumn<PlayerCharacter, Integer> tableColumn_playerCharacters_condition;
+    private TableColumn<PlayerCharacter, Integer> tableColumn_playerCharacters_physicalMonitor;
+    @FXML
+    private TableColumn<PlayerCharacter, Integer> tableColumn_playerCharacters_stunMonitor;
     @FXML
     private TableColumn<PlayerCharacter, Integer> tableColumn_playerCharacters_spiritIndex;
 
@@ -284,8 +285,10 @@ public class ControllerMain {
         tab_characters.disableProperty().bind(appLogic.hasCampaign());
 
         tableColumn_playerCharacters_character.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
-        tableColumn_playerCharacters_condition
-                .setCellValueFactory(param -> param.getValue().conditionProperty().asObject());
+        tableColumn_playerCharacters_physicalMonitor
+                .setCellValueFactory(param -> param.getValue().physicalMonitorProperty().asObject());
+        tableColumn_playerCharacters_stunMonitor
+                .setCellValueFactory(param -> param.getValue().stunMonitorProperty().asObject());
         tableColumn_playerCharacters_spiritIndex
                 .setCellValueFactory(param -> param.getValue().spiritIndexProperty().asObject());
 
@@ -303,16 +306,27 @@ public class ControllerMain {
 
                 result.ifPresent(selected::setName);
             });
-            MenuItem setCondition = new MenuItem("Set condition");
-            setCondition.setOnAction(event -> {
+            MenuItem setPhysicalMonitor = new MenuItem("Set physical monitor");
+            setPhysicalMonitor.setOnAction(event -> {
                 PlayerCharacter selected = tableView_playerCharacters.getSelectionModel().getSelectedItem();
-                TextInputDialog dialog = new TextInputDialog(String.valueOf(selected.getCondition()));
-                dialog.setTitle("Set condition");
-                dialog.setHeaderText("Set " + selected.getName() + " condition.");
-                dialog.setContentText("Please enter new max base condition monitor:");
+                TextInputDialog dialog = new TextInputDialog(String.valueOf(selected.getPhysicalMonitor()));
+                dialog.setTitle("Set physical monitor");
+                dialog.setHeaderText("Set " + selected.getName() + " monitor.");
+                dialog.setContentText("Please enter new max physical monitor:");
                 Optional<String> result = dialog.showAndWait();
 
-                result.ifPresent(s -> selected.setCondition(Integer.parseInt(s)));
+                result.ifPresent(s -> selected.setPhysicalMonitor(Integer.parseInt(s)));
+            });
+            MenuItem setStunMonitor = new MenuItem("Set stun monitor");
+            setStunMonitor.setOnAction(event -> {
+                PlayerCharacter selected = tableView_playerCharacters.getSelectionModel().getSelectedItem();
+                TextInputDialog dialog = new TextInputDialog(String.valueOf(selected.stunMonitorProperty()));
+                dialog.setTitle("Set stun monitor");
+                dialog.setHeaderText("Set " + selected.getName() + " monitor.");
+                dialog.setContentText("Please enter new max stun monitor:");
+                Optional<String> result = dialog.showAndWait();
+
+                result.ifPresent(s -> selected.setStunMonitor(Integer.parseInt(s)));
             });
             MenuItem deletePlayer = new MenuItem("Delete player");
             deletePlayer.setOnAction(event -> tableView_playerCharacters.getItems()
@@ -321,7 +335,8 @@ public class ControllerMain {
             addPlayer.setOnAction(event -> addPlayerOnAction());
             ContextMenu fullContextMenu = new ContextMenu(
                     renamePlayer,
-                    setCondition,
+                    setPhysicalMonitor,
+                    setStunMonitor,
                     new SeparatorMenuItem(),
                     deletePlayer,
                     addPlayer);

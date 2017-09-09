@@ -29,8 +29,8 @@ public class Battle {
                     World.REAL,
                     false,
                     false,
-                    playerCharacter.getCondition(),
-                    playerCharacter.getCondition(),
+                    playerCharacter.getPhysicalMonitor(),
+                    playerCharacter.getStunMonitor(),
                     playerCharacter);
 
     private ObjectProperty<Host> host;
