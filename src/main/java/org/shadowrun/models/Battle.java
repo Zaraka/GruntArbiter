@@ -77,8 +77,6 @@ public class Battle {
         time = new SimpleIntegerProperty(startingTime);
         maxInitiative = null;
         this.name = new SimpleStringProperty(name);
-
-        characters.addListener((InvalidationListener) observable -> maxInitiative.invalidate());
     }
 
     public Host getHost() {

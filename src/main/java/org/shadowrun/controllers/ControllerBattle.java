@@ -3,10 +3,12 @@ package org.shadowrun.controllers;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.application.Platform;
+import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -990,11 +992,14 @@ public class ControllerBattle {
         anchorPane_bottomTables.managedProperty().bind(anchorPane_bottomTables.visibleProperty());
 
         //Items
-        SortedList<Character> sortedCharacters = new SortedList<>(battle.getCharacters(),
+        ObservableList<Character> firableCharacters = FXCollections.
+                observableArrayList(param -> new Observable[]{param.initiativeProperty()});
+        Bindings.bindContentBidirectional(firableCharacters, battle.getCharacters());
+        SortedList<Character> sortedCharacters = new SortedList<>(firableCharacters,
                 Comparator.comparingInt(Character::getInitiative).reversed()).sorted();
         sortedCharacters.comparatorProperty().bind(tableView_masterTable.comparatorProperty());
         tableView_masterTable.setItems(sortedCharacters);
-        tableView_masterTable.sort();
+        //tableView_masterTable.sort();
         tableView_barrier.setItems(battle.getBarriers());
         tableView_devices.setItems(battle.getDevices());
 
