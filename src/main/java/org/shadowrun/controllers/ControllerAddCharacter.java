@@ -101,9 +101,9 @@ public class ControllerAddCharacter {
                     if(newValue != null) {
                         textField_name.textProperty().setValue(newValue.getName());
                         textField_physicalConditionMonitor.textProperty()
-                                .setValue(String.valueOf(newValue.getPhysicalMonitor()));
+                                .setValue(String.valueOf(newValue.getPhysicalMonitor().getMax()));
                         textField_stunConditionMonitor.textProperty()
-                                .setValue(String.valueOf(newValue.getStunMonitor()));
+                                .setValue(String.valueOf(newValue.getStunMonitor().getMax()));
                         switch (newValue.getWorld()){
                             case REAL:
                                 radioButton_realWorld.setSelected(true);
