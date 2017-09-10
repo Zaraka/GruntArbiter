@@ -360,6 +360,21 @@ public class ControllerMain {
             }
         });
 
+        appLogic.activeCampaignProperty().addListener((observable, oldValue, newValue) -> {
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append("Grunt Arbiter");
+            if(newValue != null) {
+                stringBuilder.append(" - ");
+                stringBuilder.append(newValue.getName());
+                if(appLogic.getCampaignFile() != null) {
+                    stringBuilder.append(" [");
+                    stringBuilder.append(appLogic.getCampaignFile().toPath().toString());
+                    stringBuilder.append("]");
+                }
+            }
+            stage.setTitle(stringBuilder.toString());
+        });
+
         loadRecentFiles();
     }
 

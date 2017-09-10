@@ -47,6 +47,7 @@ public class AppLogic {
     }
 
     public void newCampaign(String name) {
+        campaignFile.setValue(null);
         activeCampaign.setValue(new Campaign(name, config.getVersion()));
     }
 
