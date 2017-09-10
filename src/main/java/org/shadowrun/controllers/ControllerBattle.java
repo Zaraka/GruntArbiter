@@ -27,6 +27,7 @@ import javafx.util.Pair;
 import javafx.util.converter.NumberStringConverter;
 import org.apache.commons.lang3.StringUtils;
 import org.shadowrun.common.NumericLimitListener;
+import org.shadowrun.common.factories.ExceptionDialogFactory;
 import org.shadowrun.common.nodes.cells.*;
 import org.shadowrun.common.constants.ICE;
 import org.shadowrun.common.constants.Weather;
@@ -64,6 +65,9 @@ public class ControllerBattle {
     private SplitPane.Divider centerContentDivider;
 
     private BooleanBinding allPlayersIncluded;
+
+    private static final InitiativeDialogFactory initiativeDialogFactory = new InitiativeDialogFactory();
+    private static final ExceptionDialogFactory exceptionDialogFactory = new ExceptionDialogFactory();
 
     @FXML
     private TableView<Character> tableView_masterTable;
@@ -224,6 +228,9 @@ public class ControllerBattle {
             alert.setTitle("Too much ICe");
             alert.setHeaderText("ICe number exceeds host rating");
             alert.setContentText("Spawn another anyway?");
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStylesheets().add(
+                    getClass().getClassLoader().getResource("css/dark.css").toExternalForm());
             Optional<ButtonType> result = alert.showAndWait();
             if (!result.isPresent() || result.get() != ButtonType.OK) {
                 return;
@@ -263,7 +270,11 @@ public class ControllerBattle {
             }
         });
 
-        dialog.getDialogPane().setContent(grid);
+        DialogPane dialogPane = dialog.getDialogPane();
+        dialogPane.getStylesheets().add(
+                getClass().getClassLoader().getResource("css/dark.css").toExternalForm());
+
+        dialogPane.setContent(grid);
         Platform.runLater(iceChoice::requestFocus);
 
         dialog.setResultConverter(dialogButton -> {
@@ -642,7 +653,7 @@ public class ControllerBattle {
 
     private void setNewInitiative() {
         for (Character character : battle.getCharacters()) {
-            TextInputDialog dialog = InitiativeDialogFactory.createDialog(character);
+            TextInputDialog dialog = initiativeDialogFactory.createDialog(character);
             Optional<String> result = dialog.showAndWait();
             try {
                 character.setInitiative(result.map(Integer::parseInt).orElse(0));
@@ -724,7 +735,7 @@ public class ControllerBattle {
             MenuItem setInitiative = new MenuItem("Set initiative");
             setInitiative.setOnAction(event -> {
                 Character selectedChar = tableView_masterTable.getSelectionModel().getSelectedItem();
-                TextInputDialog dialog = InitiativeDialogFactory.createDialog(selectedChar);
+                TextInputDialog dialog = initiativeDialogFactory.createDialog(selectedChar);
                 Optional<String> result = dialog.showAndWait();
                 result.ifPresent(initiative -> {
                     selectedChar.setInitiative(Integer.parseInt(initiative));
@@ -967,14 +978,19 @@ public class ControllerBattle {
         label_overwatchScore.textProperty().addListener((observable, oldValue, newValue) -> {
             if (StringUtils.isNotEmpty(newValue)) {
                 Integer value = Integer.parseInt(newValue);
+                ObservableList<String> overwatchClasses = label_overwatchScore.getStyleClass();
                 if (value >= 40) {
-                    label_overwatchScore.setTextFill(Color.RED);
+                    overwatchClasses.clear();
+                    overwatchClasses.add("overwatch-score-critical");
                 } else if (value >= 30) {
-                    label_overwatchScore.setTextFill(Color.DARKORANGE);
+                    overwatchClasses.clear();
+                    overwatchClasses.add("overwatch-score-high");
                 } else if (value >= 20) {
-                    label_overwatchScore.setTextFill(Color.ORANGE);
+                    overwatchClasses.clear();
+                    overwatchClasses.add("overwatch-score-medium");
                 } else {
-                    label_overwatchScore.setTextFill(Color.BLACK);
+                    overwatchClasses.clear();
+                    overwatchClasses.add("overwatch-score-clear");
                 }
             }
         });

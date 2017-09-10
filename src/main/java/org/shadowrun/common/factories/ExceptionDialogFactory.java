@@ -11,7 +11,7 @@ import java.io.StringWriter;
 
 public class ExceptionDialogFactory {
 
-    public static Alert createExceptionDialog(String title, String header, String content, Exception exception) {
+    public Alert createExceptionDialog(String title, String header, String content, Exception exception) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);
         alert.setHeaderText(header);

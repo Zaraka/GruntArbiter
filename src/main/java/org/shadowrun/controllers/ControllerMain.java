@@ -1,7 +1,6 @@
 package org.shadowrun.controllers;
 
 import com.sun.javafx.geom.Vec4d;
-import com.sun.javafx.geom.Vec4f;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.fxml.FXML;
@@ -32,6 +31,8 @@ import java.util.Optional;
 public class ControllerMain {
 
     private static final Logger LOG = LoggerFactory.getLogger(ControllerMain.class);
+
+    private static final ExceptionDialogFactory exceptionDialogFactory = new ExceptionDialogFactory();
 
     private AppLogic appLogic;
     private BattleLogic battleLogic;
@@ -124,10 +125,13 @@ public class ControllerMain {
                 appLogic.saveCampaign();
             } catch (IOException e) {
                 LOG.error(e.getMessage());
-                Alert alert = ExceptionDialogFactory.createExceptionDialog(
+                Alert alert = exceptionDialogFactory.createExceptionDialog(
                         "Error!",
                         "Error occured while saving campaign.",
                         "I/O exception", e);
+                DialogPane dialogPane = alert.getDialogPane();
+                dialogPane.getStylesheets().add(
+                        getClass().getClassLoader().getResource("css/dark.css").toExternalForm());
                 alert.showAndWait();
             }
         }
@@ -146,10 +150,11 @@ public class ControllerMain {
                 appLogic.saveAsCampaign(file);
             } catch (IOException e) {
                 LOG.error(e.getMessage());
-                Alert alert = ExceptionDialogFactory.createExceptionDialog(
+                Alert alert = exceptionDialogFactory.createExceptionDialog(
                         "Error!",
                         "Error occured while saving campaign.",
                         "I/O exception", e);
+
                 alert.showAndWait();
             }
         }
@@ -214,6 +219,9 @@ public class ControllerMain {
     @FXML
     private void aboutOnAction() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.getStylesheets().add(
+                getClass().getClassLoader().getResource("css/dark.css").toExternalForm());
         alert.setTitle("About Grunt Arbiter");
         alert.setHeaderText("Grunt Arbiter version: " + appLogic.getConfig().getVersion().toString());
         alert.setContentText("Created by Zaraka.\nhttp://www.github.com/zaraka/gruntarbiter");
@@ -417,7 +425,7 @@ public class ControllerMain {
                 addCampaignHooks();
             } catch (IOException e) {
                 LOG.error(e.getMessage());
-                Alert alert = ExceptionDialogFactory.createExceptionDialog(
+                Alert alert = exceptionDialogFactory.createExceptionDialog(
                         "Error!",
                         "Error occured while opening campaign file.",
                         "You campaign file could not be read", e);
@@ -427,7 +435,9 @@ public class ControllerMain {
                 alert.setTitle("Oh, drek!");
                 alert.setHeaderText("Version of campaign you are trying to load is incompoatible with app version");
                 alert.setContentText("This means, that loading this campaign could crash or corrupt campaign file.\ndo you still want to load?");
-
+                DialogPane dialogPane = alert.getDialogPane();
+                dialogPane.getStylesheets().add(
+                        getClass().getClassLoader().getResource("css/dark.css").toExternalForm());
                 Optional<ButtonType> result = alert.showAndWait();
                 result.ifPresent(buttonType -> {
                     if (buttonType == ButtonType.OK) {

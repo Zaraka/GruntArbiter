@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import java.lang.String?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
@@ -21,7 +22,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.shadowrun.controllers.ControllerBattle">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" stylesheets="@../css/dark.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.shadowrun.controllers.ControllerBattle">
    <children>
       <VBox prefHeight="167.0" prefWidth="1024.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -104,8 +105,8 @@
                            <children>
                               <ToolBar prefHeight="40.0" prefWidth="200.0">
                                  <items>
-                                    <Button mnemonicParsing="false" onAction="#addCharacterOnAction" text="Spawn character" />
-                                    <Button fx:id="button_spawnPlayer" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#addPlayerOnAction" text="Spawn player" />
+                                    <Button mnemonicParsing="false" onAction="#addCharacterOnAction" styleClass="button-primary" text="Spawn character" />
+                                    <Button fx:id="button_spawnPlayer" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#addPlayerOnAction" styleClass="button-primary" text="Spawn player" />
                                  </items>
                               </ToolBar>
                               <VBox>
@@ -123,7 +124,7 @@
                                                       </ToolBar>
                                                       <ToolBar prefHeight="40.0" prefWidth="200.0">
                                                          <items>
-                                                            <Button mnemonicParsing="false" onAction="#addBarrierOnAction" text="Add barrier" />
+                                                            <Button mnemonicParsing="false" onAction="#addBarrierOnAction" styleClass="button-primary" text="Add barrier" />
                                                          </items>
                                                       </ToolBar>
                                                    </children>
@@ -132,7 +133,7 @@
                                           </AnchorPane>
                                        </content>
                                     </TitledPane>
-                                    <TitledPane animated="false" text="Matrix">
+                                    <TitledPane animated="false" styleClass="matrix-pane" text="Matrix">
                                        <content>
                                           <AnchorPane>
                                              <children>
@@ -140,8 +141,8 @@
                                                    <children>
                                                       <ToolBar prefHeight="40.0" prefWidth="200.0">
                                                          <items>
-                                                            <Button fx:id="button_hostAction" mnemonicParsing="false" onAction="#hostActionOnAction" text="Generate Host" />
-                                                            <Button mnemonicParsing="false" onAction="#addDeviceOnAction" text="Add device" />
+                                                            <Button fx:id="button_hostAction" mnemonicParsing="false" onAction="#hostActionOnAction" styleClass="button-primary" text="Generate Host" />
+                                                            <Button mnemonicParsing="false" onAction="#addDeviceOnAction" styleClass="button-primary" text="Add device" />
                                                          </items>
                                                       </ToolBar>
                                                       <VBox fx:id="vbox_matrixProperties">
@@ -194,7 +195,7 @@
                                                                      </tooltip>
                                                                   </Label>
                                                                   <Label fx:id="label_host_dataProcessing" text="5" />
-                                                                  <Button mnemonicParsing="false" onAction="#addICeOnAction" text="Add ICe" />
+                                                                  <Button mnemonicParsing="false" onAction="#addICeOnAction" styleClass="button-primary" text="Add ICe" />
                                                                </items>
                                                             </ToolBar>
                                                             <ToolBar prefHeight="40.0" prefWidth="200.0">
@@ -212,7 +213,7 @@
                                                                         <Tooltip text="Overwatch score" />
                                                                      </tooltip>
                                                                   </Label>
-                                                                  <Button contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#overwatchScorePlusOnAction">
+                                                                  <Button contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#overwatchScorePlusOnAction" styleClass="button-success">
                                                                      <graphic>
                                                                         <FontAwesomeIconView glyphName="PLUS" />
                                                                      </graphic>
@@ -220,7 +221,7 @@
                                                                         <Tooltip text="Increase overwatch score" />
                                                                      </tooltip>
                                                                   </Button>
-                                                                  <Button mnemonicParsing="false" onAction="#overwatchScoreMinusOnAction">
+                                                                  <Button mnemonicParsing="false" onAction="#overwatchScoreMinusOnAction" styleClass="button-danger">
                                                                      <graphic>
                                                                         <FontAwesomeIconView glyphName="MINUS" />
                                                                      </graphic>
@@ -246,18 +247,18 @@
                                           </AnchorPane>
                                        </content>
                                     </TitledPane>
-                                    <TitledPane animated="false" text="Astral space">
+                                    <TitledPane animated="false" styleClass="astral-pane" text="Astral space">
                                        <content>
                                           <AnchorPane>
                                              <children>
-                                                <VBox fx:id="vbox_astralPlane">
+                                                <VBox fx:id="vbox_astralPlane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="inner-pane-box" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                    <children>
                                                       <GridPane>
                                                          <columnConstraints>
-                                                            <ColumnConstraints hgrow="SOMETIMES" />
-                                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="25.0" minWidth="25.0" prefWidth="25.0" />
-                                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="25.0" minWidth="25.0" prefWidth="100.0" />
+                                                            <ColumnConstraints hgrow="NEVER" />
+                                                            <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="75.0" />
+                                                            <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" />
+                                                            <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="30.0" />
                                                          </columnConstraints>
                                                          <rowConstraints>
                                                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -272,6 +273,10 @@
                                                                <tooltip>
                                                                   <Tooltip text="Increase astral background count" />
                                                                </tooltip>
+                                                               <styleClass>
+                                                                  <String fx:value="button-pill" />
+                                                                  <String fx:value="button-success" />
+                                                               </styleClass>
                                                             </Button>
                                                             <Button layoutX="229.0" layoutY="12.0" mnemonicParsing="false" onAction="#backgroundCountMinusOnAction" GridPane.columnIndex="3">
                                                                <graphic>
@@ -280,6 +285,10 @@
                                                                <tooltip>
                                                                   <Tooltip text="Decrease astral background count" />
                                                                </tooltip>
+                                                               <styleClass>
+                                                                  <String fx:value="button-pill" />
+                                                                  <String fx:value="button-danger" />
+                                                               </styleClass>
                                                             </Button>
                                                          </children>
                                                       </GridPane>
@@ -356,13 +365,13 @@
                         </SplitPane>
                      </children>
                   </AnchorPane>
-                  <AnchorPane fx:id="anchorPane_selected" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="270.0">
+                  <AnchorPane fx:id="anchorPane_selected" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="280.0">
                      <children>
                         <VBox prefHeight="664.0" prefWidth="250.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0">
                            <children>
                               <HBox fx:id="hbox_selected_glyph" alignment="CENTER">
                                  <children>
-                                    <FontAwesomeIconView fx:id="fontAwesomeIcon_selected" size="48.0" />
+                                    <FontAwesomeIconView fx:id="fontAwesomeIcon_selected" fill="WHITE" size="48.0" />
                                  </children>
                               </HBox>
                               <HBox alignment="CENTER">
@@ -381,9 +390,9 @@
                                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="20.0" />
                                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="80.0" />
                                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="75.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="25.0" minWidth="25.0" prefWidth="25.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="25.0" minWidth="25.0" prefWidth="25.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="25.0" minWidth="25.0" prefWidth="100.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="30.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="30.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="30.0" />
                                        </columnConstraints>
                                        <rowConstraints>
                                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -392,15 +401,15 @@
                                        </rowConstraints>
                                        <children>
                                           <Label text="Physical" GridPane.columnIndex="1" />
-                                          <Button contentDisplay="CENTER" mnemonicParsing="false" onAction="#physicalPlusOnAction" GridPane.columnIndex="3">
+                                          <Button contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#physicalPlusOnAction" styleClass="button-pill, button-success" GridPane.columnIndex="3">
                                              <graphic>
-                                                <FontAwesomeIconView glyphName="PLUS" />
+                                                <FontAwesomeIconView fill="WHITE" glyphName="PLUS" />
                                              </graphic>
                                              <tooltip>
                                                 <Tooltip text="Increase condition" />
                                              </tooltip>
                                           </Button>
-                                          <Button mnemonicParsing="false" onAction="#physicalMinusOnAction" GridPane.columnIndex="4">
+                                          <Button mnemonicParsing="false" onAction="#physicalMinusOnAction" styleClass="button-pill, button-danger" GridPane.columnIndex="4">
                                              <graphic>
                                                 <FontAwesomeIconView glyphName="MINUS" />
                                              </graphic>
@@ -409,7 +418,7 @@
                                              </tooltip>
                                           </Button>
                                           <Label text="Stun" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                          <Button mnemonicParsing="false" onAction="#stunPlusOnAction" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                                          <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#stunPlusOnAction" styleClass="button-pill, button-success" GridPane.columnIndex="3" GridPane.rowIndex="1">
                                              <graphic>
                                                 <FontAwesomeIconView glyphName="PLUS" />
                                              </graphic>
@@ -417,7 +426,7 @@
                                                 <Tooltip text="Increase stun condition" />
                                              </tooltip>
                                           </Button>
-                                          <Button mnemonicParsing="false" onAction="#stunMinusOnAction" GridPane.columnIndex="4" GridPane.rowIndex="1">
+                                          <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#stunMinusOnAction" styleClass="button-pill, button-danger" GridPane.columnIndex="4" GridPane.rowIndex="1">
                                              <graphic>
                                                 <FontAwesomeIconView glyphName="MINUS" />
                                              </graphic>
@@ -427,7 +436,7 @@
                                           </Button>
                                           <Label text="Initiative" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                           <TextField fx:id="textField_selected_initiative" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                                          <Button layoutX="185.0" layoutY="42.0" mnemonicParsing="false" onAction="#initiativePlusOnAction" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                                          <Button layoutX="185.0" layoutY="42.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#initiativePlusOnAction" styleClass="button-pill, button-success" GridPane.columnIndex="3" GridPane.rowIndex="2">
                                              <graphic>
                                                 <FontAwesomeIconView glyphName="PLUS" />
                                              </graphic>
@@ -435,7 +444,7 @@
                                                 <Tooltip text="Increase stun condition" />
                                              </tooltip>
                                           </Button>
-                                          <Button layoutX="210.0" layoutY="42.0" mnemonicParsing="false" onAction="#initiativeMinusOnAction" GridPane.columnIndex="4" GridPane.rowIndex="2">
+                                          <Button layoutX="210.0" layoutY="42.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#initiativeMinusOnAction" styleClass="button-pill, button-danger" GridPane.columnIndex="4" GridPane.rowIndex="2">
                                              <graphic>
                                                 <FontAwesomeIconView glyphName="MINUS" />
                                              </graphic>
@@ -443,7 +452,7 @@
                                                 <Tooltip text="Decrease stun condition" />
                                              </tooltip>
                                           </Button>
-                                          <Button layoutX="210.0" layoutY="12.0" mnemonicParsing="false" onAction="#physicalMonitorSettingsOnAction" GridPane.columnIndex="5">
+                                          <Button layoutX="210.0" layoutY="12.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#physicalMonitorSettingsOnAction" styleClass="button-pill" GridPane.columnIndex="5">
                                              <graphic>
                                                 <FontAwesomeIconView glyphName="COG" />
                                              </graphic>
@@ -451,7 +460,7 @@
                                                 <Tooltip text="Decrease condition" />
                                              </tooltip>
                                           </Button>
-                                          <Button layoutX="235.0" layoutY="12.0" mnemonicParsing="false" onAction="#stunMonitorSettingsOnAction" GridPane.columnIndex="5" GridPane.rowIndex="1">
+                                          <Button layoutX="235.0" layoutY="12.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#stunMonitorSettingsOnAction" styleClass="button-pill" GridPane.columnIndex="5" GridPane.rowIndex="1">
                                              <graphic>
                                                 <FontAwesomeIconView glyphName="COG" />
                                              </graphic>
@@ -471,12 +480,12 @@
                                           </HBox>
                                           <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                                              <children>
-                                                <FontAwesomeIconView glyphName="HEART" size="14.0" />
+                                                <FontAwesomeIconView fill="WHITE" glyphName="HEART" size="14.0" />
                                              </children>
                                           </HBox>
                                           <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="1">
                                              <children>
-                                                <FontAwesomeIconView glyphName="HEART_ALT" size="14.0" />
+                                                <FontAwesomeIconView fill="WHITE" glyphName="HEART_ALT" size="14.0" />
                                              </children>
                                           </HBox>
                                        </children>
@@ -492,9 +501,9 @@
                                                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="20.0" />
                                                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="80.0" />
                                                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="75.0" />
-                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="25.0" minWidth="25.0" prefWidth="25.0" />
-                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="25.0" minWidth="25.0" prefWidth="25.0" />
-                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="25.0" minWidth="25.0" prefWidth="100.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="30.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="30.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="30.0" />
                                              </columnConstraints>
                                              <rowConstraints>
                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -503,7 +512,7 @@
                                              <children>
                                                 <Label text="Spirit Index" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                                 <TextField fx:id="textField_selected_spiritIndex" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                                                <Button mnemonicParsing="false" onAction="#spiritIndexPlusOnAction" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                                                <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#spiritIndexPlusOnAction" styleClass="button-pill, button-success" GridPane.columnIndex="3" GridPane.rowIndex="1">
                                                    <graphic>
                                                       <FontAwesomeIconView glyphName="PLUS" />
                                                    </graphic>
@@ -511,7 +520,7 @@
                                                       <Tooltip text="Increase condition" />
                                                    </tooltip>
                                                 </Button>
-                                                <Button mnemonicParsing="false" onAction="#spiritIndexMinusOnAction" GridPane.columnIndex="4" GridPane.rowIndex="1">
+                                                <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#spiritIndexMinusOnAction" styleClass="button-pill, button-danger" GridPane.columnIndex="4" GridPane.rowIndex="1">
                                                    <graphic>
                                                       <FontAwesomeIconView glyphName="MINUS" />
                                                    </graphic>
@@ -534,9 +543,9 @@
                                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="20.0" />
                                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="80.0" />
                                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="75.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="25.0" minWidth="25.0" prefWidth="25.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="25.0" minWidth="25.0" prefWidth="25.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="25.0" minWidth="25.0" prefWidth="100.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="30.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="30.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="30.0" />
                                        </columnConstraints>
                                        <rowConstraints>
                                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -544,7 +553,7 @@
                                        </rowConstraints>
                                        <children>
                                           <Label text="Structure" GridPane.columnIndex="1" />
-                                          <Button mnemonicParsing="false" onAction="#structurePlusOnAction" GridPane.columnIndex="3">
+                                          <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#structurePlusOnAction" styleClass="button-pill, button-success" GridPane.columnIndex="3">
                                              <graphic>
                                                 <FontAwesomeIconView glyphName="PLUS" />
                                              </graphic>
@@ -552,7 +561,7 @@
                                                 <Tooltip text="Increase structure" />
                                              </tooltip>
                                           </Button>
-                                          <Button mnemonicParsing="false" onAction="#structureMinusOnAction" GridPane.columnIndex="4">
+                                          <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#structureMinusOnAction" styleClass="button-pill, button-danger" GridPane.columnIndex="4">
                                              <graphic>
                                                 <FontAwesomeIconView glyphName="MINUS" />
                                              </graphic>
@@ -561,7 +570,7 @@
                                              </tooltip>
                                           </Button>
                                           <Label text="Armor" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                          <Button mnemonicParsing="false" onAction="#armorPlusOnAction" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                                          <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#armorPlusOnAction" styleClass="button-pill, button-success" GridPane.columnIndex="3" GridPane.rowIndex="1">
                                              <graphic>
                                                 <FontAwesomeIconView glyphName="PLUS" />
                                              </graphic>
@@ -569,7 +578,7 @@
                                                 <Tooltip text="Increase armor" />
                                              </tooltip>
                                           </Button>
-                                          <Button mnemonicParsing="false" onAction="#armorMinusOnAction" GridPane.columnIndex="4" GridPane.rowIndex="1">
+                                          <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#armorMinusOnAction" styleClass="button-pill, button-danger" GridPane.columnIndex="4" GridPane.rowIndex="1">
                                              <graphic>
                                                 <FontAwesomeIconView glyphName="MINUS" />
                                              </graphic>
@@ -577,7 +586,7 @@
                                                 <Tooltip text="Decrease armor" />
                                              </tooltip>
                                           </Button>
-                                          <Button layoutX="210.0" layoutY="12.0" mnemonicParsing="false" onAction="#structureMonitorSettingsOnAction" GridPane.columnIndex="5">
+                                          <Button layoutX="210.0" layoutY="12.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#structureMonitorSettingsOnAction" styleClass="button-pill" GridPane.columnIndex="5">
                                              <graphic>
                                                 <FontAwesomeIconView glyphName="COG" />
                                              </graphic>
@@ -611,16 +620,16 @@
                                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="20.0" />
                                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="80.0" />
                                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="75.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="25.0" minWidth="25.0" prefWidth="25.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="25.0" minWidth="25.0" prefWidth="25.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="25.0" minWidth="25.0" prefWidth="100.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="30.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="30.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="30.0" />
                                        </columnConstraints>
                                        <rowConstraints>
                                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                        </rowConstraints>
                                        <children>
                                           <Label text="Condition" GridPane.columnIndex="1" />
-                                          <Button mnemonicParsing="false" onAction="#conditionPlusOnAction" GridPane.columnIndex="3">
+                                          <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#conditionPlusOnAction" styleClass="button-pill, button-success" GridPane.columnIndex="3">
                                              <graphic>
                                                 <FontAwesomeIconView glyphName="PLUS" />
                                              </graphic>
@@ -628,9 +637,9 @@
                                                 <Tooltip text="Increase condition" />
                                              </tooltip>
                                           </Button>
-                                          <Button mnemonicParsing="false" onAction="#conditionMinusOnAction" GridPane.columnIndex="4">
+                                          <Button mnemonicParsing="false" onAction="#conditionMinusOnAction" styleClass="button-pill, button-danger" GridPane.columnIndex="4">
                                              <graphic>
-                                                <FontAwesomeIconView glyphName="MINUS" />
+                                                <FontAwesomeIconView glyphName="MINUS" text="" />
                                              </graphic>
                                              <tooltip>
                                                 <Tooltip text="Decrease condition" />
@@ -646,7 +655,7 @@
                                                 <FontAwesomeIconView glyphName="COGS" size="14.0" />
                                              </children>
                                           </HBox>
-                                          <Button mnemonicParsing="false" onAction="#conditionMonitorSettingsOnAction" GridPane.columnIndex="5">
+                                          <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#conditionMonitorSettingsOnAction" styleClass="button-pill" GridPane.columnIndex="5">
                                              <graphic>
                                                 <FontAwesomeIconView glyphName="COG" />
                                              </graphic>

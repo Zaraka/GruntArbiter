@@ -1,0 +1,218 @@
+* {
+    -fx-theme-gray-base: #000;
+    -fx-theme-gray-darker: #222;
+    -fx-theme-gray-dark: #303030;
+    -fx-theme-gray: #464545;
+    -fx-theme-gray-light: #999;
+    -fx-theme-gray-lighter: #EBEBEB;
+    -fx-theme-brand-primary: #375a7f;
+    -fx-theme-brand-success: #00bc8c;
+    -fx-theme-brand-info: #3498DB;
+    -fx-theme-brand-warning: #F39C12;
+    -fx-theme-brand-danger: #E74C3C;
+    -fx-theme-brand-signature: #8b0c24;
+
+    -fx-theme-text-color: derive(-fx-theme-gray-lighter, 5%);
+
+}
+
+.root {
+    -fx-base: -fx-theme-gray-darker;
+    -fx-background: -fx-theme-gray-darker;
+
+    /* make controls (buttons, thumb, etc.) slightly lighter */
+    -fx-color: derive(-fx-base, 10%);
+
+    /* text fields and table rows background */
+    -fx-control-inner-background: -fx-theme-gray-dark;
+    /* version of -fx-control-inner-background for alternative rows */
+    -fx-control-inner-background-alt: derive(-fx-control-inner-background, 2.5%);
+
+    /* text colors depending on background's brightness */
+    -fx-light-text-color: -fx-theme-text-color;
+    -fx-mid-text-color: derive(-fx-light-text-color, 15%);
+    -fx-dark-text-color: derive(-fx-mid-text-color, 15%);
+
+    /* A bright blue for highlighting/accenting objects.  For example: selected
+     * text; selected items in menus, lists, trees, and tables; progress bars */
+    -fx-accent: derive(-fx-theme-brand-signature, 10%);
+
+    /* color of non-focused yet selected elements */
+    -fx-selection-bar-non-focused: derive(-fx-theme-brand-signature, 10%);
+
+    -fx-box-border: -fx-base;
+    -fx-inner-border: -fx-base;
+    -fx-inner-border-horizontal: -fx-base;
+}
+
+/* Fix derived prompt color for text fields */
+.text-input {
+    -fx-prompt-text-fill: derive(-fx-control-inner-background, +50%);
+}
+
+/* Keep prompt invisible when focused (above color fix overrides it) */
+.text-input:focused {
+    -fx-prompt-text-fill: transparent;
+}
+
+/* Fix scroll bar buttons arrows colors */
+.scroll-bar > .increment-button > .increment-arrow,
+.scroll-bar > .decrement-button > .decrement-arrow {
+    -fx-background-color: -fx-mark-highlight-color, rgb(220, 220, 220);
+}
+
+.scroll-bar > .increment-button:hover > .increment-arrow,
+.scroll-bar > .decrement-button:hover > .decrement-arrow {
+    -fx-background-color: -fx-mark-highlight-color, rgb(240, 240, 240);
+}
+
+.scroll-bar > .increment-button:pressed > .increment-arrow,
+.scroll-bar > .decrement-button:pressed > .decrement-arrow {
+    -fx-background-color: -fx-mark-highlight-color, rgb(255, 255, 255);
+}
+
+.glyph-icon {
+    -fx-fill: #fff;
+}
+
+.button {
+    -fx-text-fill: -fx-theme-text-color;
+    -fx-background-color: -fx-theme-gray;
+    -fx-border-color: -fx-theme-gray;
+}
+
+.button:hover {
+    -fx-background-color: derive(-fx-theme-gray, -15%);
+    -fx-border-color: derive(-fx-theme-gray, -15%);
+}
+
+.button-primary,
+.button:default {
+    -fx-text-fill: -fx-theme-text-color;
+    -fx-background-color: -fx-theme-brand-signature;
+    -fx-border-color: -fx-theme-brand-signature;
+}
+
+.button-primary:hover,
+.button:default:hover {
+    -fx-background-color: derive(-fx-theme-brand-signature, -15%);
+    -fx-border-color: derive(-fx-theme-brand-signature, -15%);
+}
+
+.button-success {
+    -fx-text-fill: -fx-theme-text-color;
+    -fx-background-color: -fx-theme-brand-success;
+    -fx-border-color: -fx-theme-brand-success;
+}
+
+.button-success:hover {
+    -fx-background-color: derive(-fx-theme-brand-success, -15%);
+    -fx-border-color: derive(-fx-theme-brand-success, -15%);
+}
+
+.button-info {
+    -fx-text-fill: -fx-theme-text-color;
+    -fx-background-color: -fx-theme-brand-info;
+    -fx-border-color: -fx-theme-brand-info;
+}
+
+.button-info:hover {
+    -fx-background-color: derive(-fx-theme-brand-info, -15%);
+    -fx-border-color: derive(-fx-theme-brand-info, -15%);
+}
+
+.button-warning {
+    -fx-text-fill: -fx-theme-text-color;
+    -fx-background-color: -fx-theme-brand-warning;
+    -fx-border-color: -fx-theme-brand-warning;
+}
+
+.button-warning:hover {
+    -fx-background-color: derive(-fx-theme-brand-warning, -15%);
+    -fx-border-color: derive(-fx-theme-brand-warning, -15%);
+}
+
+.button-danger {
+    -fx-text-fill: -fx-theme-text-color;
+    -fx-background-color: -fx-theme-brand-danger;
+    -fx-border-color: -fx-theme-brand-danger;
+}
+
+.button-danger:hover {
+    -fx-background-color: derive(-fx-theme-brand-danger, -15%);
+    -fx-border-color: derive(-fx-theme-brand-danger, -15%);
+}
+
+.button-pill {
+    -fx-content-display: center;
+}
+
+.menu-bar {
+    -fx-background-color: -fx-base;
+}
+
+.separator:horizontal .line {
+    -fx-border-color: -fx-theme-gray transparent transparent transparent;
+}
+.separator:vertical .line {
+    -fx-border-color: transparent transparent transparent -fx-theme-gray-light;
+}
+
+.titled-pane > *.content {
+    -fx-border-insets: 0 0 0 0;
+}
+
+.titled-pane > *.content > AnchorPane {
+    -fx-padding: 5px;
+}
+
+.tool-bar {
+    -fx-background-color: -fx-theme-gray-dark;
+}
+
+.matrix-pane > .title {
+    -fx-background-color: derive(-fx-theme-brand-success, 10%);
+}
+
+.matrix-pane > *.content {
+    -fx-border-insets: 0 0 0 0;
+    -fx-background-color: derive(-fx-theme-brand-success, -25%);
+}
+
+.astral-pane > .title {
+    -fx-background-color: derive(-fx-theme-brand-danger, 10%);
+}
+
+.astral-pane > *.content  {
+    -fx-border-insets: 0 0 0 0;
+    -fx-background-color: derive(-fx-theme-brand-danger, -25%);
+}
+
+.inner-pane-box {
+    -fx-background-color: -fx-theme-gray-dark;
+    -fx-margin: 5px;
+}
+
+.overwatch-score-critical {
+    -fx-text-fill: -fx-theme-brand-signature;
+}
+
+.overwatch-score-high {
+    -fx-text-fill: -fx-theme-brand-danger;
+}
+
+.overwatch-score-medium {
+    -fx-text-fill: -fx-theme-brand-warning;
+}
+
+.overwatch-score-clear {
+    -fx-text-fill: -fx-theme-text-color;
+}
+
+.turn-cell-empty {
+    -fx-text-fill: derive(-fx-theme-text-color, -40%);
+}
+
+.turn-cell-full {
+    -fx-text-fill: -fx-theme-text-color;
+}

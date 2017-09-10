@@ -1,6 +1,7 @@
 package org.shadowrun.common.nodes.cells;
 
 
+import javafx.collections.ObservableList;
 import javafx.scene.control.TableCell;
 import org.shadowrun.models.Character;
 
@@ -12,10 +13,11 @@ public class TurnTableCell extends TableCell<Character, Integer>  {
 
         if(!empty && item != null) {
             setText(String.valueOf(item));
+            ObservableList<String> cellClasses = getStyleClass();
             if(item < 1) {
-                setStyle("-fx-text-fill: lightgray");
+                cellClasses.add("turn-cell-empty");
             } else {
-                setStyle(null);
+                cellClasses.add("turn-cell-full");
             }
         } else {
             setText(null);
