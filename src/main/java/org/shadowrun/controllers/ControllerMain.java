@@ -1,5 +1,7 @@
 package org.shadowrun.controllers;
 
+import com.sun.javafx.geom.Vec4d;
+import com.sun.javafx.geom.Vec4f;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.fxml.FXML;
@@ -253,6 +255,24 @@ public class ControllerMain {
         appLogic = new AppLogic();
         battleLogic = new BattleLogic();
 
+        Vec4d windowPos = appLogic.getConfig().loadWindowPos();
+
+        stage.setX(windowPos.x);
+        stage.setY(windowPos.y);
+        stage.setWidth(windowPos.z);
+        stage.setHeight(windowPos.w);
+
+        stage.setMaximized(appLogic.getConfig().getMaximized());
+
+        stage.setOnCloseRequest(event -> {
+            appLogic.getConfig().saveWindowPos(
+                    new Vec4d(  stage.getX(),
+                            stage.getY(),
+                            stage.getWidth(),
+                            stage.getHeight()));
+            appLogic.getConfig().setMaximized(stage.isMaximized());
+        });
+
         menu_campaign.disableProperty().bind(appLogic.hasCampaign());
         menuItem_newBattle.disableProperty().bind(appLogic.hasCampaign());
         menuItem_saveCampaign.disableProperty().bind(appLogic.hasCampaign());
@@ -410,7 +430,7 @@ public class ControllerMain {
 
                 Optional<ButtonType> result = alert.showAndWait();
                 result.ifPresent(buttonType -> {
-                    if(buttonType == ButtonType.OK) {
+                    if (buttonType == ButtonType.OK) {
                         appLogic.loadCampaign(file, ex.getCampaign());
                         addCampaignHooks();
                     }

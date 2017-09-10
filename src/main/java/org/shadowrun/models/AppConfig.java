@@ -1,5 +1,6 @@
 package org.shadowrun.models;
 
+import com.sun.javafx.geom.Vec4d;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,6 +18,12 @@ import java.util.stream.Collectors;
 public class AppConfig {
 
     private static final Logger LOG = LoggerFactory.getLogger(AppConfig.class);
+
+    private static final String WINDOW_X = "WINDOW_X";
+    private static final String WINDOW_Y = "WINDOW_Y";
+    private static final String WINDOW_WIDTH = "WINDOW_WIDTH";
+    private static final String WINDOW_HEIGHT = "WINDOW_HEIGHT";
+    private static final String WINDOW_MAXIMIZED = "WINDOW_MAXIMIZED";
 
     private Preferences preferences;
 
@@ -37,11 +44,11 @@ public class AppConfig {
 
     public List<Path> getRecentFiles() {
         List<Path> result = new ArrayList<>();
-        for(int i = 0; i < 3; i++) {
+        for (int i = 0; i < 3; i++) {
             try {
                 Path recentFile = Paths.get(URI.create(preferences.get("recentFile" + i, "")));
                 result.add(recentFile);
-            } catch(SecurityException | FileSystemNotFoundException | IllegalArgumentException ex) {
+            } catch (SecurityException | FileSystemNotFoundException | IllegalArgumentException ex) {
                 //do nothing
             }
         }
@@ -49,11 +56,11 @@ public class AppConfig {
     }
 
     public void setRecentFiles(List<Path> paths) {
-        for(int i = 0; i < 3; i++) {
+        for (int i = 0; i < 3; i++) {
             preferences.remove("recentFile" + i);
         }
 
-        for(int i = 0; i < paths.size(); i++) {
+        for (int i = 0; i < paths.size(); i++) {
             preferences.put("recentFile" + i, paths.get(i).toUri().toString());
         }
     }
@@ -65,7 +72,7 @@ public class AppConfig {
     public void insertOrRefreshRecentCampaign(Path campaign) {
         List<Path> recentCampaigns = getRecentFiles();
 
-        if(recentCampaigns.contains(campaign)) {
+        if (recentCampaigns.contains(campaign)) {
             recentCampaigns.remove(campaign);
         }
 
@@ -76,5 +83,27 @@ public class AppConfig {
 
     public SemanticVersion getVersion() {
         return version;
+    }
+
+    public void saveWindowPos(Vec4d window) {
+        preferences.putDouble(WINDOW_X, window.x);
+        preferences.putDouble(WINDOW_Y, window.y);
+        preferences.putDouble(WINDOW_WIDTH, window.z);
+        preferences.putDouble(WINDOW_HEIGHT, window.w);
+    }
+
+    public Vec4d loadWindowPos() {
+        return new Vec4d(preferences.getFloat(WINDOW_X, 0),
+                preferences.getFloat(WINDOW_Y, 0),
+                preferences.getFloat(WINDOW_WIDTH, 1280),
+                preferences.getFloat(WINDOW_HEIGHT, 720));
+    }
+
+    public boolean getMaximized() {
+        return preferences.getBoolean(WINDOW_MAXIMIZED, false);
+    }
+
+    public void setMaximized(boolean maximized) {
+        preferences.putBoolean(WINDOW_MAXIMIZED, maximized);
     }
 }
