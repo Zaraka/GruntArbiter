@@ -53,10 +53,15 @@ public class ControllerBattle {
 
     private static final String LABEL_DISCONNECT = "Disconnect";
     private static final String LABEL_GENERATE_HOST = "Generate Host";
+    public static final double SELECTED_PANE_OPEN_POS = 0.8;
 
     private AppLogic appLogic;
     private BattleLogic battleLogic;
     private Battle battle;
+
+    private SplitPane.Divider selectedPaneDivider;
+    private SplitPane.Divider bottomTablesDivider;
+    private SplitPane.Divider centerContentDivider;
 
     private BooleanBinding allPlayersIncluded;
 
@@ -202,6 +207,10 @@ public class ControllerBattle {
 
     @FXML
     private SplitPane splitPane_horizontal;
+    @FXML
+    private SplitPane splitPane_centerContent;
+    @FXML
+    private SplitPane splitPane_bottomTables;
 
     @FXML
     private FontAwesomeIconView fontAwesomeIcon_selected;
@@ -644,6 +653,7 @@ public class ControllerBattle {
     }
 
     private void cleanSelectedPane() {
+        selectedPaneDivider.setPosition(99.0);
         label_selectedCharacter.textProperty().unbind();
 
         hbox_selected_glyph.setVisible(false);
@@ -661,6 +671,8 @@ public class ControllerBattle {
 
         button_nextTurn.disableProperty().bind(battleLogic.hasBattle());
         button_prevTurn.disableProperty().bind(battleLogic.hasBattle());
+
+        selectedPaneDivider = splitPane_horizontal.getDividers().get(1);
 
         tableColumn_masterTable_character.setCellFactory(param -> new CharacterCell());
         tableColumn_masterTable_character.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
@@ -756,9 +768,6 @@ public class ControllerBattle {
                     } else {
                         setStyle(null);
                     }
-                    //tableView_masterTable.sort();
-                    //tableView_masterTable.getSortOrder().clear();
-                    //tableView_masterTable.getSortOrder().add(tableColumn_masterTable_initiative);
                 }
             };
             tableRow.emptyProperty().addListener((observable, oldValue, newValue) ->
@@ -813,6 +822,7 @@ public class ControllerBattle {
                 hbox_selected_character.setVisible(true);
                 vbox_selected_player.setVisible(true);
                 anchorPane_selected.setVisible(true);
+                selectedPaneDivider.setPosition(SELECTED_PANE_OPEN_POS);
             }
         });
 
@@ -875,6 +885,7 @@ public class ControllerBattle {
                 hbox_selected_barrier.setVisible(true);
                 hbox_selected_glyph.setVisible(true);
                 anchorPane_selected.setVisible(true);
+                selectedPaneDivider.setPosition(SELECTED_PANE_OPEN_POS);
             }
         });
 
@@ -938,6 +949,7 @@ public class ControllerBattle {
                 hbox_selected_glyph.setVisible(true);
                 hbox_selected_device.setVisible(true);
                 anchorPane_selected.setVisible(true);
+                selectedPaneDivider.setPosition(SELECTED_PANE_OPEN_POS);
             }
         });
 
@@ -986,10 +998,6 @@ public class ControllerBattle {
         comboBox_weather.setItems(FXCollections.observableArrayList(Weather.values()));
         comboBox_weather.setCellFactory(param -> new WeatherCell());
         comboBox_weather.setButtonCell(new WeatherCell());
-
-        anchorPane_barriers.managedProperty().bind(anchorPane_barriers.visibleProperty());
-        anchorPane_devices.managedProperty().bind(anchorPane_devices.visibleProperty());
-        anchorPane_bottomTables.managedProperty().bind(anchorPane_bottomTables.visibleProperty());
 
         //Items
         ObservableList<Character> firableCharacters = FXCollections.
@@ -1046,12 +1054,6 @@ public class ControllerBattle {
         battle.maxInitiativeBinding().greaterThan(60).addListener((observable, oldValue, newValue) ->
                 tableColumn_masterTable_turn7.setVisible(newValue));
 
-        anchorPane_barriers.visibleProperty().bind(Bindings.isEmpty(tableView_barrier.getItems()).not());
-        anchorPane_devices.visibleProperty().bind(Bindings.isEmpty(tableView_devices.getItems()).not());
-        anchorPane_bottomTables.visibleProperty().bind(anchorPane_barriers.visibleProperty()
-                .or(anchorPane_devices.visibleProperty()));
-
-
         battleLogic.activeBattleProperty().addListener((observable, oldValue, newValue) -> {
             if(newValue == battle) {
                 battleLogic.hasHostProperty().addListener((host, oldHost, newHost) -> {
@@ -1069,6 +1071,23 @@ public class ControllerBattle {
                         battle.getCharacters().stream().filter(character -> character.getPlayer() != null).count());
 
         button_spawnPlayer.disableProperty().bind(allPlayersIncluded);
+
+        bottomTablesDivider = splitPane_bottomTables.getDividers().get(0);
+        centerContentDivider = splitPane_centerContent.getDividers().get(0);
+
+        BooleanBinding emptyTables =  Bindings.isEmpty(tableView_barrier.getItems())
+                .and(Bindings.isEmpty(tableView_devices.getItems()));
+
+        Bindings.when(emptyTables)
+                .then(1.0).otherwise(0.5)
+                .addListener((observable, oldValue, newValue) -> {
+                            if(newValue != null) {
+                                centerContentDivider.setPosition((Double) newValue);
+                            }
+                        });
+
+        //HACK AS FUCK
+        centerContentDivider.setPosition(1.0);
 
         if(!loaded) {
             setNewInitiative();
@@ -1091,9 +1110,6 @@ public class ControllerBattle {
         label_time.textProperty().unbind();
         button_prevTurn.disableProperty().unbind();
         comboBox_weather.valueProperty().unbind();
-        anchorPane_devices.visibleProperty().unbind();
-        anchorPane_barriers.visibleProperty().unbind();
-        anchorPane_bottomTables.visibleProperty().unbind();
 
         tableColumn_masterTable_turn1.visibleProperty().unbind();
         tableColumn_masterTable_turn2.visibleProperty().unbind();

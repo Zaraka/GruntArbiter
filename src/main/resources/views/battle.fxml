@@ -212,7 +212,7 @@
                                                                         <Tooltip text="Overwatch score" />
                                                                      </tooltip>
                                                                   </Label>
-                                                                  <Button mnemonicParsing="false" onAction="#overwatchScorePlusOnAction">
+                                                                  <Button contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#overwatchScorePlusOnAction">
                                                                      <graphic>
                                                                         <FontAwesomeIconView glyphName="PLUS" />
                                                                      </graphic>
@@ -297,7 +297,7 @@
                   </AnchorPane>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                      <children>
-                        <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="664.0" prefWidth="734.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <SplitPane fx:id="splitPane_centerContent" dividerPositions="0.5" orientation="VERTICAL" prefHeight="664.0" prefWidth="734.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <items>
                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                                  <children>
@@ -320,7 +320,7 @@
                               </AnchorPane>
                               <AnchorPane fx:id="anchorPane_bottomTables" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                                  <children>
-                                    <SplitPane dividerPositions="0.4" prefHeight="327.0" prefWidth="474.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <SplitPane fx:id="splitPane_bottomTables" dividerPositions="0.4" prefHeight="327.0" prefWidth="474.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <items>
                                           <AnchorPane fx:id="anchorPane_barriers" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                                              <children>
