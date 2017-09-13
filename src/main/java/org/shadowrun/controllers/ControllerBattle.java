@@ -289,6 +289,7 @@ public class ControllerBattle {
             ICE ice = ICE.fromName(res.getKey().replaceAll("\\s+", "").toUpperCase());
             Integer initiativeInt = Integer.parseInt(res.getValue());
             battleLogic.spawnICe(ice, initiativeInt);
+            tableView_masterTable.refresh();
         });
     }
 
