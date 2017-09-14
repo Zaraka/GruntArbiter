@@ -99,7 +99,7 @@
             </ToolBar>
             <SplitPane fx:id="splitPane_horizontal" dividerPositions="0.3, 0.5" prefHeight="160.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                <items>
-                  <AnchorPane maxWidth="280.0" minWidth="280.0" prefWidth="280.0">
+                  <AnchorPane>
                      <children>
                         <VBox prefHeight="707.0" prefWidth="301.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
@@ -137,7 +137,7 @@
                                        <content>
                                           <AnchorPane>
                                              <children>
-                                                <VBox fx:id="vbox_matrix" prefHeight="141.0" prefWidth="278.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                <VBox fx:id="vbox_matrix" prefHeight="141.0" prefWidth="282.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                    <children>
                                                       <ToolBar prefHeight="40.0" prefWidth="200.0">
                                                          <items>
@@ -167,7 +167,7 @@
                                                                         <Tooltip text="Host attack" />
                                                                      </tooltip>
                                                                   </Label>
-                                                                  <Label fx:id="label_host_attack" text="2" />
+                                                                  <Label fx:id="label_host_attack" prefWidth="18.0" text="2" />
                                                                   <Label text="S">
                                                                      <font>
                                                                         <Font name="System Bold" size="13.0" />
@@ -176,7 +176,7 @@
                                                                         <Tooltip text="Host sleeze" />
                                                                      </tooltip>
                                                                   </Label>
-                                                                  <Label fx:id="label_host_sleeze" text="3" />
+                                                                  <Label fx:id="label_host_sleeze" prefWidth="18.0" text="3" />
                                                                   <Label text="F">
                                                                      <font>
                                                                         <Font name="System Bold" size="13.0" />
@@ -185,7 +185,7 @@
                                                                         <Tooltip text="Host firewall" />
                                                                      </tooltip>
                                                                   </Label>
-                                                                  <Label fx:id="label_host_firewall" text="4" />
+                                                                  <Label fx:id="label_host_firewall" prefWidth="18.0" text="4" />
                                                                   <Label text="DP">
                                                                      <font>
                                                                         <Font name="System Bold" size="13.0" />
@@ -194,7 +194,7 @@
                                                                         <Tooltip text="Host data processing" />
                                                                      </tooltip>
                                                                   </Label>
-                                                                  <Label fx:id="label_host_dataProcessing" text="5" />
+                                                                  <Label fx:id="label_host_dataProcessing" prefWidth="18.0" text="5" />
                                                                   <Button mnemonicParsing="false" onAction="#addICeOnAction" styleClass="button-primary" text="Add ICe" />
                                                                </items>
                                                             </ToolBar>
