@@ -5,13 +5,15 @@ public enum ICE {
     ACID("Acid"),
     BINDER("Binder"),
     BLACKIC("Black IC"),
-    BLASTER("Blaster"),
+    BLASTER("Blaster(Grey IC)"),
     CRASH("Crash"),
     JAMMER("Jammer"),
     KILLER("Killer"),
     MARKER("Marker"),
     PATROL("Patrol"),
     PROBE("Probe"),
+    SCRAMBLE("Scramble"),
+    SPARKY("Sparky"),
     TARBABY("Tar Baby"),
     TRACK("Track");
 
