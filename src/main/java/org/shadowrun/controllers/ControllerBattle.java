@@ -257,7 +257,7 @@ public class ControllerBattle {
 
         grid.add(new Label("ICE:"), 0, 0);
         grid.add(iceChoice, 1, 0);
-        grid.add(new Label("Initiative " + battle.getHost().getDataProcessing() + " + (4d6)"), 0, 1);
+        grid.add(new Label("Initiative " + battle.getHost().getDataProcessing() + " + 4d6 ="), 0, 1);
         grid.add(initiative, 1, 1);
 
         Node addButton = dialog.getDialogPane().lookupButton(okButtonType);
