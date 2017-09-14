@@ -21,14 +21,11 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 import javafx.util.converter.NumberStringConverter;
 import org.apache.commons.lang3.StringUtils;
 import org.shadowrun.common.NumericLimitListener;
-import org.shadowrun.common.factories.ExceptionDialogFactory;
-import org.shadowrun.common.nodes.cells.*;
 import org.shadowrun.common.constants.ICE;
 import org.shadowrun.common.constants.Weather;
 import org.shadowrun.common.constants.World;
@@ -36,7 +33,10 @@ import org.shadowrun.common.converters.IterationTimeConverter;
 import org.shadowrun.common.converters.SpiritIndexReputationConverter;
 import org.shadowrun.common.exceptions.NextTurnException;
 import org.shadowrun.common.factories.CharacterIconFactory;
+import org.shadowrun.common.factories.ConfirmationDialogFactory;
+import org.shadowrun.common.factories.ExceptionDialogFactory;
 import org.shadowrun.common.factories.InitiativeDialogFactory;
+import org.shadowrun.common.nodes.cells.*;
 import org.shadowrun.logic.AppLogic;
 import org.shadowrun.logic.BattleLogic;
 import org.shadowrun.models.*;
@@ -70,6 +70,7 @@ public class ControllerBattle {
 
     private static final InitiativeDialogFactory initiativeDialogFactory = new InitiativeDialogFactory();
     private static final ExceptionDialogFactory exceptionDialogFactory = new ExceptionDialogFactory();
+    private static final ConfirmationDialogFactory confirmationDialogFactory = new ConfirmationDialogFactory();
 
     @FXML
     private TableView<Character> tableView_masterTable;
@@ -226,13 +227,10 @@ public class ControllerBattle {
     @FXML
     private void addICeOnAction() {
         if (battle.getICe().size() >= battle.getHost().getRating()) {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Too much ICe");
-            alert.setHeaderText("ICe number exceeds host rating");
-            alert.setContentText("Spawn another anyway?");
-            DialogPane dialogPane = alert.getDialogPane();
-            dialogPane.getStylesheets().add(
-                    getClass().getClassLoader().getResource("css/dark.css").toExternalForm());
+            Alert alert = confirmationDialogFactory.createDialog(
+                    "Too much ICe",
+                    "ICe number exceeds host rating",
+                    "Spawn another anyway?");
             Optional<ButtonType> result = alert.showAndWait();
             if (!result.isPresent() || result.get() != ButtonType.OK) {
                 return;
@@ -259,7 +257,7 @@ public class ControllerBattle {
 
         grid.add(new Label("ICE:"), 0, 0);
         grid.add(iceChoice, 1, 0);
-        grid.add(new Label("Initiative:"), 0, 1);
+        grid.add(new Label("Initiative " + battle.getHost().getDataProcessing() + " + (4d6)"), 0, 1);
         grid.add(initiative, 1, 1);
 
         Node addButton = dialog.getDialogPane().lookupButton(okButtonType);
@@ -289,8 +287,7 @@ public class ControllerBattle {
         Optional<Pair<String, String>> result = dialog.showAndWait();
         result.ifPresent(res -> {
             ICE ice = ICE.fromName(res.getKey().replaceAll("\\s+", "").toUpperCase());
-            Integer initiativeInt = Integer.parseInt(res.getValue());
-            battleLogic.spawnICe(ice, initiativeInt);
+            battleLogic.spawnICe(ice, Integer.parseInt(res.getValue()));
             tableView_masterTable.refresh();
         });
     }
@@ -1030,7 +1027,6 @@ public class ControllerBattle {
                 Comparator.comparingInt(Character::getInitiative).reversed()).sorted();
         sortedCharacters.comparatorProperty().bind(tableView_masterTable.comparatorProperty());
         tableView_masterTable.setItems(sortedCharacters);
-        //tableView_masterTable.sort();
         tableView_barrier.setItems(battle.getBarriers());
         tableView_devices.setItems(battle.getDevices());
 
@@ -1077,15 +1073,11 @@ public class ControllerBattle {
         battle.maxInitiativeBinding().greaterThan(60).addListener((observable, oldValue, newValue) ->
                 tableColumn_masterTable_turn7.setVisible(newValue));
 
-        battleLogic.activeBattleProperty().addListener((observable, oldValue, newValue) -> {
-            if(newValue == battle) {
-                battleLogic.hasHostProperty().addListener((host, oldHost, newHost) -> {
-                    if (newHost) {
-                        button_hostAction.textProperty().setValue(LABEL_DISCONNECT);
-                    } else {
-                        button_hostAction.textProperty().setValue(LABEL_GENERATE_HOST);
-                    }
-                });
+        battle.getHost().ratingProperty().isNotEqualTo(0).addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                button_hostAction.textProperty().setValue(LABEL_DISCONNECT);
+            } else {
+                button_hostAction.textProperty().setValue(LABEL_GENERATE_HOST);
             }
         });
 
