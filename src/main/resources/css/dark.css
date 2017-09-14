@@ -216,3 +216,11 @@
 .turn-cell-full {
     -fx-text-fill: -fx-theme-text-color;
 }
+
+.table-matrix {
+    -fx-control-inner-background: derive(-fx-theme-brand-success, -30%);
+}
+
+.table-astral {
+    -fx-control-inner-background: derive(-fx-theme-brand-danger, -30%);
+}

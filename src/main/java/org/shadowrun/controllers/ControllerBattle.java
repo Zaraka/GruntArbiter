@@ -54,7 +54,9 @@ public class ControllerBattle {
 
     private static final String LABEL_DISCONNECT = "Disconnect";
     private static final String LABEL_GENERATE_HOST = "Generate Host";
-    public static final double SELECTED_PANE_OPEN_POS = 0.8;
+    private static final double SELECTED_PANE_OPEN_POS = 0.8;
+    private static final String TABLE_ASTRAL = "table-astral";
+    private static final String TABLE_MATRIX = "table-matrix";
 
     private AppLogic appLogic;
     private BattleLogic battleLogic;
@@ -766,15 +768,19 @@ public class ControllerBattle {
                 protected void updateItem(Character item, boolean empty) {
                     super.updateItem(item, empty);
                     if (!empty) {
+                        ObservableList<String> classes = getStyleClass();
                         switch (item.getWorld()) {
                             case REAL:
-                                setStyle(null);
+                                classes.remove(TABLE_ASTRAL);
+                                classes.remove(TABLE_MATRIX);
                                 break;
                             case ASTRAL:
-                                setStyle("-fx-control-inner-background: tomato;");
+                                classes.remove(TABLE_MATRIX);
+                                classes.add(TABLE_ASTRAL);
                                 break;
                             case MATRIX:
-                                setStyle("-fx-control-inner-background: springgreen;");
+                                classes.remove(TABLE_ASTRAL);
+                                classes.add(TABLE_MATRIX);
                                 break;
                         }
                     } else {
