@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
@@ -14,20 +15,30 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import org.shadowrun.common.factories.CheckBoxCellFactory?>
 
 <AnchorPane stylesheets="@../css/dark.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.shadowrun.controllers.ControllerNewBattle">
    <children>
       <VBox>
          <children>
-            <TableView fx:id="tableView_players" editable="true" VBox.vgrow="ALWAYS">
-              <columns>
-                <TableColumn fx:id="tableColumn_character" editable="false" maxWidth="200.0" minWidth="200.0" prefWidth="200.0" resizable="false" sortable="false" text="Character" />
-                  <TableColumn fx:id="tableColumn_include" maxWidth="200.0" minWidth="200.0" prefWidth="200.0" resizable="false" sortable="false" text="Include">
-                      <cellValueFactory><PropertyValueFactory property="checked" /></cellValueFactory>
-                      <cellFactory><org.shadowrun.common.factories.CheckBoxCellFactory /></cellFactory>
-                  </TableColumn>
-              </columns>
-            </TableView>
+            <VBox prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <TableView fx:id="tableView_players" editable="true" VBox.vgrow="ALWAYS">
+                    <columns>
+                      <TableColumn fx:id="tableColumn_character" editable="false" maxWidth="200.0" minWidth="200.0" prefWidth="200.0" resizable="false" sortable="false" text="Character" />
+                        <TableColumn fx:id="tableColumn_include" maxWidth="200.0" minWidth="200.0" prefWidth="200.0" resizable="false" sortable="false" text="Include">
+                            <cellValueFactory>
+                              <PropertyValueFactory property="checked" />
+                           </cellValueFactory>
+                            <cellFactory>
+                              <org.shadowrun.common.factories.CheckBoxCellFactory />
+                           </cellFactory>
+                        </TableColumn>
+                    </columns>
+                  </TableView>
+                  <CheckBox fx:id="checkBox_includeAll" mnemonicParsing="false" onAction="#includeAllOnAction" selected="true" text="Include all players" />
+               </children>
+            </VBox>
             <GridPane>
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="30.0" percentWidth="30.0" prefWidth="30.0" />

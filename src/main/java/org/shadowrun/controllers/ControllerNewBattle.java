@@ -72,6 +72,9 @@ public class ControllerNewBattle {
     private ComboBox<Weather> comboBox_weather;
 
     @FXML
+    private CheckBox checkBox_includeAll;
+
+    @FXML
     private Button button_ok;
 
     @FXML
@@ -88,6 +91,12 @@ public class ControllerNewBattle {
         weather = comboBox_weather.getSelectionModel().getSelectedItem();
 
         stage.close();
+    }
+
+    @FXML
+    private void includeAllOnAction() {
+        boolean checked = checkBox_includeAll.isSelected();
+        players.forEach(pickPlayer -> pickPlayer.checkedProperty().setValue(checked));
     }
 
     public void onOpen(Stage stage, String initialName, List<PlayerCharacter> players) {
@@ -109,6 +118,8 @@ public class ControllerNewBattle {
 
         textField_name.setText(initialName);
         textField_name.selectAll();
+
+
 
         button_ok.disableProperty().bind(textField_name.textProperty().isEmpty());
 
