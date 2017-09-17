@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane stylesheets="@../css/dark.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.shadowrun.controllers.ControllerCampaignScreen">
+   <children>
+      <TableView fx:id="tableView_playerCharacters" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <columns>
+            <TableColumn fx:id="tableColumn_playerCharacters_character" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="500.0" resizable="false" text="Character" />
+            <TableColumn fx:id="tableColumn_playerCharacters_physicalMonitor" prefWidth="137.0" text="Physical monitor" />
+            <TableColumn fx:id="tableColumn_playerCharacters_stunMonitor" prefWidth="137.0" text="Stun monitor" />
+            <TableColumn fx:id="tableColumn_playerCharacters_spiritIndex" prefWidth="137.0" text="Spirit index" />
+         </columns>
+      </TableView>
+   </children>
+</AnchorPane>

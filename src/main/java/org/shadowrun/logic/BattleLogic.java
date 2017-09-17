@@ -2,6 +2,7 @@ package org.shadowrun.logic;
 
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.*;
+import org.apache.commons.lang3.StringUtils;
 import org.shadowrun.common.constants.ICE;
 import org.shadowrun.common.constants.Weather;
 import org.shadowrun.common.constants.World;
@@ -144,6 +145,12 @@ public class BattleLogic {
         activeHost.setDataProcessing(0);
 
         getActiveBattle().getCharacters().removeIf(Character::isIce);
+        hasHost.setValue(false);
+    }
+
+    public void clear() {
+        currentCharacterName.setValue(StringUtils.EMPTY);
+        activeBattle.setValue(null);
         hasHost.setValue(false);
     }
 }

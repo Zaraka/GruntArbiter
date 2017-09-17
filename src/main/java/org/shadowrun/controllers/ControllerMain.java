@@ -3,6 +3,7 @@ package org.shadowrun.controllers;
 import com.sun.javafx.geom.Vec4d;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -17,7 +18,6 @@ import org.shadowrun.logic.AppLogic;
 import org.shadowrun.logic.BattleLogic;
 import org.shadowrun.models.Battle;
 import org.shadowrun.models.Campaign;
-import org.shadowrun.models.PlayerCharacter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,18 +39,7 @@ public class ControllerMain {
     private Stage stage;
 
     //------------------------object injections
-    @FXML
-    private TableView<PlayerCharacter> tableView_playerCharacters;
-    @FXML
-    private TableColumn<PlayerCharacter, String> tableColumn_playerCharacters_character;
-    @FXML
-    private TableColumn<PlayerCharacter, Integer> tableColumn_playerCharacters_physicalMonitor;
-    @FXML
-    private TableColumn<PlayerCharacter, Integer> tableColumn_playerCharacters_stunMonitor;
-    @FXML
-    private TableColumn<PlayerCharacter, Integer> tableColumn_playerCharacters_spiritIndex;
-
-    @FXML
+        @FXML
     private Menu menu_campaign;
     @FXML
     private MenuItem menuItem_newBattle;
@@ -71,13 +60,11 @@ public class ControllerMain {
 
     @FXML
     private TabPane tabPane;
-    @FXML
-    private Tab tab_characters;
 
 
     //------------------------method hooks
     @FXML
-    private void addPlayerOnAction() {
+    public void addPlayerOnAction() {
         TextInputDialog dialog = new TextInputDialog("John Doe");
         dialog.setTitle("New player");
         dialog.setHeaderText("Create new player");
@@ -91,7 +78,7 @@ public class ControllerMain {
     }
 
     @FXML
-    private void newCampaignOnAction() {
+    public void newCampaignOnAction() {
         TextInputDialog dialog = new TextInputDialog("SampleCampaign");
         dialog.setTitle("New campaign");
         dialog.setHeaderText("Create new campaign");
@@ -105,7 +92,7 @@ public class ControllerMain {
     }
 
     @FXML
-    private void openCampaignOnAction() {
+    public void openCampaignOnAction() {
         FileChooser dialog = new FileChooser();
         dialog.setTitle("Open campaign");
         dialog.getExtensionFilters().add(new FileChooser.ExtensionFilter("Grunt campaign (.gra)", "*.gra"));
@@ -244,14 +231,22 @@ public class ControllerMain {
         openCampaign(((Path) menuItem_recentCampaign3.getUserData()).toFile());
     }
 
+    @FXML
+    private void openWelcomeScreenOnAction() {
+        FilteredList<Tab> welcomeScreens = tabPane.getTabs()
+                .filtered(tab -> tab.getUserData() != null && tab.getUserData().getClass() == ControllerWelcomeScreen.class);
+        if(welcomeScreens.isEmpty()) {
+            openWelcomeScreen();
+        } else {
+            tabPane.getSelectionModel().select(welcomeScreens.get(0));
+        }
+    }
+
     private void addCampaignHooks() {
         if (appLogic.getActiveCampaign() != null) {
             Campaign campaign = appLogic.getActiveCampaign();
 
-            //Items
-            tableView_playerCharacters.setItems(campaign.getPlayers());
-            //tab selection
-            tabPane.getSelectionModel().select(tab_characters);
+            openCampaignScreen(campaign);
 
             //open battles
             campaign.getBattles().forEach(battle -> openBattle(battle, true));
@@ -286,70 +281,8 @@ public class ControllerMain {
         menuItem_saveCampaign.disableProperty().bind(appLogic.hasCampaign());
         menuItem_saveAsCampaign.disableProperty().bind(appLogic.hasCampaign());
         menuItem_closeCampaign.disableProperty().bind(appLogic.hasCampaign());
-        tab_characters.disableProperty().bind(appLogic.hasCampaign());
 
-        tableColumn_playerCharacters_character.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
-        tableColumn_playerCharacters_physicalMonitor
-                .setCellValueFactory(param -> param.getValue().physicalMonitorProperty().asObject());
-        tableColumn_playerCharacters_stunMonitor
-                .setCellValueFactory(param -> param.getValue().stunMonitorProperty().asObject());
-        tableColumn_playerCharacters_spiritIndex
-                .setCellValueFactory(param -> param.getValue().spiritIndexProperty().asObject());
 
-        tableView_playerCharacters.setRowFactory(param -> {
-            TableRow<PlayerCharacter> tableRow = new TableRow<>();
-
-            MenuItem renamePlayer = new MenuItem("Rename player");
-            renamePlayer.setOnAction(event -> {
-                PlayerCharacter selected = tableView_playerCharacters.getSelectionModel().getSelectedItem();
-                TextInputDialog dialog = new TextInputDialog(selected.getName());
-                dialog.setTitle("Rename player");
-                dialog.setHeaderText("Rename player " + selected.getName());
-                dialog.setContentText("Please enter new name:");
-                Optional<String> result = dialog.showAndWait();
-
-                result.ifPresent(selected::setName);
-            });
-            MenuItem setPhysicalMonitor = new MenuItem("Set physical monitor");
-            setPhysicalMonitor.setOnAction(event -> {
-                PlayerCharacter selected = tableView_playerCharacters.getSelectionModel().getSelectedItem();
-                TextInputDialog dialog = new TextInputDialog(String.valueOf(selected.getPhysicalMonitor()));
-                dialog.setTitle("Set physical monitor");
-                dialog.setHeaderText("Set " + selected.getName() + " monitor.");
-                dialog.setContentText("Please enter new max physical monitor:");
-                Optional<String> result = dialog.showAndWait();
-
-                result.ifPresent(s -> selected.setPhysicalMonitor(Integer.parseInt(s)));
-            });
-            MenuItem setStunMonitor = new MenuItem("Set stun monitor");
-            setStunMonitor.setOnAction(event -> {
-                PlayerCharacter selected = tableView_playerCharacters.getSelectionModel().getSelectedItem();
-                TextInputDialog dialog = new TextInputDialog(String.valueOf(selected.stunMonitorProperty()));
-                dialog.setTitle("Set stun monitor");
-                dialog.setHeaderText("Set " + selected.getName() + " monitor.");
-                dialog.setContentText("Please enter new max stun monitor:");
-                Optional<String> result = dialog.showAndWait();
-
-                result.ifPresent(s -> selected.setStunMonitor(Integer.parseInt(s)));
-            });
-            MenuItem deletePlayer = new MenuItem("Delete player");
-            deletePlayer.setOnAction(event -> tableView_playerCharacters.getItems()
-                    .remove(tableView_playerCharacters.getSelectionModel().getSelectedIndex()));
-            MenuItem addPlayer = new MenuItem("Add player");
-            addPlayer.setOnAction(event -> addPlayerOnAction());
-            ContextMenu fullContextMenu = new ContextMenu(
-                    renamePlayer,
-                    setPhysicalMonitor,
-                    setStunMonitor,
-                    new SeparatorMenuItem(),
-                    deletePlayer,
-                    addPlayer);
-            ContextMenu emptyContextMenu = new ContextMenu(addPlayer);
-
-            tableRow.emptyProperty().addListener((observable, oldValue, newValue) ->
-                    tableRow.setContextMenu(newValue ? emptyContextMenu : fullContextMenu));
-            return tableRow;
-        });
         tabPane.getSelectionModel().selectedItemProperty().addListener((observable, oldTab, newTab) -> {
             if (newTab != null) {
                 Object userData = newTab.getUserData();
@@ -376,6 +309,7 @@ public class ControllerMain {
         });
 
         loadRecentFiles();
+        openWelcomeScreen();
     }
 
     /**
@@ -412,6 +346,45 @@ public class ControllerMain {
         }
     }
 
+    private void openWelcomeScreen() {
+        try {
+            FXMLLoader tabLoader = new FXMLLoader(getClass().getClassLoader().getResource("views/welcomeScreen.fxml"));
+            Tab welcomeScreenTab = new Tab("Welcome screen", tabLoader.load());
+            ControllerWelcomeScreen controllerWelcomeScreen = tabLoader.getController();
+            welcomeScreenTab.setUserData(controllerWelcomeScreen);
+            welcomeScreenTab.setOnClosed(event -> {
+                controllerWelcomeScreen.remove();
+                tabPane.getTabs().removeIf(tab -> tab.getUserData() == controllerWelcomeScreen);
+            });
+            tabPane.getTabs().add(welcomeScreenTab);
+            controllerWelcomeScreen.setStageAndListeners(stage, this, appLogic);
+            tabPane.getSelectionModel().select(welcomeScreenTab);
+        } catch (IOException ex) {
+            LOG.error("Error while loading welcome screen tab ", ex);
+        }
+    }
+
+    private void openCampaignScreen(Campaign campaign) {
+        try {
+            FXMLLoader tabLoader = new FXMLLoader(getClass().getClassLoader().getResource("views/campaign.fxml"));
+            Tab campaignScreenTab = new Tab(campaign.getName(), tabLoader.load());
+            ControllerCampaignScreen controllerCampaignScreen = tabLoader.getController();
+            campaignScreenTab.setUserData(controllerCampaignScreen);
+            campaignScreenTab.setOnClosed(event -> {
+                tabPane.getTabs().removeIf(tab -> tab.getUserData() != null &&
+                        tab.getUserData().getClass() == ControllerBattle.class);
+                appLogic.closeCampaign();
+                controllerCampaignScreen.remove();
+                tabPane.getTabs().removeIf(tab -> tab.getUserData() == controllerCampaignScreen);
+            });
+            tabPane.getTabs().add(campaignScreenTab);
+            controllerCampaignScreen.setStageAndListeners(stage, this, campaign);
+            tabPane.getSelectionModel().select(campaignScreenTab);
+        } catch (IOException ex) {
+            LOG.error("Error while loading campaign screen tab ", ex);
+        }
+    }
+
     private void openBattle(Battle battle, boolean loaded) {
         try {
             FXMLLoader tabLoader = new FXMLLoader(getClass().getClassLoader().getResource("views/battle.fxml"));
@@ -433,7 +406,7 @@ public class ControllerMain {
         }
     }
 
-    private void openCampaign(File file) {
+    public void openCampaign(File file) {
         if (file != null) {
             try {
                 appLogic.openCampaign(file);

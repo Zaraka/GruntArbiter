@@ -1,28 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SeparatorMenuItem?>
-<?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
 <?import javafx.scene.input.KeyCodeCombination?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
 <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1024.0" stylesheets="@../css/dark.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.shadowrun.controllers.ControllerMain">
     <children>
         <MenuBar>
             <menus>
-                <Menu mnemonicParsing="false" text="File">
+                <Menu text="_File">
                     <items>
-                        <MenuItem mnemonicParsing="false" onAction="#newCampaignOnAction" text="New campaign" />
+                        <MenuItem mnemonicParsing="false" onAction="#newCampaignOnAction" text="New campaign">
+                     <graphic>
+                        <FontAwesomeIconView glyphName="FILE" />
+                     </graphic></MenuItem>
                         <MenuItem mnemonicParsing="false" onAction="#openCampaignOnAction" text="Open campaign">
                             <accelerator>
                                 <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                             </accelerator>
+                     <graphic>
+                        <FontAwesomeIconView glyphName="FOLDER" />
+                     </graphic>
                         </MenuItem>
                         <Menu fx:id="menu_recentCampaigns" mnemonicParsing="false" text="Recent campaigns">
                             <items>
@@ -50,8 +53,11 @@
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem mnemonicParsing="false" onAction="#closeAppOnAction" text="Close GruntArbiter" />
                     </items>
+               <accelerator>
+                  <KeyCodeCombination alt="ANY" code="F" control="UP" meta="UP" shift="UP" shortcut="UP" />
+               </accelerator>
                 </Menu>
-                <Menu fx:id="menu_campaign" mnemonicParsing="false" text="Campaign">
+                <Menu fx:id="menu_campaign" text="_Campaign">
                     <items>
                         <MenuItem fx:id="menuItem_addPlayer" mnemonicParsing="false" onAction="#addPlayerOnAction" text="Add player" />
                         <SeparatorMenuItem mnemonicParsing="false" />
@@ -61,33 +67,28 @@
                             </accelerator>
                         </MenuItem>
                     </items>
+               <accelerator>
+                  <KeyCodeCombination alt="ANY" code="C" control="UP" meta="UP" shift="UP" shortcut="UP" />
+               </accelerator>
                 </Menu>
-                <Menu mnemonicParsing="false" text="Help">
+            <Menu text="_Views">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#openWelcomeScreenOnAction" text="Open welcome screen" />
+              </items>
+               <accelerator>
+                  <KeyCodeCombination alt="ANY" code="V" control="UP" meta="UP" shift="UP" shortcut="UP" />
+               </accelerator>
+            </Menu>
+                <Menu text="_Help">
                     <items>
                         <MenuItem mnemonicParsing="false" onAction="#aboutOnAction" text="About" />
                     </items>
+               <accelerator>
+                  <KeyCodeCombination alt="ANY" code="H" control="UP" meta="UP" shift="UP" shortcut="UP" />
+               </accelerator>
                 </Menu>
             </menus>
         </MenuBar>
-        <TabPane fx:id="tabPane" VBox.vgrow="ALWAYS">
-            <tabs>
-                <Tab fx:id="tab_characters" closable="false" text="Characters">
-                    <content>
-                        <AnchorPane minHeight="-Infinity" minWidth="-Infinity">
-                            <children>
-                                <TableView fx:id="tableView_playerCharacters" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                    <columns>
-                                        <TableColumn fx:id="tableColumn_playerCharacters_character" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="500.0" resizable="false" text="Character" />
-                              <TableColumn fx:id="tableColumn_playerCharacters_physicalMonitor" prefWidth="137.0" text="Physical monitor" />
-                              <TableColumn fx:id="tableColumn_playerCharacters_stunMonitor" prefWidth="137.0" text="Stun monitor" />
-                              <TableColumn fx:id="tableColumn_playerCharacters_spiritIndex" prefWidth="137.0" text="Spirit index" />
-                                    </columns>
-                                </TableView>
-                            </children>
-                        </AnchorPane>
-                    </content>
-                </Tab>
-            </tabs>
-        </TabPane>
+        <TabPane fx:id="tabPane" VBox.vgrow="ALWAYS" />
     </children>
 </VBox>

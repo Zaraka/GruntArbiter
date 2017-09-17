@@ -224,3 +224,16 @@
 .table-astral {
     -fx-control-inner-background: derive(-fx-theme-brand-danger, -30%);
 }
+
+.header {
+    -fx-font-size: 17px;
+    -fx-font-family: "system";
+    -fx-font-weight: bold;
+    -fx-text-fill: -fx-theme-text-color;
+}
+
+.text-fix {
+    -fx-font-size: 13px;
+    -fx-font-family: "system";
+    -fx-fill: -fx-theme-text-color;
+}
