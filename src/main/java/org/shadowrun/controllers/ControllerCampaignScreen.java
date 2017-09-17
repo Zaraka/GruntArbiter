@@ -25,6 +25,11 @@ public class ControllerCampaignScreen {
     @FXML
     private TableColumn<PlayerCharacter, Integer> tableColumn_playerCharacters_spiritIndex;
 
+    @FXML
+    private TextField textField_name;
+    @FXML
+    private TextArea textArea_description;
+
     public void setStageAndListeners(Stage stage, ControllerMain controllerMain, Campaign campaign) {
         this.stage = stage;
         this.campaign = campaign;
@@ -95,9 +100,13 @@ public class ControllerCampaignScreen {
                     tableRow.setContextMenu(newValue ? emptyContextMenu : fullContextMenu));
             return tableRow;
         });
+
+        textField_name.textProperty().bindBidirectional(campaign.nameProperty());
+        textArea_description.textProperty().bindBidirectional(campaign.descriptionProperty());
     }
 
     public void remove() {
-
+        textField_name.textProperty().unbindBidirectional(campaign.nameProperty());
+        textArea_description.textProperty().unbindBidirectional(campaign.descriptionProperty());
     }
 }

@@ -6,10 +6,13 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import org.apache.commons.lang3.StringUtils;
 
 public class Campaign {
 
     private StringProperty name;
+
+    private StringProperty description;
 
     private ObjectProperty<SemanticVersion> version;
 
@@ -21,6 +24,7 @@ public class Campaign {
 
     public Campaign(String name, SemanticVersion version) {
         this.name = new SimpleStringProperty(name);
+        this.description = new SimpleStringProperty(StringUtils.EMPTY);
         this.version = new SimpleObjectProperty<>(version);
         this.players = FXCollections.observableArrayList();
         this.characterPresets = FXCollections.observableArrayList();
@@ -65,5 +69,17 @@ public class Campaign {
 
     public ObjectProperty<SemanticVersion> versionProperty() {
         return version;
+    }
+
+    public String getDescription() {
+        return description.get();
+    }
+
+    public StringProperty descriptionProperty() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description.set(description);
     }
 }

@@ -1,19 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 
 <AnchorPane stylesheets="@../css/dark.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.shadowrun.controllers.ControllerCampaignScreen">
    <children>
-      <TableView fx:id="tableView_playerCharacters" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <columns>
-            <TableColumn fx:id="tableColumn_playerCharacters_character" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="500.0" resizable="false" text="Character" />
-            <TableColumn fx:id="tableColumn_playerCharacters_physicalMonitor" prefWidth="137.0" text="Physical monitor" />
-            <TableColumn fx:id="tableColumn_playerCharacters_stunMonitor" prefWidth="137.0" text="Stun monitor" />
-            <TableColumn fx:id="tableColumn_playerCharacters_spiritIndex" prefWidth="137.0" text="Spirit index" />
-         </columns>
-      </TableView>
+      <VBox prefWidth="913.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <GridPane>
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="120.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="80.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label text="Campaign name" />
+                  <Label text="Description" GridPane.rowIndex="1" />
+                  <TextField fx:id="textField_name" GridPane.columnIndex="1" />
+                  <TextArea fx:id="textArea_description" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <TextField fx:id="textField_name" GridPane.columnIndex="1" />
+               </children>
+            </GridPane>
+            <TableView fx:id="tableView_playerCharacters" VBox.vgrow="ALWAYS">
+               <columns>
+                  <TableColumn fx:id="tableColumn_playerCharacters_character" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="500.0" resizable="false" text="Character" />
+                  <TableColumn fx:id="tableColumn_playerCharacters_physicalMonitor" prefWidth="137.0" text="Physical monitor" />
+                  <TableColumn fx:id="tableColumn_playerCharacters_stunMonitor" prefWidth="137.0" text="Stun monitor" />
+                  <TableColumn fx:id="tableColumn_playerCharacters_spiritIndex" prefWidth="137.0" text="Spirit index" />
+               </columns>
+            </TableView>
+         </children>
+      </VBox>
    </children>
 </AnchorPane>
