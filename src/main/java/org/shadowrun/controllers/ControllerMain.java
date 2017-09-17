@@ -75,7 +75,6 @@ public class ControllerMain {
         Optional<String> result = dialog.showAndWait();
         result.ifPresent(name -> {
             appLogic.newCharacter(name);
-            addCampaignHooks();
         });
     }
 
