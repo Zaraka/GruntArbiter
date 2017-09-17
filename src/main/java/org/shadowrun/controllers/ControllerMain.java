@@ -23,6 +23,7 @@ import org.shadowrun.models.Campaign;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.script.Bindings;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -43,7 +44,7 @@ public class ControllerMain {
     private Stage stage;
 
     //------------------------object injections
-        @FXML
+    @FXML
     private Menu menu_campaign;
     @FXML
     private MenuItem menuItem_newBattle;
@@ -89,7 +90,7 @@ public class ControllerMain {
                 "Please enter name for new campaign:",
                 "SampleCampaign");
         Optional<String> result = dialog.showAndWait();
-        
+
         result.ifPresent(name -> {
             appLogic.newCampaign(name);
             addCampaignHooks();
@@ -138,7 +139,7 @@ public class ControllerMain {
 
         File file = dialog.showSaveDialog(stage);
         if (file != null) {
-            if(!file.getName().endsWith(".gra")) {
+            if (!file.getName().endsWith(".gra")) {
                 file = new File(file.getAbsolutePath() + ".gra");
             }
             try {
@@ -159,7 +160,7 @@ public class ControllerMain {
     private void closeCampaignOnAction() {
         FilteredList<Tab> campaignTabs = tabPane.getTabs().filtered(tab -> tab.getUserData() != null
                 && tab.getUserData().getClass() == ControllerCampaignScreen.class);
-        if(!campaignTabs.isEmpty())
+        if (!campaignTabs.isEmpty())
             campaignTabs.get(0).getOnClosed().handle(null);
     }
 
@@ -232,7 +233,7 @@ public class ControllerMain {
     private void openWelcomeScreenOnAction() {
         FilteredList<Tab> welcomeScreens = tabPane.getTabs()
                 .filtered(tab -> tab.getUserData() != null && tab.getUserData().getClass() == ControllerWelcomeScreen.class);
-        if(welcomeScreens.isEmpty()) {
+        if (welcomeScreens.isEmpty()) {
             openWelcomeScreen();
         } else {
             tabPane.getSelectionModel().select(welcomeScreens.get(0));
@@ -266,7 +267,7 @@ public class ControllerMain {
 
         stage.setOnCloseRequest(event -> {
             appLogic.getConfig().saveWindowPos(
-                    new Vec4d(  stage.getX(),
+                    new Vec4d(stage.getX(),
                             stage.getY(),
                             stage.getWidth(),
                             stage.getHeight()));
@@ -290,20 +291,10 @@ public class ControllerMain {
             }
         });
 
-        appLogic.activeCampaignProperty().addListener((observable, oldValue, newValue) -> {
-            StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.append("Grunt Arbiter");
-            if(newValue != null) {
-                stringBuilder.append(" - ");
-                stringBuilder.append(newValue.getName());
-                if(appLogic.getCampaignFile() != null) {
-                    stringBuilder.append(" [");
-                    stringBuilder.append(appLogic.getCampaignFile().toPath().toString());
-                    stringBuilder.append("]");
-                }
-            }
-            stage.setTitle(stringBuilder.toString());
-        });
+        stage.titleProperty().bind(javafx.beans.binding.Bindings.createStringBinding(() ->
+                appLogic.getAppTitle(),
+                appLogic.activeCampaignProperty(),
+                appLogic.campaignFileProperty()));
 
         loadRecentFiles();
         openWelcomeScreen();

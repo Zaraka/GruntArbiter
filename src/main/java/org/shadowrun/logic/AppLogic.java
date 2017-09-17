@@ -137,4 +137,19 @@ public class AppLogic {
     public AppConfig getConfig() {
         return config;
     }
+
+    public String getAppTitle() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("Grunt Arbiter");
+        if(activeCampaign.isNotNull().get()) {
+            stringBuilder.append(" - ");
+            stringBuilder.append(activeCampaign.get().getName());
+            if(campaignFileProperty().isNotNull().get()) {
+                stringBuilder.append(" [");
+                stringBuilder.append(campaignFileProperty().get().toPath().toString());
+                stringBuilder.append("]");
+            }
+        }
+        return stringBuilder.toString();
+    }
 }
