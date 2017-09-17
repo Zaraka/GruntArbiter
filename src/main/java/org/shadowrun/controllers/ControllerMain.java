@@ -13,6 +13,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.apache.commons.lang3.StringUtils;
 import org.shadowrun.common.exceptions.IncompatibleVersionsException;
+import org.shadowrun.common.factories.ConfirmationDialogFactory;
 import org.shadowrun.common.factories.ExceptionDialogFactory;
 import org.shadowrun.logic.AppLogic;
 import org.shadowrun.logic.BattleLogic;
@@ -33,6 +34,7 @@ public class ControllerMain {
     private static final Logger LOG = LoggerFactory.getLogger(ControllerMain.class);
 
     private static final ExceptionDialogFactory exceptionDialogFactory = new ExceptionDialogFactory();
+    private static final ConfirmationDialogFactory confirmationDialogFactory = new ConfirmationDialogFactory();
 
     private AppLogic appLogic;
     private BattleLogic battleLogic;
@@ -388,6 +390,16 @@ public class ControllerMain {
             ControllerBattle controllerBattle = tabLoader.getController();
             battleTab.setUserData(controllerBattle);
             battleTab.setGraphic(new FontAwesomeIconView(FontAwesomeIcon.FIRE));
+            battleTab.setOnCloseRequest(event -> {
+                Alert alert = confirmationDialogFactory.createDialog(
+                        "Close battle",
+                        "Are you sure you want to close battle " + battle.getName(),
+                        "The battle will be deleted.");
+                Optional<ButtonType> result = alert.showAndWait();
+                if (!result.isPresent() || result.get() != ButtonType.OK) {
+                    event.consume();
+                }
+            });
             battleTab.setOnClosed(event -> {
                 controllerBattle.remove();
                 tabPane.getTabs().removeIf(tab -> tab.getUserData() == controllerBattle);
