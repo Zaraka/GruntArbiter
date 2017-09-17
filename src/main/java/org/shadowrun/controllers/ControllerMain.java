@@ -83,8 +83,11 @@ public class ControllerMain {
         dialog.setTitle("New campaign");
         dialog.setHeaderText("Create new campaign");
         dialog.setContentText("Please enter name for new campaign:");
-
+        DialogPane dialogPane = dialog.getDialogPane();
+        dialogPane.getStylesheets().add(
+                getClass().getClassLoader().getResource("css/dark.css").toExternalForm());
         Optional<String> result = dialog.showAndWait();
+        
         result.ifPresent(name -> {
             appLogic.newCampaign(name);
             addCampaignHooks();
