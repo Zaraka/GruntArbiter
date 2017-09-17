@@ -139,7 +139,7 @@ public class ControllerMain {
         File file = dialog.showSaveDialog(stage);
         if (file != null) {
             if(!file.getName().endsWith(".gra")) {
-                file = new File(file.getName() + ".gra");
+                file = new File(file.getAbsolutePath() + ".gra");
             }
             try {
                 appLogic.saveAsCampaign(file);
