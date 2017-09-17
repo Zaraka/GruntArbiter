@@ -14,6 +14,16 @@ Grunt arbiter (GA) is inteded to be simple app for GMs with laptops. Shadowrun i
 Release?
 --------
 Grunt Arbiter isn't considered stable yet, so compile your own version using maven or wait to first release.
+
+Versioning
+----------
+Grunt Arbiter uses Semantic Versioning that means the program version is composed of three parts.
+
+**Major.Minor.Patch**
+
+  * Major - Means major changes in GA save files. That means save files are not compatible between major versions, and will probably result in unexpected application behaviour.
+  * Minor - Means new features that doesn't compromise compatibility.
+  * Patch - Means no new features, just hotfixes of existing ones.  
   
 Contributing
 ------------
