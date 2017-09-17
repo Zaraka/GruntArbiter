@@ -37,6 +37,9 @@
      * text; selected items in menus, lists, trees, and tables; progress bars */
     -fx-accent: derive(-fx-theme-brand-signature, 10%);
 
+    -fx-focus-color: derive(-fx-theme-brand-signature, 10%);
+    -fx-faint-focus-color: #91142d22;
+
     /* color of non-focused yet selected elements */
     -fx-selection-bar-non-focused: derive(-fx-theme-brand-signature, 10%);
 
