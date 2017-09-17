@@ -15,6 +15,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.shadowrun.common.exceptions.IncompatibleVersionsException;
 import org.shadowrun.common.factories.ConfirmationDialogFactory;
 import org.shadowrun.common.factories.ExceptionDialogFactory;
+import org.shadowrun.common.factories.TextInputDialogFactory;
 import org.shadowrun.logic.AppLogic;
 import org.shadowrun.logic.BattleLogic;
 import org.shadowrun.models.Battle;
@@ -35,6 +36,7 @@ public class ControllerMain {
 
     private static final ExceptionDialogFactory exceptionDialogFactory = new ExceptionDialogFactory();
     private static final ConfirmationDialogFactory confirmationDialogFactory = new ConfirmationDialogFactory();
+    private static final TextInputDialogFactory textInputDialogFactory = new TextInputDialogFactory();
 
     private AppLogic appLogic;
     private BattleLogic battleLogic;
@@ -67,10 +69,11 @@ public class ControllerMain {
     //------------------------method hooks
     @FXML
     public void addPlayerOnAction() {
-        TextInputDialog dialog = new TextInputDialog("John Doe");
-        dialog.setTitle("New player");
-        dialog.setHeaderText("Create new player");
-        dialog.setContentText("Please enter name for new player:");
+        TextInputDialog dialog = textInputDialogFactory.createDialog(
+                "New player",
+                "Create new player",
+                "Please enter name for new player:",
+                "John Doe");
 
         Optional<String> result = dialog.showAndWait();
         result.ifPresent(name -> {
@@ -80,13 +83,11 @@ public class ControllerMain {
 
     @FXML
     public void newCampaignOnAction() {
-        TextInputDialog dialog = new TextInputDialog("SampleCampaign");
-        dialog.setTitle("New campaign");
-        dialog.setHeaderText("Create new campaign");
-        dialog.setContentText("Please enter name for new campaign:");
-        DialogPane dialogPane = dialog.getDialogPane();
-        dialogPane.getStylesheets().add(
-                getClass().getClassLoader().getResource("css/dark.css").toExternalForm());
+        TextInputDialog dialog = textInputDialogFactory.createDialog(
+                "New campaign",
+                "Create new campaign",
+                "Please enter name for new campaign:",
+                "SampleCampaign");
         Optional<String> result = dialog.showAndWait();
         
         result.ifPresent(name -> {

@@ -32,10 +32,7 @@ import org.shadowrun.common.constants.World;
 import org.shadowrun.common.converters.IterationTimeConverter;
 import org.shadowrun.common.converters.SpiritIndexReputationConverter;
 import org.shadowrun.common.exceptions.NextTurnException;
-import org.shadowrun.common.factories.CharacterIconFactory;
-import org.shadowrun.common.factories.ConfirmationDialogFactory;
-import org.shadowrun.common.factories.ExceptionDialogFactory;
-import org.shadowrun.common.factories.InitiativeDialogFactory;
+import org.shadowrun.common.factories.*;
 import org.shadowrun.common.nodes.cells.*;
 import org.shadowrun.logic.AppLogic;
 import org.shadowrun.logic.BattleLogic;
@@ -71,6 +68,7 @@ public class ControllerBattle {
     private static final InitiativeDialogFactory initiativeDialogFactory = new InitiativeDialogFactory();
     private static final ExceptionDialogFactory exceptionDialogFactory = new ExceptionDialogFactory();
     private static final ConfirmationDialogFactory confirmationDialogFactory = new ConfirmationDialogFactory();
+    private static final TextInputDialogFactory textInputDialogFactory = new TextInputDialogFactory();
 
     @FXML
     private TableView<Character> tableView_masterTable;
@@ -853,10 +851,11 @@ public class ControllerBattle {
             MenuItem renameBarrier = new MenuItem("Rename barrier");
             renameBarrier.setOnAction(event -> {
                 Barrier selected = tableView_barrier.getSelectionModel().getSelectedItem();
-                TextInputDialog dialog = new TextInputDialog(selected.getName());
-                dialog.setTitle("Rename barrier");
-                dialog.setHeaderText("Rename barrier " + selected.getName());
-                dialog.setContentText("Please enter new name:");
+                TextInputDialog dialog = textInputDialogFactory.createDialog(
+                        "Rename barrier",
+                        "Rename barrier " + selected.getName(),
+                        "Please enter name:",
+                        selected.getName());
                 Optional<String> result = dialog.showAndWait();
 
                 result.ifPresent(selected::setName);
@@ -920,10 +919,11 @@ public class ControllerBattle {
             MenuItem renameDevice = new MenuItem("Rename device");
             renameDevice.setOnAction(event -> {
                 Device selected = tableView_devices.getSelectionModel().getSelectedItem();
-                TextInputDialog dialog = new TextInputDialog(selected.getName());
-                dialog.setTitle("Rename device");
-                dialog.setHeaderText("Rename device " + selected.getName());
-                dialog.setContentText("Please enter new name:");
+                TextInputDialog dialog = textInputDialogFactory.createDialog(
+                        "Rename device",
+                        "Rename device " + selected.getName(),
+                        "Please enter name:",
+                        selected.getName());
                 Optional<String> result = dialog.showAndWait();
 
                 result.ifPresent(selected::setName);
