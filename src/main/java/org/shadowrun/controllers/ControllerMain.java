@@ -373,6 +373,7 @@ public class ControllerMain {
             campaignScreenTab.setOnClosed(event -> {
                 tabPane.getTabs().removeIf(tab -> tab.getUserData() != null &&
                         tab.getUserData().getClass() == ControllerBattle.class);
+                battleLogic.clear();
                 appLogic.closeCampaign();
                 controllerCampaignScreen.remove();
                 tabPane.getTabs().removeIf(tab -> tab.getUserData() == controllerCampaignScreen);
