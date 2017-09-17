@@ -155,21 +155,10 @@ public class ControllerMain {
 
     @FXML
     private void closeCampaignOnAction() {
-        List<Tab> toDelete = new ArrayList<>();
-        for (Tab tab : tabPane.getTabs()) {
-            Object userData = tab.getUserData();
-            if (userData != null && userData.getClass() == ControllerBattle.class) {
-                ControllerBattle controllerBattle = (ControllerBattle) userData;
-                controllerBattle.remove();
-                toDelete.add(tab);
-            }
-        }
-        for (Tab tab : toDelete) {
-            tabPane.getTabs().remove(tab);
-        }
-
-        appLogic.closeCampaign();
-        addCampaignHooks();
+        FilteredList<Tab> campaignTabs = tabPane.getTabs().filtered(tab -> tab.getUserData() != null
+                && tab.getUserData().getClass() == ControllerCampaignScreen.class);
+        if(!campaignTabs.isEmpty())
+            campaignTabs.get(0).getOnClosed().handle(null);
     }
 
     @FXML
