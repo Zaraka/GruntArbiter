@@ -61,7 +61,8 @@ public class ControllerBattle {
 
     private SplitPane.Divider selectedPaneDivider;
     private SplitPane.Divider bottomTablesDivider;
-    private SplitPane.Divider centerContentDivider;
+    private SplitPane.Divider centerContentFirstDivider;
+    private SplitPane.Divider centerContentSecondDivider;
 
     private BooleanBinding allPlayersIncluded;
 
@@ -94,6 +95,27 @@ public class ControllerBattle {
     private TableColumn<Character, Integer> tableColumn_masterTable_turn6;
     @FXML
     private TableColumn<Character, Integer> tableColumn_masterTable_turn7;
+
+    @FXML
+    private TableView<Vehicle> tableView_vehicles;
+    @FXML
+    private TableColumn<Vehicle, String> tableColumn_vehicles_name;
+    @FXML
+    private TableColumn<Vehicle, String> tableColumn_vehicles_condition;
+    @FXML
+    private TableColumn<Vehicle, String> tableColumn_vehicles_handling;
+    @FXML
+    private TableColumn<Vehicle, String> tableColumn_vehicles_speed;
+    @FXML
+    private TableColumn<Vehicle, String> tableColumn_vehicles_acceleration;
+    @FXML
+    private TableColumn<Vehicle, Integer> tableColumn_vehicles_body;
+    @FXML
+    private TableColumn<Vehicle, Integer> tableColumn_vehicles_armor;
+    @FXML
+    private TableColumn<Vehicle, Integer> tableColumn_vehicles_pilot;
+    @FXML
+    private TableColumn<Vehicle, Integer> tableColumn_vehicles_sensor;
 
     @FXML
     private TableView<Barrier> tableView_barrier;
@@ -141,6 +163,8 @@ public class ControllerBattle {
     private HBox hbox_selected_glyph;
     @FXML
     private HBox hbox_selected_device;
+    @FXML
+    private HBox hbox_selected_vehicle;
 
 
     @FXML
@@ -180,7 +204,9 @@ public class ControllerBattle {
     @FXML
     private Label label_selected_armor;
     @FXML
-    private Label label_selected_condition;
+    private Label label_selected_deviceCondition;
+    @FXML
+    private Label label_selected_vehicleCondition;
 
     @FXML
     private Button button_nextTurn;
@@ -219,6 +245,8 @@ public class ControllerBattle {
 
     @FXML
     private FontAwesomeIconView fontAwesomeIcon_selected;
+
+    private List<TableView> contentTables;
 
     //------------------FXML methods-------------------
 
@@ -512,6 +540,41 @@ public class ControllerBattle {
         }
     }
 
+    @FXML
+    private void vehicleConditionPlusOnAction() {
+        Vehicle vehicle = tableView_vehicles.getSelectionModel().getSelectedItem();
+        vehicle.getConditionMonitor().increase(1);
+    }
+
+    @FXML
+    private void vehicleConditionMinusOnAction() {
+        Vehicle vehicle = tableView_vehicles.getSelectionModel().getSelectedItem();
+        vehicle.getConditionMonitor().decrease(1);
+    }
+
+    @FXML
+    private void vehicleConditionMonitorSettingsOnAction() {
+        Vehicle vehicle = tableView_vehicles.getSelectionModel().getSelectedItem();
+        Parent root;
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("views/monitorSettings.fxml"));
+            root = loader.load();
+            Stage dialog = new Stage();
+            dialog.setTitle("Vehicle condition monitor settings");
+            dialog.setScene(new Scene(root));
+            ControllerMonitorSettings controllerMonitorSettings = loader.getController();
+            controllerMonitorSettings.onOpen(dialog, vehicle.getConditionMonitor(), "Vehicle condition monitor");
+            dialog.showAndWait();
+            controllerMonitorSettings.getMonitor().ifPresent(monitor -> {
+                vehicle.getConditionMonitor().maxProperty().setValue(monitor.getMax());
+                vehicle.getConditionMonitor().currentProperty().setValue(monitor.getCurrent());
+            });
+
+        } catch (IOException ex) {
+            LOG.error("Could not load momnitorSettings dialog: ", ex);
+        }
+    }
+
 
     @FXML
     private void spiritIndexPlusOnAction() {
@@ -588,6 +651,26 @@ public class ControllerBattle {
 
         } catch (IOException ex) {
             LOG.error("Could not load addDevice dialog: ", ex);
+        }
+    }
+
+    @FXML
+    private void addVehicleOnAction() {
+        Parent root;
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("views/addVehicle.fxml"));
+            root = loader.load();
+            Stage dialog = new Stage();
+            dialog.setTitle("Create new vehicle");
+            dialog.setScene(new Scene(root));
+            ControllerAddVehicle controllerAddVehicle = loader.getController();
+            controllerAddVehicle.onOpen(dialog);
+            dialog.showAndWait();
+            controllerAddVehicle.getVehicle().ifPresent(vehicle -> {
+                battle.getVehicles().add(vehicle);
+            });
+        } catch (IOException ex) {
+            LOG.error("Could not load addVehicle dialog: ", ex);
         }
     }
 
@@ -669,6 +752,7 @@ public class ControllerBattle {
         hbox_selected_character.setVisible(false);
         hbox_selected_barrier.setVisible(false);
         hbox_selected_device.setVisible(false);
+        hbox_selected_vehicle.setVisible(false);
         vbox_selected_player.setVisible(false);
         anchorPane_selected.setVisible(false);
     }
@@ -678,11 +762,274 @@ public class ControllerBattle {
         this.appLogic = appLogic;
         this.battleLogic = battleLogic;
 
+        contentTables = Arrays.asList(
+                tableView_masterTable,
+                tableView_vehicles,
+                tableView_devices,
+                tableView_barrier
+        );
+
         button_nextTurn.disableProperty().bind(battleLogic.hasBattle());
         button_prevTurn.disableProperty().bind(battleLogic.hasBattle());
 
         selectedPaneDivider = splitPane_horizontal.getDividers().get(1);
 
+        setupMasterTable(battle);
+
+        setupBarrierTable();
+
+        setupDeviceTable();
+
+        setupVehicleTable();
+
+        textField_selected_initiative.textProperty()
+                .addListener(new NumericLimitListener(textField_selected_initiative, -100, 100));
+
+        hbox_selected_barrier.managedProperty().bind(hbox_selected_barrier.visibleProperty());
+        hbox_selected_character.managedProperty().bind(hbox_selected_character.visibleProperty());
+        vbox_selected_player.managedProperty().bind(vbox_selected_player.visibleProperty());
+        hbox_selected_glyph.managedProperty().bind(hbox_selected_glyph.visibleProperty());
+        hbox_selected_vehicle.managedProperty().bind(hbox_selected_vehicle.visibleProperty());
+        anchorPane_selected.managedProperty().bind(anchorPane_selected.visibleProperty());
+
+        cleanSelectedPane();
+
+        label_overwatchScore.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (StringUtils.isNotEmpty(newValue)) {
+                Integer value = Integer.parseInt(newValue);
+                ObservableList<String> overwatchClasses = label_overwatchScore.getStyleClass();
+                if (value >= 40) {
+                    overwatchClasses.clear();
+                    overwatchClasses.add("overwatch-score-critical");
+                } else if (value >= 30) {
+                    overwatchClasses.clear();
+                    overwatchClasses.add("overwatch-score-high");
+                } else if (value >= 20) {
+                    overwatchClasses.clear();
+                    overwatchClasses.add("overwatch-score-medium");
+                } else {
+                    overwatchClasses.clear();
+                    overwatchClasses.add("overwatch-score-clear");
+                }
+            }
+        });
+
+        appLogic.showRealWorldProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                vbox_realWorld.setVisible(newValue);
+            }
+        });
+        appLogic.showAstralPlaneProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                vbox_astralPlane.setVisible(newValue);
+            }
+        });
+        appLogic.showMatrixProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                vbox_matrix.setVisible(newValue);
+            }
+        });
+
+        comboBox_weather.setItems(FXCollections.observableArrayList(Weather.values()));
+        comboBox_weather.setCellFactory(param -> new WeatherCell());
+        comboBox_weather.setButtonCell(new WeatherCell());
+
+        //Items
+        ObservableList<Character> firableCharacters = FXCollections.
+                observableArrayList(param -> new Observable[]{param.initiativeProperty()});
+        Bindings.bindContentBidirectional(firableCharacters, battle.getCharacters());
+        SortedList<Character> sortedCharacters = new SortedList<>(firableCharacters,
+                Comparator.comparingInt(Character::getInitiative).reversed()).sorted();
+        sortedCharacters.comparatorProperty().bind(tableView_masterTable.comparatorProperty());
+        tableView_masterTable.setItems(sortedCharacters);
+        tableView_barrier.setItems(battle.getBarriers());
+        tableView_devices.setItems(battle.getDevices());
+        tableView_vehicles.setItems(battle.getVehicles());
+
+        //binds
+        label_combatTurnCounter.textProperty().bind(battle.combatTurnProperty().asString());
+        label_intiativePassCounter.textProperty().bind(battle.initiativePassProperty().asString());
+        label_actionPhaseCounter.textProperty().bind(battle.actionPhaseProperty().asString());
+        label_currentCharacter.textProperty().bind(battleLogic.currentCharacterNameProperty());
+        label_host_attack.textProperty().bind(battle.getHost().attackProperty().asString());
+        label_host_sleeze.textProperty().bind(battle.getHost().sleezeProperty().asString());
+        label_host_firewall.textProperty().bind(battle.getHost().firewallProperty().asString());
+        label_host_dataProcessing.textProperty().bind(battle.getHost().dataProcessingProperty().asString());
+        label_host_rating.textProperty().bind(battle.getHost().ratingProperty().asString());
+        textField_backgroundCount.textProperty().bindBidirectional(battle.backgroundCountProperty(), new NumberStringConverter());
+        label_overwatchScore.textProperty().bind(battle.getHost().overwatchScoreProperty().asString());
+        vbox_matrixProperties.visibleProperty().bind(battle.getHost().isInitalized());
+        Bindings.bindBidirectional(label_time.textProperty(), battle.combatTurnProperty(), new IterationTimeConverter(battle.getTime()));
+        comboBox_weather.valueProperty().bindBidirectional(battle.selectedWeatherProperty());
+
+
+        battle.currentCharacterProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                tableView_masterTable.getSelectionModel().select(newValue);
+            }
+        });
+
+        button_prevTurn.disableProperty()
+                .bind(battle.actionPhaseProperty().greaterThan(1).not()
+                        .or(battle.initiativePassProperty().greaterThan(1).not()
+                                .or(battle.combatTurnProperty().greaterThan(1)).not()));
+
+        battle.maxInitiativeBinding().greaterThan(0).addListener((observable, oldValue, newValue) ->
+                tableColumn_masterTable_turn1.setVisible(newValue));
+        battle.maxInitiativeBinding().greaterThan(10).addListener((observable, oldValue, newValue) ->
+                tableColumn_masterTable_turn2.setVisible(newValue));
+        battle.maxInitiativeBinding().greaterThan(20).addListener((observable, oldValue, newValue) ->
+                tableColumn_masterTable_turn3.setVisible(newValue));
+        battle.maxInitiativeBinding().greaterThan(30).addListener((observable, oldValue, newValue) ->
+                tableColumn_masterTable_turn4.setVisible(newValue));
+        battle.maxInitiativeBinding().greaterThan(40).addListener((observable, oldValue, newValue) ->
+                tableColumn_masterTable_turn5.setVisible(newValue));
+        battle.maxInitiativeBinding().greaterThan(50).addListener((observable, oldValue, newValue) ->
+                tableColumn_masterTable_turn6.setVisible(newValue));
+        battle.maxInitiativeBinding().greaterThan(60).addListener((observable, oldValue, newValue) ->
+                tableColumn_masterTable_turn7.setVisible(newValue));
+
+        battle.getHost().ratingProperty().isNotEqualTo(0).addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                button_hostAction.textProperty().setValue(LABEL_DISCONNECT);
+            } else {
+                button_hostAction.textProperty().setValue(LABEL_GENERATE_HOST);
+            }
+        });
+
+        allPlayersIncluded = Bindings.createBooleanBinding(() ->
+                appLogic.getActiveCampaign().getPlayers().size() <=
+                        battle.getCharacters().stream().filter(character -> character.getPlayer() != null).count());
+
+        button_spawnPlayer.disableProperty().bind(allPlayersIncluded);
+
+        bottomTablesDivider = splitPane_bottomTables.getDividers().get(0);
+        centerContentFirstDivider = splitPane_centerContent.getDividers().get(0);
+        centerContentFirstDivider = splitPane_centerContent.getDividers().get(1);
+
+        Node vehicleTableNode = splitPane_centerContent.getItems().get(1);
+        Node barrierDeviceTableNode = splitPane_centerContent.getItems().get(2);
+
+        Bindings.isEmpty(tableView_vehicles.getItems()).addListener((observable, oldValue, newValue) -> {
+            if(newValue != null) {
+                if(newValue) {
+                    splitPane_centerContent.getItems().remove(vehicleTableNode);
+                } else {
+                    splitPane_centerContent.getItems().add(vehicleTableNode);
+                }
+            }
+        });
+
+        Bindings.isEmpty(tableView_barrier.getItems())
+                .and(Bindings.isEmpty(tableView_devices.getItems())).addListener((observable, oldValue, newValue) -> {
+            if(newValue != null) {
+                if(newValue) {
+                    splitPane_centerContent.getItems().remove(barrierDeviceTableNode);
+                } else {
+                    splitPane_centerContent.getItems().add(barrierDeviceTableNode);
+                }
+            }
+        });
+
+        splitPane_centerContent.getItems().remove(barrierDeviceTableNode);
+        splitPane_centerContent.getItems().remove(vehicleTableNode);
+
+        if(!loaded) {
+            setNewInitiative();
+        }
+    }
+
+    private void setupVehicleTable() {
+        tableColumn_vehicles_name.setCellValueFactory(param -> param.getValue().nameProperty());
+        tableColumn_vehicles_condition.setCellValueFactory(param ->
+                Bindings.concat(
+                        param.getValue().getConditionMonitor().getCurrent(),
+                        "/",
+                        param.getValue().getConditionMonitor().getMax()));
+        tableColumn_vehicles_handling.setCellValueFactory(param ->
+                Bindings.concat(
+                        param.getValue().getHandling().getOnRoad(),
+                        "/",
+                        param.getValue().getHandling().getOffRoad()));
+        tableColumn_vehicles_speed.setCellValueFactory(param ->
+                Bindings.concat(
+                        param.getValue().getSpeed().getOnRoad(),
+                        "/",
+                        param.getValue().getSpeed().getOffRoad()));
+        tableColumn_vehicles_acceleration.setCellValueFactory(param ->
+                Bindings.concat(
+                        param.getValue().getAcceleration().getOnRoad(),
+                        "/",
+                        param.getValue().getAcceleration().getOffRoad()));
+        tableColumn_vehicles_body.setCellValueFactory(param -> param.getValue().bodyProperty().asObject());
+        tableColumn_vehicles_armor.setCellValueFactory(param -> param.getValue().armorProperty().asObject());
+        tableColumn_vehicles_pilot.setCellValueFactory(param -> param.getValue().pilotProperty().asObject());
+        tableColumn_vehicles_sensor.setCellValueFactory(param -> param.getValue().sensorProperty().asObject());
+
+        tableView_vehicles.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (oldValue != null) {
+                label_selected_vehicleCondition.textProperty().unbind();
+            }
+
+            cleanSelectedPane();
+
+            if (newValue != null) {
+                clearTableSelection(tableView_vehicles);
+
+                fontAwesomeIcon_selected.setIcon(FontAwesomeIcon.CAR);
+
+                label_selected_vehicleCondition.textProperty().bind(Bindings.concat(
+                        newValue.getConditionMonitor().currentProperty(),
+                        "/",
+                        newValue.getConditionMonitor().maxProperty()
+                ));
+                label_selectedCharacter.textProperty().bind(newValue.nameProperty());
+
+                hbox_selected_glyph.setVisible(true);
+                hbox_selected_vehicle.setVisible(true);
+                anchorPane_selected.setVisible(true);
+                selectedPaneDivider.setPosition(SELECTED_PANE_OPEN_POS);
+            }
+        });
+
+        tableView_vehicles.setRowFactory(param -> {
+            TableRow<Vehicle> tableRow = new TableRow<>();
+
+            MenuItem renameVehicle = new MenuItem("Rename vehicle");
+            renameVehicle.setOnAction(event -> {
+                Vehicle selected = tableView_vehicles.getSelectionModel().getSelectedItem();
+                TextInputDialog dialog = textInputDialogFactory.createDialog(
+                        "Rename vehicle",
+                        "Rename vehicler " + selected.getName(),
+                        "Please enter name:",
+                        selected.getName());
+                Optional<String> result = dialog.showAndWait();
+
+                result.ifPresent(selected::setName);
+            });
+            MenuItem deleteVehicle = new MenuItem("Delete vehicler");
+            deleteVehicle.setOnAction(event -> tableView_barrier.getItems()
+                    .remove(tableView_vehicles.getSelectionModel().getSelectedIndex()));
+            MenuItem addVehicle = new MenuItem("Add vehicler");
+            addVehicle.setOnAction(event -> addVehicleOnAction());
+            ContextMenu fullContextMenu = new ContextMenu(addVehicle, deleteVehicle, renameVehicle);
+            ContextMenu emptyContextMenu = new ContextMenu(addVehicle);
+
+            tableRow.emptyProperty().addListener((observable, oldValue, newValue) ->
+                    tableRow.setContextMenu(newValue ? emptyContextMenu : fullContextMenu));
+            return tableRow;
+        });
+    }
+
+    private void clearTableSelection(TableView ignoredTable) {
+        for(TableView table : contentTables) {
+            if(table == ignoredTable)
+                continue;
+            table.getSelectionModel().clearSelection();
+        }
+    }
+
+    private void setupMasterTable(Battle battle) {
         tableColumn_masterTable_character.setCellFactory(param -> new CharacterCell());
         tableColumn_masterTable_character.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
         tableColumn_masterTable_condition.setCellFactory(param -> new CharacterConditionCell());
@@ -803,8 +1150,7 @@ public class ControllerBattle {
             cleanSelectedPane();
 
             if (newValue != null) {
-                tableView_barrier.getSelectionModel().clearSelection();
-                tableView_devices.getSelectionModel().clearSelection();
+                clearTableSelection(tableView_masterTable);
 
                 CharacterIconFactory.createIcon(newValue).ifPresent(fontAwesomeIcon -> {
                     fontAwesomeIcon_selected.setIcon(fontAwesomeIcon);
@@ -838,7 +1184,9 @@ public class ControllerBattle {
                 selectedPaneDivider.setPosition(SELECTED_PANE_OPEN_POS);
             }
         });
+    }
 
+    private void setupBarrierTable() {
         tableColumn_barrier_object.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
         tableColumn_barrier_object.setCellFactory(param -> new ObjectCell());
         tableColumn_barrier_armor.setCellValueFactory(param -> param.getValue().armorProperty().asObject());
@@ -882,8 +1230,7 @@ public class ControllerBattle {
             cleanSelectedPane();
 
             if (newValue != null) {
-                tableView_masterTable.getSelectionModel().clearSelection();
-                tableView_devices.getSelectionModel().clearSelection();
+                clearTableSelection(tableView_barrier);
 
                 fontAwesomeIcon_selected.setIcon(FontAwesomeIcon.SQUARE);
 
@@ -902,7 +1249,9 @@ public class ControllerBattle {
                 selectedPaneDivider.setPosition(SELECTED_PANE_OPEN_POS);
             }
         });
+    }
 
+    private void setupDeviceTable() {
         tableColumn_device_device.setCellValueFactory(param -> param.getValue().nameProperty());
         tableColumn_device_rating.setCellValueFactory(param -> param.getValue().ratingProperty().asObject());
         tableColumn_device_attack.setCellValueFactory(param -> param.getValue().attackProperty().asObject());
@@ -943,18 +1292,17 @@ public class ControllerBattle {
 
         tableView_devices.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (oldValue != null) {
-                label_selected_condition.textProperty().unbind();
+                label_selected_deviceCondition.textProperty().unbind();
             }
 
             cleanSelectedPane();
 
             if (newValue != null) {
-                tableView_masterTable.getSelectionModel().clearSelection();
-                tableView_barrier.getSelectionModel().clearSelection();
+                clearTableSelection(tableView_devices);
 
                 fontAwesomeIcon_selected.setIcon(FontAwesomeIcon.LAPTOP);
 
-                label_selected_condition.textProperty().bind(Bindings.concat(
+                label_selected_deviceCondition.textProperty().bind(Bindings.concat(
                         newValue.getConditionMonitor().currentProperty(),
                         "/",
                         newValue.getConditionMonitor().maxProperty()
@@ -967,146 +1315,6 @@ public class ControllerBattle {
                 selectedPaneDivider.setPosition(SELECTED_PANE_OPEN_POS);
             }
         });
-
-        textField_selected_initiative.textProperty()
-                .addListener(new NumericLimitListener(textField_selected_initiative, -100, 100));
-
-        hbox_selected_barrier.managedProperty().bind(hbox_selected_barrier.visibleProperty());
-        hbox_selected_character.managedProperty().bind(hbox_selected_character.visibleProperty());
-        vbox_selected_player.managedProperty().bind(vbox_selected_player.visibleProperty());
-        hbox_selected_glyph.managedProperty().bind(hbox_selected_glyph.visibleProperty());
-        anchorPane_selected.managedProperty().bind(anchorPane_selected.visibleProperty());
-
-        cleanSelectedPane();
-
-        label_overwatchScore.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (StringUtils.isNotEmpty(newValue)) {
-                Integer value = Integer.parseInt(newValue);
-                ObservableList<String> overwatchClasses = label_overwatchScore.getStyleClass();
-                if (value >= 40) {
-                    overwatchClasses.clear();
-                    overwatchClasses.add("overwatch-score-critical");
-                } else if (value >= 30) {
-                    overwatchClasses.clear();
-                    overwatchClasses.add("overwatch-score-high");
-                } else if (value >= 20) {
-                    overwatchClasses.clear();
-                    overwatchClasses.add("overwatch-score-medium");
-                } else {
-                    overwatchClasses.clear();
-                    overwatchClasses.add("overwatch-score-clear");
-                }
-            }
-        });
-
-        appLogic.showRealWorldProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) {
-                vbox_realWorld.setVisible(newValue);
-            }
-        });
-        appLogic.showAstralPlaneProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) {
-                vbox_astralPlane.setVisible(newValue);
-            }
-        });
-        appLogic.showMatrixProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) {
-                vbox_matrix.setVisible(newValue);
-            }
-        });
-
-        comboBox_weather.setItems(FXCollections.observableArrayList(Weather.values()));
-        comboBox_weather.setCellFactory(param -> new WeatherCell());
-        comboBox_weather.setButtonCell(new WeatherCell());
-
-        //Items
-        ObservableList<Character> firableCharacters = FXCollections.
-                observableArrayList(param -> new Observable[]{param.initiativeProperty()});
-        Bindings.bindContentBidirectional(firableCharacters, battle.getCharacters());
-        SortedList<Character> sortedCharacters = new SortedList<>(firableCharacters,
-                Comparator.comparingInt(Character::getInitiative).reversed()).sorted();
-        sortedCharacters.comparatorProperty().bind(tableView_masterTable.comparatorProperty());
-        tableView_masterTable.setItems(sortedCharacters);
-        tableView_barrier.setItems(battle.getBarriers());
-        tableView_devices.setItems(battle.getDevices());
-
-        //binds
-        label_combatTurnCounter.textProperty().bind(battle.combatTurnProperty().asString());
-        label_intiativePassCounter.textProperty().bind(battle.initiativePassProperty().asString());
-        label_actionPhaseCounter.textProperty().bind(battle.actionPhaseProperty().asString());
-        label_currentCharacter.textProperty().bind(battleLogic.currentCharacterNameProperty());
-        label_host_attack.textProperty().bind(battle.getHost().attackProperty().asString());
-        label_host_sleeze.textProperty().bind(battle.getHost().sleezeProperty().asString());
-        label_host_firewall.textProperty().bind(battle.getHost().firewallProperty().asString());
-        label_host_dataProcessing.textProperty().bind(battle.getHost().dataProcessingProperty().asString());
-        label_host_rating.textProperty().bind(battle.getHost().ratingProperty().asString());
-        textField_backgroundCount.textProperty().bindBidirectional(battle.backgroundCountProperty(), new NumberStringConverter());
-        label_overwatchScore.textProperty().bind(battle.getHost().overwatchScoreProperty().asString());
-        vbox_matrixProperties.visibleProperty().bind(battle.getHost().isInitalized());
-        Bindings.bindBidirectional(label_time.textProperty(), battle.combatTurnProperty(), new IterationTimeConverter(battle.getTime()));
-        comboBox_weather.valueProperty().bindBidirectional(battle.selectedWeatherProperty());
-
-
-        battle.currentCharacterProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) {
-                tableView_masterTable.getSelectionModel().select(newValue);
-            }
-        });
-
-        button_prevTurn.disableProperty()
-                .bind(battle.actionPhaseProperty().greaterThan(1).not()
-                        .or(battle.initiativePassProperty().greaterThan(1).not()
-                                .or(battle.combatTurnProperty().greaterThan(1)).not()));
-
-        battle.maxInitiativeBinding().greaterThan(0).addListener((observable, oldValue, newValue) ->
-                tableColumn_masterTable_turn1.setVisible(newValue));
-        battle.maxInitiativeBinding().greaterThan(10).addListener((observable, oldValue, newValue) ->
-                tableColumn_masterTable_turn2.setVisible(newValue));
-        battle.maxInitiativeBinding().greaterThan(20).addListener((observable, oldValue, newValue) ->
-                tableColumn_masterTable_turn3.setVisible(newValue));
-        battle.maxInitiativeBinding().greaterThan(30).addListener((observable, oldValue, newValue) ->
-                tableColumn_masterTable_turn4.setVisible(newValue));
-        battle.maxInitiativeBinding().greaterThan(40).addListener((observable, oldValue, newValue) ->
-                tableColumn_masterTable_turn5.setVisible(newValue));
-        battle.maxInitiativeBinding().greaterThan(50).addListener((observable, oldValue, newValue) ->
-                tableColumn_masterTable_turn6.setVisible(newValue));
-        battle.maxInitiativeBinding().greaterThan(60).addListener((observable, oldValue, newValue) ->
-                tableColumn_masterTable_turn7.setVisible(newValue));
-
-        battle.getHost().ratingProperty().isNotEqualTo(0).addListener((observable, oldValue, newValue) -> {
-            if (newValue) {
-                button_hostAction.textProperty().setValue(LABEL_DISCONNECT);
-            } else {
-                button_hostAction.textProperty().setValue(LABEL_GENERATE_HOST);
-            }
-        });
-
-        allPlayersIncluded = Bindings.createBooleanBinding(() ->
-                appLogic.getActiveCampaign().getPlayers().size() <=
-                        battle.getCharacters().stream().filter(character -> character.getPlayer() != null).count());
-
-        button_spawnPlayer.disableProperty().bind(allPlayersIncluded);
-
-        bottomTablesDivider = splitPane_bottomTables.getDividers().get(0);
-        centerContentDivider = splitPane_centerContent.getDividers().get(0);
-
-        BooleanBinding emptyTables =  Bindings.isEmpty(tableView_barrier.getItems())
-                .and(Bindings.isEmpty(tableView_devices.getItems()));
-
-        Bindings.when(emptyTables)
-                .then(1.0).otherwise(0.5)
-                .addListener((observable, oldValue, newValue) -> {
-                            if(newValue != null) {
-                                centerContentDivider.setPosition((Double) newValue);
-                            }
-                        });
-
-        //HACK AS FUCK
-        centerContentDivider.setPosition(1.0);
-
-        if(!loaded) {
-            setNewInitiative();
-        }
     }
 
     public void remove() {

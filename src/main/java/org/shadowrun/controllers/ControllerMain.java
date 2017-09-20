@@ -23,7 +23,6 @@ import org.shadowrun.models.Campaign;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.script.Bindings;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -292,7 +291,7 @@ public class ControllerMain {
         });
 
         stage.titleProperty().bind(javafx.beans.binding.Bindings.createStringBinding(() ->
-                appLogic.getAppTitle(),
+                        appLogic.getAppTitle(),
                 appLogic.activeCampaignProperty(),
                 appLogic.campaignFileProperty()));
 

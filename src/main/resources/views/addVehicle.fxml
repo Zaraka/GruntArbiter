@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TreeView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<GridPane hgap="14.0" maxHeight="+Infinity" maxWidth="+Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="700.0" stylesheets="@../css/dark.css" vgap="20.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.shadowrun.controllers.ControllerAddVehicle">
+  <children>
+      <FontAwesomeIconView glyphName="CAR" size="50" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.valignment="TOP" />
+      <HBox GridPane.columnIndex="1">
+         <children>
+            <VBox>
+               <children>
+                  <HBox alignment="CENTER">
+                     <children>
+                        <Label styleClass="header" text="Vehicle presets" />
+                     </children>
+                  </HBox>
+                  <TreeView fx:id="treeView_pressets" prefHeight="400.0" prefWidth="300.0" />
+               </children>
+            </VBox>
+          <VBox spacing="7.0">
+            <children>
+                  <GridPane>
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="85.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" prefWidth="200.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label text="Name" />
+                        <Label text="Handling" GridPane.rowIndex="1" />
+                        <Label text="Speed" GridPane.rowIndex="2" />
+                        <TextField fx:id="textField_sensor" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                        <TextField fx:id="textField_body" layoutX="110.0" layoutY="102.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <TextField fx:id="textField_armor" layoutX="110.0" layoutY="132.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <TextField fx:id="textField_pilot" layoutX="110.0" layoutY="162.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                        <Label layoutX="10.0" layoutY="77.0" text="Acceleration" GridPane.rowIndex="3" />
+                        <Label layoutX="10.0" layoutY="107.0" text="Body" GridPane.rowIndex="4" />
+                        <Label layoutX="10.0" layoutY="137.0" text="Armor" GridPane.rowIndex="5" />
+                        <Label layoutX="10.0" layoutY="167.0" text="Pilot" GridPane.rowIndex="6" />
+                        <Label layoutX="10.0" layoutY="107.0" text="Sensor" GridPane.rowIndex="7" />
+                        <TextField fx:id="textField_name" layoutX="95.0" layoutY="192.0" GridPane.columnIndex="1" />
+                        <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <children>
+                              <TextField fx:id="textField_handling_onRoad" />
+                              <TextField fx:id="textField_handling_offRoad" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                           <children>
+                              <TextField fx:id="textField_speed_onRoad" />
+                              <TextField fx:id="textField_speed_offRoad" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                           <children>
+                              <TextField fx:id="textField_acceleration_onRoad" />
+                              <TextField fx:id="textField_acceleration_offRoad" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </GridPane>
+            </children>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+          </VBox>
+         </children>
+      </HBox>
+    <HBox maxHeight="-Infinity" maxWidth="+Infinity" minHeight="-Infinity" minWidth="-Infinity" GridPane.columnIndex="1" GridPane.rowIndex="1">
+      <children>
+        <HBox fx:id="actionParent" alignment="CENTER">
+          <HBox.margin>
+            <Insets />
+          </HBox.margin>
+        </HBox>
+        <Pane maxWidth="+Infinity" HBox.hgrow="ALWAYS" />
+        <Button fx:id="cancelButton" cancelButton="true" minWidth="80.0" mnemonicParsing="false" onAction="#cancelOnAction" text="Cancel" HBox.hgrow="NEVER">
+          <HBox.margin>
+            <Insets />
+          </HBox.margin>
+        </Button>
+        <HBox fx:id="okParent" alignment="CENTER">
+          <children>
+            <Button fx:id="okButton" defaultButton="true" minWidth="80.0" mnemonicParsing="false" onAction="#okOnAction" text="Ok" HBox.hgrow="NEVER">
+              <HBox.margin>
+                <Insets left="14.0" />
+              </HBox.margin>
+            </Button>
+          </children>
+        </HBox>
+      </children>
+    </HBox>
+  </children>
+  <columnConstraints>
+    <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" />
+    <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="+Infinity" minWidth="-Infinity" />
+  </columnConstraints>
+  <padding>
+    <Insets bottom="14.0" left="14.0" right="14.0" top="14.0" />
+  </padding>
+  <rowConstraints>
+    <RowConstraints maxHeight="+Infinity" minHeight="-Infinity" valignment="CENTER" vgrow="ALWAYS" />
+    <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" vgrow="NEVER" />
+  </rowConstraints>
+</GridPane>

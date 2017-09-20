@@ -1,0 +1,5640 @@
+{
+  "vehicle": {
+    "name": "root",
+    "handling": {
+      "onRoad": 0,
+      "offRoad": 0
+    },
+    "speed": {
+      "onRoad": 0,
+      "offRoad": 0
+    },
+    "acceleration": {
+      "onRoad": 0,
+      "offRoad": 0
+    },
+    "body": 0,
+    "armor": 0,
+    "pilot": 0,
+    "sensor": 0,
+    "condition": null
+  },
+  "children": [
+    {
+      "vehicle": {
+        "name": "Vehicles",
+        "handling": {
+          "onRoad": 0,
+          "offRoad": 0
+        },
+        "speed": {
+          "onRoad": 0,
+          "offRoad": 0
+        },
+        "acceleration": {
+          "onRoad": 0,
+          "offRoad": 0
+        },
+        "body": 0,
+        "armor": 0,
+        "pilot": 0,
+        "sensor": 0,
+        "condition": null
+      },
+      "children": [
+        {
+          "vehicle": {
+            "name": "Groundcraft",
+            "handling": {
+              "onRoad": 0,
+              "offRoad": 0
+            },
+            "speed": {
+              "onRoad": 0,
+              "offRoad": 0
+            },
+            "acceleration": {
+              "onRoad": 0,
+              "offRoad": 0
+            },
+            "body": 0,
+            "armor": 0,
+            "pilot": 0,
+            "sensor": 0,
+            "condition": null
+          },
+          "children": [
+            {
+              "vehicle": {
+                "name": "Bike",
+                "handling": {
+                  "onRoad": 0,
+                  "offRoad": 0
+                },
+                "speed": {
+                  "onRoad": 0,
+                  "offRoad": 0
+                },
+                "acceleration": {
+                  "onRoad": 0,
+                  "offRoad": 0
+                },
+                "body": 0,
+                "armor": 0,
+                "pilot": 0,
+                "sensor": 0,
+                "condition": null
+              },
+              "children": [
+                {
+                  "vehicle": {
+                    "name": "Dodge Scoot",
+                    "handling": {
+                      "onRoad": 4,
+                      "offRoad": 3
+                    },
+                    "speed": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "acceleration": {
+                      "onRoad": 1,
+                      "offRoad": 1
+                    },
+                    "body": 4,
+                    "armor": 4,
+                    "pilot": 1,
+                    "sensor": 1,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Harley-Davidson Scorpion",
+                    "handling": {
+                      "onRoad": 4,
+                      "offRoad": 3
+                    },
+                    "speed": {
+                      "onRoad": 4,
+                      "offRoad": 4
+                    },
+                    "acceleration": {
+                      "onRoad": 2,
+                      "offRoad": 2
+                    },
+                    "body": 8,
+                    "armor": 9,
+                    "pilot": 1,
+                    "sensor": 2,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Yamaha Growler",
+                    "handling": {
+                      "onRoad": 4,
+                      "offRoad": 5
+                    },
+                    "speed": {
+                      "onRoad": 3,
+                      "offRoad": 4
+                    },
+                    "acceleration": {
+                      "onRoad": 1,
+                      "offRoad": 1
+                    },
+                    "body": 5,
+                    "armor": 5,
+                    "pilot": 1,
+                    "sensor": 1,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Suzuki Mirage",
+                    "handling": {
+                      "onRoad": 5,
+                      "offRoad": 3
+                    },
+                    "speed": {
+                      "onRoad": 6,
+                      "offRoad": 6
+                    },
+                    "acceleration": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "body": 5,
+                    "armor": 6,
+                    "pilot": 1,
+                    "sensor": 2,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Cocotaxi HT",
+                    "handling": {
+                      "onRoad": 4,
+                      "offRoad": 2
+                    },
+                    "speed": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "acceleration": {
+                      "onRoad": 2,
+                      "offRoad": 2
+                    },
+                    "body": 5,
+                    "armor": 4,
+                    "pilot": 1,
+                    "sensor": 1,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Cyclops",
+                    "handling": {
+                      "onRoad": 4,
+                      "offRoad": 4
+                    },
+                    "speed": {
+                      "onRoad": 4,
+                      "offRoad": 4
+                    },
+                    "acceleration": {
+                      "onRoad": 2,
+                      "offRoad": 2
+                    },
+                    "body": 4,
+                    "armor": 4,
+                    "pilot": 1,
+                    "sensor": 1,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Falcon-EX",
+                    "handling": {
+                      "onRoad": 3,
+                      "offRoad": 5
+                    },
+                    "speed": {
+                      "onRoad": 2,
+                      "offRoad": 3
+                    },
+                    "acceleration": {
+                      "onRoad": 1,
+                      "offRoad": 2
+                    },
+                    "body": 7,
+                    "armor": 9,
+                    "pilot": 1,
+                    "sensor": 1,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Horseman",
+                    "handling": {
+                      "onRoad": 3,
+                      "offRoad": 1
+                    },
+                    "speed": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "acceleration": {
+                      "onRoad": 2,
+                      "offRoad": 2
+                    },
+                    "body": 4,
+                    "armor": 3,
+                    "pilot": 2,
+                    "sensor": 2,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Kaburaya",
+                    "handling": {
+                      "onRoad": 5,
+                      "offRoad": 3
+                    },
+                    "speed": {
+                      "onRoad": 6,
+                      "offRoad": 6
+                    },
+                    "acceleration": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "body": 5,
+                    "armor": 4,
+                    "pilot": 1,
+                    "sensor": 2,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Mustang",
+                    "handling": {
+                      "onRoad": 4,
+                      "offRoad": 4
+                    },
+                    "speed": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "acceleration": {
+                      "onRoad": 2,
+                      "offRoad": 2
+                    },
+                    "body": 8,
+                    "armor": 6,
+                    "pilot": 1,
+                    "sensor": 1,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Nightmare",
+                    "handling": {
+                      "onRoad": 4,
+                      "offRoad": 3
+                    },
+                    "speed": {
+                      "onRoad": 5,
+                      "offRoad": 5
+                    },
+                    "acceleration": {
+                      "onRoad": 2,
+                      "offRoad": 2
+                    },
+                    "body": 8,
+                    "armor": 6,
+                    "pilot": 2,
+                    "sensor": 3,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Nodachi",
+                    "handling": {
+                      "onRoad": 4,
+                      "offRoad": 3
+                    },
+                    "speed": {
+                      "onRoad": 5,
+                      "offRoad": 5
+                    },
+                    "acceleration": {
+                      "onRoad": 2,
+                      "offRoad": 2
+                    },
+                    "body": 8,
+                    "armor": 9,
+                    "pilot": 2,
+                    "sensor": 2,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Revolution",
+                    "handling": {
+                      "onRoad": 5,
+                      "offRoad": 3
+                    },
+                    "speed": {
+                      "onRoad": 4,
+                      "offRoad": 4
+                    },
+                    "acceleration": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "body": 6,
+                    "armor": 9,
+                    "pilot": 2,
+                    "sensor": 2,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Spartan",
+                    "handling": {
+                      "onRoad": 3,
+                      "offRoad": 4
+                    },
+                    "speed": {
+                      "onRoad": 4,
+                      "offRoad": 4
+                    },
+                    "acceleration": {
+                      "onRoad": 2,
+                      "offRoad": 2
+                    },
+                    "body": 7,
+                    "armor": 6,
+                    "pilot": 2,
+                    "sensor": 2,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Terrier",
+                    "handling": {
+                      "onRoad": 5,
+                      "offRoad": 2
+                    },
+                    "speed": {
+                      "onRoad": 2,
+                      "offRoad": 2
+                    },
+                    "acceleration": {
+                      "onRoad": 1,
+                      "offRoad": 1
+                    },
+                    "body": 2,
+                    "armor": 2,
+                    "pilot": 2,
+                    "sensor": 2,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Zip",
+                    "handling": {
+                      "onRoad": 3,
+                      "offRoad": 2
+                    },
+                    "speed": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "acceleration": {
+                      "onRoad": 1,
+                      "offRoad": 1
+                    },
+                    "body": 6,
+                    "armor": 4,
+                    "pilot": 1,
+                    "sensor": 2,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                }
+              ]
+            },
+            {
+              "vehicle": {
+                "name": "Limo",
+                "handling": {
+                  "onRoad": 0,
+                  "offRoad": 0
+                },
+                "speed": {
+                  "onRoad": 0,
+                  "offRoad": 0
+                },
+                "acceleration": {
+                  "onRoad": 0,
+                  "offRoad": 0
+                },
+                "body": 0,
+                "armor": 0,
+                "pilot": 0,
+                "sensor": 0,
+                "condition": null
+              },
+              "children": [
+                {
+                  "vehicle": {
+                    "name": "Mitsubishi Nightsky",
+                    "handling": {
+                      "onRoad": 4,
+                      "offRoad": 3
+                    },
+                    "speed": {
+                      "onRoad": 4,
+                      "offRoad": 4
+                    },
+                    "acceleration": {
+                      "onRoad": 2,
+                      "offRoad": 2
+                    },
+                    "body": 15,
+                    "armor": 15,
+                    "pilot": 3,
+                    "sensor": 5,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Phaeton",
+                    "handling": {
+                      "onRoad": 5,
+                      "offRoad": 3
+                    },
+                    "speed": {
+                      "onRoad": 5,
+                      "offRoad": 3
+                    },
+                    "acceleration": {
+                      "onRoad": 2,
+                      "offRoad": 2
+                    },
+                    "body": 16,
+                    "armor": 12,
+                    "pilot": 3,
+                    "sensor": 4,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                }
+              ]
+            },
+            {
+              "vehicle": {
+                "name": "Car",
+                "handling": {
+                  "onRoad": 0,
+                  "offRoad": 0
+                },
+                "speed": {
+                  "onRoad": 0,
+                  "offRoad": 0
+                },
+                "acceleration": {
+                  "onRoad": 0,
+                  "offRoad": 0
+                },
+                "body": 0,
+                "armor": 0,
+                "pilot": 0,
+                "sensor": 0,
+                "condition": null
+              },
+              "children": [
+                {
+                  "vehicle": {
+                    "name": "Chrysler-Nissan Jackrabbit",
+                    "handling": {
+                      "onRoad": 4,
+                      "offRoad": 3
+                    },
+                    "speed": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "acceleration": {
+                      "onRoad": 2,
+                      "offRoad": 2
+                    },
+                    "body": 8,
+                    "armor": 4,
+                    "pilot": 1,
+                    "sensor": 2,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Honda Spirit",
+                    "handling": {
+                      "onRoad": 3,
+                      "offRoad": 2
+                    },
+                    "speed": {
+                      "onRoad": 4,
+                      "offRoad": 4
+                    },
+                    "acceleration": {
+                      "onRoad": 2,
+                      "offRoad": 2
+                    },
+                    "body": 8,
+                    "armor": 6,
+                    "pilot": 1,
+                    "sensor": 2,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Hyundai Shin-Hyung",
+                    "handling": {
+                      "onRoad": 4,
+                      "offRoad": 4
+                    },
+                    "speed": {
+                      "onRoad": 6,
+                      "offRoad": 6
+                    },
+                    "acceleration": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "body": 10,
+                    "armor": 6,
+                    "pilot": 1,
+                    "sensor": 2,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Eurocar Westwind 3000",
+                    "handling": {
+                      "onRoad": 6,
+                      "offRoad": 4
+                    },
+                    "speed": {
+                      "onRoad": 7,
+                      "offRoad": 7
+                    },
+                    "acceleration": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "body": 10,
+                    "armor": 6,
+                    "pilot": 3,
+                    "sensor": 5,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Ford Americar",
+                    "handling": {
+                      "onRoad": 4,
+                      "offRoad": 3
+                    },
+                    "speed": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "acceleration": {
+                      "onRoad": 2,
+                      "offRoad": 2
+                    },
+                    "body": 11,
+                    "armor": 6,
+                    "pilot": 1,
+                    "sensor": 2,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Saeder-Krupp-Bentley Concordat",
+                    "handling": {
+                      "onRoad": 5,
+                      "offRoad": 4
+                    },
+                    "speed": {
+                      "onRoad": 5,
+                      "offRoad": 5
+                    },
+                    "acceleration": {
+                      "onRoad": 2,
+                      "offRoad": 2
+                    },
+                    "body": 12,
+                    "armor": 12,
+                    "pilot": 2,
+                    "sensor": 4,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Comet",
+                    "handling": {
+                      "onRoad": 4,
+                      "offRoad": 4
+                    },
+                    "speed": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "acceleration": {
+                      "onRoad": 2,
+                      "offRoad": 2
+                    },
+                    "body": 11,
+                    "armor": 6,
+                    "pilot": 2,
+                    "sensor": 2,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Artemis",
+                    "handling": {
+                      "onRoad": 4,
+                      "offRoad": 2
+                    },
+                    "speed": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "acceleration": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "body": 9,
+                    "armor": 6,
+                    "pilot": 1,
+                    "sensor": 1,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Chameleon",
+                    "handling": {
+                      "onRoad": 4,
+                      "offRoad": 2
+                    },
+                    "speed": {
+                      "onRoad": 4,
+                      "offRoad": 4
+                    },
+                    "acceleration": {
+                      "onRoad": 1,
+                      "offRoad": 1
+                    },
+                    "body": 10,
+                    "armor": 4,
+                    "pilot": 1,
+                    "sensor": 1,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Dynamit",
+                    "handling": {
+                      "onRoad": 5,
+                      "offRoad": 1
+                    },
+                    "speed": {
+                      "onRoad": 9,
+                      "offRoad": 9
+                    },
+                    "acceleration": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "body": 10,
+                    "armor": 3,
+                    "pilot": 2,
+                    "sensor": 3,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Equus",
+                    "handling": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "speed": {
+                      "onRoad": 4,
+                      "offRoad": 3
+                    },
+                    "acceleration": {
+                      "onRoad": 2,
+                      "offRoad": 2
+                    },
+                    "body": 12,
+                    "armor": 10,
+                    "pilot": 2,
+                    "sensor": 3,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "FunOne",
+                    "handling": {
+                      "onRoad": 3,
+                      "offRoad": 1
+                    },
+                    "speed": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "acceleration": {
+                      "onRoad": 1,
+                      "offRoad": 1
+                    },
+                    "body": 6,
+                    "armor": 4,
+                    "pilot": 2,
+                    "sensor": 1,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Gladius",
+                    "handling": {
+                      "onRoad": 7,
+                      "offRoad": 3
+                    },
+                    "speed": {
+                      "onRoad": 9,
+                      "offRoad": 9
+                    },
+                    "acceleration": {
+                      "onRoad": 4,
+                      "offRoad": 4
+                    },
+                    "body": 10,
+                    "armor": 5,
+                    "pilot": 3,
+                    "sensor": 5,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Journey",
+                    "handling": {
+                      "onRoad": 4,
+                      "offRoad": 3
+                    },
+                    "speed": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "acceleration": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "body": 9,
+                    "armor": 5,
+                    "pilot": 1,
+                    "sensor": 1,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Longboard",
+                    "handling": {
+                      "onRoad": 4,
+                      "offRoad": 3
+                    },
+                    "speed": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "acceleration": {
+                      "onRoad": 2,
+                      "offRoad": 2
+                    },
+                    "body": 12,
+                    "armor": 6,
+                    "pilot": 1,
+                    "sensor": 2,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "MetaWay",
+                    "handling": {
+                      "onRoad": 4,
+                      "offRoad": 2
+                    },
+                    "speed": {
+                      "onRoad": 4,
+                      "offRoad": 4
+                    },
+                    "acceleration": {
+                      "onRoad": 1,
+                      "offRoad": 1
+                    },
+                    "body": 10,
+                    "armor": 4,
+                    "pilot": 1,
+                    "sensor": 2,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Phoenix",
+                    "handling": {
+                      "onRoad": 4,
+                      "offRoad": 2
+                    },
+                    "speed": {
+                      "onRoad": 6,
+                      "offRoad": 6
+                    },
+                    "acceleration": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "body": 10,
+                    "armor": 6,
+                    "pilot": 2,
+                    "sensor": 3,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Xenon",
+                    "handling": {
+                      "onRoad": 3,
+                      "offRoad": 2
+                    },
+                    "speed": {
+                      "onRoad": 4,
+                      "offRoad": 3
+                    },
+                    "acceleration": {
+                      "onRoad": 2,
+                      "offRoad": 2
+                    },
+                    "body": 8,
+                    "armor": 6,
+                    "pilot": 2,
+                    "sensor": 2,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                }
+              ]
+            },
+            {
+              "vehicle": {
+                "name": "Truck",
+                "handling": {
+                  "onRoad": 0,
+                  "offRoad": 0
+                },
+                "speed": {
+                  "onRoad": 0,
+                  "offRoad": 0
+                },
+                "acceleration": {
+                  "onRoad": 0,
+                  "offRoad": 0
+                },
+                "body": 0,
+                "armor": 0,
+                "pilot": 0,
+                "sensor": 0,
+                "condition": null
+              },
+              "children": [
+                {
+                  "vehicle": {
+                    "name": "Toyota Gopher",
+                    "handling": {
+                      "onRoad": 5,
+                      "offRoad": 5
+                    },
+                    "speed": {
+                      "onRoad": 4,
+                      "offRoad": 4
+                    },
+                    "acceleration": {
+                      "onRoad": 2,
+                      "offRoad": 2
+                    },
+                    "body": 14,
+                    "armor": 10,
+                    "pilot": 1,
+                    "sensor": 2,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Armadillo",
+                    "handling": {
+                      "onRoad": 3,
+                      "offRoad": 4
+                    },
+                    "speed": {
+                      "onRoad": 4,
+                      "offRoad": 4
+                    },
+                    "acceleration": {
+                      "onRoad": 2,
+                      "offRoad": 2
+                    },
+                    "body": 13,
+                    "armor": 10,
+                    "pilot": 1,
+                    "sensor": 2,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Escalade",
+                    "handling": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "speed": {
+                      "onRoad": 4,
+                      "offRoad": 4
+                    },
+                    "acceleration": {
+                      "onRoad": 2,
+                      "offRoad": 2
+                    },
+                    "body": 16,
+                    "armor": 10,
+                    "pilot": 3,
+                    "sensor": 4,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Hauler",
+                    "handling": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "speed": {
+                      "onRoad": 4,
+                      "offRoad": 3
+                    },
+                    "acceleration": {
+                      "onRoad": 1,
+                      "offRoad": 1
+                    },
+                    "body": 16,
+                    "armor": 8,
+                    "pilot": 2,
+                    "sensor": 2,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Hotspur",
+                    "handling": {
+                      "onRoad": 4,
+                      "offRoad": 5
+                    },
+                    "speed": {
+                      "onRoad": 6,
+                      "offRoad": 6
+                    },
+                    "acceleration": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "body": 16,
+                    "armor": 12,
+                    "pilot": 2,
+                    "sensor": 2,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Minotaur",
+                    "handling": {
+                      "onRoad": 4,
+                      "offRoad": 5
+                    },
+                    "speed": {
+                      "onRoad": 5,
+                      "offRoad": 5
+                    },
+                    "acceleration": {
+                      "onRoad": 2,
+                      "offRoad": 2
+                    },
+                    "body": 14,
+                    "armor": 8,
+                    "pilot": 4,
+                    "sensor": 4,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Morgan",
+                    "handling": {
+                      "onRoad": 3,
+                      "offRoad": 5
+                    },
+                    "speed": {
+                      "onRoad": 4,
+                      "offRoad": 4
+                    },
+                    "acceleration": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "body": 14,
+                    "armor": 8,
+                    "pilot": 0,
+                    "sensor": 0,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Northstar",
+                    "handling": {
+                      "onRoad": 5,
+                      "offRoad": 3
+                    },
+                    "speed": {
+                      "onRoad": 6,
+                      "offRoad": 6
+                    },
+                    "acceleration": {
+                      "onRoad": 2,
+                      "offRoad": 2
+                    },
+                    "body": 12,
+                    "armor": 8,
+                    "pilot": 3,
+                    "sensor": 5,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Percheron",
+                    "handling": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "speed": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "acceleration": {
+                      "onRoad": 2,
+                      "offRoad": 2
+                    },
+                    "body": 15,
+                    "armor": 6,
+                    "pilot": 4,
+                    "sensor": 3,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Sidewinder",
+                    "handling": {
+                      "onRoad": 4,
+                      "offRoad": 3
+                    },
+                    "speed": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "acceleration": {
+                      "onRoad": 2,
+                      "offRoad": 2
+                    },
+                    "body": 10,
+                    "armor": 6,
+                    "pilot": 2,
+                    "sensor": 2,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Talon",
+                    "handling": {
+                      "onRoad": 4,
+                      "offRoad": 3
+                    },
+                    "speed": {
+                      "onRoad": 4,
+                      "offRoad": 4
+                    },
+                    "acceleration": {
+                      "onRoad": 2,
+                      "offRoad": 2
+                    },
+                    "body": 12,
+                    "armor": 6,
+                    "pilot": 2,
+                    "sensor": 2,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Trailblazer",
+                    "handling": {
+                      "onRoad": 3,
+                      "offRoad": 4
+                    },
+                    "speed": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "acceleration": {
+                      "onRoad": 2,
+                      "offRoad": 2
+                    },
+                    "body": 12,
+                    "armor": 6,
+                    "pilot": 1,
+                    "sensor": 2,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Watcher",
+                    "handling": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "speed": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "acceleration": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "body": 9,
+                    "armor": 8,
+                    "pilot": 1,
+                    "sensor": 3,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                }
+              ]
+            },
+            {
+              "vehicle": {
+                "name": "Van",
+                "handling": {
+                  "onRoad": 0,
+                  "offRoad": 0
+                },
+                "speed": {
+                  "onRoad": 0,
+                  "offRoad": 0
+                },
+                "acceleration": {
+                  "onRoad": 0,
+                  "offRoad": 0
+                },
+                "body": 0,
+                "armor": 0,
+                "pilot": 0,
+                "sensor": 0,
+                "condition": null
+              },
+              "children": [
+                {
+                  "vehicle": {
+                    "name": "GMC Bulldog",
+                    "handling": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "speed": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "acceleration": {
+                      "onRoad": 1,
+                      "offRoad": 1
+                    },
+                    "body": 16,
+                    "armor": 12,
+                    "pilot": 1,
+                    "sensor": 2,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Rover Model 2072",
+                    "handling": {
+                      "onRoad": 5,
+                      "offRoad": 5
+                    },
+                    "speed": {
+                      "onRoad": 4,
+                      "offRoad": 4
+                    },
+                    "acceleration": {
+                      "onRoad": 2,
+                      "offRoad": 2
+                    },
+                    "body": 15,
+                    "armor": 12,
+                    "pilot": 2,
+                    "sensor": 4,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Ares Roadmaster",
+                    "handling": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "speed": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "acceleration": {
+                      "onRoad": 1,
+                      "offRoad": 1
+                    },
+                    "body": 18,
+                    "armor": 18,
+                    "pilot": 3,
+                    "sensor": 3,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Caravaner",
+                    "handling": {
+                      "onRoad": 3,
+                      "offRoad": 2
+                    },
+                    "speed": {
+                      "onRoad": 4,
+                      "offRoad": 4
+                    },
+                    "acceleration": {
+                      "onRoad": 1,
+                      "offRoad": 1
+                    },
+                    "body": 12,
+                    "armor": 8,
+                    "pilot": 2,
+                    "sensor": 2,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Chuck Wagon",
+                    "handling": {
+                      "onRoad": 2,
+                      "offRoad": 2
+                    },
+                    "speed": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "acceleration": {
+                      "onRoad": 1,
+                      "offRoad": 1
+                    },
+                    "body": 16,
+                    "armor": 5,
+                    "pilot": 2,
+                    "sensor": 2,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Econovan",
+                    "handling": {
+                      "onRoad": 3,
+                      "offRoad": 2
+                    },
+                    "speed": {
+                      "onRoad": 4,
+                      "offRoad": 4
+                    },
+                    "acceleration": {
+                      "onRoad": 1,
+                      "offRoad": 1
+                    },
+                    "body": 14,
+                    "armor": 8,
+                    "pilot": 2,
+                    "sensor": 2,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Endurance",
+                    "handling": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "speed": {
+                      "onRoad": 4,
+                      "offRoad": 4
+                    },
+                    "acceleration": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "body": 14,
+                    "armor": 8,
+                    "pilot": 1,
+                    "sensor": 2,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "S-K LT-21",
+                    "handling": {
+                      "onRoad": 2,
+                      "offRoad": 1
+                    },
+                    "speed": {
+                      "onRoad": 2,
+                      "offRoad": 2
+                    },
+                    "acceleration": {
+                      "onRoad": 1,
+                      "offRoad": 1
+                    },
+                    "body": 15,
+                    "armor": 7,
+                    "pilot": 2,
+                    "sensor": 2,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Universe",
+                    "handling": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "speed": {
+                      "onRoad": 4,
+                      "offRoad": 3
+                    },
+                    "acceleration": {
+                      "onRoad": 1,
+                      "offRoad": 1
+                    },
+                    "body": 14,
+                    "armor": 8,
+                    "pilot": 3,
+                    "sensor": 2,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                }
+              ]
+            },
+            {
+              "vehicle": {
+                "name": "RV",
+                "handling": {
+                  "onRoad": 0,
+                  "offRoad": 0
+                },
+                "speed": {
+                  "onRoad": 0,
+                  "offRoad": 0
+                },
+                "acceleration": {
+                  "onRoad": 0,
+                  "offRoad": 0
+                },
+                "body": 0,
+                "armor": 0,
+                "pilot": 0,
+                "sensor": 0,
+                "condition": null
+              },
+              "children": [
+                {
+                  "vehicle": {
+                    "name": "Chinook",
+                    "handling": {
+                      "onRoad": 3,
+                      "offRoad": 2
+                    },
+                    "speed": {
+                      "onRoad": 4,
+                      "offRoad": 3
+                    },
+                    "acceleration": {
+                      "onRoad": 1,
+                      "offRoad": 1
+                    },
+                    "body": 14,
+                    "armor": 12,
+                    "pilot": 2,
+                    "sensor": 2,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Outback",
+                    "handling": {
+                      "onRoad": 3,
+                      "offRoad": 4
+                    },
+                    "speed": {
+                      "onRoad": 3,
+                      "offRoad": 4
+                    },
+                    "acceleration": {
+                      "onRoad": 1,
+                      "offRoad": 1
+                    },
+                    "body": 14,
+                    "armor": 12,
+                    "pilot": 2,
+                    "sensor": 4,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Preserve",
+                    "handling": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "speed": {
+                      "onRoad": 4,
+                      "offRoad": 4
+                    },
+                    "acceleration": {
+                      "onRoad": 1,
+                      "offRoad": 1
+                    },
+                    "body": 16,
+                    "armor": 12,
+                    "pilot": 2,
+                    "sensor": 3,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                }
+              ]
+            },
+            {
+              "vehicle": {
+                "name": "Tractor/Trailer",
+                "handling": {
+                  "onRoad": 0,
+                  "offRoad": 0
+                },
+                "speed": {
+                  "onRoad": 0,
+                  "offRoad": 0
+                },
+                "acceleration": {
+                  "onRoad": 0,
+                  "offRoad": 0
+                },
+                "body": 0,
+                "armor": 0,
+                "pilot": 0,
+                "sensor": 0,
+                "condition": null
+              },
+              "children": [
+                {
+                  "vehicle": {
+                    "name": "Conestoga Trailblazer",
+                    "handling": {
+                      "onRoad": 2,
+                      "offRoad": 1
+                    },
+                    "speed": {
+                      "onRoad": 2,
+                      "offRoad": 2
+                    },
+                    "acceleration": {
+                      "onRoad": 1,
+                      "offRoad": 1
+                    },
+                    "body": 14,
+                    "armor": 6,
+                    "pilot": 2,
+                    "sensor": 1,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Hellhound",
+                    "handling": {
+                      "onRoad": 3,
+                      "offRoad": 4
+                    },
+                    "speed": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "acceleration": {
+                      "onRoad": 1,
+                      "offRoad": 1
+                    },
+                    "body": 20,
+                    "armor": 15,
+                    "pilot": 3,
+                    "sensor": 3,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Trailer (Trailblazer)",
+                    "handling": {
+                      "onRoad": 1,
+                      "offRoad": 1
+                    },
+                    "speed": {
+                      "onRoad": 1,
+                      "offRoad": 1
+                    },
+                    "acceleration": {
+                      "onRoad": 1,
+                      "offRoad": 1
+                    },
+                    "body": 20,
+                    "armor": 6,
+                    "pilot": 2,
+                    "sensor": 1,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                }
+              ]
+            },
+            {
+              "vehicle": {
+                "name": "Bus",
+                "handling": {
+                  "onRoad": 0,
+                  "offRoad": 0
+                },
+                "speed": {
+                  "onRoad": 0,
+                  "offRoad": 0
+                },
+                "acceleration": {
+                  "onRoad": 0,
+                  "offRoad": 0
+                },
+                "body": 0,
+                "armor": 0,
+                "pilot": 0,
+                "sensor": 0,
+                "condition": null
+              },
+              "children": [
+                {
+                  "vehicle": {
+                    "name": "Camellos HT",
+                    "handling": {
+                      "onRoad": 3,
+                      "offRoad": 2
+                    },
+                    "speed": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "acceleration": {
+                      "onRoad": 1,
+                      "offRoad": 1
+                    },
+                    "body": 16,
+                    "armor": 5,
+                    "pilot": 1,
+                    "sensor": 2,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Omnibus",
+                    "handling": {
+                      "onRoad": 2,
+                      "offRoad": 2
+                    },
+                    "speed": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "acceleration": {
+                      "onRoad": 1,
+                      "offRoad": 1
+                    },
+                    "body": 18,
+                    "armor": 10,
+                    "pilot": 2,
+                    "sensor": 2,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                }
+              ]
+            },
+            {
+              "vehicle": {
+                "name": "Commercial",
+                "handling": {
+                  "onRoad": 0,
+                  "offRoad": 0
+                },
+                "speed": {
+                  "onRoad": 0,
+                  "offRoad": 0
+                },
+                "acceleration": {
+                  "onRoad": 0,
+                  "offRoad": 0
+                },
+                "body": 0,
+                "armor": 0,
+                "pilot": 0,
+                "sensor": 0,
+                "condition": null
+              },
+              "children": [
+                {
+                  "vehicle": {
+                    "name": "Commercial D-Compact",
+                    "handling": {
+                      "onRoad": 2,
+                      "offRoad": 2
+                    },
+                    "speed": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "acceleration": {
+                      "onRoad": 1,
+                      "offRoad": 1
+                    },
+                    "body": 12,
+                    "armor": 8,
+                    "pilot": 2,
+                    "sensor": 2,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Commercial D-Series",
+                    "handling": {
+                      "onRoad": 2,
+                      "offRoad": 2
+                    },
+                    "speed": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "acceleration": {
+                      "onRoad": 1,
+                      "offRoad": 1
+                    },
+                    "body": 16,
+                    "armor": 10,
+                    "pilot": 2,
+                    "sensor": 2,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Commercial DD",
+                    "handling": {
+                      "onRoad": 2,
+                      "offRoad": 2
+                    },
+                    "speed": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "acceleration": {
+                      "onRoad": 1,
+                      "offRoad": 1
+                    },
+                    "body": 20,
+                    "armor": 12,
+                    "pilot": 2,
+                    "sensor": 2,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Commercial G-series",
+                    "handling": {
+                      "onRoad": 2,
+                      "offRoad": 2
+                    },
+                    "speed": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "acceleration": {
+                      "onRoad": 1,
+                      "offRoad": 1
+                    },
+                    "body": 28,
+                    "armor": 12,
+                    "pilot": 2,
+                    "sensor": 3,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Konstructors",
+                    "handling": {
+                      "onRoad": 2,
+                      "offRoad": 2
+                    },
+                    "speed": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "acceleration": {
+                      "onRoad": 1,
+                      "offRoad": 1
+                    },
+                    "body": 24,
+                    "armor": 18,
+                    "pilot": 4,
+                    "sensor": 3,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Ram Industrail Narrow",
+                    "handling": {
+                      "onRoad": 3,
+                      "offRoad": 1
+                    },
+                    "speed": {
+                      "onRoad": 1,
+                      "offRoad": 1
+                    },
+                    "acceleration": {
+                      "onRoad": 1,
+                      "offRoad": 1
+                    },
+                    "body": 16,
+                    "armor": 8,
+                    "pilot": 2,
+                    "sensor": 4,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Ram Industrial Large",
+                    "handling": {
+                      "onRoad": 2,
+                      "offRoad": 1
+                    },
+                    "speed": {
+                      "onRoad": 1,
+                      "offRoad": 1
+                    },
+                    "acceleration": {
+                      "onRoad": 1,
+                      "offRoad": 1
+                    },
+                    "body": 16,
+                    "armor": 8,
+                    "pilot": 2,
+                    "sensor": 4,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                }
+              ]
+            },
+            {
+              "vehicle": {
+                "name": "Security",
+                "handling": {
+                  "onRoad": 0,
+                  "offRoad": 0
+                },
+                "speed": {
+                  "onRoad": 0,
+                  "offRoad": 0
+                },
+                "acceleration": {
+                  "onRoad": 0,
+                  "offRoad": 0
+                },
+                "body": 0,
+                "armor": 0,
+                "pilot": 0,
+                "sensor": 0,
+                "condition": null
+              },
+              "children": [
+                {
+                  "vehicle": {
+                    "name": "Blitzkrieg",
+                    "handling": {
+                      "onRoad": 4,
+                      "offRoad": 3
+                    },
+                    "speed": {
+                      "onRoad": 4,
+                      "offRoad": 4
+                    },
+                    "acceleration": {
+                      "onRoad": 2,
+                      "offRoad": 2
+                    },
+                    "body": 10,
+                    "armor": 8,
+                    "pilot": 3,
+                    "sensor": 4,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Charger",
+                    "handling": {
+                      "onRoad": 4,
+                      "offRoad": 3
+                    },
+                    "speed": {
+                      "onRoad": 5,
+                      "offRoad": 5
+                    },
+                    "acceleration": {
+                      "onRoad": 2,
+                      "offRoad": 2
+                    },
+                    "body": 12,
+                    "armor": 12,
+                    "pilot": 4,
+                    "sensor": 4,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Command (General)",
+                    "handling": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "speed": {
+                      "onRoad": 4,
+                      "offRoad": 4
+                    },
+                    "acceleration": {
+                      "onRoad": 1,
+                      "offRoad": 1
+                    },
+                    "body": 20,
+                    "armor": 16,
+                    "pilot": 5,
+                    "sensor": 7,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Goliath",
+                    "handling": {
+                      "onRoad": 3,
+                      "offRoad": 2
+                    },
+                    "speed": {
+                      "onRoad": 4,
+                      "offRoad": 4
+                    },
+                    "acceleration": {
+                      "onRoad": 2,
+                      "offRoad": 2
+                    },
+                    "body": 16,
+                    "armor": 16,
+                    "pilot": 3,
+                    "sensor": 3,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "i8 Interceptor",
+                    "handling": {
+                      "onRoad": 5,
+                      "offRoad": 3
+                    },
+                    "speed": {
+                      "onRoad": 8,
+                      "offRoad": 8
+                    },
+                    "acceleration": {
+                      "onRoad": 4,
+                      "offRoad": 4
+                    },
+                    "body": 12,
+                    "armor": 8,
+                    "pilot": 4,
+                    "sensor": 4,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Luxus",
+                    "handling": {
+                      "onRoad": 5,
+                      "offRoad": 5
+                    },
+                    "speed": {
+                      "onRoad": 5,
+                      "offRoad": 5
+                    },
+                    "acceleration": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "body": 18,
+                    "armor": 16,
+                    "pilot": 5,
+                    "sensor": 6,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Rhino",
+                    "handling": {
+                      "onRoad": 4,
+                      "offRoad": 4
+                    },
+                    "speed": {
+                      "onRoad": 4,
+                      "offRoad": 4
+                    },
+                    "acceleration": {
+                      "onRoad": 2,
+                      "offRoad": 2
+                    },
+                    "body": 17,
+                    "armor": 18,
+                    "pilot": 4,
+                    "sensor": 4,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Stallion",
+                    "handling": {
+                      "onRoad": 3,
+                      "offRoad": 4
+                    },
+                    "speed": {
+                      "onRoad": 5,
+                      "offRoad": 5
+                    },
+                    "acceleration": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "body": 16,
+                    "armor": 12,
+                    "pilot": 3,
+                    "sensor": 3,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Stürmwagon",
+                    "handling": {
+                      "onRoad": 5,
+                      "offRoad": 4
+                    },
+                    "speed": {
+                      "onRoad": 4,
+                      "offRoad": 4
+                    },
+                    "acceleration": {
+                      "onRoad": 2,
+                      "offRoad": 2
+                    },
+                    "body": 17,
+                    "armor": 18,
+                    "pilot": 4,
+                    "sensor": 5,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Teufelkatze",
+                    "handling": {
+                      "onRoad": 5,
+                      "offRoad": 4
+                    },
+                    "speed": {
+                      "onRoad": 5,
+                      "offRoad": 5
+                    },
+                    "acceleration": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "body": 16,
+                    "armor": 16,
+                    "pilot": 3,
+                    "sensor": 3,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Trailer (General)",
+                    "handling": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "speed": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "acceleration": {
+                      "onRoad": 1,
+                      "offRoad": 1
+                    },
+                    "body": 20,
+                    "armor": 16,
+                    "pilot": 3,
+                    "sensor": 7,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Wolf II",
+                    "handling": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "speed": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "acceleration": {
+                      "onRoad": 2,
+                      "offRoad": 2
+                    },
+                    "body": 24,
+                    "armor": 12,
+                    "pilot": 2,
+                    "sensor": 2,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "vehicle": {
+            "name": "Watercraft",
+            "handling": {
+              "onRoad": 0,
+              "offRoad": 0
+            },
+            "speed": {
+              "onRoad": 0,
+              "offRoad": 0
+            },
+            "acceleration": {
+              "onRoad": 0,
+              "offRoad": 0
+            },
+            "body": 0,
+            "armor": 0,
+            "pilot": 0,
+            "sensor": 0,
+            "condition": null
+          },
+          "children": [
+            {
+              "vehicle": {
+                "name": "Boat",
+                "handling": {
+                  "onRoad": 0,
+                  "offRoad": 0
+                },
+                "speed": {
+                  "onRoad": 0,
+                  "offRoad": 0
+                },
+                "acceleration": {
+                  "onRoad": 0,
+                  "offRoad": 0
+                },
+                "body": 0,
+                "armor": 0,
+                "pilot": 0,
+                "sensor": 0,
+                "condition": null
+              },
+              "children": [
+                {
+                  "vehicle": {
+                    "name": "Samuvani Criscraft Otter",
+                    "handling": {
+                      "onRoad": 4,
+                      "offRoad": 4
+                    },
+                    "speed": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "acceleration": {
+                      "onRoad": 2,
+                      "offRoad": 2
+                    },
+                    "body": 12,
+                    "armor": 6,
+                    "pilot": 2,
+                    "sensor": 2,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Yongkang Gala Trinity",
+                    "handling": {
+                      "onRoad": 5,
+                      "offRoad": 5
+                    },
+                    "speed": {
+                      "onRoad": 6,
+                      "offRoad": 6
+                    },
+                    "acceleration": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "body": 10,
+                    "armor": 6,
+                    "pilot": 1,
+                    "sensor": 1,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Morgan Cutlass",
+                    "handling": {
+                      "onRoad": 5,
+                      "offRoad": 5
+                    },
+                    "speed": {
+                      "onRoad": 4,
+                      "offRoad": 4
+                    },
+                    "acceleration": {
+                      "onRoad": 2,
+                      "offRoad": 2
+                    },
+                    "body": 16,
+                    "armor": 10,
+                    "pilot": 3,
+                    "sensor": 5,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "AirRanger",
+                    "handling": {
+                      "onRoad": 4,
+                      "offRoad": 4
+                    },
+                    "speed": {
+                      "onRoad": 4,
+                      "offRoad": 4
+                    },
+                    "acceleration": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "body": 10,
+                    "armor": 6,
+                    "pilot": 1,
+                    "sensor": 1,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "AirRanger Heavy",
+                    "handling": {
+                      "onRoad": 4,
+                      "offRoad": 4
+                    },
+                    "speed": {
+                      "onRoad": 4,
+                      "offRoad": 4
+                    },
+                    "acceleration": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "body": 12,
+                    "armor": 6,
+                    "pilot": 1,
+                    "sensor": 1,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Aquavida 1",
+                    "handling": {
+                      "onRoad": 2,
+                      "offRoad": 2
+                    },
+                    "speed": {
+                      "onRoad": 1,
+                      "offRoad": 1
+                    },
+                    "acceleration": {
+                      "onRoad": 2,
+                      "offRoad": 2
+                    },
+                    "body": 20,
+                    "armor": 16,
+                    "pilot": 1,
+                    "sensor": 3,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Aquavida 2",
+                    "handling": {
+                      "onRoad": 2,
+                      "offRoad": 2
+                    },
+                    "speed": {
+                      "onRoad": 1,
+                      "offRoad": 1
+                    },
+                    "acceleration": {
+                      "onRoad": 2,
+                      "offRoad": 2
+                    },
+                    "body": 20,
+                    "armor": 16,
+                    "pilot": 1,
+                    "sensor": 3,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Classic 111",
+                    "handling": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "speed": {
+                      "onRoad": 4,
+                      "offRoad": 4
+                    },
+                    "acceleration": {
+                      "onRoad": 2,
+                      "offRoad": 2
+                    },
+                    "body": 24,
+                    "armor": 14,
+                    "pilot": 4,
+                    "sensor": 4,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Cottonmouth",
+                    "handling": {
+                      "onRoad": 5,
+                      "offRoad": 5
+                    },
+                    "speed": {
+                      "onRoad": 7,
+                      "offRoad": 7
+                    },
+                    "acceleration": {
+                      "onRoad": 4,
+                      "offRoad": 4
+                    },
+                    "body": 8,
+                    "armor": 4,
+                    "pilot": 3,
+                    "sensor": 3,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Kingfisher",
+                    "handling": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "speed": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "acceleration": {
+                      "onRoad": 2,
+                      "offRoad": 2
+                    },
+                    "body": 16,
+                    "armor": 12,
+                    "pilot": 3,
+                    "sensor": 4,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Lake King",
+                    "handling": {
+                      "onRoad": 2,
+                      "offRoad": 2
+                    },
+                    "speed": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "acceleration": {
+                      "onRoad": 2,
+                      "offRoad": 2
+                    },
+                    "body": 14,
+                    "armor": 8,
+                    "pilot": 1,
+                    "sensor": 1,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Manta Ray",
+                    "handling": {
+                      "onRoad": 4,
+                      "offRoad": 4
+                    },
+                    "speed": {
+                      "onRoad": 5,
+                      "offRoad": 5
+                    },
+                    "acceleration": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "body": 9,
+                    "armor": 6,
+                    "pilot": 1,
+                    "sensor": 1,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Mobius",
+                    "handling": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "speed": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "acceleration": {
+                      "onRoad": 2,
+                      "offRoad": 2
+                    },
+                    "body": 36,
+                    "armor": 14,
+                    "pilot": 6,
+                    "sensor": 5,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Nightrunner",
+                    "handling": {
+                      "onRoad": 5,
+                      "offRoad": 5
+                    },
+                    "speed": {
+                      "onRoad": 6,
+                      "offRoad": 6
+                    },
+                    "acceleration": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "body": 12,
+                    "armor": 6,
+                    "pilot": 3,
+                    "sensor": 4,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Riverine Military",
+                    "handling": {
+                      "onRoad": 5,
+                      "offRoad": 5
+                    },
+                    "speed": {
+                      "onRoad": 5,
+                      "offRoad": 5
+                    },
+                    "acceleration": {
+                      "onRoad": 2,
+                      "offRoad": 2
+                    },
+                    "body": 20,
+                    "armor": 20,
+                    "pilot": 6,
+                    "sensor": 6,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Riverine Police",
+                    "handling": {
+                      "onRoad": 4,
+                      "offRoad": 4
+                    },
+                    "speed": {
+                      "onRoad": 5,
+                      "offRoad": 5
+                    },
+                    "acceleration": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "body": 16,
+                    "armor": 14,
+                    "pilot": 4,
+                    "sensor": 5,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Riverine Security",
+                    "handling": {
+                      "onRoad": 4,
+                      "offRoad": 4
+                    },
+                    "speed": {
+                      "onRoad": 5,
+                      "offRoad": 5
+                    },
+                    "acceleration": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "body": 16,
+                    "armor": 12,
+                    "pilot": 4,
+                    "sensor": 4,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Stingray",
+                    "handling": {
+                      "onRoad": 5,
+                      "offRoad": 5
+                    },
+                    "speed": {
+                      "onRoad": 5,
+                      "offRoad": 5
+                    },
+                    "acceleration": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "body": 8,
+                    "armor": 6,
+                    "pilot": 1,
+                    "sensor": 1,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Water Strider",
+                    "handling": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "speed": {
+                      "onRoad": 2,
+                      "offRoad": 2
+                    },
+                    "acceleration": {
+                      "onRoad": 1,
+                      "offRoad": 1
+                    },
+                    "body": 8,
+                    "armor": 5,
+                    "pilot": 2,
+                    "sensor": 2,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Waterbug",
+                    "handling": {
+                      "onRoad": 6,
+                      "offRoad": 6
+                    },
+                    "speed": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "acceleration": {
+                      "onRoad": 2,
+                      "offRoad": 2
+                    },
+                    "body": 8,
+                    "armor": 4,
+                    "pilot": 1,
+                    "sensor": 0,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Waterking",
+                    "handling": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "speed": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "acceleration": {
+                      "onRoad": 2,
+                      "offRoad": 2
+                    },
+                    "body": 14,
+                    "armor": 8,
+                    "pilot": 3,
+                    "sensor": 2,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Waveskipper",
+                    "handling": {
+                      "onRoad": 5,
+                      "offRoad": 5
+                    },
+                    "speed": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "acceleration": {
+                      "onRoad": 2,
+                      "offRoad": 2
+                    },
+                    "body": 10,
+                    "armor": 4,
+                    "pilot": 1,
+                    "sensor": 0,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Zodiac Scorpio",
+                    "handling": {
+                      "onRoad": 4,
+                      "offRoad": 4
+                    },
+                    "speed": {
+                      "onRoad": 4,
+                      "offRoad": 4
+                    },
+                    "acceleration": {
+                      "onRoad": 2,
+                      "offRoad": 2
+                    },
+                    "body": 10,
+                    "armor": 6,
+                    "pilot": 1,
+                    "sensor": 1,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                }
+              ]
+            },
+            {
+              "vehicle": {
+                "name": "Sailboat",
+                "handling": {
+                  "onRoad": 0,
+                  "offRoad": 0
+                },
+                "speed": {
+                  "onRoad": 0,
+                  "offRoad": 0
+                },
+                "acceleration": {
+                  "onRoad": 0,
+                  "offRoad": 0
+                },
+                "body": 0,
+                "armor": 0,
+                "pilot": 0,
+                "sensor": 0,
+                "condition": null
+              },
+              "children": [
+                {
+                  "vehicle": {
+                    "name": "Elysium",
+                    "handling": {
+                      "onRoad": 1,
+                      "offRoad": 3
+                    },
+                    "speed": {
+                      "onRoad": 1,
+                      "offRoad": 4
+                    },
+                    "acceleration": {
+                      "onRoad": 1,
+                      "offRoad": 2
+                    },
+                    "body": 14,
+                    "armor": 10,
+                    "pilot": 2,
+                    "sensor": 3,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Panther",
+                    "handling": {
+                      "onRoad": 1,
+                      "offRoad": 3
+                    },
+                    "speed": {
+                      "onRoad": 2,
+                      "offRoad": 5
+                    },
+                    "acceleration": {
+                      "onRoad": 1,
+                      "offRoad": 3
+                    },
+                    "body": 18,
+                    "armor": 10,
+                    "pilot": 2,
+                    "sensor": 3,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Trident",
+                    "handling": {
+                      "onRoad": 1,
+                      "offRoad": 3
+                    },
+                    "speed": {
+                      "onRoad": 4,
+                      "offRoad": 5
+                    },
+                    "acceleration": {
+                      "onRoad": 2,
+                      "offRoad": 3
+                    },
+                    "body": 16,
+                    "armor": 10,
+                    "pilot": 2,
+                    "sensor": 3,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Triton",
+                    "handling": {
+                      "onRoad": 1,
+                      "offRoad": 1
+                    },
+                    "speed": {
+                      "onRoad": 6,
+                      "offRoad": 6
+                    },
+                    "acceleration": {
+                      "onRoad": 2,
+                      "offRoad": 2
+                    },
+                    "body": 16,
+                    "armor": 10,
+                    "pilot": 2,
+                    "sensor": 3,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                }
+              ]
+            },
+            {
+              "vehicle": {
+                "name": "Submarine",
+                "handling": {
+                  "onRoad": 0,
+                  "offRoad": 0
+                },
+                "speed": {
+                  "onRoad": 0,
+                  "offRoad": 0
+                },
+                "acceleration": {
+                  "onRoad": 0,
+                  "offRoad": 0
+                },
+                "body": 0,
+                "armor": 0,
+                "pilot": 0,
+                "sensor": 0,
+                "condition": null
+              },
+              "children": [
+                {
+                  "vehicle": {
+                    "name": "Proteus Lamprey",
+                    "handling": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "speed": {
+                      "onRoad": 2,
+                      "offRoad": 2
+                    },
+                    "acceleration": {
+                      "onRoad": 1,
+                      "offRoad": 1
+                    },
+                    "body": 6,
+                    "armor": 6,
+                    "pilot": 1,
+                    "sensor": 3,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Vulkan Electronaut",
+                    "handling": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "speed": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "acceleration": {
+                      "onRoad": 1,
+                      "offRoad": 1
+                    },
+                    "body": 12,
+                    "armor": 10,
+                    "pilot": 4,
+                    "sensor": 4,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "vehicle": {
+            "name": "Aircraft",
+            "handling": {
+              "onRoad": 0,
+              "offRoad": 0
+            },
+            "speed": {
+              "onRoad": 0,
+              "offRoad": 0
+            },
+            "acceleration": {
+              "onRoad": 0,
+              "offRoad": 0
+            },
+            "body": 0,
+            "armor": 0,
+            "pilot": 0,
+            "sensor": 0,
+            "condition": null
+          },
+          "children": [
+            {
+              "vehicle": {
+                "name": "Fixed-Wing",
+                "handling": {
+                  "onRoad": 0,
+                  "offRoad": 0
+                },
+                "speed": {
+                  "onRoad": 0,
+                  "offRoad": 0
+                },
+                "acceleration": {
+                  "onRoad": 0,
+                  "offRoad": 0
+                },
+                "body": 0,
+                "armor": 0,
+                "pilot": 0,
+                "sensor": 0,
+                "condition": null
+              },
+              "children": [
+                {
+                  "vehicle": {
+                    "name": "Artemis Industries Nightwing",
+                    "handling": {
+                      "onRoad": 6,
+                      "offRoad": 6
+                    },
+                    "speed": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "acceleration": {
+                      "onRoad": 1,
+                      "offRoad": 1
+                    },
+                    "body": 4,
+                    "armor": 0,
+                    "pilot": 1,
+                    "sensor": 1,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Cessna C750",
+                    "handling": {
+                      "onRoad": 750,
+                      "offRoad": 750
+                    },
+                    "speed": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "acceleration": {
+                      "onRoad": 5,
+                      "offRoad": 5
+                    },
+                    "body": 3,
+                    "armor": 18,
+                    "pilot": 4,
+                    "sensor": 2,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Renault-Fiat Fokker Tundra-9",
+                    "handling": {
+                      "onRoad": 9,
+                      "offRoad": 9
+                    },
+                    "speed": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "acceleration": {
+                      "onRoad": 4,
+                      "offRoad": 4
+                    },
+                    "body": 3,
+                    "armor": 20,
+                    "pilot": 10,
+                    "sensor": 3,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "PBY-70 Catalina II",
+                    "handling": {
+                      "onRoad": 4,
+                      "offRoad": 4
+                    },
+                    "speed": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "acceleration": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "body": 22,
+                    "armor": 14,
+                    "pilot": 3,
+                    "sensor": 4,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                }
+              ]
+            },
+            {
+              "vehicle": {
+                "name": "Rotorcraft",
+                "handling": {
+                  "onRoad": 0,
+                  "offRoad": 0
+                },
+                "speed": {
+                  "onRoad": 0,
+                  "offRoad": 0
+                },
+                "acceleration": {
+                  "onRoad": 0,
+                  "offRoad": 0
+                },
+                "body": 0,
+                "armor": 0,
+                "pilot": 0,
+                "sensor": 0,
+                "condition": null
+              },
+              "children": [
+                {
+                  "vehicle": {
+                    "name": "Ares Dragon",
+                    "handling": {
+                      "onRoad": 4,
+                      "offRoad": 4
+                    },
+                    "speed": {
+                      "onRoad": 4,
+                      "offRoad": 4
+                    },
+                    "acceleration": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "body": 22,
+                    "armor": 8,
+                    "pilot": 3,
+                    "sensor": 3,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Nissan Hound",
+                    "handling": {
+                      "onRoad": 5,
+                      "offRoad": 5
+                    },
+                    "speed": {
+                      "onRoad": 4,
+                      "offRoad": 4
+                    },
+                    "acceleration": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "body": 16,
+                    "armor": 16,
+                    "pilot": 2,
+                    "sensor": 4,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Northrup Wasp",
+                    "handling": {
+                      "onRoad": 5,
+                      "offRoad": 5
+                    },
+                    "speed": {
+                      "onRoad": 5,
+                      "offRoad": 5
+                    },
+                    "acceleration": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "body": 10,
+                    "armor": 8,
+                    "pilot": 3,
+                    "sensor": 3,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Agular GX-2",
+                    "handling": {
+                      "onRoad": 2,
+                      "offRoad": 2
+                    },
+                    "speed": {
+                      "onRoad": 5,
+                      "offRoad": 5
+                    },
+                    "acceleration": {
+                      "onRoad": 7,
+                      "offRoad": 7
+                    },
+                    "body": 5,
+                    "armor": 20,
+                    "pilot": 16,
+                    "sensor": 4,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Agular GX-3AT",
+                    "handling": {
+                      "onRoad": 4,
+                      "offRoad": 4
+                    },
+                    "speed": {
+                      "onRoad": 6,
+                      "offRoad": 6
+                    },
+                    "acceleration": {
+                      "onRoad": 4,
+                      "offRoad": 4
+                    },
+                    "body": 22,
+                    "armor": 20,
+                    "pilot": 4,
+                    "sensor": 4,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Lift-Ticket ALS-669",
+                    "handling": {
+                      "onRoad": 669,
+                      "offRoad": 669
+                    },
+                    "speed": {
+                      "onRoad": 5,
+                      "offRoad": 5
+                    },
+                    "acceleration": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "body": 3,
+                    "armor": 16,
+                    "pilot": 12,
+                    "sensor": 3,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Sea Sprite",
+                    "handling": {
+                      "onRoad": 5,
+                      "offRoad": 5
+                    },
+                    "speed": {
+                      "onRoad": 4,
+                      "offRoad": 4
+                    },
+                    "acceleration": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "body": 18,
+                    "armor": 12,
+                    "pilot": 3,
+                    "sensor": 5,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "SKA-008",
+                    "handling": {
+                      "onRoad": 8,
+                      "offRoad": 8
+                    },
+                    "speed": {
+                      "onRoad": 6,
+                      "offRoad": 6
+                    },
+                    "acceleration": {
+                      "onRoad": 5,
+                      "offRoad": 5
+                    },
+                    "body": 8,
+                    "armor": 16,
+                    "pilot": 18,
+                    "sensor": 4,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Stallion",
+                    "handling": {
+                      "onRoad": 5,
+                      "offRoad": 5
+                    },
+                    "speed": {
+                      "onRoad": 5,
+                      "offRoad": 5
+                    },
+                    "acceleration": {
+                      "onRoad": 4,
+                      "offRoad": 4
+                    },
+                    "body": 16,
+                    "armor": 16,
+                    "pilot": 4,
+                    "sensor": 4,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                }
+              ]
+            },
+            {
+              "vehicle": {
+                "name": "VTOL/VSTOL",
+                "handling": {
+                  "onRoad": 0,
+                  "offRoad": 0
+                },
+                "speed": {
+                  "onRoad": 0,
+                  "offRoad": 0
+                },
+                "acceleration": {
+                  "onRoad": 0,
+                  "offRoad": 0
+                },
+                "body": 0,
+                "armor": 0,
+                "pilot": 0,
+                "sensor": 0,
+                "condition": null
+              },
+              "children": [
+                {
+                  "vehicle": {
+                    "name": "Ares Venture",
+                    "handling": {
+                      "onRoad": 5,
+                      "offRoad": 5
+                    },
+                    "speed": {
+                      "onRoad": 7,
+                      "offRoad": 7
+                    },
+                    "acceleration": {
+                      "onRoad": 4,
+                      "offRoad": 4
+                    },
+                    "body": 16,
+                    "armor": 14,
+                    "pilot": 4,
+                    "sensor": 4,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "GMC Banshee",
+                    "handling": {
+                      "onRoad": 6,
+                      "offRoad": 6
+                    },
+                    "speed": {
+                      "onRoad": 8,
+                      "offRoad": 8
+                    },
+                    "acceleration": {
+                      "onRoad": 4,
+                      "offRoad": 4
+                    },
+                    "body": 20,
+                    "armor": 18,
+                    "pilot": 4,
+                    "sensor": 6,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Federated Boeing Commuter",
+                    "handling": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "speed": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "acceleration": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "body": 16,
+                    "armor": 8,
+                    "pilot": 3,
+                    "sensor": 3,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Gryphon",
+                    "handling": {
+                      "onRoad": 5,
+                      "offRoad": 5
+                    },
+                    "speed": {
+                      "onRoad": 8,
+                      "offRoad": 8
+                    },
+                    "acceleration": {
+                      "onRoad": 7,
+                      "offRoad": 7
+                    },
+                    "body": 24,
+                    "armor": 24,
+                    "pilot": 4,
+                    "sensor": 5,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Krime Wing 4",
+                    "handling": {
+                      "onRoad": 4,
+                      "offRoad": 4
+                    },
+                    "speed": {
+                      "onRoad": 6,
+                      "offRoad": 6
+                    },
+                    "acceleration": {
+                      "onRoad": 5,
+                      "offRoad": 5
+                    },
+                    "body": 22,
+                    "armor": 18,
+                    "pilot": 4,
+                    "sensor": 5,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                }
+              ]
+            },
+            {
+              "vehicle": {
+                "name": "Airship",
+                "handling": {
+                  "onRoad": 0,
+                  "offRoad": 0
+                },
+                "speed": {
+                  "onRoad": 0,
+                  "offRoad": 0
+                },
+                "acceleration": {
+                  "onRoad": 0,
+                  "offRoad": 0
+                },
+                "body": 0,
+                "armor": 0,
+                "pilot": 0,
+                "sensor": 0,
+                "condition": null
+              },
+              "children": [
+                {
+                  "vehicle": {
+                    "name": "LZP-2070",
+                    "handling": {
+                      "onRoad": 2070,
+                      "offRoad": 2070
+                    },
+                    "speed": {
+                      "onRoad": 4,
+                      "offRoad": 4
+                    },
+                    "acceleration": {
+                      "onRoad": 2,
+                      "offRoad": 2
+                    },
+                    "body": 3,
+                    "armor": 12,
+                    "pilot": 6,
+                    "sensor": 5,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                },
+                {
+                  "vehicle": {
+                    "name": "Mothership LAVH",
+                    "handling": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "speed": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "acceleration": {
+                      "onRoad": 3,
+                      "offRoad": 3
+                    },
+                    "body": 10,
+                    "armor": 5,
+                    "pilot": 3,
+                    "sensor": 4,
+                    "condition": null
+                  },
+                  "children": [
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "vehicle": {
+        "name": "Drones",
+        "handling": {
+          "onRoad": 0,
+          "offRoad": 0
+        },
+        "speed": {
+          "onRoad": 0,
+          "offRoad": 0
+        },
+        "acceleration": {
+          "onRoad": 0,
+          "offRoad": 0
+        },
+        "body": 0,
+        "armor": 0,
+        "pilot": 0,
+        "sensor": 0,
+        "condition": null
+      },
+      "children": [
+        {
+          "vehicle": {
+            "name": "Micro",
+            "handling": {
+              "onRoad": 0,
+              "offRoad": 0
+            },
+            "speed": {
+              "onRoad": 0,
+              "offRoad": 0
+            },
+            "acceleration": {
+              "onRoad": 0,
+              "offRoad": 0
+            },
+            "body": 0,
+            "armor": 0,
+            "pilot": 0,
+            "sensor": 0,
+            "condition": null
+          },
+          "children": [
+            {
+              "vehicle": {
+                "name": "Shiawase Kanmushi",
+                "handling": {
+                  "onRoad": 4,
+                  "offRoad": 4
+                },
+                "speed": {
+                  "onRoad": 2,
+                  "offRoad": 2
+                },
+                "acceleration": {
+                  "onRoad": 1,
+                  "offRoad": 1
+                },
+                "body": 0,
+                "armor": 0,
+                "pilot": 3,
+                "sensor": 3,
+                "condition": null
+              },
+              "children": [
+              ]
+            },
+            {
+              "vehicle": {
+                "name": "Silkorsky-Bell Microskimmer 	",
+                "handling": {
+                  "onRoad": 3,
+                  "offRoad": 3
+                },
+                "speed": {
+                  "onRoad": 3,
+                  "offRoad": 3
+                },
+                "acceleration": {
+                  "onRoad": 1,
+                  "offRoad": 1
+                },
+                "body": 0,
+                "armor": 0,
+                "pilot": 3,
+                "sensor": 3,
+                "condition": null
+              },
+              "children": [
+              ]
+            },
+            {
+              "vehicle": {
+                "name": "Goldfish",
+                "handling": {
+                  "onRoad": 2,
+                  "offRoad": 4
+                },
+                "speed": {
+                  "onRoad": 1,
+                  "offRoad": 1
+                },
+                "acceleration": {
+                  "onRoad": 1,
+                  "offRoad": 1
+                },
+                "body": 0,
+                "armor": 0,
+                "pilot": 2,
+                "sensor": 2,
+                "condition": null
+              },
+              "children": [
+              ]
+            },
+            {
+              "vehicle": {
+                "name": "NoizQuito",
+                "handling": {
+                  "onRoad": 4,
+                  "offRoad": 4
+                },
+                "speed": {
+                  "onRoad": 3,
+                  "offRoad": 3
+                },
+                "acceleration": {
+                  "onRoad": 2,
+                  "offRoad": 2
+                },
+                "body": 1,
+                "armor": 0,
+                "pilot": 3,
+                "sensor": 3,
+                "condition": null
+              },
+              "children": [
+              ]
+            }
+          ]
+        },
+        {
+          "vehicle": {
+            "name": "Mini",
+            "handling": {
+              "onRoad": 0,
+              "offRoad": 0
+            },
+            "speed": {
+              "onRoad": 0,
+              "offRoad": 0
+            },
+            "acceleration": {
+              "onRoad": 0,
+              "offRoad": 0
+            },
+            "body": 0,
+            "armor": 0,
+            "pilot": 0,
+            "sensor": 0,
+            "condition": null
+          },
+          "children": [
+            {
+              "vehicle": {
+                "name": "MCT Fly-Spy",
+                "handling": {
+                  "onRoad": 4,
+                  "offRoad": 4
+                },
+                "speed": {
+                  "onRoad": 3,
+                  "offRoad": 3
+                },
+                "acceleration": {
+                  "onRoad": 2,
+                  "offRoad": 2
+                },
+                "body": 1,
+                "armor": 0,
+                "pilot": 3,
+                "sensor": 3,
+                "condition": null
+              },
+              "children": [
+              ]
+            },
+            {
+              "vehicle": {
+                "name": "Horizon Flying Eye",
+                "handling": {
+                  "onRoad": 4,
+                  "offRoad": 4
+                },
+                "speed": {
+                  "onRoad": 3,
+                  "offRoad": 3
+                },
+                "acceleration": {
+                  "onRoad": 2,
+                  "offRoad": 2
+                },
+                "body": 1,
+                "armor": 0,
+                "pilot": 3,
+                "sensor": 3,
+                "condition": null
+              },
+              "children": [
+              ]
+            },
+            {
+              "vehicle": {
+                "name": "Condor",
+                "handling": {
+                  "onRoad": 2,
+                  "offRoad": 2
+                },
+                "speed": {
+                  "onRoad": 0,
+                  "offRoad": 0
+                },
+                "acceleration": {
+                  "onRoad": 0,
+                  "offRoad": 0
+                },
+                "body": 1,
+                "armor": 0,
+                "pilot": 2,
+                "sensor": 4,
+                "condition": null
+              },
+              "children": [
+              ]
+            },
+            {
+              "vehicle": {
+                "name": "Dragonfly",
+                "handling": {
+                  "onRoad": 4,
+                  "offRoad": 4
+                },
+                "speed": {
+                  "onRoad": 2,
+                  "offRoad": 2
+                },
+                "acceleration": {
+                  "onRoad": 1,
+                  "offRoad": 1
+                },
+                "body": 1,
+                "armor": 3,
+                "pilot": 3,
+                "sensor": 2,
+                "condition": null
+              },
+              "children": [
+              ]
+            },
+            {
+              "vehicle": {
+                "name": "Gerbil",
+                "handling": {
+                  "onRoad": 4,
+                  "offRoad": 2
+                },
+                "speed": {
+                  "onRoad": 2,
+                  "offRoad": 2
+                },
+                "acceleration": {
+                  "onRoad": 1,
+                  "offRoad": 1
+                },
+                "body": 1,
+                "armor": 0,
+                "pilot": 2,
+                "sensor": 2,
+                "condition": null
+              },
+              "children": [
+              ]
+            },
+            {
+              "vehicle": {
+                "name": "Hedgehog",
+                "handling": {
+                  "onRoad": 3,
+                  "offRoad": 3
+                },
+                "speed": {
+                  "onRoad": 1,
+                  "offRoad": 1
+                },
+                "acceleration": {
+                  "onRoad": 1,
+                  "offRoad": 1
+                },
+                "body": 1,
+                "armor": 0,
+                "pilot": 4,
+                "sensor": 3,
+                "condition": null
+              },
+              "children": [
+              ]
+            },
+            {
+              "vehicle": {
+                "name": "Horizon CU^3",
+                "handling": {
+                  "onRoad": 3,
+                  "offRoad": 3
+                },
+                "speed": {
+                  "onRoad": 4,
+                  "offRoad": 4
+                },
+                "acceleration": {
+                  "onRoad": 1,
+                  "offRoad": 1
+                },
+                "body": 1,
+                "armor": 0,
+                "pilot": 2,
+                "sensor": 3,
+                "condition": null
+              },
+              "children": [
+              ]
+            },
+            {
+              "vehicle": {
+                "name": "Pigeon 2.0",
+                "handling": {
+                  "onRoad": 0,
+                  "offRoad": 0
+                },
+                "speed": {
+                  "onRoad": 4,
+                  "offRoad": 4
+                },
+                "acceleration": {
+                  "onRoad": 1,
+                  "offRoad": 1
+                },
+                "body": 1,
+                "armor": 0,
+                "pilot": 2,
+                "sensor": 2,
+                "condition": null
+              },
+              "children": [
+              ]
+            }
+          ]
+        },
+        {
+          "vehicle": {
+            "name": "Small",
+            "handling": {
+              "onRoad": 0,
+              "offRoad": 0
+            },
+            "speed": {
+              "onRoad": 0,
+              "offRoad": 0
+            },
+            "acceleration": {
+              "onRoad": 0,
+              "offRoad": 0
+            },
+            "body": 0,
+            "armor": 0,
+            "pilot": 0,
+            "sensor": 0,
+            "condition": null
+          },
+          "children": [
+            {
+              "vehicle": {
+                "name": "Aztechnology Crawler",
+                "handling": {
+                  "onRoad": 4,
+                  "offRoad": 4
+                },
+                "speed": {
+                  "onRoad": 3,
+                  "offRoad": 3
+                },
+                "acceleration": {
+                  "onRoad": 1,
+                  "offRoad": 1
+                },
+                "body": 3,
+                "armor": 3,
+                "pilot": 4,
+                "sensor": 3,
+                "condition": null
+              },
+              "children": [
+              ]
+            },
+            {
+              "vehicle": {
+                "name": "Lockheed Optic-X2",
+                "handling": {
+                  "onRoad": 2,
+                  "offRoad": 2
+                },
+                "speed": {
+                  "onRoad": 4,
+                  "offRoad": 4
+                },
+                "acceleration": {
+                  "onRoad": 4,
+                  "offRoad": 4
+                },
+                "body": 3,
+                "armor": 2,
+                "pilot": 2,
+                "sensor": 3,
+                "condition": null
+              },
+              "children": [
+              ]
+            },
+            {
+              "vehicle": {
+                "name": "Bloodhound",
+                "handling": {
+                  "onRoad": 3,
+                  "offRoad": 3
+                },
+                "speed": {
+                  "onRoad": 1,
+                  "offRoad": 1
+                },
+                "acceleration": {
+                  "onRoad": 1,
+                  "offRoad": 1
+                },
+                "body": 2,
+                "armor": 0,
+                "pilot": 2,
+                "sensor": 4,
+                "condition": null
+              },
+              "children": [
+              ]
+            },
+            {
+              "vehicle": {
+                "name": "Castle Guard",
+                "handling": {
+                  "onRoad": 4,
+                  "offRoad": 2
+                },
+                "speed": {
+                  "onRoad": 1,
+                  "offRoad": 1
+                },
+                "acceleration": {
+                  "onRoad": 1,
+                  "offRoad": 1
+                },
+                "body": 2,
+                "armor": 6,
+                "pilot": 3,
+                "sensor": 2,
+                "condition": null
+              },
+              "children": [
+              ]
+            },
+            {
+              "vehicle": {
+                "name": "Ferret RPD-5X",
+                "handling": {
+                  "onRoad": 4,
+                  "offRoad": 2
+                },
+                "speed": {
+                  "onRoad": 1,
+                  "offRoad": 1
+                },
+                "acceleration": {
+                  "onRoad": 1,
+                  "offRoad": 1
+                },
+                "body": 2,
+                "armor": 3,
+                "pilot": 3,
+                "sensor": 3,
+                "condition": null
+              },
+              "children": [
+              ]
+            },
+            {
+              "vehicle": {
+                "name": "Gun Turret",
+                "handling": {
+                  "onRoad": 0,
+                  "offRoad": 0
+                },
+                "speed": {
+                  "onRoad": 0,
+                  "offRoad": 0
+                },
+                "acceleration": {
+                  "onRoad": 0,
+                  "offRoad": 0
+                },
+                "body": 2,
+                "armor": 6,
+                "pilot": 3,
+                "sensor": 2,
+                "condition": null
+              },
+              "children": [
+              ]
+            },
+            {
+              "vehicle": {
+                "name": "Jardinero",
+                "handling": {
+                  "onRoad": 2,
+                  "offRoad": 4
+                },
+                "speed": {
+                  "onRoad": 1,
+                  "offRoad": 1
+                },
+                "acceleration": {
+                  "onRoad": 1,
+                  "offRoad": 1
+                },
+                "body": 2,
+                "armor": 0,
+                "pilot": 2,
+                "sensor": 2,
+                "condition": null
+              },
+              "children": [
+              ]
+            },
+            {
+              "vehicle": {
+                "name": "Job-a-Mat",
+                "handling": {
+                  "onRoad": 0,
+                  "offRoad": 0
+                },
+                "speed": {
+                  "onRoad": 0,
+                  "offRoad": 0
+                },
+                "acceleration": {
+                  "onRoad": 0,
+                  "offRoad": 0
+                },
+                "body": 2,
+                "armor": 0,
+                "pilot": 2,
+                "sensor": 2,
+                "condition": null
+              },
+              "children": [
+              ]
+            },
+            {
+              "vehicle": {
+                "name": "Knight Errant P5",
+                "handling": {
+                  "onRoad": 5,
+                  "offRoad": 5
+                },
+                "speed": {
+                  "onRoad": 4,
+                  "offRoad": 2
+                },
+                "acceleration": {
+                  "onRoad": 2,
+                  "offRoad": 2
+                },
+                "body": 2,
+                "armor": 0,
+                "pilot": 3,
+                "sensor": 2,
+                "condition": null
+              },
+              "children": [
+              ]
+            },
+            {
+              "vehicle": {
+                "name": "Krake",
+                "handling": {
+                  "onRoad": 5,
+                  "offRoad": 5
+                },
+                "speed": {
+                  "onRoad": 3,
+                  "offRoad": 3
+                },
+                "acceleration": {
+                  "onRoad": 4,
+                  "offRoad": 4
+                },
+                "body": 2,
+                "armor": 2,
+                "pilot": 4,
+                "sensor": 3,
+                "condition": null
+              },
+              "children": [
+              ]
+            },
+            {
+              "vehicle": {
+                "name": "Mini-Zep",
+                "handling": {
+                  "onRoad": 2,
+                  "offRoad": 2
+                },
+                "speed": {
+                  "onRoad": 0,
+                  "offRoad": 0
+                },
+                "acceleration": {
+                  "onRoad": 0,
+                  "offRoad": 0
+                },
+                "body": 2,
+                "armor": 0,
+                "pilot": 2,
+                "sensor": 2,
+                "condition": null
+              },
+              "children": [
+              ]
+            },
+            {
+              "vehicle": {
+                "name": "Pelican",
+                "handling": {
+                  "onRoad": 4,
+                  "offRoad": 4
+                },
+                "speed": {
+                  "onRoad": 2,
+                  "offRoad": 2
+                },
+                "acceleration": {
+                  "onRoad": 1,
+                  "offRoad": 1
+                },
+                "body": 2,
+                "armor": 0,
+                "pilot": 2,
+                "sensor": 2,
+                "condition": null
+              },
+              "children": [
+              ]
+            },
+            {
+              "vehicle": {
+                "name": "Prairie Dog",
+                "handling": {
+                  "onRoad": 2,
+                  "offRoad": 4
+                },
+                "speed": {
+                  "onRoad": 2,
+                  "offRoad": 2
+                },
+                "acceleration": {
+                  "onRoad": 1,
+                  "offRoad": 1
+                },
+                "body": 2,
+                "armor": 3,
+                "pilot": 3,
+                "sensor": 4,
+                "condition": null
+              },
+              "children": [
+              ]
+            },
+            {
+              "vehicle": {
+                "name": "Proletarian",
+                "handling": {
+                  "onRoad": 4,
+                  "offRoad": 2
+                },
+                "speed": {
+                  "onRoad": 2,
+                  "offRoad": 2
+                },
+                "acceleration": {
+                  "onRoad": 1,
+                  "offRoad": 1
+                },
+                "body": 2,
+                "armor": 0,
+                "pilot": 2,
+                "sensor": 2,
+                "condition": null
+              },
+              "children": [
+              ]
+            },
+            {
+              "vehicle": {
+                "name": "Renraku Dove",
+                "handling": {
+                  "onRoad": 4,
+                  "offRoad": 4
+                },
+                "speed": {
+                  "onRoad": 2,
+                  "offRoad": 2
+                },
+                "acceleration": {
+                  "onRoad": 1,
+                  "offRoad": 1
+                },
+                "body": 2,
+                "armor": 0,
+                "pilot": 2,
+                "sensor": 2,
+                "condition": null
+              },
+              "children": [
+              ]
+            },
+            {
+              "vehicle": {
+                "name": "Sentry V",
+                "handling": {
+                  "onRoad": 4,
+                  "offRoad": 0
+                },
+                "speed": {
+                  "onRoad": 1,
+                  "offRoad": 1
+                },
+                "acceleration": {
+                  "onRoad": 1,
+                  "offRoad": 1
+                },
+                "body": 2,
+                "armor": 6,
+                "pilot": 3,
+                "sensor": 2,
+                "condition": null
+              },
+              "children": [
+              ]
+            },
+            {
+              "vehicle": {
+                "name": "Seven (Wheelie)",
+                "handling": {
+                  "onRoad": 4,
+                  "offRoad": 2
+                },
+                "speed": {
+                  "onRoad": 2,
+                  "offRoad": 2
+                },
+                "acceleration": {
+                  "onRoad": 1,
+                  "offRoad": 1
+                },
+                "body": 1,
+                "armor": 0,
+                "pilot": 1,
+                "sensor": 1,
+                "condition": null
+              },
+              "children": [
+              ]
+            },
+            {
+              "vehicle": {
+                "name": "Seven (Treads)",
+                "handling": {
+                  "onRoad": 3,
+                  "offRoad": 3
+                },
+                "speed": {
+                  "onRoad": 2,
+                  "offRoad": 2
+                },
+                "acceleration": {
+                  "onRoad": 1,
+                  "offRoad": 1
+                },
+                "body": 1,
+                "armor": 0,
+                "pilot": 1,
+                "sensor": 1,
+                "condition": null
+              },
+              "children": [
+              ]
+            },
+            {
+              "vehicle": {
+                "name": "Seven (Dirty)",
+                "handling": {
+                  "onRoad": 2,
+                  "offRoad": 4
+                },
+                "speed": {
+                  "onRoad": 2,
+                  "offRoad": 2
+                },
+                "acceleration": {
+                  "onRoad": 1,
+                  "offRoad": 1
+                },
+                "body": 1,
+                "armor": 0,
+                "pilot": 1,
+                "sensor": 1,
+                "condition": null
+              },
+              "children": [
+              ]
+            },
+            {
+              "vehicle": {
+                "name": "Seven (Quad)",
+                "handling": {
+                  "onRoad": 4,
+                  "offRoad": 4
+                },
+                "speed": {
+                  "onRoad": 1,
+                  "offRoad": 1
+                },
+                "acceleration": {
+                  "onRoad": 1,
+                  "offRoad": 1
+                },
+                "body": 1,
+                "armor": 0,
+                "pilot": 1,
+                "sensor": 1,
+                "condition": null
+              },
+              "children": [
+              ]
+            },
+            {
+              "vehicle": {
+                "name": "Seven (Swims)",
+                "handling": {
+                  "onRoad": 3,
+                  "offRoad": 3
+                },
+                "speed": {
+                  "onRoad": 2,
+                  "offRoad": 2
+                },
+                "acceleration": {
+                  "onRoad": 1,
+                  "offRoad": 1
+                },
+                "body": 1,
+                "armor": 0,
+                "pilot": 1,
+                "sensor": 1,
+                "condition": null
+              },
+              "children": [
+              ]
+            },
+            {
+              "vehicle": {
+                "name": "Seven (Hovers)",
+                "handling": {
+                  "onRoad": 4,
+                  "offRoad": 4
+                },
+                "speed": {
+                  "onRoad": 1,
+                  "offRoad": 1
+                },
+                "acceleration": {
+                  "onRoad": 1,
+                  "offRoad": 1
+                },
+                "body": 1,
+                "armor": 0,
+                "pilot": 1,
+                "sensor": 1,
+                "condition": null
+              },
+              "children": [
+              ]
+            },
+            {
+              "vehicle": {
+                "name": "Seven (Soars)",
+                "handling": {
+                  "onRoad": 3,
+                  "offRoad": 3
+                },
+                "speed": {
+                  "onRoad": 2,
+                  "offRoad": 2
+                },
+                "acceleration": {
+                  "onRoad": 1,
+                  "offRoad": 1
+                },
+                "body": 1,
+                "armor": 0,
+                "pilot": 1,
+                "sensor": 1,
+                "condition": null
+              },
+              "children": [
+              ]
+            },
+            {
+              "vehicle": {
+                "name": "Sewer Snake",
+                "handling": {
+                  "onRoad": 3,
+                  "offRoad": 3
+                },
+                "speed": {
+                  "onRoad": 1,
+                  "offRoad": 1
+                },
+                "acceleration": {
+                  "onRoad": 1,
+                  "offRoad": 1
+                },
+                "body": 2,
+                "armor": 0,
+                "pilot": 2,
+                "sensor": 2,
+                "condition": null
+              },
+              "children": [
+              ]
+            },
+            {
+              "vehicle": {
+                "name": "Shamus",
+                "handling": {
+                  "onRoad": 3,
+                  "offRoad": 3
+                },
+                "speed": {
+                  "onRoad": 3,
+                  "offRoad": 3
+                },
+                "acceleration": {
+                  "onRoad": 1,
+                  "offRoad": 1
+                },
+                "body": 4,
+                "armor": 4,
+                "pilot": 3,
+                "sensor": 8,
+                "condition": null
+              },
+              "children": [
+              ]
+            },
+            {
+              "vehicle": {
+                "name": "Smoke Generator",
+                "handling": {
+                  "onRoad": 3,
+                  "offRoad": 3
+                },
+                "speed": {
+                  "onRoad": 1,
+                  "offRoad": 1
+                },
+                "acceleration": {
+                  "onRoad": 1,
+                  "offRoad": 1
+                },
+                "body": 2,
+                "armor": 0,
+                "pilot": 2,
+                "sensor": 2,
+                "condition": null
+              },
+              "children": [
+              ]
+            },
+            {
+              "vehicle": {
+                "name": "Sundowner",
+                "handling": {
+                  "onRoad": 3,
+                  "offRoad": 3
+                },
+                "speed": {
+                  "onRoad": 4,
+                  "offRoad": 4
+                },
+                "acceleration": {
+                  "onRoad": 1,
+                  "offRoad": 1
+                },
+                "body": 2,
+                "armor": 0,
+                "pilot": 2,
+                "sensor": 2,
+                "condition": null
+              },
+              "children": [
+              ]
+            },
+            {
+              "vehicle": {
+                "name": "Wolfhound",
+                "handling": {
+                  "onRoad": 3,
+                  "offRoad": 3
+                },
+                "speed": {
+                  "onRoad": 2,
+                  "offRoad": 2
+                },
+                "acceleration": {
+                  "onRoad": 1,
+                  "offRoad": 1
+                },
+                "body": 2,
+                "armor": 0,
+                "pilot": 2,
+                "sensor": 4,
+                "condition": null
+              },
+              "children": [
+              ]
+            }
+          ]
+        },
+        {
+          "vehicle": {
+            "name": "Medium",
+            "handling": {
+              "onRoad": 0,
+              "offRoad": 0
+            },
+            "speed": {
+              "onRoad": 0,
+              "offRoad": 0
+            },
+            "acceleration": {
+              "onRoad": 0,
+              "offRoad": 0
+            },
+            "body": 0,
+            "armor": 0,
+            "pilot": 0,
+            "sensor": 0,
+            "condition": null
+          },
+          "children": [
+            {
+              "vehicle": {
+                "name": "Ares Duelist",
+                "handling": {
+                  "onRoad": 3,
+                  "offRoad": 3
+                },
+                "speed": {
+                  "onRoad": 3,
+                  "offRoad": 3
+                },
+                "acceleration": {
+                  "onRoad": 1,
+                  "offRoad": 1
+                },
+                "body": 4,
+                "armor": 4,
+                "pilot": 3,
+                "sensor": 3,
+                "condition": null
+              },
+              "children": [
+              ]
+            },
+            {
+              "vehicle": {
+                "name": "GM-Nissan Doberman",
+                "handling": {
+                  "onRoad": 5,
+                  "offRoad": 5
+                },
+                "speed": {
+                  "onRoad": 3,
+                  "offRoad": 3
+                },
+                "acceleration": {
+                  "onRoad": 1,
+                  "offRoad": 1
+                },
+                "body": 4,
+                "armor": 4,
+                "pilot": 3,
+                "sensor": 3,
+                "condition": null
+              },
+              "children": [
+              ]
+            },
+            {
+              "vehicle": {
+                "name": "MCT-Nissan Roto-Drone",
+                "handling": {
+                  "onRoad": 4,
+                  "offRoad": 4
+                },
+                "speed": {
+                  "onRoad": 4,
+                  "offRoad": 4
+                },
+                "acceleration": {
+                  "onRoad": 2,
+                  "offRoad": 2
+                },
+                "body": 4,
+                "armor": 4,
+                "pilot": 3,
+                "sensor": 3,
+                "condition": null
+              },
+              "children": [
+              ]
+            },
+            {
+              "vehicle": {
+                "name": "Cheetah",
+                "handling": {
+                  "onRoad": 4,
+                  "offRoad": 4
+                },
+                "speed": {
+                  "onRoad": 6,
+                  "offRoad": 6
+                },
+                "acceleration": {
+                  "onRoad": 2,
+                  "offRoad": 2
+                },
+                "body": 2,
+                "armor": 6,
+                "pilot": 3,
+                "sensor": 2,
+                "condition": null
+              },
+              "children": [
+              ]
+            },
+            {
+              "vehicle": {
+                "name": "Evo Krokodil",
+                "handling": {
+                  "onRoad": 3,
+                  "offRoad": 3
+                },
+                "speed": {
+                  "onRoad": 2,
+                  "offRoad": 3
+                },
+                "acceleration": {
+                  "onRoad": 1,
+                  "offRoad": 1
+                },
+                "body": 3,
+                "armor": 6,
+                "pilot": 2,
+                "sensor": 2,
+                "condition": null
+              },
+              "children": [
+              ]
+            },
+            {
+              "vehicle": {
+                "name": "F-B Kull",
+                "handling": {
+                  "onRoad": 3,
+                  "offRoad": 3
+                },
+                "speed": {
+                  "onRoad": 4,
+                  "offRoad": 4
+                },
+                "acceleration": {
+                  "onRoad": 2,
+                  "offRoad": 2
+                },
+                "body": 3,
+                "armor": 0,
+                "pilot": 3,
+                "sensor": 2,
+                "condition": null
+              },
+              "children": [
+              ]
+            },
+            {
+              "vehicle": {
+                "name": "LEBD-2",
+                "handling": {
+                  "onRoad": 2,
+                  "offRoad": 2
+                },
+                "speed": {
+                  "onRoad": 4,
+                  "offRoad": 4
+                },
+                "acceleration": {
+                  "onRoad": 1,
+                  "offRoad": 1
+                },
+                "body": 3,
+                "armor": 9,
+                "pilot": 4,
+                "sensor": 4,
+                "condition": null
+              },
+              "children": [
+              ]
+            },
+            {
+              "vehicle": {
+                "name": "Steed",
+                "handling": {
+                  "onRoad": 4,
+                  "offRoad": 2
+                },
+                "speed": {
+                  "onRoad": 1,
+                  "offRoad": 1
+                },
+                "acceleration": {
+                  "onRoad": 1,
+                  "offRoad": 1
+                },
+                "body": 3,
+                "armor": 0,
+                "pilot": 2,
+                "sensor": 2,
+                "condition": null
+              },
+              "children": [
+              ]
+            },
+            {
+              "vehicle": {
+                "name": "Tunneler",
+                "handling": {
+                  "onRoad": 3,
+                  "offRoad": 3
+                },
+                "speed": {
+                  "onRoad": 0,
+                  "offRoad": 0
+                },
+                "acceleration": {
+                  "onRoad": 0,
+                  "offRoad": 0
+                },
+                "body": 3,
+                "armor": 6,
+                "pilot": 2,
+                "sensor": 2,
+                "condition": null
+              },
+              "children": [
+              ]
+            }
+          ]
+        },
+        {
+          "vehicle": {
+            "name": "Large",
+            "handling": {
+              "onRoad": 0,
+              "offRoad": 0
+            },
+            "speed": {
+              "onRoad": 0,
+              "offRoad": 0
+            },
+            "acceleration": {
+              "onRoad": 0,
+              "offRoad": 0
+            },
+            "body": 0,
+            "armor": 0,
+            "pilot": 0,
+            "sensor": 0,
+            "condition": null
+          },
+          "children": [
+            {
+              "vehicle": {
+                "name": "Cyberspace Designs Dalmation",
+                "handling": {
+                  "onRoad": 5,
+                  "offRoad": 5
+                },
+                "speed": {
+                  "onRoad": 5,
+                  "offRoad": 5
+                },
+                "acceleration": {
+                  "onRoad": 3,
+                  "offRoad": 3
+                },
+                "body": 5,
+                "armor": 5,
+                "pilot": 3,
+                "sensor": 3,
+                "condition": null
+              },
+              "children": [
+              ]
+            },
+            {
+              "vehicle": {
+                "name": "Steel Lynx Combat Drone",
+                "handling": {
+                  "onRoad": 5,
+                  "offRoad": 5
+                },
+                "speed": {
+                  "onRoad": 4,
+                  "offRoad": 4
+                },
+                "acceleration": {
+                  "onRoad": 2,
+                  "offRoad": 2
+                },
+                "body": 6,
+                "armor": 12,
+                "pilot": 3,
+                "sensor": 3,
+                "condition": null
+              },
+              "children": [
+              ]
+            },
+            {
+              "vehicle": {
+                "name": "Malakim",
+                "handling": {
+                  "onRoad": 3,
+                  "offRoad": 3
+                },
+                "speed": {
+                  "onRoad": 6,
+                  "offRoad": 6
+                },
+                "acceleration": {
+                  "onRoad": 2,
+                  "offRoad": 2
+                },
+                "body": 4,
+                "armor": 9,
+                "pilot": 4,
+                "sensor": 4,
+                "condition": null
+              },
+              "children": [
+              ]
+            },
+            {
+              "vehicle": {
+                "name": "Matilda",
+                "handling": {
+                  "onRoad": 1,
+                  "offRoad": 1
+                },
+                "speed": {
+                  "onRoad": 2,
+                  "offRoad": 2
+                },
+                "acceleration": {
+                  "onRoad": 1,
+                  "offRoad": 1
+                },
+                "body": 8,
+                "armor": 8,
+                "pilot": 2,
+                "sensor": 1,
+                "condition": null
+              },
+              "children": [
+              ]
+            },
+            {
+              "vehicle": {
+                "name": "MediCart",
+                "handling": {
+                  "onRoad": 5,
+                  "offRoad": 5
+                },
+                "speed": {
+                  "onRoad": 5,
+                  "offRoad": 5
+                },
+                "acceleration": {
+                  "onRoad": 1,
+                  "offRoad": 1
+                },
+                "body": 6,
+                "armor": 5,
+                "pilot": 4,
+                "sensor": 4,
+                "condition": null
+              },
+              "children": [
+              ]
+            },
+            {
+              "vehicle": {
+                "name": "Mule",
+                "handling": {
+                  "onRoad": 4,
+                  "offRoad": 4
+                },
+                "speed": {
+                  "onRoad": 1,
+                  "offRoad": 1
+                },
+                "acceleration": {
+                  "onRoad": 1,
+                  "offRoad": 1
+                },
+                "body": 4,
+                "armor": 6,
+                "pilot": 2,
+                "sensor": 2,
+                "condition": null
+              },
+              "children": [
+              ]
+            },
+            {
+              "vehicle": {
+                "name": "Neptune",
+                "handling": {
+                  "onRoad": 2,
+                  "offRoad": 2
+                },
+                "speed": {
+                  "onRoad": 3,
+                  "offRoad": 3
+                },
+                "acceleration": {
+                  "onRoad": 1,
+                  "offRoad": 1
+                },
+                "body": 5,
+                "armor": 3,
+                "pilot": 4,
+                "sensor": 3,
+                "condition": null
+              },
+              "children": [
+              ]
+            },
+            {
+              "vehicle": {
+                "name": "Paladin",
+                "handling": {
+                  "onRoad": 5,
+                  "offRoad": 5
+                },
+                "speed": {
+                  "onRoad": 4,
+                  "offRoad": 4
+                },
+                "acceleration": {
+                  "onRoad": 1,
+                  "offRoad": 1
+                },
+                "body": 5,
+                "armor": 18,
+                "pilot": 3,
+                "sensor": 2,
+                "condition": null
+              },
+              "children": [
+              ]
+            },
+            {
+              "vehicle": {
+                "name": "Tower",
+                "handling": {
+                  "onRoad": 2,
+                  "offRoad": 2
+                },
+                "speed": {
+                  "onRoad": 1,
+                  "offRoad": 1
+                },
+                "acceleration": {
+                  "onRoad": 1,
+                  "offRoad": 1
+                },
+                "body": 4,
+                "armor": 6,
+                "pilot": 2,
+                "sensor": 2,
+                "condition": null
+              },
+              "children": [
+              ]
+            }
+          ]
+        },
+        {
+          "vehicle": {
+            "name": "Huge",
+            "handling": {
+              "onRoad": 0,
+              "offRoad": 0
+            },
+            "speed": {
+              "onRoad": 0,
+              "offRoad": 0
+            },
+            "acceleration": {
+              "onRoad": 0,
+              "offRoad": 0
+            },
+            "body": 0,
+            "armor": 0,
+            "pilot": 0,
+            "sensor": 0,
+            "condition": null
+          },
+          "children": [
+            {
+              "vehicle": {
+                "name": "Ares KN-Y0 (Deimos)",
+                "handling": {
+                  "onRoad": 3,
+                  "offRoad": 3
+                },
+                "speed": {
+                  "onRoad": 2,
+                  "offRoad": 2
+                },
+                "acceleration": {
+                  "onRoad": 1,
+                  "offRoad": 1
+                },
+                "body": 6,
+                "armor": 18,
+                "pilot": 5,
+                "sensor": 3,
+                "condition": null
+              },
+              "children": [
+              ]
+            },
+            {
+              "vehicle": {
+                "name": "Ares KN-Y0 (Eris)",
+                "handling": {
+                  "onRoad": 3,
+                  "offRoad": 3
+                },
+                "speed": {
+                  "onRoad": 2,
+                  "offRoad": 2
+                },
+                "acceleration": {
+                  "onRoad": 1,
+                  "offRoad": 1
+                },
+                "body": 6,
+                "armor": 18,
+                "pilot": 5,
+                "sensor": 3,
+                "condition": null
+              },
+              "children": [
+              ]
+            },
+            {
+              "vehicle": {
+                "name": "Ares KN-Y0 (Phobos)",
+                "handling": {
+                  "onRoad": 3,
+                  "offRoad": 3
+                },
+                "speed": {
+                  "onRoad": 2,
+                  "offRoad": 2
+                },
+                "acceleration": {
+                  "onRoad": 1,
+                  "offRoad": 1
+                },
+                "body": 6,
+                "armor": 18,
+                "pilot": 5,
+                "sensor": 3,
+                "condition": null
+              },
+              "children": [
+              ]
+            },
+            {
+              "vehicle": {
+                "name": "Avenging Angel",
+                "handling": {
+                  "onRoad": 3,
+                  "offRoad": 3
+                },
+                "speed": {
+                  "onRoad": 6,
+                  "offRoad": 6
+                },
+                "acceleration": {
+                  "onRoad": 2,
+                  "offRoad": 2
+                },
+                "body": 6,
+                "armor": 12,
+                "pilot": 6,
+                "sensor": 6,
+                "condition": null
+              },
+              "children": [
+              ]
+            },
+            {
+              "vehicle": {
+                "name": "Kodiak",
+                "handling": {
+                  "onRoad": 2,
+                  "offRoad": 4
+                },
+                "speed": {
+                  "onRoad": 2,
+                  "offRoad": 2
+                },
+                "acceleration": {
+                  "onRoad": 1,
+                  "offRoad": 1
+                },
+                "body": 6,
+                "armor": 12,
+                "pilot": 2,
+                "sensor": 2,
+                "condition": null
+              },
+              "children": [
+              ]
+            }
+          ]
+        },
+        {
+          "vehicle": {
+            "name": "Anthro",
+            "handling": {
+              "onRoad": 0,
+              "offRoad": 0
+            },
+            "speed": {
+              "onRoad": 0,
+              "offRoad": 0
+            },
+            "acceleration": {
+              "onRoad": 0,
+              "offRoad": 0
+            },
+            "body": 0,
+            "armor": 0,
+            "pilot": 0,
+            "sensor": 0,
+            "condition": null
+          },
+          "children": [
+            {
+              "vehicle": {
+                "name": "Criado Juan",
+                "handling": {
+                  "onRoad": 2,
+                  "offRoad": 2
+                },
+                "speed": {
+                  "onRoad": 2,
+                  "offRoad": 2
+                },
+                "acceleration": {
+                  "onRoad": 1,
+                  "offRoad": 1
+                },
+                "body": 2,
+                "armor": 0,
+                "pilot": 2,
+                "sensor": 2,
+                "condition": null
+              },
+              "children": [
+              ]
+            },
+            {
+              "vehicle": {
+                "name": "Direktionssekretar",
+                "handling": {
+                  "onRoad": 4,
+                  "offRoad": 4
+                },
+                "speed": {
+                  "onRoad": 4,
+                  "offRoad": 4
+                },
+                "acceleration": {
+                  "onRoad": 2,
+                  "offRoad": 2
+                },
+                "body": 4,
+                "armor": 3,
+                "pilot": 4,
+                "sensor": 4,
+                "condition": null
+              },
+              "children": [
+              ]
+            },
+            {
+              "vehicle": {
+                "name": "Juggernaught",
+                "handling": {
+                  "onRoad": 3,
+                  "offRoad": 3
+                },
+                "speed": {
+                  "onRoad": 4,
+                  "offRoad": 4
+                },
+                "acceleration": {
+                  "onRoad": 1,
+                  "offRoad": 1
+                },
+                "body": 6,
+                "armor": 12,
+                "pilot": 3,
+                "sensor": 3,
+                "condition": null
+              },
+              "children": [
+              ]
+            },
+            {
+              "vehicle": {
+                "name": "Kenchiku-Kikai",
+                "handling": {
+                  "onRoad": 2,
+                  "offRoad": 2
+                },
+                "speed": {
+                  "onRoad": 2,
+                  "offRoad": 2
+                },
+                "acceleration": {
+                  "onRoad": 1,
+                  "offRoad": 1
+                },
+                "body": 5,
+                "armor": 3,
+                "pilot": 2,
+                "sensor": 2,
+                "condition": null
+              },
+              "children": [
+              ]
+            },
+            {
+              "vehicle": {
+                "name": "Little Buddy",
+                "handling": {
+                  "onRoad": 2,
+                  "offRoad": 2
+                },
+                "speed": {
+                  "onRoad": 1,
+                  "offRoad": 1
+                },
+                "acceleration": {
+                  "onRoad": 1,
+                  "offRoad": 1
+                },
+                "body": 1,
+                "armor": 0,
+                "pilot": 2,
+                "sensor": 2,
+                "condition": null
+              },
+              "children": [
+              ]
+            },
+            {
+              "vehicle": {
+                "name": "Shiawase i-Doll",
+                "handling": {
+                  "onRoad": 3,
+                  "offRoad": 3
+                },
+                "speed": {
+                  "onRoad": 3,
+                  "offRoad": 3
+                },
+                "acceleration": {
+                  "onRoad": 1,
+                  "offRoad": 1
+                },
+                "body": 3,
+                "armor": 0,
+                "pilot": 3,
+                "sensor": 3,
+                "condition": null
+              },
+              "children": [
+              ]
+            }
+          ]
+        },
+        {
+          "vehicle": {
+            "name": "Missile",
+            "handling": {
+              "onRoad": 0,
+              "offRoad": 0
+            },
+            "speed": {
+              "onRoad": 0,
+              "offRoad": 0
+            },
+            "acceleration": {
+              "onRoad": 0,
+              "offRoad": 0
+            },
+            "body": 0,
+            "armor": 0,
+            "pilot": 0,
+            "sensor": 0,
+            "condition": null
+          },
+          "children": [
+            {
+              "vehicle": {
+                "name": "Garuda 6",
+                "handling": {
+                  "onRoad": 3,
+                  "offRoad": 3
+                },
+                "speed": {
+                  "onRoad": 6,
+                  "offRoad": 6
+                },
+                "acceleration": {
+                  "onRoad": 2,
+                  "offRoad": 4
+                },
+                "body": 2,
+                "armor": 2,
+                "pilot": 4,
+                "sensor": 3,
+                "condition": null
+              },
+              "children": [
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

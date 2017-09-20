@@ -97,11 +97,11 @@
                   <Pane HBox.hgrow="ALWAYS" />
                </items>
             </ToolBar>
-            <SplitPane fx:id="splitPane_horizontal" dividerPositions="0.3, 0.5" prefHeight="160.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+            <SplitPane fx:id="splitPane_horizontal" dividerPositions="0.25, 0.5" prefHeight="160.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                <items>
                   <AnchorPane>
                      <children>
-                        <VBox prefHeight="707.0" prefWidth="301.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <VBox prefHeight="707.0" prefWidth="315.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <ToolBar prefHeight="40.0" prefWidth="200.0">
                                  <items>
@@ -115,16 +115,17 @@
                                        <content>
                                           <AnchorPane>
                                              <children>
-                                                <VBox fx:id="vbox_realWorld" prefHeight="67.0" prefWidth="278.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                <VBox fx:id="vbox_realWorld" prefHeight="67.0" prefWidth="315.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                    <children>
-                                                      <ToolBar prefHeight="40.0" prefWidth="200.0">
+                                                      <ToolBar prefHeight="40.0" prefWidth="220.0">
                                                          <items>
                                                             <ComboBox fx:id="comboBox_weather" minWidth="200.0" />
                                                          </items>
                                                       </ToolBar>
-                                                      <ToolBar prefHeight="40.0" prefWidth="200.0">
+                                                      <ToolBar prefHeight="40.0" prefWidth="220.0">
                                                          <items>
                                                             <Button mnemonicParsing="false" onAction="#addBarrierOnAction" styleClass="button-primary" text="Add barrier" />
+                                                            <Button mnemonicParsing="false" onAction="#addVehicleOnAction" styleClass="button-primary" text="Add vehicle" />
                                                          </items>
                                                       </ToolBar>
                                                    </children>
@@ -137,9 +138,9 @@
                                        <content>
                                           <AnchorPane>
                                              <children>
-                                                <VBox fx:id="vbox_matrix" prefHeight="141.0" prefWidth="282.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                <VBox fx:id="vbox_matrix" prefHeight="141.0" prefWidth="315.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                    <children>
-                                                      <ToolBar prefHeight="40.0" prefWidth="200.0">
+                                                      <ToolBar prefHeight="40.0" prefWidth="220.0">
                                                          <items>
                                                             <Button fx:id="button_hostAction" mnemonicParsing="false" onAction="#hostActionOnAction" styleClass="button-primary" text="Generate Host" />
                                                             <Button mnemonicParsing="false" onAction="#addDeviceOnAction" styleClass="button-primary" text="Add device" />
@@ -147,7 +148,7 @@
                                                       </ToolBar>
                                                       <VBox fx:id="vbox_matrixProperties">
                                                          <children>
-                                                            <ToolBar prefHeight="40.0" prefWidth="200.0">
+                                                            <ToolBar prefHeight="40.0" prefWidth="220.0">
                                                                <items>
                                                                   <Label text="R">
                                                                      <font>
@@ -306,7 +307,7 @@
                   </AnchorPane>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                      <children>
-                        <SplitPane fx:id="splitPane_centerContent" dividerPositions="0.5" orientation="VERTICAL" prefHeight="664.0" prefWidth="734.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <SplitPane fx:id="splitPane_centerContent" dividerPositions="0.5, 0.7" orientation="VERTICAL" prefHeight="664.0" prefWidth="734.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <items>
                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                                  <children>
@@ -324,6 +325,23 @@
                                           <TableColumn fx:id="tableColumn_masterTable_turn6" editable="false" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" resizable="false" sortable="false" text="6" />
                                           <TableColumn fx:id="tableColumn_masterTable_turn7" editable="false" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" resizable="false" sortable="false" text="7" />
                                        </columns>
+                                    </TableView>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane>
+                                 <children>
+                                    <TableView fx:id="tableView_vehicles" prefHeight="400.0" prefWidth="727.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                      <columns>
+                                        <TableColumn fx:id="tableColumn_vehicles_name" prefWidth="120.0" text="Name" />
+                                          <TableColumn fx:id="tableColumn_vehicles_condition" text="Condition" />
+                                          <TableColumn fx:id="tableColumn_vehicles_handling" prefWidth="75.0" text="Handling" />
+                                          <TableColumn fx:id="tableColumn_vehicles_speed" prefWidth="75.0" text="Speed" />
+                                          <TableColumn fx:id="tableColumn_vehicles_acceleration" prefWidth="75.0" text="Acceleration" />
+                                          <TableColumn fx:id="tableColumn_vehicles_body" prefWidth="75.0" text="Body" />
+                                          <TableColumn fx:id="tableColumn_vehicles_armor" prefWidth="75.0" text="Armor" />
+                                          <TableColumn fx:id="tableColumn_vehicles_pilot" prefWidth="75.0" text="Pilot" />
+                                          <TableColumn fx:id="tableColumn_vehicles_sensor" prefWidth="75.0" text="Sensor" />
+                                      </columns>
                                     </TableView>
                                  </children>
                               </AnchorPane>
@@ -647,7 +665,7 @@
                                           </Button>
                                           <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2">
                                              <children>
-                                                <Label fx:id="label_selected_condition" text="Label" />
+                                                <Label fx:id="label_selected_deviceCondition" text="Label" />
                                              </children>
                                           </HBox>
                                           <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
@@ -656,6 +674,60 @@
                                              </children>
                                           </HBox>
                                           <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#conditionMonitorSettingsOnAction" styleClass="button-pill" GridPane.columnIndex="5">
+                                             <graphic>
+                                                <FontAwesomeIconView glyphName="COG" />
+                                             </graphic>
+                                             <tooltip>
+                                                <Tooltip text="Decrease structure" />
+                                             </tooltip>
+                                          </Button>
+                                       </children>
+                                    </GridPane>
+                                 </children>
+                              </HBox>
+                              <HBox fx:id="hbox_selected_vehicle" alignment="CENTER" layoutX="10.0" layoutY="290.0">
+                                 <children>
+                                    <GridPane>
+                                       <columnConstraints>
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="20.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="80.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="75.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="30.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="30.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="30.0" />
+                                       </columnConstraints>
+                                       <rowConstraints>
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                       </rowConstraints>
+                                       <children>
+                                          <Label text="Condition" GridPane.columnIndex="1" />
+                                          <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#vehicleConditionPlusOnAction" styleClass="button-pill, button-success" GridPane.columnIndex="3">
+                                             <graphic>
+                                                <FontAwesomeIconView glyphName="PLUS" />
+                                             </graphic>
+                                             <tooltip>
+                                                <Tooltip text="Increase condition" />
+                                             </tooltip>
+                                          </Button>
+                                          <Button mnemonicParsing="false" onAction="#vehicleConditionMinusOnAction" styleClass="button-pill, button-danger" GridPane.columnIndex="4">
+                                             <graphic>
+                                                <FontAwesomeIconView glyphName="MINUS" text="" />
+                                             </graphic>
+                                             <tooltip>
+                                                <Tooltip text="Decrease condition" />
+                                             </tooltip>
+                                          </Button>
+                                          <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2">
+                                             <children>
+                                                <Label fx:id="label_selected_vehicleCondition" text="Label" />
+                                             </children>
+                                          </HBox>
+                                          <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                             <children>
+                                                <FontAwesomeIconView glyphName="COGS" size="14.0" />
+                                             </children>
+                                          </HBox>
+                                          <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#vehicleConditionMonitorSettingsOnAction" styleClass="button-pill" GridPane.columnIndex="5">
                                              <graphic>
                                                 <FontAwesomeIconView glyphName="COG" />
                                              </graphic>
