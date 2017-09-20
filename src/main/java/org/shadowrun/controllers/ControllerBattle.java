@@ -667,6 +667,7 @@ public class ControllerBattle {
             controllerAddVehicle.onOpen(dialog);
             dialog.showAndWait();
             controllerAddVehicle.getVehicle().ifPresent(vehicle -> {
+                LOG.info("adding new vehicle");
                 battle.getVehicles().add(vehicle);
             });
         } catch (IOException ex) {
@@ -1008,7 +1009,7 @@ public class ControllerBattle {
                 result.ifPresent(selected::setName);
             });
             MenuItem deleteVehicle = new MenuItem("Delete vehicler");
-            deleteVehicle.setOnAction(event -> tableView_barrier.getItems()
+            deleteVehicle.setOnAction(event -> tableView_vehicles.getItems()
                     .remove(tableView_vehicles.getSelectionModel().getSelectedIndex()));
             MenuItem addVehicle = new MenuItem("Add vehicler");
             addVehicle.setOnAction(event -> addVehicleOnAction());
