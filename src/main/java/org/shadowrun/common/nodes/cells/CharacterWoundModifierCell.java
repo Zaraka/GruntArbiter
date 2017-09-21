@@ -2,6 +2,7 @@ package org.shadowrun.common.nodes.cells;
 
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableCell;
+import javafx.scene.control.Tooltip;
 import org.shadowrun.models.Character;
 
 public class CharacterWoundModifierCell extends TableCell<Character, Character> {
@@ -15,6 +16,9 @@ public class CharacterWoundModifierCell extends TableCell<Character, Character> 
         if(empty || item == null) {
             setText(null);
         } else {
+            if(tooltipProperty().isNull().get())
+                setTooltip(new Tooltip("Wound modifier"));
+
             int woundModifier = item.getPhysicalMonitor().countWoundModifier() +
                     item.getStunMonitor().countWoundModifier();
 
