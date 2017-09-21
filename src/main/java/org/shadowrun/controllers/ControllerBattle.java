@@ -710,6 +710,9 @@ public class ControllerBattle {
         if(!availablePlayers.isEmpty()) {
             ChoiceDialog<PlayerCharacter> dialog = new ChoiceDialog<>(availablePlayers.get(0), availablePlayers);
             GridPane gridPane = (GridPane) dialog.getDialogPane().getContent();
+            DialogPane dialogPane = dialog.getDialogPane();
+            dialogPane.getStylesheets().add(
+                    getClass().getClassLoader().getResource("css/dark.css").toExternalForm());
             ComboBox<PlayerCharacter> playerCharacterComboBox;
             try {
                 playerCharacterComboBox = (ComboBox<PlayerCharacter>) gridPane.getChildren().stream()
