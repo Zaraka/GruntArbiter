@@ -220,6 +220,14 @@
     -fx-text-fill: -fx-theme-text-color;
 }
 
+.wound-cell-healthy {
+    -fx-text-fill: -fx-theme-brand-success;
+}
+
+.wound-cell-hurt {
+    -fx-text-fill: -fx-theme-brand-danger;
+}
+
 .table-matrix {
     -fx-control-inner-background: derive(-fx-theme-brand-success, -30%);
 }

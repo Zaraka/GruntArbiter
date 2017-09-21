@@ -1,5 +1,6 @@
 package org.shadowrun.common.nodes.cells;
 
+import javafx.collections.ObservableList;
 import javafx.scene.control.TableCell;
 import org.shadowrun.models.Character;
 
@@ -10,11 +11,23 @@ public class CharacterWoundModifierCell extends TableCell<Character, Character> 
         super.updateItem(item, empty);
 
         setGraphic(null);
+        ObservableList<String> cellClasses = getStyleClass();
         if(empty || item == null) {
             setText(null);
         } else {
-            setText(String.valueOf(item.getPhysicalMonitor().countWoundModifier() +
-                    item.getStunMonitor().countWoundModifier()));
+            int woundModifier = item.getPhysicalMonitor().countWoundModifier() +
+                    item.getStunMonitor().countWoundModifier();
+
+            setText(String.valueOf(woundModifier));
+
+            if(woundModifier > 0) {
+                cellClasses.add("wound-cell-hurt");
+            } else {
+                cellClasses.add("wound-cell-healthy");
+            }
+
+
+
         }
     }
 }

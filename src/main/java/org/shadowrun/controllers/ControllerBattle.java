@@ -667,7 +667,7 @@ public class ControllerBattle {
             controllerAddVehicle.onOpen(dialog);
             dialog.showAndWait();
             controllerAddVehicle.getVehicle().ifPresent(vehicle -> {
-                LOG.info("adding new vehicle");
+                LOG.info("add vehicle " + vehicle);
                 battle.getVehicles().add(vehicle);
             });
         } catch (IOException ex) {
