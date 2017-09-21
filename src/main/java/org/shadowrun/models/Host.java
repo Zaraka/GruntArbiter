@@ -20,8 +20,6 @@ public class Host {
 
     private IntegerProperty dataProcessing;
 
-    private IntegerProperty overwatchScore;
-
     private ObservableMap<Character, IntegerProperty> connectedCharacters;
 
     public Host() {
@@ -30,7 +28,6 @@ public class Host {
         sleeze = new SimpleIntegerProperty(0);
         firewall = new SimpleIntegerProperty(0);
         dataProcessing = new SimpleIntegerProperty(0);
-        overwatchScore = new SimpleIntegerProperty(0);
         connectedCharacters = FXCollections.observableHashMap();
     }
 
@@ -74,14 +71,6 @@ public class Host {
         this.dataProcessing.setValue(dataProcessing);
     }
 
-    public int getOverwatchScore() {
-        return overwatchScore.get();
-    }
-
-    public void setOverwatchScore(int overwatchScore) {
-        this.overwatchScore.setValue(overwatchScore);
-    }
-
     public ObservableMap<Character, IntegerProperty> getConnectedCharacters() {
         return connectedCharacters;
     }
@@ -104,10 +93,6 @@ public class Host {
 
     public IntegerProperty dataProcessingProperty() {
         return dataProcessing;
-    }
-
-    public IntegerProperty overwatchScoreProperty() {
-        return overwatchScore;
     }
 
     public void randomize(int rating) {
