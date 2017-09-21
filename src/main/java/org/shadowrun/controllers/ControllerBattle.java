@@ -60,9 +60,6 @@ public class ControllerBattle {
     private Battle battle;
 
     private SplitPane.Divider selectedPaneDivider;
-    private SplitPane.Divider bottomTablesDivider;
-    private SplitPane.Divider centerContentFirstDivider;
-    private SplitPane.Divider centerContentSecondDivider;
 
     private BooleanBinding allPlayersIncluded;
 
@@ -906,10 +903,6 @@ public class ControllerBattle {
                         battle.getCharacters().stream().filter(character -> character.getPlayer() != null).count());
 
         button_spawnPlayer.disableProperty().bind(allPlayersIncluded);
-
-        bottomTablesDivider = splitPane_bottomTables.getDividers().get(0);
-        centerContentFirstDivider = splitPane_centerContent.getDividers().get(0);
-        centerContentFirstDivider = splitPane_centerContent.getDividers().get(1);
 
         Node vehicleTableNode = splitPane_centerContent.getItems().get(1);
         Node barrierDeviceTableNode = splitPane_centerContent.getItems().get(2);
