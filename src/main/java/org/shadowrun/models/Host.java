@@ -3,9 +3,10 @@ package org.shadowrun.models;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableMap;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 
 public class Host {
@@ -21,6 +22,8 @@ public class Host {
 
     private IntegerProperty overwatchScore;
 
+    private ObservableMap<Character, IntegerProperty> connectedCharacters;
+
     public Host() {
         rating = new SimpleIntegerProperty(0);
         attack = new SimpleIntegerProperty(0);
@@ -28,6 +31,7 @@ public class Host {
         firewall = new SimpleIntegerProperty(0);
         dataProcessing = new SimpleIntegerProperty(0);
         overwatchScore = new SimpleIntegerProperty(0);
+        connectedCharacters = FXCollections.observableHashMap();
     }
 
     public int getRating() {
@@ -76,6 +80,10 @@ public class Host {
 
     public void setOverwatchScore(int overwatchScore) {
         this.overwatchScore.setValue(overwatchScore);
+    }
+
+    public ObservableMap<Character, IntegerProperty> getConnectedCharacters() {
+        return connectedCharacters;
     }
 
     public IntegerProperty ratingProperty() {

@@ -21,6 +21,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.layout.FlowPane?>
 
 <AnchorPane minHeight="-Infinity" minWidth="-Infinity" stylesheets="@../css/dark.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.shadowrun.controllers.ControllerBattle">
    <children>
@@ -199,47 +200,6 @@
                                                                   <Button mnemonicParsing="false" onAction="#addICeOnAction" styleClass="button-primary" text="Add ICe" />
                                                                </items>
                                                             </ToolBar>
-                                                            <ToolBar prefHeight="40.0" prefWidth="200.0">
-                                                               <items>
-                                                                  <Label text="OS">
-                                                                     <font>
-                                                                        <Font name="System Bold" size="15.0" />
-                                                                     </font>
-                                                                  </Label>
-                                                                  <Label fx:id="label_overwatchScore" text="0">
-                                                                     <font>
-                                                                        <Font name="System Bold" size="15.0" />
-                                                                     </font>
-                                                                     <tooltip>
-                                                                        <Tooltip text="Overwatch score" />
-                                                                     </tooltip>
-                                                                  </Label>
-                                                                  <Button contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#overwatchScorePlusOnAction" styleClass="button-success">
-                                                                     <graphic>
-                                                                        <FontAwesomeIconView glyphName="PLUS" />
-                                                                     </graphic>
-                                                                     <tooltip>
-                                                                        <Tooltip text="Increase overwatch score" />
-                                                                     </tooltip>
-                                                                  </Button>
-                                                                  <Button mnemonicParsing="false" onAction="#overwatchScoreMinusOnAction" styleClass="button-danger">
-                                                                     <graphic>
-                                                                        <FontAwesomeIconView glyphName="MINUS" />
-                                                                     </graphic>
-                                                                     <tooltip>
-                                                                        <Tooltip text="Decrease overwatch score" />
-                                                                     </tooltip>
-                                                                  </Button>
-                                                                  <Button mnemonicParsing="false" onAction="#overwatchScoreResetOnAction" text="Reset">
-                                                                     <graphic>
-                                                                        <FontAwesomeIconView glyphName="REFRESH" />
-                                                                     </graphic>
-                                                                     <tooltip>
-                                                                        <Tooltip text="Reset overwatch score" />
-                                                                     </tooltip>
-                                                                  </Button>
-                                                               </items>
-                                                            </ToolBar>
                                                          </children>
                                                       </VBox>
                                                    </children>
@@ -401,6 +361,61 @@
                                     </Label>
                                  </children>
                               </HBox>
+                              <FlowPane>
+                                 <children>
+                                    <Button fx:id="button_selected_matrix" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#matrixConnectOnAction" styleClass="button-success" text="Connect">
+
+                                    </Button>
+                                    <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#removeCharacterOnAction" styleClass="button-primary" text="Delete">
+                                       <graphic>
+                                          <FontAwesomeIconView glyphName="TRASH"/>
+                                       </graphic>
+                                    </Button>
+                                 </children>
+                              </FlowPane>
+                              <VBox fx:id="vbox_selected_matrix" alignment="CENTER">
+                                 <ToolBar prefHeight="40.0" prefWidth="200.0">
+                                    <items>
+                                       <Label text="OS">
+                                          <font>
+                                             <Font name="System Bold" size="15.0" />
+                                          </font>
+                                       </Label>
+                                       <Label fx:id="label_overwatchScore" text="0">
+                                          <font>
+                                             <Font name="System Bold" size="15.0" />
+                                          </font>
+                                          <tooltip>
+                                             <Tooltip text="Overwatch score" />
+                                          </tooltip>
+                                       </Label>
+                                       <Button contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#overwatchScorePlusOnAction" styleClass="button-success">
+                                          <graphic>
+                                             <FontAwesomeIconView glyphName="PLUS" />
+                                          </graphic>
+                                          <tooltip>
+                                             <Tooltip text="Increase overwatch score" />
+                                          </tooltip>
+                                       </Button>
+                                       <Button contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#overwatchScoreMinusOnAction" styleClass="button-danger">
+                                          <graphic>
+                                             <FontAwesomeIconView glyphName="MINUS" />
+                                          </graphic>
+                                          <tooltip>
+                                             <Tooltip text="Decrease overwatch score" />
+                                          </tooltip>
+                                       </Button>
+                                       <Button mnemonicParsing="false" onAction="#overwatchScoreResetOnAction" text="Reboot">
+                                          <graphic>
+                                             <FontAwesomeIconView glyphName="REFRESH" />
+                                          </graphic>
+                                          <tooltip>
+                                             <Tooltip text="Reboot &amp; overwatch score" />
+                                          </tooltip>
+                                       </Button>
+                                    </items>
+                                 </ToolBar>
+                              </VBox>
                               <HBox fx:id="hbox_selected_character" alignment="CENTER">
                                  <children>
                                     <GridPane>

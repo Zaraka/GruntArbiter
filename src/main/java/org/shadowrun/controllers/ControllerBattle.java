@@ -6,9 +6,12 @@ import javafx.application.Platform;
 import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.ObservableMap;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -150,6 +153,8 @@ public class ControllerBattle {
     private VBox vbox_matrixProperties;
     @FXML
     private VBox vbox_selected_player;
+    @FXML
+    private VBox vbox_selected_matrix;
 
 
     @FXML
@@ -213,6 +218,8 @@ public class ControllerBattle {
     private Button button_hostAction;
     @FXML
     private Button button_spawnPlayer;
+    @FXML
+    private Button button_selected_matrix;
 
     @FXML
     private TextField textField_selected_initiative;
@@ -599,17 +606,33 @@ public class ControllerBattle {
 
     @FXML
     private void overwatchScorePlusOnAction() {
-        battleLogic.raiseOverwatchScore();
+        Character character = tableView_masterTable.getSelectionModel().getSelectedItem();
+        ObservableMap<Character, IntegerProperty> connectedCharacters = battle.getHost().getConnectedCharacters();
+        IntegerProperty overwatchProperty = connectedCharacters.get(character);
+
+        int currentValue = overwatchProperty.get();
+        if(currentValue < 40)
+            overwatchProperty.set(currentValue + 1);
     }
 
     @FXML
     private void overwatchScoreMinusOnAction() {
-        battleLogic.decreaseOverwatchScore();
+        Character character = tableView_masterTable.getSelectionModel().getSelectedItem();
+        ObservableMap<Character, IntegerProperty> connectedCharacters = battle.getHost().getConnectedCharacters();
+        IntegerProperty overwatchProperty = connectedCharacters.get(character);
+
+        int currentValue = overwatchProperty.get();
+        if(currentValue > 0)
+            overwatchProperty.set(currentValue - 1);
     }
 
     @FXML
     private void overwatchScoreResetOnAction() {
-        battleLogic.resetOverwatchScoore();
+        Character character = tableView_masterTable.getSelectionModel().getSelectedItem();
+        ObservableMap<Character, IntegerProperty> connectedCharacters = battle.getHost().getConnectedCharacters();
+        IntegerProperty overwatchProperty = connectedCharacters.get(character);
+
+        overwatchProperty.set(0);
     }
 
     @FXML
@@ -733,6 +756,25 @@ public class ControllerBattle {
         }
     }
 
+    @FXML
+    private void matrixConnectOnAction() {
+        Character character = tableView_masterTable.getSelectionModel().getSelectedItem();
+        ObservableMap<Character, IntegerProperty> connectedCharacters = battle.getHost().getConnectedCharacters();
+        if(connectedCharacters.containsKey(character)) {
+            connectedCharacters.remove(character);
+        } else {
+            connectedCharacters.put(character, new SimpleIntegerProperty(0));
+        }
+        tableView_masterTable.getSelectionModel().clearSelection();
+        tableView_masterTable.getSelectionModel().select(character);
+    }
+
+    @FXML
+    private void removeCharacterOnAction() {
+        Character character = tableView_masterTable.getSelectionModel().getSelectedItem();
+        battle.getCharacters().remove(character);
+    }
+
     private void setNewInitiative() {
         for (Character character : battle.getCharacters()) {
             TextInputDialog dialog = initiativeDialogFactory.createDialog(character);
@@ -749,6 +791,7 @@ public class ControllerBattle {
         selectedPaneDivider.setPosition(99.0);
         label_selectedCharacter.textProperty().unbind();
 
+        vbox_selected_matrix.setVisible(false);
         hbox_selected_glyph.setVisible(false);
         hbox_selected_character.setVisible(false);
         hbox_selected_barrier.setVisible(false);
@@ -786,6 +829,7 @@ public class ControllerBattle {
         textField_selected_initiative.textProperty()
                 .addListener(new NumericLimitListener(textField_selected_initiative, -100, 100));
 
+        vbox_selected_matrix.managedProperty().bind(vbox_selected_matrix.visibleProperty());
         hbox_selected_barrier.managedProperty().bind(hbox_selected_barrier.visibleProperty());
         hbox_selected_character.managedProperty().bind(hbox_selected_character.visibleProperty());
         vbox_selected_player.managedProperty().bind(vbox_selected_player.visibleProperty());
@@ -858,7 +902,6 @@ public class ControllerBattle {
         label_host_dataProcessing.textProperty().bind(battle.getHost().dataProcessingProperty().asString());
         label_host_rating.textProperty().bind(battle.getHost().ratingProperty().asString());
         textField_backgroundCount.textProperty().bindBidirectional(battle.backgroundCountProperty(), new NumberStringConverter());
-        label_overwatchScore.textProperty().bind(battle.getHost().overwatchScoreProperty().asString());
         vbox_matrixProperties.visibleProperty().bind(battle.getHost().isInitalized());
         Bindings.bindBidirectional(label_time.textProperty(), battle.combatTurnProperty(), new IterationTimeConverter(battle.getTime()));
         comboBox_weather.valueProperty().bindBidirectional(battle.selectedWeatherProperty());
@@ -1131,48 +1174,59 @@ public class ControllerBattle {
                     tableRow.setContextMenu(newValue ? emptyContextMenu : fullContextMenu));
             return tableRow;
         });
-        tableView_masterTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if (oldValue != null) {
+        tableView_masterTable.getSelectionModel().selectedItemProperty()
+                .addListener((observable, oldCharacter, newCharacter) -> {
+            if (oldCharacter != null) {
                 label_selected_physical.textProperty().unbind();
                 label_selected_stun.textProperty().unbind();
-                textField_selected_initiative.textProperty().unbindBidirectional(oldValue.initiativeProperty());
-                if (oldValue.playerProperty().isNotNull().get()) {
+                label_overwatchScore.textProperty().unbind();
+                textField_selected_initiative.textProperty().unbindBidirectional(oldCharacter.initiativeProperty());
+                if (oldCharacter.playerProperty().isNotNull().get()) {
                     textField_selected_spiritIndex.textProperty()
-                            .unbindBidirectional(oldValue.getPlayer().spiritIndexProperty());
+                            .unbindBidirectional(oldCharacter.getPlayer().spiritIndexProperty());
                     label_selected_astralReputation.textProperty()
-                            .unbindBidirectional(oldValue.getPlayer().spiritIndexProperty());
+                            .unbindBidirectional(oldCharacter.getPlayer().spiritIndexProperty());
                 }
             }
 
             cleanSelectedPane();
 
-            if (newValue != null) {
+            if (newCharacter != null) {
                 clearTableSelection(tableView_masterTable);
 
-                CharacterIconFactory.createIcon(newValue).ifPresent(fontAwesomeIcon -> {
+                CharacterIconFactory.createIcon(newCharacter).ifPresent(fontAwesomeIcon -> {
                     fontAwesomeIcon_selected.setIcon(fontAwesomeIcon);
                     hbox_selected_glyph.setVisible(true);
                 });
 
                 label_selected_physical.textProperty().bind(Bindings.concat(
-                        newValue.getPhysicalMonitor().currentProperty(),
+                        newCharacter.getPhysicalMonitor().currentProperty(),
                         "/",
-                        newValue.getPhysicalMonitor().maxProperty()
+                        newCharacter.getPhysicalMonitor().maxProperty()
                 ));
 
                 label_selected_stun.textProperty().bind(Bindings.concat(
-                        newValue.getStunMonitor().currentProperty(),
+                        newCharacter.getStunMonitor().currentProperty(),
                         "/",
-                        newValue.getStunMonitor().maxProperty()
+                        newCharacter.getStunMonitor().maxProperty()
                 ));
                 textField_selected_initiative.textProperty()
-                        .bindBidirectional(newValue.initiativeProperty(), new NumberStringConverter());
-                label_selectedCharacter.textProperty().bind(newValue.nameProperty());
-                if (newValue.playerProperty().isNotNull().get()) {
+                        .bindBidirectional(newCharacter.initiativeProperty(), new NumberStringConverter());
+                label_selectedCharacter.textProperty().bind(newCharacter.nameProperty());
+                if (newCharacter.playerProperty().isNotNull().get()) {
                     textField_selected_spiritIndex.textProperty()
-                            .bindBidirectional(newValue.getPlayer().spiritIndexProperty(), new NumberStringConverter());
+                            .bindBidirectional(newCharacter.getPlayer().spiritIndexProperty(), new NumberStringConverter());
                     label_selected_astralReputation.textProperty()
-                            .bindBidirectional(newValue.getPlayer().spiritIndexProperty(), new SpiritIndexReputationConverter());
+                            .bindBidirectional(newCharacter.getPlayer().spiritIndexProperty(), new SpiritIndexReputationConverter());
+                }
+
+                if(battle.getHost().getConnectedCharacters().containsKey(newCharacter)) {
+                    vbox_selected_matrix.setVisible(true);
+                    label_overwatchScore.textProperty().bind(
+                            battle.getHost().getConnectedCharacters().get(newCharacter).asString());
+                    button_selected_matrix.textProperty().setValue("Disconnect");
+                } else {
+                    button_selected_matrix.textProperty().setValue("Connect");
                 }
 
                 hbox_selected_character.setVisible(true);

@@ -2,6 +2,7 @@ package org.shadowrun.logic;
 
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.*;
+import javafx.collections.ObservableMap;
 import org.apache.commons.lang3.StringUtils;
 import org.shadowrun.common.constants.ICE;
 import org.shadowrun.common.constants.Weather;
@@ -77,19 +78,6 @@ public class BattleLogic {
     public void refreshPhase() {
         getActiveBattle().refreshPhase();
         currentCharacterName.setValue(getActiveBattle().currentCharacterProperty().get().getName());
-    }
-
-    public void raiseOverwatchScore() {
-        getActiveBattle().getHost().overwatchScoreProperty().setValue(getActiveBattle().getHost().getOverwatchScore() + 1);
-    }
-
-    public void decreaseOverwatchScore() {
-        if (getActiveBattle().getHost().getOverwatchScore() > 0)
-            getActiveBattle().getHost().overwatchScoreProperty().setValue(getActiveBattle().getHost().getOverwatchScore() - 1);
-    }
-
-    public void resetOverwatchScoore() {
-        getActiveBattle().getHost().overwatchScoreProperty().setValue(0);
     }
 
     public void raiseBackgroundCount() {
