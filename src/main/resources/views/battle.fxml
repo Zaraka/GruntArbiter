@@ -15,14 +15,15 @@
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.layout.FlowPane?>
 
+<?import javafx.geometry.Insets?>
 <AnchorPane minHeight="-Infinity" minWidth="-Infinity" stylesheets="@../css/dark.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.shadowrun.controllers.ControllerBattle">
    <children>
       <VBox prefHeight="167.0" prefWidth="1024.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -275,7 +276,7 @@
                                        <columns>
                                           <TableColumn fx:id="tableColumn_masterTable_character" editable="false" prefWidth="145.0" sortable="false" text="Character" />
                                           <TableColumn fx:id="tableColumn_masterTable_condition" editable="false" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" sortable="false" text="Condition" />
-                                          <TableColumn fx:id="tableColumn_masterTable_woundModifier" editable="false" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" sortable="false" text="Wound"/>
+                                          <TableColumn fx:id="tableColumn_masterTable_woundModifier" editable="false" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" sortable="false" text="Wound" />
                                           <TableColumn fx:id="tableColumn_masterTable_initiative" editable="false" maxWidth="91.0" minWidth="51.0" prefWidth="90.0" resizable="false" sortType="DESCENDING" sortable="false" text="Initiative" />
                                           <TableColumn fx:id="tableColumn_masterTable_turn1" editable="false" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" resizable="false" sortable="false" text="1" />
                                           <TableColumn fx:id="tableColumn_masterTable_turn2" editable="false" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" resizable="false" sortable="false" text="2" />
@@ -361,14 +362,17 @@
                                     </Label>
                                  </children>
                               </HBox>
-                              <FlowPane>
+                              <FlowPane fx:id="flowPane_selected_badges">
+                                 <padding><Insets top="5" bottom="5"/></padding>
+                              </FlowPane>
+                              <FlowPane hgap="5.0" vgap="3.0">
                                  <children>
                                     <Button fx:id="button_selected_matrix" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#matrixConnectOnAction" styleClass="button-success" text="Connect">
 
                                     </Button>
                                     <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#removeCharacterOnAction" styleClass="button-primary" text="Delete">
                                        <graphic>
-                                          <FontAwesomeIconView glyphName="TRASH"/>
+                                          <FontAwesomeIconView glyphName="TRASH" />
                                        </graphic>
                                     </Button>
                                  </children>

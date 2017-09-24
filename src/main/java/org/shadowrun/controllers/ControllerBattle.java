@@ -20,10 +20,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 import javafx.util.converter.NumberStringConverter;
@@ -249,6 +246,9 @@ public class ControllerBattle {
 
     @FXML
     private FontAwesomeIconView fontAwesomeIcon_selected;
+
+    @FXML
+    private FlowPane flowPane_selected_badges;
 
     private List<TableView> contentTables;
 
@@ -762,11 +762,14 @@ public class ControllerBattle {
         ObservableMap<Character, IntegerProperty> connectedCharacters = battle.getHost().getConnectedCharacters();
         if(connectedCharacters.containsKey(character)) {
             connectedCharacters.remove(character);
+            character.setWorld(World.REAL);
         } else {
             connectedCharacters.put(character, new SimpleIntegerProperty(0));
+            character.setWorld(World.MATRIX);
         }
         tableView_masterTable.getSelectionModel().clearSelection();
         tableView_masterTable.getSelectionModel().select(character);
+        tableView_masterTable.refresh();
     }
 
     @FXML
@@ -799,6 +802,8 @@ public class ControllerBattle {
         hbox_selected_vehicle.setVisible(false);
         vbox_selected_player.setVisible(false);
         anchorPane_selected.setVisible(false);
+
+        flowPane_selected_badges.getChildren().clear();
     }
 
     public void setStageAndListeners(Battle battle, AppLogic appLogic, BattleLogic battleLogic, boolean loaded) {
@@ -1227,6 +1232,14 @@ public class ControllerBattle {
                     button_selected_matrix.textProperty().setValue("Disconnect");
                 } else {
                     button_selected_matrix.textProperty().setValue("Connect");
+                }
+
+                if(newCharacter.getWorld() == World.MATRIX) {
+                    Label matrix = new Label("In matrix");
+                    matrix.getStyleClass().add("badge");
+                    matrix.getStyleClass().add("badge-success");
+                    flowPane_selected_badges.getChildren().add(matrix);
+
                 }
 
                 hbox_selected_character.setVisible(true);

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/dark.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.Test">
+   <children>
+      <FlowPane hgap="5.0" layoutX="83.0" layoutY="14.0" prefHeight="400.0" prefWidth="600.0" vgap="3.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label text="Label">
+               <styleClass>
+                  <String fx:value="badge" />
+                  <String fx:value="badge-success" />
+               </styleClass>
+            </Label>
+            <Label styleClass="badge" text="Label" />
+            <Label text="Label">
+               <styleClass>
+                  <String fx:value="badge" />
+                  <String fx:value="badge-danger" />
+               </styleClass>
+            </Label>
+            <Label layoutX="136.0" layoutY="10.0" text="Label">
+               <styleClass>
+                  <String fx:value="badge" />
+                  <String fx:value="badge-warning" />
+               </styleClass>
+            </Label>
+            <Label layoutX="199.0" layoutY="10.0" text="Label">
+               <styleClass>
+                  <String fx:value="badge" />
+                  <String fx:value="badge-info" />
+               </styleClass>
+            </Label>
+            <Label layoutX="262.0" layoutY="10.0" styleClass="badge" text="Label" />
+         </children>
+      </FlowPane>
+   </children>
+</AnchorPane>

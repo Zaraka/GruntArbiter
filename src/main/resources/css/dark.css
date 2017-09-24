@@ -248,3 +248,32 @@
     -fx-font-family: "system";
     -fx-fill: -fx-theme-text-color;
 }
+
+.badge {
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-padding: 5 10 5 10;
+    -fx-border-style: solid;
+    -fx-border-color: -fx-theme-brand-signature;
+    -fx-background-color: -fx-theme-brand-signature;
+}
+
+.badge-success {
+    -fx-border-color: -fx-theme-brand-success;
+    -fx-background-color: -fx-theme-brand-success;
+}
+
+.badge-info {
+    -fx-border-color: -fx-theme-brand-info;
+    -fx-background-color: -fx-theme-brand-info;
+}
+
+.badge-warning {
+    -fx-border-color: -fx-theme-brand-warning;
+    -fx-background-color: -fx-theme-brand-warning;
+}
+
+.badge-danger {
+    -fx-border-color: -fx-theme-brand-danger;
+    -fx-background-color: -fx-theme-brand-danger;
+}
