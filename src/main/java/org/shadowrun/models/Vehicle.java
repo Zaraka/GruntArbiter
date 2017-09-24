@@ -102,4 +102,19 @@ public class Vehicle {
     public IntegerProperty sensorProperty() {
         return sensor;
     }
+
+    @Override
+    public String toString() {
+        return "Vehicle{" +
+                "name=" + name +
+                ", conditionMonitor=" + conditionMonitor +
+                ", handling=" + handling +
+                ", speed=" + speed +
+                ", acceleration=" + acceleration +
+                ", body=" + body +
+                ", armor=" + armor +
+                ", pilot=" + pilot +
+                ", sensor=" + sensor +
+                '}';
+    }
 }

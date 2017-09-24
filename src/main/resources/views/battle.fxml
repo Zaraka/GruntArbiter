@@ -365,7 +365,7 @@
                               <FlowPane fx:id="flowPane_selected_badges">
                                  <padding><Insets top="5" bottom="5"/></padding>
                               </FlowPane>
-                              <FlowPane hgap="5.0" vgap="3.0">
+                              <FlowPane hgap="10.0" vgap="3.0">
                                  <children>
                                     <Button fx:id="button_selected_matrix" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#matrixConnectOnAction" styleClass="button-success" text="Connect">
 

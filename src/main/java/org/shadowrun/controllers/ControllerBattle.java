@@ -26,6 +26,7 @@ import javafx.util.Pair;
 import javafx.util.converter.NumberStringConverter;
 import org.apache.commons.lang3.StringUtils;
 import org.shadowrun.common.NumericLimitListener;
+import org.shadowrun.common.constants.CssClasses;
 import org.shadowrun.common.constants.ICE;
 import org.shadowrun.common.constants.Weather;
 import org.shadowrun.common.constants.World;
@@ -1234,12 +1235,34 @@ public class ControllerBattle {
                     button_selected_matrix.textProperty().setValue("Connect");
                 }
 
-                if(newCharacter.getWorld() == World.MATRIX) {
-                    Label matrix = new Label("In matrix");
-                    matrix.getStyleClass().add("badge");
-                    matrix.getStyleClass().add("badge-success");
-                    flowPane_selected_badges.getChildren().add(matrix);
+                if(newCharacter.isNpc()) {
+                    flowPane_selected_badges.getChildren()
+                            .add(BadgeFactory.createBadge(
+                                    "NPC",
+                                    "This character is a NPC",
+                                    CssClasses.INFO));
+                } else {
+                    flowPane_selected_badges.getChildren()
+                            .add(BadgeFactory.createBadge(
+                                    "PC",
+                                    "This character is player controlled",
+                                    CssClasses.PRIMARY));
+                }
 
+                if(newCharacter.isIce()) {
+                    flowPane_selected_badges.getChildren()
+                            .add(BadgeFactory.createBadge(
+                                    "ICe",
+                                    "This character is part of host defense countermeasures",
+                                    CssClasses.INFO));
+                }
+
+                if(newCharacter.getWorld() == World.MATRIX) {
+                    flowPane_selected_badges.getChildren()
+                            .add(BadgeFactory.createBadge(
+                                    "Matrix",
+                                    "This character is inside matrix",
+                                    CssClasses.SUCCESS));
                 }
 
                 hbox_selected_character.setVisible(true);
