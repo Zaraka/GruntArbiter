@@ -38,7 +38,9 @@ public class ControllerWelcomeScreen {
         listView_latestCampaigns.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
                 Path selectedItem = listView_latestCampaigns.getSelectionModel().getSelectedItem();
-                controllerMain.openCampaign(selectedItem.toFile());
+                if(selectedItem != null) {
+                    controllerMain.openCampaign(selectedItem.toFile());
+                }
             }
         });
     }
