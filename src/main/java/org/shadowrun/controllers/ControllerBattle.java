@@ -101,11 +101,11 @@ public class ControllerBattle {
     @FXML
     private TableColumn<Vehicle, String> tableColumn_vehicles_condition;
     @FXML
-    private TableColumn<Vehicle, String> tableColumn_vehicles_handling;
+    private TableColumn<Vehicle, VehicleAttribute> tableColumn_vehicles_handling;
     @FXML
-    private TableColumn<Vehicle, String> tableColumn_vehicles_speed;
+    private TableColumn<Vehicle, VehicleAttribute> tableColumn_vehicles_speed;
     @FXML
-    private TableColumn<Vehicle, String> tableColumn_vehicles_acceleration;
+    private TableColumn<Vehicle, VehicleAttribute> tableColumn_vehicles_acceleration;
     @FXML
     private TableColumn<Vehicle, Integer> tableColumn_vehicles_body;
     @FXML
@@ -993,20 +993,14 @@ public class ControllerBattle {
                         "/",
                         param.getValue().getConditionMonitor().getMax()));
         tableColumn_vehicles_handling.setCellValueFactory(param ->
-                Bindings.concat(
-                        param.getValue().getHandling().getOnRoad(),
-                        "/",
-                        param.getValue().getHandling().getOffRoad()));
+                new ReadOnlyObjectWrapper<>(param.getValue().getHandling()));
+        tableColumn_vehicles_handling.setCellFactory(param -> new VehicleAttributeCell());
         tableColumn_vehicles_speed.setCellValueFactory(param ->
-                Bindings.concat(
-                        param.getValue().getSpeed().getOnRoad(),
-                        "/",
-                        param.getValue().getSpeed().getOffRoad()));
+                new ReadOnlyObjectWrapper<>(param.getValue().getSpeed()));
+        tableColumn_vehicles_speed.setCellFactory(param -> new VehicleAttributeCell());
         tableColumn_vehicles_acceleration.setCellValueFactory(param ->
-                Bindings.concat(
-                        param.getValue().getAcceleration().getOnRoad(),
-                        "/",
-                        param.getValue().getAcceleration().getOffRoad()));
+                new ReadOnlyObjectWrapper<>(param.getValue().getAcceleration()));
+        tableColumn_vehicles_acceleration.setCellFactory(param -> new VehicleAttributeCell());
         tableColumn_vehicles_body.setCellValueFactory(param -> param.getValue().bodyProperty().asObject());
         tableColumn_vehicles_armor.setCellValueFactory(param -> param.getValue().armorProperty().asObject());
         tableColumn_vehicles_pilot.setCellValueFactory(param -> param.getValue().pilotProperty().asObject());
