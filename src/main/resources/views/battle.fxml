@@ -99,7 +99,7 @@
                   <Pane HBox.hgrow="ALWAYS" />
                </items>
             </ToolBar>
-            <SplitPane fx:id="splitPane_horizontal" dividerPositions="0.4, 0.72" VBox.vgrow="ALWAYS">
+            <SplitPane fx:id="splitPane_horizontal" dividerPositions="0.23, 0.72" VBox.vgrow="ALWAYS">
                <items>
                   <AnchorPane>
                      <children>

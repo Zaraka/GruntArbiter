@@ -60,8 +60,6 @@ public class ControllerBattle {
     private BattleLogic battleLogic;
     private Battle battle;
 
-    private SplitPane.Divider selectedPaneDivider;
-
     private BooleanBinding allPlayersIncluded;
 
     private static final InitiativeDialogFactory initiativeDialogFactory = new InitiativeDialogFactory();
@@ -814,7 +812,6 @@ public class ControllerBattle {
     }
 
     private void cleanSelectedPane() {
-        selectedPaneDivider.setPosition(99.0);
         label_selectedCharacter.textProperty().unbind();
 
         vbox_selected_matrix.setVisible(false);
@@ -843,8 +840,6 @@ public class ControllerBattle {
 
         button_nextTurn.disableProperty().bind(battleLogic.hasBattle());
         button_prevTurn.disableProperty().bind(battleLogic.hasBattle());
-
-        selectedPaneDivider = splitPane_horizontal.getDividers().get(1);
 
         setupMasterTable(battle);
 
@@ -977,6 +972,7 @@ public class ControllerBattle {
 
         Node vehicleTableNode = splitPane_centerContent.getItems().get(1);
         Node barrierDeviceTableNode = splitPane_centerContent.getItems().get(2);
+        Node selectedPaneNode = splitPane_horizontal.getItems().get(2);
 
         Bindings.isEmpty(tableView_vehicles.getItems()).addListener((observable, oldValue, newValue) -> {
             if(newValue != null) {
@@ -999,8 +995,25 @@ public class ControllerBattle {
             }
         });
 
+        tableView_masterTable.getSelectionModel().selectedItemProperty().isNotNull().or(
+                tableView_vehicles.getSelectionModel().selectedItemProperty().isNotNull().or(
+                        tableView_barrier.getSelectionModel().selectedItemProperty().isNotNull().or(
+                                tableView_devices.getSelectionModel().selectedItemProperty().isNotNull()
+                        )
+                )
+        ).addListener((observable, oldValue, newValue) -> {
+            if(newValue != null) {
+                if(newValue) {
+                    splitPane_horizontal.getItems().add(selectedPaneNode);
+                } else {
+                    splitPane_horizontal.getItems().remove(selectedPaneNode);
+                }
+            }
+        });
+
         splitPane_centerContent.getItems().remove(barrierDeviceTableNode);
         splitPane_centerContent.getItems().remove(vehicleTableNode);
+        splitPane_horizontal.getItems().remove(selectedPaneNode);
 
         if(!loaded) {
             setNewInitiative();
@@ -1050,7 +1063,6 @@ public class ControllerBattle {
                 hbox_selected_glyph.setVisible(true);
                 hbox_selected_vehicle.setVisible(true);
                 anchorPane_selected.setVisible(true);
-                selectedPaneDivider.setPosition(SELECTED_PANE_OPEN_POS);
             }
         });
 
@@ -1284,7 +1296,6 @@ public class ControllerBattle {
                 hbox_selected_character.setVisible(true);
                 vbox_selected_player.setVisible(true);
                 anchorPane_selected.setVisible(true);
-                selectedPaneDivider.setPosition(SELECTED_PANE_OPEN_POS);
             }
         });
     }
@@ -1349,7 +1360,6 @@ public class ControllerBattle {
                 hbox_selected_barrier.setVisible(true);
                 hbox_selected_glyph.setVisible(true);
                 anchorPane_selected.setVisible(true);
-                selectedPaneDivider.setPosition(SELECTED_PANE_OPEN_POS);
             }
         });
     }
@@ -1415,7 +1425,6 @@ public class ControllerBattle {
                 hbox_selected_glyph.setVisible(true);
                 hbox_selected_device.setVisible(true);
                 anchorPane_selected.setVisible(true);
-                selectedPaneDivider.setPosition(SELECTED_PANE_OPEN_POS);
             }
         });
     }
