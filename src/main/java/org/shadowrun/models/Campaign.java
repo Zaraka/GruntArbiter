@@ -8,6 +8,13 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.apache.commons.lang3.StringUtils;
 
+/**
+ * WARNING:
+ * This Campaign class is also used as save file.
+ * Everything in this class is serialized when saving Grunt Arbiter campaign.
+ * That means, changing this class attributes will create issue with backward compability.
+ * So all changes HAVE to raise Major version.
+ */
 public class Campaign {
 
     private StringProperty name;
@@ -20,6 +27,8 @@ public class Campaign {
 
     private ObservableList<Character> characterPresets;
 
+    private ObservableList<Squad> squads;
+
     private ObservableList<Battle> battles;
 
     public Campaign(String name, SemanticVersion version) {
@@ -29,6 +38,7 @@ public class Campaign {
         this.players = FXCollections.observableArrayList();
         this.characterPresets = FXCollections.observableArrayList();
         this.battles = FXCollections.observableArrayList();
+        this.squads = FXCollections.observableArrayList();
     }
 
     public String getName() {
@@ -81,5 +91,9 @@ public class Campaign {
 
     public void setDescription(String description) {
         this.description.set(description);
+    }
+
+    public ObservableList<Squad> getSquads() {
+        return squads;
     }
 }

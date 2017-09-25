@@ -779,15 +779,42 @@ public class ControllerBattle {
         battle.getCharacters().remove(character);
     }
 
+    @FXML
+    private void addSquadOnAction() {
+        Parent root;
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("views/manageSquads.fxml"));
+            root = loader.load();
+            Stage dialog = new Stage();
+            dialog.setTitle("Create new squad");
+            dialog.setScene(new Scene(root));
+
+            ControllerManageSquads controllerManageSquads = loader.getController();
+            controllerManageSquads.onOpen(dialog, appLogic.getActiveCampaign());
+            dialog.showAndWait();
+            controllerManageSquads.getSquad().ifPresent(squad -> squad.getCharacters().forEach(character -> {
+                setCharacterInitiative(character);
+                battle.getCharacters().add(character);
+            }));
+
+        } catch (IOException ex) {
+            LOG.error("Could not load addCharacter dialog: ", ex);
+        }
+    }
+
     private void setNewInitiative() {
         for (Character character : battle.getCharacters()) {
-            TextInputDialog dialog = initiativeDialogFactory.createDialog(character);
-            Optional<String> result = dialog.showAndWait();
-            try {
-                character.setInitiative(result.map(Integer::parseInt).orElse(0));
-            } catch (NumberFormatException ex) {
-                character.setInitiative(0);
-            }
+            setCharacterInitiative(character);
+        }
+    }
+
+    private void setCharacterInitiative(Character character) {
+        TextInputDialog dialog = initiativeDialogFactory.createDialog(character);
+        Optional<String> result = dialog.showAndWait();
+        try {
+            character.setInitiative(result.map(Integer::parseInt).orElse(0));
+        } catch (NumberFormatException ex) {
+            character.setInitiative(0);
         }
     }
 

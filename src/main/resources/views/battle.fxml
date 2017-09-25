@@ -99,16 +99,24 @@
                   <Pane HBox.hgrow="ALWAYS" />
                </items>
             </ToolBar>
-            <SplitPane fx:id="splitPane_horizontal" dividerPositions="0.32, 0.72" prefHeight="160.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+            <SplitPane fx:id="splitPane_horizontal" dividerPositions="0.4, 0.72" VBox.vgrow="ALWAYS">
                <items>
                   <AnchorPane>
                      <children>
                         <VBox prefHeight="707.0" prefWidth="315.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <ToolBar prefHeight="40.0" prefWidth="200.0">
+                              <ToolBar prefHeight="40.0" prefWidth="315.0">
                                  <items>
-                                    <Button mnemonicParsing="false" onAction="#addCharacterOnAction" styleClass="button-primary" text="Spawn character" />
-                                    <Button fx:id="button_spawnPlayer" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#addPlayerOnAction" styleClass="button-primary" text="Spawn player" />
+                                    <Button mnemonicParsing="false" onAction="#addCharacterOnAction" styleClass="button-primary" text="Spawn character">
+                                       <graphic>
+                                          <FontAwesomeIconView glyphName="MALE" />
+                                       </graphic>
+                                    </Button>
+                                    <Button fx:id="button_spawnPlayer" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#addPlayerOnAction" styleClass="button-primary" text="Spawn player">
+                                       <graphic>
+                                          <FontAwesomeIconView glyphName="USER" />
+                                       </graphic>
+                                    </Button>
                                  </items>
                               </ToolBar>
                               <VBox>
@@ -127,7 +135,16 @@
                                                       <ToolBar prefHeight="40.0" prefWidth="220.0">
                                                          <items>
                                                             <Button mnemonicParsing="false" onAction="#addBarrierOnAction" styleClass="button-primary" text="Add barrier" />
-                                                            <Button mnemonicParsing="false" onAction="#addVehicleOnAction" styleClass="button-primary" text="Add vehicle" />
+                                                            <Button mnemonicParsing="false" onAction="#addVehicleOnAction" styleClass="button-primary" text="Add vehicle">
+                                                               <graphic>
+                                                                  <FontAwesomeIconView glyphName="CAR" />
+                                                               </graphic>
+                                                            </Button>
+                                                            <Button mnemonicParsing="false" onAction="#addSquadOnAction" styleClass="button-primary" text="Add squad">
+                                                               <graphic>
+                                                                  <FontAwesomeIconView glyphName="USERS" />
+                                                               </graphic>
+                                                            </Button>
                                                          </items>
                                                       </ToolBar>
                                                    </children>
