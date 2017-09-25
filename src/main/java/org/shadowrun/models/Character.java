@@ -33,6 +33,17 @@ public class Character implements Comparable<Character> {
         this.player = new SimpleObjectProperty<>(player);
     }
 
+    public Character(Character character) {
+        this.name = new SimpleStringProperty(character.getName());
+        this.initiative = new SimpleIntegerProperty(character.getInitiative());
+        this.world = new SimpleObjectProperty<>(character.getWorld());
+        this.npc = new SimpleBooleanProperty(character.isNpc());
+        this.ice = new SimpleBooleanProperty(character.isIce());
+        this.physicalMonitor = new Monitor(character.getPhysicalMonitor());
+        this.stunMonitor = new Monitor(character.getStunMonitor());
+        this.player = new SimpleObjectProperty<>(character.getPlayer());
+    }
+
 
     public String getName() {
         return name.get();

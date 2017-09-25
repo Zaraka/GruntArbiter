@@ -19,6 +19,11 @@ public class Monitor {
         this.current = new SimpleIntegerProperty(current);
     }
 
+    public Monitor(Monitor monitor) {
+        this.max = new SimpleIntegerProperty(monitor.getMax());
+        this.current = new SimpleIntegerProperty(monitor.getCurrent());
+    }
+
     public int getMax() {
         return max.get();
     }

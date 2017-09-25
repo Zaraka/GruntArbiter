@@ -78,7 +78,7 @@ public class ControllerManageSquads {
 
     @FXML
     private void addToSquadOnAction() {
-        tableView_characters.getItems().add(comboBox_pressets.getSelectionModel().getSelectedItem());
+        tableView_characters.getItems().add(new Character(comboBox_pressets.getSelectionModel().getSelectedItem()));
     }
 
     @FXML
