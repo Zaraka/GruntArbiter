@@ -28,7 +28,8 @@ Grunt Arbiter uses Semantic Versioning that means the program version is compose
   
 Contributing
 ------------
-Currently codebase is a little mess. If you don't want to get your hands dirty, consider reporting bugs by opening new issues and providing sufficient data to reproducing them.
+Codebase did get a little better, but it's still mess. I'm running out of time, so I would be grateful for your help.
+Of course, you will always help by reporting issues on github!
 
 
 License
