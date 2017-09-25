@@ -5,10 +5,10 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import org.apache.commons.lang3.StringUtils;
 import org.shadowrun.common.NumericLimitListener;
+import org.shadowrun.common.constants.World;
 import org.shadowrun.common.nodes.cells.CharacterPresetCell;
 import org.shadowrun.models.Campaign;
 import org.shadowrun.models.Character;
-import org.shadowrun.common.constants.World;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -78,10 +78,17 @@ public class ControllerAddCharacter {
         textField_initiative.setText(StringUtils.EMPTY);
     }
 
-    public void onOpen(Stage stage, Campaign campaign) {
+    public void onOpen(Stage stage, Campaign campaign, Character edit) {
         this.stage = stage;
         this.character = null;
         this.campaign = campaign;
+
+        if(edit != null) {
+            textField_initiative.setText(String.valueOf(edit.getInitiative()));
+            textField_physicalConditionMonitor.setText(String.valueOf(edit.getPhysicalMonitor().getMax()));
+            textField_stunConditionMonitor.setText(String.valueOf(edit.getStunMonitor().getMax()));
+            textField_name.setText(edit.getName());
+        }
 
         textField_initiative.textProperty()
                 .addListener(new NumericLimitListener(textField_initiative, 0, null));
@@ -126,6 +133,11 @@ public class ControllerAddCharacter {
 
     public Optional<Character> getCharacter() {
         return Optional.ofNullable(character);
+    }
+
+
+    public Stage getStage() {
+        return stage;
     }
 
     private int getInitative() {

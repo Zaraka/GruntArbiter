@@ -2,12 +2,10 @@ package org.shadowrun.controllers;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import org.apache.commons.lang3.StringUtils;
+import org.shadowrun.common.factories.CharacterDialogFactory;
 import org.shadowrun.common.factories.TextInputDialogFactory;
 import org.shadowrun.common.nodes.cells.CharacterPresetCell;
 import org.shadowrun.common.nodes.cells.SquadPressetCell;
@@ -26,6 +24,7 @@ public class ControllerManageSquads {
     private static final Logger LOG = LoggerFactory.getLogger(ControllerManageSquads.class);
 
     private static final TextInputDialogFactory textInputDialogFactory = new TextInputDialogFactory();
+    private static final CharacterDialogFactory characterDialogFactory = new CharacterDialogFactory();
 
     private Campaign campaign;
 
@@ -84,16 +83,9 @@ public class ControllerManageSquads {
     @FXML
     private void createCharacterOnAction() {
 
-        Parent root;
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("views/addCharacter.fxml"));
-            root = loader.load();
-            Stage dialog = new Stage();
-            dialog.setTitle("Create new character");
-            dialog.setScene(new Scene(root));
-            ControllerAddCharacter controllerAddCharacter = loader.getController();
-            controllerAddCharacter.onOpen(dialog, campaign);
-            dialog.showAndWait();
+            ControllerAddCharacter controllerAddCharacter = characterDialogFactory.createDialog(campaign, null);
+            controllerAddCharacter.getStage().showAndWait();
             controllerAddCharacter.getCharacter().ifPresent(playerCharacter -> {
                 tableView_characters.getItems().add(playerCharacter);
             });
@@ -158,12 +150,28 @@ public class ControllerManageSquads {
 
                 result.ifPresent(selected::setName);
             });
+            MenuItem editCharacter = new MenuItem("Edit character");
+            editCharacter.setOnAction(event -> {
+                Character selected = tableView_characters.getSelectionModel().getSelectedItem();
+                try {
+                    ControllerAddCharacter controllerAddCharacter = characterDialogFactory.createDialog(campaign, selected);
+                    controllerAddCharacter.getStage().showAndWait();
+
+                    controllerAddCharacter.getCharacter().ifPresent(character -> {
+                        int index = tableView_characters.getSelectionModel().getSelectedIndex();
+                        tableView_characters.getItems().remove(index);
+                        tableView_characters.getItems().add(index, character);
+                    });
+                } catch (IOException ex) {
+                    LOG.info("Cannot create edit dialog: ", ex);
+                }
+            });
             MenuItem deleteCharacter = new MenuItem("Delete character");
             deleteCharacter.setOnAction(event -> tableView_characters.getItems()
                     .remove(tableView_characters.getSelectionModel().getSelectedIndex()));
             MenuItem addCharacter = new MenuItem("Add character");
             addCharacter.setOnAction(event -> createCharacterOnAction());
-            ContextMenu fullContextMenu = new ContextMenu(addCharacter, deleteCharacter, renameCharacter);
+            ContextMenu fullContextMenu = new ContextMenu(addCharacter, deleteCharacter, renameCharacter, editCharacter);
             ContextMenu emptyContextMenu = new ContextMenu(addCharacter);
 
             tableRow.emptyProperty().addListener((observable, oldValue, newValue) ->
@@ -180,7 +188,10 @@ public class ControllerManageSquads {
     }
 
     private Squad createSquad() {
-        return new Squad();
+        Squad squad = new Squad();
+        squad.nameProperty().setValue(textField_name.getText());
+        squad.getCharacters().addAll(tableView_characters.getItems());
+        return squad;
     }
 
     public Optional<Squad> getSquad() {

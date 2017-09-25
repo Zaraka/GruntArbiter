@@ -68,6 +68,7 @@ public class ControllerBattle {
     private static final ExceptionDialogFactory exceptionDialogFactory = new ExceptionDialogFactory();
     private static final ConfirmationDialogFactory confirmationDialogFactory = new ConfirmationDialogFactory();
     private static final TextInputDialogFactory textInputDialogFactory = new TextInputDialogFactory();
+    private static final CharacterDialogFactory characterDialogFactory = new CharacterDialogFactory();
 
     @FXML
     private TableView<Character> tableView_masterTable;
@@ -698,16 +699,10 @@ public class ControllerBattle {
 
     @FXML
     private void addCharacterOnAction() {
-        Parent root;
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("views/addCharacter.fxml"));
-            root = loader.load();
-            Stage dialog = new Stage();
-            dialog.setTitle("Create new character");
-            dialog.setScene(new Scene(root));
-            ControllerAddCharacter controllerAddCharacter = loader.getController();
-            controllerAddCharacter.onOpen(dialog, appLogic.getActiveCampaign());
-            dialog.showAndWait();
+            ControllerAddCharacter controllerAddCharacter =
+                    characterDialogFactory.createDialog(appLogic.getActiveCampaign(), null);
+            controllerAddCharacter.getStage().showAndWait();
             controllerAddCharacter.getCharacter().ifPresent(playerCharacter -> {
                 battle.getCharacters().add(playerCharacter);
             });
