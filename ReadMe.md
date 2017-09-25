@@ -1,5 +1,6 @@
 Grunt Arbiter
 =============
+[![Build Status](https://travis-ci.org/Zaraka/GruntArbiter.svg?branch=master)](https://travis-ci.org/Zaraka/GruntArbiter)
 
 Handy lightweight app for tracking your battles in Shadowrun 5e. Grunt Arbiter will allow you to:.
   * Manage PC and NPCs though battle. Keep track whom turn it is, who is going next and in which space are they located.
