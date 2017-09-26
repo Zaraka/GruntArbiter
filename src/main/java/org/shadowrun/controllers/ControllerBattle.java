@@ -768,8 +768,19 @@ public class ControllerBattle {
 
     @FXML
     private void removeCharacterOnAction() {
-        Character character = tableView_masterTable.getSelectionModel().getSelectedItem();
-        battle.getCharacters().remove(character);
+        if(!tableView_masterTable.getSelectionModel().isEmpty()) {
+            Character character = tableView_masterTable.getSelectionModel().getSelectedItem();
+            battle.getCharacters().remove(character);
+        } else if(!tableView_vehicles.getSelectionModel().isEmpty()) {
+            Vehicle vehicle = tableView_vehicles.getSelectionModel().getSelectedItem();
+            battle.getVehicles().remove(vehicle);
+        } else if(!tableView_barrier.getSelectionModel().isEmpty()) {
+            Barrier barrier = tableView_barrier.getSelectionModel().getSelectedItem();
+            battle.getBarriers().remove(barrier);
+        } else if(!tableView_devices.getSelectionModel().isEmpty()) {
+            Device device = tableView_devices.getSelectionModel().getSelectedItem();
+            battle.getDevices().remove(device);
+        }
     }
 
     @FXML
