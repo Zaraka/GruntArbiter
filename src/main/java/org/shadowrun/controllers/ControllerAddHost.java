@@ -84,10 +84,10 @@ public class ControllerAddHost {
         textField_rating.textProperty().addListener(new NumericLimitListener(textField_rating, 0, 12));
 
         ObservableList<String> attributes = FXCollections.observableArrayList();
-        attributes.add("0");
-        attributes.add("1");
-        attributes.add("2");
-        attributes.add("3");
+        attributes.add("+0");
+        attributes.add("+1");
+        attributes.add("+2");
+        attributes.add("+3");
 
         comboBox_attack.setItems(attributes);
         comboBox_attack.getSelectionModel().select(0);

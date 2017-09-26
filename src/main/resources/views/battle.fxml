@@ -134,7 +134,11 @@
                                                       </ToolBar>
                                                       <ToolBar prefHeight="40.0" prefWidth="220.0">
                                                          <items>
-                                                            <Button mnemonicParsing="false" onAction="#addBarrierOnAction" styleClass="button-primary" text="Add barrier" />
+                                                            <Button mnemonicParsing="false" onAction="#addBarrierOnAction" styleClass="button-primary" text="Add barrier">
+                                                               <graphic>
+                                                                  <FontAwesomeIconView glyphName="BOXES" />
+                                                               </graphic>
+                                                            </Button>
                                                             <Button mnemonicParsing="false" onAction="#addVehicleOnAction" styleClass="button-primary" text="Add vehicle">
                                                                <graphic>
                                                                   <FontAwesomeIconView glyphName="CAR" />
@@ -161,8 +165,16 @@
                                                    <children>
                                                       <ToolBar prefHeight="40.0" prefWidth="220.0">
                                                          <items>
-                                                            <Button fx:id="button_hostAction" mnemonicParsing="false" onAction="#hostActionOnAction" styleClass="button-primary" text="Generate Host" />
-                                                            <Button mnemonicParsing="false" onAction="#addDeviceOnAction" styleClass="button-primary" text="Add device" />
+                                                            <Button fx:id="button_hostAction" mnemonicParsing="false" onAction="#hostActionOnAction" styleClass="button-primary" text="Generate Host">
+                                                               <graphic>
+                                                                  <FontAwesomeIconView glyphName="SERVER" />
+                                                               </graphic>
+                                                            </Button>
+                                                            <Button mnemonicParsing="false" onAction="#addDeviceOnAction" styleClass="button-primary" text="Add device">
+                                                               <graphic>
+                                                                  <FontAwesomeIconView glyphName="MOBILE" />
+                                                               </graphic>
+                                                            </Button>
                                                          </items>
                                                       </ToolBar>
                                                       <VBox fx:id="vbox_matrixProperties">
