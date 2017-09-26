@@ -24,8 +24,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<?import javafx.geometry.Insets?>
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.shadowrun.controllers.ControllerBattle">
+<AnchorPane stylesheets="@../css/dark.css" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.shadowrun.controllers.ControllerBattle">
    <children>
       <VBox prefHeight="167.0" prefWidth="1024.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -104,198 +103,206 @@
                <items>
                   <AnchorPane maxWidth="-Infinity" minWidth="-Infinity" prefWidth="315.0">
                      <children>
-                        <VBox prefHeight="707.0" prefWidth="315.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <VBox>
                            <children>
-                              <ToolBar prefHeight="40.0" prefWidth="200.0">
-                                 <items>
-                                    <Button mnemonicParsing="false" onAction="#addCharacterOnAction" styleClass="button-primary" text="Spawn character">
-                                       <graphic>
-                                          <FontAwesomeIconView glyphName="MALE" />
-                                       </graphic>
-                                    </Button>
-                                    <Button mnemonicParsing="false" onAction="#addSquadOnAction" styleClass="button-primary" text="Add squad">
-                                       <graphic>
-                                          <FontAwesomeIconView glyphName="USERS" />
-                                       </graphic>
-                                    </Button>
-                                 </items>
-                              </ToolBar>
-                              <ToolBar prefHeight="40.0" prefWidth="315.0">
-                                 <items>
-                                    <Button fx:id="button_spawnPlayer" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#addPlayerOnAction" styleClass="button-primary" text="Spawn player">
-                                       <graphic>
-                                          <FontAwesomeIconView glyphName="USER" />
-                                       </graphic>
-                                    </Button>
-                                 </items>
-                              </ToolBar>
-                              <VBox>
-                                 <children>
-                                    <TitledPane animated="false" text="Meatspace">
-                                       <content>
-                                          <AnchorPane>
+                              <TitledPane animated="false" text="Spawn menu">
+                                <content>
+                                  <AnchorPane>
+                                       <children>
+                                          <VBox>
                                              <children>
-                                                <VBox fx:id="vbox_realWorld" prefHeight="67.0" prefWidth="315.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                                   <children>
-                                                      <ToolBar prefHeight="40.0" prefWidth="220.0">
-                                                         <items>
-                                                            <ComboBox fx:id="comboBox_weather" minWidth="200.0" />
-                                                         </items>
-                                                      </ToolBar>
-                                                      <ToolBar prefHeight="40.0" prefWidth="220.0">
-                                                         <items>
-                                                            <Button mnemonicParsing="false" onAction="#addBarrierOnAction" styleClass="button-primary" text="Add barrier">
-                                                               <graphic>
-                                                                  <FontAwesomeIconView glyphName="TH" />
-                                                               </graphic>
-                                                            </Button>
-                                                            <Button mnemonicParsing="false" onAction="#addVehicleOnAction" styleClass="button-primary" text="Add vehicle">
-                                                               <graphic>
-                                                                  <FontAwesomeIconView glyphName="CAR" />
-                                                               </graphic>
-                                                            </Button>
-                                                         </items>
-                                                      </ToolBar>
-                                                   </children>
-                                                </VBox>
+                                                <ToolBar>
+                                                   <items>
+                                                      <Button mnemonicParsing="false" onAction="#addCharacterOnAction" styleClass="button-primary" text="Spawn character">
+                                                         <graphic>
+                                                            <FontAwesomeIconView glyphName="MALE" />
+                                                         </graphic>
+                                                      </Button>
+                                                      <Button mnemonicParsing="false" onAction="#addSquadOnAction" styleClass="button-primary" text="Add squad">
+                                                         <graphic>
+                                                            <FontAwesomeIconView glyphName="USERS" />
+                                                         </graphic>
+                                                      </Button>
+                                                   </items>
+                                                </ToolBar>
+                                                <ToolBar prefHeight="40.0" prefWidth="315.0">
+                                                   <items>
+                                                      <Button fx:id="button_spawnPlayer" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#addPlayerOnAction" styleClass="button-primary" text="Spawn player">
+                                                         <graphic>
+                                                            <FontAwesomeIconView glyphName="USER" />
+                                                         </graphic>
+                                                      </Button>
+                                                   </items>
+                                                </ToolBar>
                                              </children>
-                                          </AnchorPane>
-                                       </content>
-                                    </TitledPane>
-                                    <TitledPane animated="false" styleClass="matrix-pane" text="Matrix">
-                                       <content>
-                                          <AnchorPane>
+                                          </VBox>
+                                       </children>
+                                    </AnchorPane>
+                                </content>
+                              </TitledPane>
+                              <TitledPane animated="false" text="Meatspace">
+                                 <content>
+                                    <AnchorPane>
+                                       <children>
+                                          <VBox fx:id="vbox_realWorld" prefHeight="67.0" prefWidth="315.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                              <children>
-                                                <VBox fx:id="vbox_matrix" prefHeight="141.0" prefWidth="315.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                <ToolBar prefHeight="40.0" prefWidth="220.0">
+                                                   <items>
+                                                      <ComboBox fx:id="comboBox_weather" minWidth="200.0" />
+                                                   </items>
+                                                </ToolBar>
+                                                <ToolBar prefHeight="40.0" prefWidth="220.0">
+                                                   <items>
+                                                      <Button mnemonicParsing="false" onAction="#addBarrierOnAction" styleClass="button-primary" text="Add barrier">
+                                                         <graphic>
+                                                            <FontAwesomeIconView glyphName="TH" />
+                                                         </graphic>
+                                                      </Button>
+                                                      <Button mnemonicParsing="false" onAction="#addVehicleOnAction" styleClass="button-primary" text="Add vehicle">
+                                                         <graphic>
+                                                            <FontAwesomeIconView glyphName="CAR" />
+                                                         </graphic>
+                                                      </Button>
+                                                   </items>
+                                                </ToolBar>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </AnchorPane>
+                                 </content>
+                              </TitledPane>
+                              <TitledPane animated="false" styleClass="matrix-pane" text="Matrix">
+                                 <content>
+                                    <AnchorPane>
+                                       <children>
+                                          <VBox fx:id="vbox_matrix" prefHeight="141.0" prefWidth="315.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                             <children>
+                                                <ToolBar prefHeight="40.0" prefWidth="220.0">
+                                                   <items>
+                                                      <Button fx:id="button_hostAction" mnemonicParsing="false" onAction="#hostActionOnAction" styleClass="button-primary" text="Generate Host">
+                                                         <graphic>
+                                                            <FontAwesomeIconView glyphName="SERVER" />
+                                                         </graphic>
+                                                      </Button>
+                                                      <Button mnemonicParsing="false" onAction="#addDeviceOnAction" styleClass="button-primary" text="Add device">
+                                                         <graphic>
+                                                            <FontAwesomeIconView glyphName="MOBILE" />
+                                                         </graphic>
+                                                      </Button>
+                                                   </items>
+                                                </ToolBar>
+                                                <VBox fx:id="vbox_matrixProperties">
                                                    <children>
                                                       <ToolBar prefHeight="40.0" prefWidth="220.0">
                                                          <items>
-                                                            <Button fx:id="button_hostAction" mnemonicParsing="false" onAction="#hostActionOnAction" styleClass="button-primary" text="Generate Host">
-                                                               <graphic>
-                                                                  <FontAwesomeIconView glyphName="SERVER" />
-                                                               </graphic>
-                                                            </Button>
-                                                            <Button mnemonicParsing="false" onAction="#addDeviceOnAction" styleClass="button-primary" text="Add device">
-                                                               <graphic>
-                                                                  <FontAwesomeIconView glyphName="MOBILE" />
-                                                               </graphic>
-                                                            </Button>
-                                                         </items>
-                                                      </ToolBar>
-                                                      <VBox fx:id="vbox_matrixProperties">
-                                                         <children>
-                                                            <ToolBar prefHeight="40.0" prefWidth="220.0">
-                                                               <items>
-                                                                  <Label text="R">
-                                                                     <font>
-                                                                        <Font name="System Bold" size="13.0" />
-                                                                     </font>
-                                                                     <tooltip>
-                                                                        <Tooltip text="Host rating" />
-                                                                     </tooltip>
-                                                                  </Label>
-                                                                  <Label fx:id="label_host_rating" text="1" />
-                                                                  <Separator prefWidth="3.0" />
-                                                                  <Label text="A">
-                                                                     <font>
-                                                                        <Font name="System Bold" size="13.0" />
-                                                                     </font>
-                                                                     <tooltip>
-                                                                        <Tooltip text="Host attack" />
-                                                                     </tooltip>
-                                                                  </Label>
-                                                                  <Label fx:id="label_host_attack" prefWidth="18.0" text="2" />
-                                                                  <Label text="S">
-                                                                     <font>
-                                                                        <Font name="System Bold" size="13.0" />
-                                                                     </font>
-                                                                     <tooltip>
-                                                                        <Tooltip text="Host sleeze" />
-                                                                     </tooltip>
-                                                                  </Label>
-                                                                  <Label fx:id="label_host_sleeze" prefWidth="18.0" text="3" />
-                                                                  <Label text="F">
-                                                                     <font>
-                                                                        <Font name="System Bold" size="13.0" />
-                                                                     </font>
-                                                                     <tooltip>
-                                                                        <Tooltip text="Host firewall" />
-                                                                     </tooltip>
-                                                                  </Label>
-                                                                  <Label fx:id="label_host_firewall" prefWidth="18.0" text="4" />
-                                                                  <Label text="DP">
-                                                                     <font>
-                                                                        <Font name="System Bold" size="13.0" />
-                                                                     </font>
-                                                                     <tooltip>
-                                                                        <Tooltip text="Host data processing" />
-                                                                     </tooltip>
-                                                                  </Label>
-                                                                  <Label fx:id="label_host_dataProcessing" prefWidth="18.0" text="5" />
-                                                                  <Button mnemonicParsing="false" onAction="#addICeOnAction" styleClass="button-primary" text="Add ICe" />
-                                                               </items>
-                                                            </ToolBar>
-                                                         </children>
-                                                      </VBox>
-                                                   </children>
-                                                </VBox>
-                                             </children>
-                                          </AnchorPane>
-                                       </content>
-                                    </TitledPane>
-                                    <TitledPane animated="false" styleClass="astral-pane" text="Astral space">
-                                       <content>
-                                          <AnchorPane>
-                                             <children>
-                                                <VBox fx:id="vbox_astralPlane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="inner-pane-box" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                                   <children>
-                                                      <GridPane>
-                                                         <columnConstraints>
-                                                            <ColumnConstraints hgrow="NEVER" />
-                                                            <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="75.0" />
-                                                            <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" />
-                                                            <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="30.0" />
-                                                         </columnConstraints>
-                                                         <rowConstraints>
-                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                         </rowConstraints>
-                                                         <children>
-                                                            <Label text="Background count" />
-                                                            <TextField fx:id="textField_backgroundCount" GridPane.columnIndex="1" />
-                                                            <Button mnemonicParsing="false" onAction="#backgroundCountPlusOnAction" GridPane.columnIndex="2">
-                                                               <graphic>
-                                                                  <FontAwesomeIconView glyphName="PLUS" />
-                                                               </graphic>
+                                                            <Label text="R">
+                                                               <font>
+                                                                  <Font name="System Bold" size="13.0" />
+                                                               </font>
                                                                <tooltip>
-                                                                  <Tooltip text="Increase astral background count" />
+                                                                  <Tooltip text="Host rating" />
                                                                </tooltip>
-                                                               <styleClass>
-                                                                  <String fx:value="button-pill" />
-                                                                  <String fx:value="button-success" />
-                                                               </styleClass>
-                                                            </Button>
-                                                            <Button layoutX="229.0" layoutY="12.0" mnemonicParsing="false" onAction="#backgroundCountMinusOnAction" GridPane.columnIndex="3">
-                                                               <graphic>
-                                                                  <FontAwesomeIconView glyphName="MINUS" />
-                                                               </graphic>
+                                                            </Label>
+                                                            <Label fx:id="label_host_rating" text="1" />
+                                                            <Separator prefWidth="3.0" />
+                                                            <Label text="A">
+                                                               <font>
+                                                                  <Font name="System Bold" size="13.0" />
+                                                               </font>
                                                                <tooltip>
-                                                                  <Tooltip text="Decrease astral background count" />
+                                                                  <Tooltip text="Host attack" />
                                                                </tooltip>
-                                                               <styleClass>
-                                                                  <String fx:value="button-pill" />
-                                                                  <String fx:value="button-danger" />
-                                                               </styleClass>
-                                                            </Button>
-                                                         </children>
-                                                      </GridPane>
+                                                            </Label>
+                                                            <Label fx:id="label_host_attack" prefWidth="18.0" text="2" />
+                                                            <Label text="S">
+                                                               <font>
+                                                                  <Font name="System Bold" size="13.0" />
+                                                               </font>
+                                                               <tooltip>
+                                                                  <Tooltip text="Host sleeze" />
+                                                               </tooltip>
+                                                            </Label>
+                                                            <Label fx:id="label_host_sleeze" prefWidth="18.0" text="3" />
+                                                            <Label text="F">
+                                                               <font>
+                                                                  <Font name="System Bold" size="13.0" />
+                                                               </font>
+                                                               <tooltip>
+                                                                  <Tooltip text="Host firewall" />
+                                                               </tooltip>
+                                                            </Label>
+                                                            <Label fx:id="label_host_firewall" prefWidth="18.0" text="4" />
+                                                            <Label text="DP">
+                                                               <font>
+                                                                  <Font name="System Bold" size="13.0" />
+                                                               </font>
+                                                               <tooltip>
+                                                                  <Tooltip text="Host data processing" />
+                                                               </tooltip>
+                                                            </Label>
+                                                            <Label fx:id="label_host_dataProcessing" prefWidth="18.0" text="5" />
+                                                            <Button mnemonicParsing="false" onAction="#addICeOnAction" styleClass="button-primary" text="Add ICe" />
+                                                         </items>
+                                                      </ToolBar>
                                                    </children>
                                                 </VBox>
                                              </children>
-                                          </AnchorPane>
-                                       </content>
-                                    </TitledPane>
-                                 </children>
-                              </VBox>
+                                          </VBox>
+                                       </children>
+                                    </AnchorPane>
+                                 </content>
+                              </TitledPane>
+                              <TitledPane animated="false" styleClass="astral-pane" text="Astral space">
+                                 <content>
+                                    <AnchorPane>
+                                       <children>
+                                          <VBox fx:id="vbox_astralPlane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="inner-pane-box" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                             <children>
+                                                <GridPane>
+                                                   <columnConstraints>
+                                                      <ColumnConstraints hgrow="NEVER" />
+                                                      <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="75.0" />
+                                                      <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" />
+                                                      <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="30.0" />
+                                                   </columnConstraints>
+                                                   <rowConstraints>
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                   </rowConstraints>
+                                                   <children>
+                                                      <Label text="Background count" />
+                                                      <TextField fx:id="textField_backgroundCount" GridPane.columnIndex="1" />
+                                                      <Button mnemonicParsing="false" onAction="#backgroundCountPlusOnAction" GridPane.columnIndex="2">
+                                                         <graphic>
+                                                            <FontAwesomeIconView glyphName="PLUS" />
+                                                         </graphic>
+                                                         <tooltip>
+                                                            <Tooltip text="Increase astral background count" />
+                                                         </tooltip>
+                                                         <styleClass>
+                                                            <String fx:value="button-pill" />
+                                                            <String fx:value="button-success" />
+                                                         </styleClass>
+                                                      </Button>
+                                                      <Button layoutX="229.0" layoutY="12.0" mnemonicParsing="false" onAction="#backgroundCountMinusOnAction" GridPane.columnIndex="3">
+                                                         <graphic>
+                                                            <FontAwesomeIconView glyphName="MINUS" />
+                                                         </graphic>
+                                                         <tooltip>
+                                                            <Tooltip text="Decrease astral background count" />
+                                                         </tooltip>
+                                                         <styleClass>
+                                                            <String fx:value="button-pill" />
+                                                            <String fx:value="button-danger" />
+                                                         </styleClass>
+                                                      </Button>
+                                                   </children>
+                                                </GridPane>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </AnchorPane>
+                                 </content>
+                              </TitledPane>
                            </children>
                         </VBox>
                      </children>

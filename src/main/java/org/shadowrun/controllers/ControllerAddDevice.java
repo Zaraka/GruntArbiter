@@ -2,22 +2,35 @@ package org.shadowrun.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import org.apache.commons.lang3.StringUtils;
 import org.shadowrun.common.NumericLimitListener;
+import org.shadowrun.common.nodes.cells.DevicePressetCell;
+import org.shadowrun.models.Campaign;
 import org.shadowrun.models.Device;
 
+import java.util.Objects;
 import java.util.Optional;
 
 public class ControllerAddDevice {
 
     private Device device;
     private Stage stage;
+    private Campaign campaign;
+
+    @FXML
+    private ComboBox<Device> comboBox_pressets;
 
     @FXML
     private Button button_ok;
     @FXML
     private Button button_cancel;
+    @FXML
+    private Button button_savePresset;
+    @FXML
+    private Button button_deletePresset;
 
     @FXML
     private TextField textField_name;
@@ -34,8 +47,7 @@ public class ControllerAddDevice {
 
     @FXML
     private void okOnAction() {
-        device = new Device(textField_name.textProperty().get(),
-                getRating(), getAttack(), getSleeze(), getFirewall(), getDataProcessing());
+        device = createDevice();
 
         stage.close();
     }
@@ -45,9 +57,47 @@ public class ControllerAddDevice {
         stage.close();
     }
 
-    public void onOpen(Stage stage) {
+    @FXML
+    private void savePressetOnAction() {
+        campaign.getDevicePressets()
+                .removeIf(device1 -> Objects.equals(device1.getName(), textField_name.getText()));
+        Device device = createDevice();
+        campaign.getDevicePressets().add(device);
+        comboBox_pressets.getSelectionModel().select(device);
+    }
+
+    @FXML
+    private void deletePressetOnAction() {
+        campaign.getDevicePressets().remove(comboBox_pressets.getSelectionModel().getSelectedItem());;
+        textField_name.setText(StringUtils.EMPTY);
+        textField_attack.setText(StringUtils.EMPTY);
+        textField_dataProcessing.setText(StringUtils.EMPTY);
+        textField_firewall.setText(StringUtils.EMPTY);
+        textField_rating.setText(StringUtils.EMPTY);
+        textField_sleeze.setText(StringUtils.EMPTY);
+
+    }
+
+
+    public void onOpen(Stage stage, Campaign campaign) {
         this.stage = stage;
+        this.campaign = campaign;
         this.device = null;
+
+        comboBox_pressets.setCellFactory(param -> new DevicePressetCell());
+        comboBox_pressets.setButtonCell(new DevicePressetCell());
+        comboBox_pressets.setItems(campaign.getDevicePressets());
+
+        comboBox_pressets.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if(newValue != null) {
+                textField_name.setText(newValue.getName());
+                textField_sleeze.setText(String.valueOf(newValue.getSleeze()));
+                textField_rating.setText(String.valueOf(newValue.getRating()));
+                textField_firewall.setText(String.valueOf(newValue.getFirewall()));
+                textField_dataProcessing.setText(String.valueOf(newValue.getDataProcessing()));
+                textField_attack.setText(String.valueOf(newValue.getAttack()));
+            }
+        });
 
         textField_rating.textProperty().addListener(new NumericLimitListener(textField_rating, 0, null));
         textField_attack.textProperty().addListener(new NumericLimitListener(textField_attack, 0, null));
@@ -63,6 +113,11 @@ public class ControllerAddDevice {
                                                 textField_dataProcessing.textProperty().isEmpty().or(
                                                         textField_name.textProperty().isEmpty()
                                                 ))))));
+
+        button_deletePresset.disableProperty().bind(
+                comboBox_pressets.getSelectionModel().selectedItemProperty().isNull());
+
+        button_savePresset.disableProperty().bind(button_ok.disableProperty());
     }
 
     public Optional<Device> getDevice() {
@@ -92,5 +147,10 @@ public class ControllerAddDevice {
     private int getDataProcessing() {
         return (textField_dataProcessing.textProperty().isEmpty().get()) ? 0 :
                 Integer.parseInt(textField_dataProcessing.textProperty().get());
+    }
+
+    private Device createDevice() {
+        return new Device(textField_name.textProperty().get(),
+                getRating(), getAttack(), getSleeze(), getFirewall(), getDataProcessing());
     }
 }

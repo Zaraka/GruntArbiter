@@ -34,7 +34,7 @@
             </GridPane>
             <TableView fx:id="tableView_playerCharacters" VBox.vgrow="ALWAYS">
                <columns>
-                  <TableColumn fx:id="tableColumn_playerCharacters_character" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="500.0" resizable="false" text="Character" />
+                  <TableColumn fx:id="tableColumn_playerCharacters_character" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="500.0" resizable="false" text="Player character" />
                   <TableColumn fx:id="tableColumn_playerCharacters_physicalMonitor" prefWidth="137.0" text="Physical monitor" />
                   <TableColumn fx:id="tableColumn_playerCharacters_stunMonitor" prefWidth="137.0" text="Stun monitor" />
                   <TableColumn fx:id="tableColumn_playerCharacters_spiritIndex" prefWidth="137.0" text="Spirit index" />

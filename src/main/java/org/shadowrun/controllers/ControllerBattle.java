@@ -665,7 +665,7 @@ public class ControllerBattle {
             dialog.setTitle("Create new device");
             dialog.setScene(new Scene(root));
             ControllerAddDevice controllerAddDevice = loader.getController();
-            controllerAddDevice.onOpen(dialog);
+            controllerAddDevice.onOpen(dialog, appLogic.getActiveCampaign());
             dialog.showAndWait();
             controllerAddDevice.getDevice().ifPresent(device -> battle.getDevices().add(device));
 

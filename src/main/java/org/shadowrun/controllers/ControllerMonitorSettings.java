@@ -78,6 +78,12 @@ public class ControllerMonitorSettings {
         textField_maxValue.textProperty().addListener(
                 new NumericLimitListener(textField_maxValue, 0, null));
 
+        textField_maxValue.textProperty().addListener((observable, oldValue, newValue) -> {
+            if(newValue != null) {
+                if(Integer.parseInt(newValue) < getCurrentValue())
+                    textField_currentValue.setText(newValue);
+            }
+        });
 
         button_ok.disableProperty()
                 .bind(textField_currentValue.textProperty().isEmpty()

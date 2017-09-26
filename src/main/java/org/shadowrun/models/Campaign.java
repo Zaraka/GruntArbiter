@@ -27,6 +27,8 @@ public class Campaign {
 
     private ObservableList<Character> characterPresets;
 
+    private ObservableList<Device> devicePressets;
+
     private ObservableList<Squad> squads;
 
     private ObservableList<Battle> battles;
@@ -37,6 +39,7 @@ public class Campaign {
         this.version = new SimpleObjectProperty<>(version);
         this.players = FXCollections.observableArrayList();
         this.characterPresets = FXCollections.observableArrayList();
+        this.devicePressets = FXCollections.observableArrayList();
         this.battles = FXCollections.observableArrayList();
         this.squads = FXCollections.observableArrayList();
     }
@@ -95,5 +98,9 @@ public class Campaign {
 
     public ObservableList<Squad> getSquads() {
         return squads;
+    }
+
+    public ObservableList<Device> getDevicePressets() {
+        return devicePressets;
     }
 }
