@@ -1,11 +1,13 @@
 package org.shadowrun.models;
 
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class Barrier {
+public class Barrier implements Observable {
 
     private StringProperty name;
 
@@ -41,5 +43,19 @@ public class Barrier {
 
     public void setName(String name) {
         this.name.set(name);
+    }
+
+    @Override
+    public void addListener(InvalidationListener listener) {
+        name.addListener(listener);
+        structureMonitor.addListener(listener);
+        armor.addListener(listener);
+    }
+
+    @Override
+    public void removeListener(InvalidationListener listener) {
+        name.removeListener(listener);
+        structureMonitor.removeListener(listener);
+        armor.removeListener(listener);
     }
 }

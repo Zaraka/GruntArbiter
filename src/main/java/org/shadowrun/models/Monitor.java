@@ -1,9 +1,11 @@
 package org.shadowrun.models;
 
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
-public class Monitor {
+public class Monitor implements Observable {
 
     private IntegerProperty max;
 
@@ -57,5 +59,17 @@ public class Monitor {
         if(current.get() < 0) {
             current.setValue(0);
         }
+    }
+
+    @Override
+    public void addListener(InvalidationListener listener) {
+        current.addListener(listener);
+        max.addListener(listener);
+    }
+
+    @Override
+    public void removeListener(InvalidationListener listener) {
+        current.removeListener(listener);
+        current.removeListener(listener);
     }
 }

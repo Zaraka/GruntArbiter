@@ -1,11 +1,13 @@
 package org.shadowrun.models;
 
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class Device {
+public class Device implements Observable {
 
     private StringProperty name;
 
@@ -85,5 +87,25 @@ public class Device {
 
     public Monitor getConditionMonitor() {
         return conditionMonitor;
+    }
+
+    @Override
+    public void addListener(InvalidationListener listener) {
+        name.addListener(listener);
+        rating.addListener(listener);
+        attack.addListener(listener);
+        sleeze.addListener(listener);
+        firewall.addListener(listener);
+        dataProcessing.addListener(listener);
+    }
+
+    @Override
+    public void removeListener(InvalidationListener listener) {
+        name.removeListener(listener);
+        rating.removeListener(listener);
+        attack.removeListener(listener);
+        sleeze.removeListener(listener);
+        firewall.removeListener(listener);
+        dataProcessing.removeListener(listener);
     }
 }

@@ -1,12 +1,14 @@
 package org.shadowrun.models;
 
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.apache.commons.lang3.StringUtils;
 
-public class Squad {
+public class Squad implements Observable {
 
     private StringProperty name;
 
@@ -27,5 +29,19 @@ public class Squad {
 
     public StringProperty nameProperty() {
         return name;
+    }
+
+    @Override
+    public void addListener(InvalidationListener listener) {
+        characters = FXCollections.observableList(characters, param -> new Observable[]{param});
+
+        characters.addListener(listener);
+        name.addListener(listener);
+    }
+
+    @Override
+    public void removeListener(InvalidationListener listener) {
+        characters.removeListener(listener);
+        characters.removeListener(listener);
     }
 }

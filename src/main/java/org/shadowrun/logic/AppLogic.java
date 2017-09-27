@@ -1,6 +1,8 @@
 package org.shadowrun.logic;
 
 import com.google.gson.Gson;
+import javafx.beans.InvalidationListener;
+import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
@@ -36,6 +38,10 @@ public class AppLogic {
 
     private AppConfig config;
 
+    private InvalidationListener invalidationListener;
+
+    private BooleanProperty changesSaved;
+
 
     public AppLogic() {
         activeCampaign = new SimpleObjectProperty<>(null);
@@ -43,12 +49,29 @@ public class AppLogic {
         showRealWorld = new SimpleBooleanProperty(true);
         showAstralPlane = new SimpleBooleanProperty(true);
         showMatrix = new SimpleBooleanProperty(true);
+        changesSaved = new SimpleBooleanProperty(true);
         config = new AppConfig();
+        invalidationListener = null;
+
+        activeCampaign.addListener((observable, oldValue, newValue) -> {
+            if(oldValue != null && invalidationListener != null) {
+                oldValue.removeListener(invalidationListener);
+            }
+
+            if(newValue != null && invalidationListener != null) {
+                newValue.addListener(invalidationListener);
+            }
+        });
+
+        addCampignListener(observable -> {
+            changesSaved.setValue(false);
+        });
     }
 
     public void newCampaign(String name) {
         campaignFile.setValue(null);
         activeCampaign.setValue(new Campaign(name, config.getVersion()));
+        changesSaved.setValue(true);
     }
 
     public void newCharacter(String name) {
@@ -59,6 +82,7 @@ public class AppLogic {
         campaignFile.set(file);
         activeCampaign.setValue(campaign);
         getConfig().insertOrRefreshRecentCampaign(getCampaignFile().toPath());
+        changesSaved.setValue(true);
     }
 
     public void openCampaign(File file) throws IOException, IncompatibleVersionsException {
@@ -68,12 +92,15 @@ public class AppLogic {
             throw new IncompatibleVersionsException(campaign);
         }
         loadCampaign(file, campaign);
+        changesSaved.setValue(true);
     }
 
     public void saveCampaign() throws IOException {
         Files.write(getCampaignFile().toPath(), gson.toJson(getActiveCampaign()).getBytes());
 
         getConfig().insertOrRefreshRecentCampaign(getCampaignFile().toPath());
+
+        changesSaved.setValue(true);
     }
 
     public void saveAsCampaign(File file) throws IOException {
@@ -134,6 +161,14 @@ public class AppLogic {
         return showAstralPlane;
     }
 
+    public boolean isChangesSaved() {
+        return changesSaved.get();
+    }
+
+    public BooleanProperty changesSavedProperty() {
+        return changesSaved;
+    }
+
     public AppConfig getConfig() {
         return config;
     }
@@ -147,9 +182,17 @@ public class AppLogic {
             if(campaignFileProperty().isNotNull().get()) {
                 stringBuilder.append(" [");
                 stringBuilder.append(campaignFileProperty().get().toPath().toString());
+                if(!changesSaved.get()) {
+                    stringBuilder.append("*");
+                }
                 stringBuilder.append("]");
             }
         }
         return stringBuilder.toString();
+    }
+
+    public void addCampignListener(InvalidationListener listener) {
+        invalidationListener = listener;
+
     }
 }

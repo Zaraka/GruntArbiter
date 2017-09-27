@@ -1,5 +1,7 @@
 package org.shadowrun.models;
 
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -15,7 +17,7 @@ import org.apache.commons.lang3.StringUtils;
  * That means, changing this class attributes will create issue with backward compability.
  * So all changes HAVE to raise Major version.
  */
-public class Campaign {
+public class Campaign implements Observable {
 
     private StringProperty name;
 
@@ -102,5 +104,35 @@ public class Campaign {
 
     public ObservableList<Device> getDevicePressets() {
         return devicePressets;
+    }
+
+    @Override
+    public void addListener(InvalidationListener listener) {
+        players = FXCollections.observableList(players, param -> new Observable[]{param});
+        characterPresets = FXCollections.observableList(characterPresets, param -> new Observable[]{param});
+        squads = FXCollections.observableList(squads, param -> new Observable[]{param});
+        devicePressets = FXCollections.observableList(devicePressets, param -> new Observable[]{param});
+        battles = FXCollections.observableList(battles, param -> new Observable[]{param});
+
+        name.addListener(listener);
+        description.addListener(listener);
+        version.addListener(listener);
+        players.addListener(listener);
+        characterPresets.addListener(listener);
+        squads.addListener(listener);
+        devicePressets.addListener(listener);
+        battles.addListener(listener);
+    }
+
+    @Override
+    public void removeListener(InvalidationListener listener) {
+        name.removeListener(listener);
+        description.removeListener(listener);
+        version.removeListener(listener);
+        players.removeListener(listener);
+        characterPresets.removeListener(listener);
+        squads.removeListener(listener);
+        devicePressets.removeListener(listener);
+        battles.removeListener(listener);
     }
 }

@@ -1,12 +1,14 @@
 package org.shadowrun.models;
 
 import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.binding.NumberBinding;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import org.apache.commons.lang3.StringUtils;
 import org.shadowrun.common.constants.Weather;
 import org.shadowrun.common.constants.World;
 import org.shadowrun.common.exceptions.NextTurnException;
@@ -19,7 +21,7 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class Battle {
+public class Battle implements Observable {
 
     private static final Logger LOG = LoggerFactory.getLogger(Battle.class);
 
@@ -67,8 +69,8 @@ public class Battle {
         combatTurn = new SimpleIntegerProperty(1);
         initiativePass = new SimpleIntegerProperty(1);
         actionPhase = new SimpleIntegerProperty(1);
-        characters = FXCollections.observableArrayList(players.stream()
-                .map(player2Character).collect(Collectors.toList()));
+        characters = FXCollections.observableArrayList();
+        characters.addAll(players.stream().map(player2Character).collect(Collectors.toList()));
         barriers = FXCollections.observableArrayList();
         devices = FXCollections.observableArrayList();
         vehicles = FXCollections.observableArrayList();
@@ -241,5 +243,44 @@ public class Battle {
 
     public void insertPlayer(PlayerCharacter playerCharacter) {
         characters.add(player2Character.apply(playerCharacter));
+    }
+
+    @Override
+    public void addListener(InvalidationListener listener) {
+        characters = FXCollections.observableList(characters, param -> new Observable[]{param});
+        barriers = FXCollections.observableList(barriers, param -> new Observable[]{param});
+        devices = FXCollections.observableList(devices, param -> new Observable[]{param});
+        vehicles = FXCollections.observableList(vehicles, param -> new Observable[]{param});
+
+        host.addListener(listener);
+        backgroundCount.addListener(listener);
+        combatTurn.addListener(listener);
+        initiativePass.addListener(listener);
+        actionPhase.addListener(listener);
+        time.addListener(listener);
+        characters.addListener(listener);
+        barriers.addListener(listener);
+        devices.addListener(listener);
+        vehicles.addListener(listener);
+        currentCharacter.addListener(listener);
+        selectedWeather.addListener(listener);
+        name.addListener(listener);
+    }
+
+    @Override
+    public void removeListener(InvalidationListener listener) {
+        host.removeListener(listener);
+        backgroundCount.removeListener(listener);
+        combatTurn.removeListener(listener);
+        initiativePass.removeListener(listener);
+        actionPhase.removeListener(listener);
+        time.removeListener(listener);
+        characters.removeListener(listener);
+        barriers.removeListener(listener);
+        devices.removeListener(listener);
+        vehicles.removeListener(listener);
+        currentCharacter.removeListener(listener);
+        selectedWeather.removeListener(listener);
+        name.removeListener(listener);
     }
 }

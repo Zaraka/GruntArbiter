@@ -1,5 +1,7 @@
 package org.shadowrun.models;
 
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -9,7 +11,7 @@ import javafx.collections.ObservableMap;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class Host {
+public class Host implements Observable {
     private IntegerProperty rating;
 
     private IntegerProperty attack;
@@ -111,4 +113,23 @@ public class Host {
     public BooleanBinding isInitalized() {
         return rating.isEqualTo(0).not();
     }
+
+    @Override
+    public void addListener(InvalidationListener listener) {
+        rating.addListener(listener);
+        attack.addListener(listener);
+        sleeze.addListener(listener);
+        firewall.addListener(listener);
+        dataProcessing.addListener(listener);
+    }
+    
+    @Override
+    public void removeListener(InvalidationListener listener) {
+        rating.removeListener(listener);
+        attack.removeListener(listener);
+        sleeze.removeListener(listener);
+        firewall.removeListener(listener);
+        dataProcessing.removeListener(listener);
+    }
+        
 }

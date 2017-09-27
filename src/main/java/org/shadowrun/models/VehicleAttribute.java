@@ -1,9 +1,13 @@
 package org.shadowrun.models;
 
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
-public class VehicleAttribute {
+public class VehicleAttribute implements Observable {
 
     private IntegerProperty onRoad;
 
@@ -34,4 +38,19 @@ public class VehicleAttribute {
     public IntegerProperty offRoadProperty() {
         return offRoad;
     }
+
+
+    @Override
+    public void addListener(InvalidationListener listener) {
+        onRoad.addListener(listener);
+        offRoad.addListener(listener);
+    }
+
+    @Override
+    public void removeListener(InvalidationListener listener) {
+        onRoad.removeListener(listener);
+        offRoad.removeListener(listener);
+    }
+
+
 }

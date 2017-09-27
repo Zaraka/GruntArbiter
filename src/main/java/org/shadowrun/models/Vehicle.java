@@ -1,8 +1,10 @@
 package org.shadowrun.models;
 
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.beans.property.*;
 
-public class Vehicle {
+public class Vehicle implements Observable {
 
     private StringProperty name;
 
@@ -116,5 +118,31 @@ public class Vehicle {
                 ", pilot=" + pilot +
                 ", sensor=" + sensor +
                 '}';
+    }
+
+    @Override
+    public void addListener(InvalidationListener listener) {
+        name.addListener(listener);
+        handling.addListener(listener);
+        speed.addListener(listener);
+        acceleration.addListener(listener);
+        getConditionMonitor().addListener(listener);
+        body.addListener(listener);
+        armor.addListener(listener);
+        pilot.addListener(listener);
+        sensor.addListener(listener);
+    }
+
+    @Override
+    public void removeListener(InvalidationListener listener) {
+        name.removeListener(listener);
+        handling.removeListener(listener);
+        speed.removeListener(listener);
+        acceleration.removeListener(listener);
+        getConditionMonitor().removeListener(listener);
+        body.removeListener(listener);
+        armor.removeListener(listener);
+        pilot.removeListener(listener);
+        sensor.removeListener(listener);
     }
 }

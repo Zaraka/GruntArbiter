@@ -1,12 +1,14 @@
 package org.shadowrun.models;
 
 
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class PlayerCharacter {
+public class PlayerCharacter implements Observable {
 
     private StringProperty name;
 
@@ -69,5 +71,21 @@ public class PlayerCharacter {
 
     public void setStunMonitor(int stunMonitor) {
         this.stunMonitor.set(stunMonitor);
+    }
+
+    @Override
+    public void addListener(InvalidationListener listener) {
+        name.addListener(listener);
+        physicalMonitor.addListener(listener);
+        stunMonitor.addListener(listener);
+        spiritIndex.addListener(listener);
+    }
+
+    @Override
+    public void removeListener(InvalidationListener listener) {
+        name.removeListener(listener);
+        physicalMonitor.removeListener(listener);
+        stunMonitor.removeListener(listener);
+        spiritIndex.removeListener(listener);
     }
 }

@@ -2,7 +2,9 @@ package org.shadowrun.controllers;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.ListView;
+import javafx.scene.control.MenuItem;
 import javafx.stage.Stage;
 import org.shadowrun.common.nodes.cells.CampaignCell;
 import org.shadowrun.logic.AppLogic;
@@ -38,11 +40,19 @@ public class ControllerWelcomeScreen {
         listView_latestCampaigns.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
                 Path selectedItem = listView_latestCampaigns.getSelectionModel().getSelectedItem();
-                if(selectedItem != null) {
+                if (selectedItem != null) {
+                    controllerMain.closeCampaignOnAction();
                     controllerMain.openCampaign(selectedItem.toFile());
                 }
             }
         });
+
+        MenuItem openCampaign = new MenuItem("Open campaign");
+        openCampaign.setOnAction(event -> {
+            controllerMain.closeCampaignOnAction();
+            controllerMain.openCampaign(listView_latestCampaigns.getSelectionModel().getSelectedItem().toFile());
+        });
+        listView_latestCampaigns.setContextMenu(new ContextMenu(openCampaign));
     }
 
     public void remove() {

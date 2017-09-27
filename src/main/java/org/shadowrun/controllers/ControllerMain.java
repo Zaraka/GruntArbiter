@@ -83,6 +83,8 @@ public class ControllerMain {
 
     @FXML
     public void newCampaignOnAction() {
+        closeCampaignOnAction();
+
         TextInputDialog dialog = textInputDialogFactory.createDialog(
                 "New campaign",
                 "Create new campaign",
@@ -98,6 +100,8 @@ public class ControllerMain {
 
     @FXML
     public void openCampaignOnAction() {
+        closeCampaignOnAction();
+
         FileChooser dialog = new FileChooser();
         dialog.setTitle("Open campaign");
         dialog.getExtensionFilters().add(new FileChooser.ExtensionFilter("Grunt campaign (.gra)", "*.gra"));
@@ -156,11 +160,12 @@ public class ControllerMain {
     }
 
     @FXML
-    private void closeCampaignOnAction() {
+    public void closeCampaignOnAction() {
         FilteredList<Tab> campaignTabs = tabPane.getTabs().filtered(tab -> tab.getUserData() != null
                 && tab.getUserData().getClass() == ControllerCampaignScreen.class);
-        if (!campaignTabs.isEmpty())
+        if (!campaignTabs.isEmpty()) {
             campaignTabs.get(0).getOnClosed().handle(null);
+        }
     }
 
     @FXML
@@ -197,6 +202,8 @@ public class ControllerMain {
 
     @FXML
     private void closeAppOnAction() {
+        checkSave();
+
         stage.close();
     }
 
@@ -293,7 +300,8 @@ public class ControllerMain {
         stage.titleProperty().bind(javafx.beans.binding.Bindings.createStringBinding(() ->
                         appLogic.getAppTitle(),
                 appLogic.activeCampaignProperty(),
-                appLogic.campaignFileProperty()));
+                appLogic.campaignFileProperty(),
+                appLogic.changesSavedProperty()));
 
         loadRecentFiles();
         openWelcomeScreen();
@@ -358,6 +366,7 @@ public class ControllerMain {
             ControllerCampaignScreen controllerCampaignScreen = tabLoader.getController();
             campaignScreenTab.setUserData(controllerCampaignScreen);
             campaignScreenTab.setOnClosed(event -> {
+                checkSave();
                 tabPane.getTabs().removeIf(tab -> tab.getUserData() != null &&
                         tab.getUserData().getClass() == ControllerBattle.class);
                 battleLogic.clear();
@@ -406,6 +415,8 @@ public class ControllerMain {
 
     public void openCampaign(File file) {
         if (file != null) {
+            checkSave();
+
             try {
                 appLogic.openCampaign(file);
                 addCampaignHooks();
@@ -434,4 +445,19 @@ public class ControllerMain {
             }
         }
     }
+
+    private void checkSave() {
+        if (!appLogic.isChangesSaved()) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Unsaved campaign");
+            alert.setHeaderText("There are unsaved changes in campaign");
+            alert.setContentText("Do you wish to save campaign first?");
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStylesheets().add(
+                    getClass().getClassLoader().getResource("css/dark.css").toExternalForm());
+            Optional<ButtonType> result = alert.showAndWait();
+            result.ifPresent(buttonType -> saveCampaignOnAction());
+        }
+    }
+
 }

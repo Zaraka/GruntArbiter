@@ -1,9 +1,11 @@
 package org.shadowrun.models;
 
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.beans.property.*;
 import org.shadowrun.common.constants.World;
 
-public class Character implements Comparable<Character> {
+public class Character implements Comparable<Character>, Observable {
 
     private StringProperty name;
 
@@ -120,5 +122,29 @@ public class Character implements Comparable<Character> {
     @Override
     public int compareTo(Character o) {
         return (o == null) ? 0 : this.getInitiative() - o.getInitiative();
+    }
+
+    @Override
+    public void addListener(InvalidationListener listener) {
+        name.addListener(listener);
+        initiative.addListener(listener);
+        world.addListener(listener);
+        ice.addListener(listener);
+        npc.addListener(listener);
+        player.addListener(listener);
+        physicalMonitor.addListener(listener);
+        stunMonitor.addListener(listener);
+    }
+
+    @Override
+    public void removeListener(InvalidationListener listener) {
+        initiative.removeListener(listener);
+        name.removeListener(listener);
+        world.removeListener(listener);
+        ice.removeListener(listener);
+        npc.removeListener(listener);
+        player.removeListener(listener);
+        physicalMonitor.removeListener(listener);
+        stunMonitor.removeListener(listener);
     }
 }
