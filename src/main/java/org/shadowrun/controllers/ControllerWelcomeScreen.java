@@ -36,7 +36,7 @@ public class ControllerWelcomeScreen {
         this.appLogic = appLogic;
 
         listView_latestCampaigns.setItems(FXCollections.observableArrayList(appLogic.getConfig().getRecentFiles()));
-        listView_latestCampaigns.setCellFactory(param -> new CampaignCell());
+        listView_latestCampaigns.setCellFactory(param -> new CampaignCell(controllerMain));
         listView_latestCampaigns.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
                 Path selectedItem = listView_latestCampaigns.getSelectionModel().getSelectedItem();
@@ -46,13 +46,6 @@ public class ControllerWelcomeScreen {
                 }
             }
         });
-
-        MenuItem openCampaign = new MenuItem("Open campaign");
-        openCampaign.setOnAction(event -> {
-            controllerMain.closeCampaignOnAction();
-            controllerMain.openCampaign(listView_latestCampaigns.getSelectionModel().getSelectedItem().toFile());
-        });
-        listView_latestCampaigns.setContextMenu(new ContextMenu(openCampaign));
     }
 
     public void remove() {

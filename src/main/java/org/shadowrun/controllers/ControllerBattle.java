@@ -611,7 +611,7 @@ public class ControllerBattle {
         IntegerProperty overwatchProperty = connectedCharacters.get(character);
 
         int currentValue = overwatchProperty.get();
-        if(currentValue < 40)
+        if (currentValue < 40)
             overwatchProperty.set(currentValue + 1);
     }
 
@@ -622,7 +622,7 @@ public class ControllerBattle {
         IntegerProperty overwatchProperty = connectedCharacters.get(character);
 
         int currentValue = overwatchProperty.get();
-        if(currentValue > 0)
+        if (currentValue > 0)
             overwatchProperty.set(currentValue - 1);
     }
 
@@ -721,7 +721,7 @@ public class ControllerBattle {
                         .filter(playerCharacter -> !playersInThisBattle.contains(playerCharacter))
                         .collect(Collectors.toList());
 
-        if(!availablePlayers.isEmpty()) {
+        if (!availablePlayers.isEmpty()) {
             ChoiceDialog<PlayerCharacter> dialog = new ChoiceDialog<>(availablePlayers.get(0), availablePlayers);
             GridPane gridPane = (GridPane) dialog.getDialogPane().getContent();
             DialogPane dialogPane = dialog.getDialogPane();
@@ -730,8 +730,8 @@ public class ControllerBattle {
             ComboBox<PlayerCharacter> playerCharacterComboBox;
             try {
                 playerCharacterComboBox = (ComboBox<PlayerCharacter>) gridPane.getChildren().stream()
-                                .filter(node -> node.getClass() == ComboBox.class)
-                                .collect(Collectors.toList()).get(0);
+                        .filter(node -> node.getClass() == ComboBox.class)
+                        .collect(Collectors.toList()).get(0);
                 playerCharacterComboBox.setCellFactory(param -> new PlayerCell());
                 playerCharacterComboBox.setButtonCell(new PlayerCell());
                 allPlayersIncluded.invalidate();
@@ -754,7 +754,7 @@ public class ControllerBattle {
     private void matrixConnectOnAction() {
         Character character = tableView_masterTable.getSelectionModel().getSelectedItem();
         ObservableMap<Character, IntegerProperty> connectedCharacters = battle.getHost().getConnectedCharacters();
-        if(connectedCharacters.containsKey(character)) {
+        if (connectedCharacters.containsKey(character)) {
             connectedCharacters.remove(character);
             character.setWorld(World.REAL);
         } else {
@@ -768,16 +768,16 @@ public class ControllerBattle {
 
     @FXML
     private void removeCharacterOnAction() {
-        if(!tableView_masterTable.getSelectionModel().isEmpty()) {
+        if (!tableView_masterTable.getSelectionModel().isEmpty()) {
             Character character = tableView_masterTable.getSelectionModel().getSelectedItem();
             battle.getCharacters().remove(character);
-        } else if(!tableView_vehicles.getSelectionModel().isEmpty()) {
+        } else if (!tableView_vehicles.getSelectionModel().isEmpty()) {
             Vehicle vehicle = tableView_vehicles.getSelectionModel().getSelectedItem();
             battle.getVehicles().remove(vehicle);
-        } else if(!tableView_barrier.getSelectionModel().isEmpty()) {
+        } else if (!tableView_barrier.getSelectionModel().isEmpty()) {
             Barrier barrier = tableView_barrier.getSelectionModel().getSelectedItem();
             battle.getBarriers().remove(barrier);
-        } else if(!tableView_devices.getSelectionModel().isEmpty()) {
+        } else if (!tableView_devices.getSelectionModel().isEmpty()) {
             Device device = tableView_devices.getSelectionModel().getSelectedItem();
             battle.getDevices().remove(device);
         }
@@ -986,8 +986,8 @@ public class ControllerBattle {
         Node selectedPaneNode = splitPane_horizontal.getItems().get(2);
 
         Bindings.isEmpty(tableView_vehicles.getItems()).addListener((observable, oldValue, newValue) -> {
-            if(newValue != null) {
-                if(newValue) {
+            if (newValue != null) {
+                if (newValue) {
                     splitPane_centerContent.getItems().remove(vehicleTableNode);
                 } else {
                     splitPane_centerContent.getItems().add(vehicleTableNode);
@@ -997,8 +997,8 @@ public class ControllerBattle {
 
         Bindings.isEmpty(tableView_barrier.getItems())
                 .and(Bindings.isEmpty(tableView_devices.getItems())).addListener((observable, oldValue, newValue) -> {
-            if(newValue != null) {
-                if(newValue) {
+            if (newValue != null) {
+                if (newValue) {
                     splitPane_centerContent.getItems().remove(barrierDeviceTableNode);
                 } else {
                     splitPane_centerContent.getItems().add(barrierDeviceTableNode);
@@ -1013,8 +1013,8 @@ public class ControllerBattle {
                         )
                 )
         ).addListener((observable, oldValue, newValue) -> {
-            if(newValue != null) {
-                if(newValue) {
+            if (newValue != null) {
+                if (newValue) {
                     splitPane_horizontal.getItems().add(selectedPaneNode);
                 } else {
                     splitPane_horizontal.getItems().remove(selectedPaneNode);
@@ -1026,7 +1026,7 @@ public class ControllerBattle {
         splitPane_centerContent.getItems().remove(vehicleTableNode);
         splitPane_horizontal.getItems().remove(selectedPaneNode);
 
-        if(!loaded) {
+        if (!loaded) {
             setNewInitiative();
         }
     }
@@ -1077,38 +1077,41 @@ public class ControllerBattle {
             }
         });
 
+        MenuItem renameVehicle = new MenuItem("Rename vehicle");
+        renameVehicle.setOnAction(event -> {
+            Vehicle selected = tableView_vehicles.getSelectionModel().getSelectedItem();
+            TextInputDialog dialog = textInputDialogFactory.createDialog(
+                    "Rename vehicle",
+                    "Rename vehicle " + selected.getName(),
+                    "Please enter name:",
+                    selected.getName());
+            Optional<String> result = dialog.showAndWait();
+
+            result.ifPresent(selected::setName);
+        });
+        MenuItem deleteVehicle = new MenuItem("Delete vehicle");
+        deleteVehicle.setOnAction(event -> tableView_vehicles.getItems()
+                .remove(tableView_vehicles.getSelectionModel().getSelectedIndex()));
+        MenuItem addVehicle = new MenuItem("Add vehicle");
+        addVehicle.setOnAction(event -> addVehicleOnAction());
+
+        ContextMenu fullContextMenu = new ContextMenu(addVehicle, deleteVehicle, renameVehicle);
+        ContextMenu emptyContextMenu = new ContextMenu(addVehicle);
+        tableView_devices.setContextMenu(emptyContextMenu);
+
         tableView_vehicles.setRowFactory(param -> {
             TableRow<Vehicle> tableRow = new TableRow<>();
 
-            MenuItem renameVehicle = new MenuItem("Rename vehicle");
-            renameVehicle.setOnAction(event -> {
-                Vehicle selected = tableView_vehicles.getSelectionModel().getSelectedItem();
-                TextInputDialog dialog = textInputDialogFactory.createDialog(
-                        "Rename vehicle",
-                        "Rename vehicler " + selected.getName(),
-                        "Please enter name:",
-                        selected.getName());
-                Optional<String> result = dialog.showAndWait();
-
-                result.ifPresent(selected::setName);
+            tableRow.emptyProperty().addListener((observable, oldValue, newValue) -> {
+                tableRow.setContextMenu((newValue) ? emptyContextMenu : fullContextMenu);
             });
-            MenuItem deleteVehicle = new MenuItem("Delete vehicler");
-            deleteVehicle.setOnAction(event -> tableView_vehicles.getItems()
-                    .remove(tableView_vehicles.getSelectionModel().getSelectedIndex()));
-            MenuItem addVehicle = new MenuItem("Add vehicler");
-            addVehicle.setOnAction(event -> addVehicleOnAction());
-            ContextMenu fullContextMenu = new ContextMenu(addVehicle, deleteVehicle, renameVehicle);
-            ContextMenu emptyContextMenu = new ContextMenu(addVehicle);
-
-            tableRow.emptyProperty().addListener((observable, oldValue, newValue) ->
-                    tableRow.setContextMenu(newValue ? emptyContextMenu : fullContextMenu));
             return tableRow;
         });
     }
 
     private void clearTableSelection(TableView ignoredTable) {
-        for(TableView table : contentTables) {
-            if(table == ignoredTable)
+        for (TableView table : contentTables) {
+            if (table == ignoredTable)
                 continue;
             table.getSelectionModel().clearSelection();
         }
@@ -1190,6 +1193,7 @@ public class ControllerBattle {
                     addCharacter,
                     removeCharacter);
             ContextMenu emptyContextMenu = new ContextMenu(addCharacter);
+            tableView_masterTable.setContextMenu(emptyContextMenu);
             TableRow<Character> tableRow = new TableRow<Character>() {
                 @Override
                 protected void updateItem(Character item, boolean empty) {
@@ -1215,100 +1219,101 @@ public class ControllerBattle {
                     }
                 }
             };
-            tableRow.emptyProperty().addListener((observable, oldValue, newValue) ->
-                    tableRow.setContextMenu(newValue ? emptyContextMenu : fullContextMenu));
+            tableRow.emptyProperty().addListener((observable, oldValue, newValue) -> {
+                tableRow.setContextMenu((newValue) ? emptyContextMenu : fullContextMenu);
+            });
             return tableRow;
         });
         tableView_masterTable.getSelectionModel().selectedItemProperty()
                 .addListener((observable, oldCharacter, newCharacter) -> {
-            if (oldCharacter != null) {
-                label_selected_physical.textProperty().unbind();
-                label_selected_stun.textProperty().unbind();
-                label_overwatchScore.textProperty().unbind();
-                textField_selected_initiative.textProperty().unbindBidirectional(oldCharacter.initiativeProperty());
-                if (oldCharacter.playerProperty().isNotNull().get()) {
-                    textField_selected_spiritIndex.textProperty()
-                            .unbindBidirectional(oldCharacter.getPlayer().spiritIndexProperty());
-                    label_selected_astralReputation.textProperty()
-                            .unbindBidirectional(oldCharacter.getPlayer().spiritIndexProperty());
-                }
-            }
+                    if (oldCharacter != null) {
+                        label_selected_physical.textProperty().unbind();
+                        label_selected_stun.textProperty().unbind();
+                        label_overwatchScore.textProperty().unbind();
+                        textField_selected_initiative.textProperty().unbindBidirectional(oldCharacter.initiativeProperty());
+                        if (oldCharacter.playerProperty().isNotNull().get()) {
+                            textField_selected_spiritIndex.textProperty()
+                                    .unbindBidirectional(oldCharacter.getPlayer().spiritIndexProperty());
+                            label_selected_astralReputation.textProperty()
+                                    .unbindBidirectional(oldCharacter.getPlayer().spiritIndexProperty());
+                        }
+                    }
 
-            cleanSelectedPane();
+                    cleanSelectedPane();
 
-            if (newCharacter != null) {
-                clearTableSelection(tableView_masterTable);
+                    if (newCharacter != null) {
+                        clearTableSelection(tableView_masterTable);
 
-                CharacterIconFactory.createIcon(newCharacter).ifPresent(fontAwesomeIcon -> {
-                    fontAwesomeIcon_selected.setIcon(fontAwesomeIcon);
-                    hbox_selected_glyph.setVisible(true);
+                        CharacterIconFactory.createIcon(newCharacter).ifPresent(fontAwesomeIcon -> {
+                            fontAwesomeIcon_selected.setIcon(fontAwesomeIcon);
+                            hbox_selected_glyph.setVisible(true);
+                        });
+
+                        label_selected_physical.textProperty().bind(Bindings.concat(
+                                newCharacter.getPhysicalMonitor().currentProperty(),
+                                "/",
+                                newCharacter.getPhysicalMonitor().maxProperty()
+                        ));
+
+                        label_selected_stun.textProperty().bind(Bindings.concat(
+                                newCharacter.getStunMonitor().currentProperty(),
+                                "/",
+                                newCharacter.getStunMonitor().maxProperty()
+                        ));
+                        textField_selected_initiative.textProperty()
+                                .bindBidirectional(newCharacter.initiativeProperty(), new NumberStringConverter());
+                        label_selectedCharacter.textProperty().bind(newCharacter.nameProperty());
+                        if (newCharacter.playerProperty().isNotNull().get()) {
+                            textField_selected_spiritIndex.textProperty()
+                                    .bindBidirectional(newCharacter.getPlayer().spiritIndexProperty(), new NumberStringConverter());
+                            label_selected_astralReputation.textProperty()
+                                    .bindBidirectional(newCharacter.getPlayer().spiritIndexProperty(), new SpiritIndexReputationConverter());
+                        }
+
+                        if (battle.getHost().getConnectedCharacters().containsKey(newCharacter)) {
+                            vbox_selected_matrix.setVisible(true);
+                            label_overwatchScore.textProperty().bind(
+                                    battle.getHost().getConnectedCharacters().get(newCharacter).asString());
+                            button_selected_matrix.textProperty().setValue("Disconnect");
+                        } else {
+                            button_selected_matrix.textProperty().setValue("Connect");
+                        }
+
+                        if (newCharacter.isNpc()) {
+                            flowPane_selected_badges.getChildren()
+                                    .add(BadgeFactory.createBadge(
+                                            "NPC",
+                                            "This character is a NPC",
+                                            CssClasses.INFO));
+                        } else {
+                            flowPane_selected_badges.getChildren()
+                                    .add(BadgeFactory.createBadge(
+                                            "PC",
+                                            "This character is player controlled",
+                                            CssClasses.PRIMARY));
+                        }
+
+                        if (newCharacter.isIce()) {
+                            flowPane_selected_badges.getChildren()
+                                    .add(BadgeFactory.createBadge(
+                                            "ICe",
+                                            "This character is part of host defense countermeasures",
+                                            CssClasses.INFO));
+                        }
+
+                        if (newCharacter.getWorld() == World.MATRIX) {
+                            flowPane_selected_badges.getChildren()
+                                    .add(BadgeFactory.createBadge(
+                                            "Matrix",
+                                            "This character is inside matrix",
+                                            CssClasses.SUCCESS));
+                        }
+
+                        hbox_selected_character.setVisible(true);
+                        vbox_selected_player.setVisible(true);
+                        anchorPane_selected.setVisible(true);
+                    }
                 });
-
-                label_selected_physical.textProperty().bind(Bindings.concat(
-                        newCharacter.getPhysicalMonitor().currentProperty(),
-                        "/",
-                        newCharacter.getPhysicalMonitor().maxProperty()
-                ));
-
-                label_selected_stun.textProperty().bind(Bindings.concat(
-                        newCharacter.getStunMonitor().currentProperty(),
-                        "/",
-                        newCharacter.getStunMonitor().maxProperty()
-                ));
-                textField_selected_initiative.textProperty()
-                        .bindBidirectional(newCharacter.initiativeProperty(), new NumberStringConverter());
-                label_selectedCharacter.textProperty().bind(newCharacter.nameProperty());
-                if (newCharacter.playerProperty().isNotNull().get()) {
-                    textField_selected_spiritIndex.textProperty()
-                            .bindBidirectional(newCharacter.getPlayer().spiritIndexProperty(), new NumberStringConverter());
-                    label_selected_astralReputation.textProperty()
-                            .bindBidirectional(newCharacter.getPlayer().spiritIndexProperty(), new SpiritIndexReputationConverter());
-                }
-
-                if(battle.getHost().getConnectedCharacters().containsKey(newCharacter)) {
-                    vbox_selected_matrix.setVisible(true);
-                    label_overwatchScore.textProperty().bind(
-                            battle.getHost().getConnectedCharacters().get(newCharacter).asString());
-                    button_selected_matrix.textProperty().setValue("Disconnect");
-                } else {
-                    button_selected_matrix.textProperty().setValue("Connect");
-                }
-
-                if(newCharacter.isNpc()) {
-                    flowPane_selected_badges.getChildren()
-                            .add(BadgeFactory.createBadge(
-                                    "NPC",
-                                    "This character is a NPC",
-                                    CssClasses.INFO));
-                } else {
-                    flowPane_selected_badges.getChildren()
-                            .add(BadgeFactory.createBadge(
-                                    "PC",
-                                    "This character is player controlled",
-                                    CssClasses.PRIMARY));
-                }
-
-                if(newCharacter.isIce()) {
-                    flowPane_selected_badges.getChildren()
-                            .add(BadgeFactory.createBadge(
-                                    "ICe",
-                                    "This character is part of host defense countermeasures",
-                                    CssClasses.INFO));
-                }
-
-                if(newCharacter.getWorld() == World.MATRIX) {
-                    flowPane_selected_badges.getChildren()
-                            .add(BadgeFactory.createBadge(
-                                    "Matrix",
-                                    "This character is inside matrix",
-                                    CssClasses.SUCCESS));
-                }
-
-                hbox_selected_character.setVisible(true);
-                vbox_selected_player.setVisible(true);
-                anchorPane_selected.setVisible(true);
-            }
-        });
     }
 
     private void setupBarrierTable() {
@@ -1318,31 +1323,35 @@ public class ControllerBattle {
         tableColumn_barrier_structure.setCellValueFactory(param -> param.getValue()
                 .getStructureMonitor().currentProperty().asObject());
 
+        MenuItem renameBarrier = new MenuItem("Rename barrier");
+        renameBarrier.setOnAction(event -> {
+            Barrier selected = tableView_barrier.getSelectionModel().getSelectedItem();
+            TextInputDialog dialog = textInputDialogFactory.createDialog(
+                    "Rename barrier",
+                    "Rename barrier " + selected.getName(),
+                    "Please enter name:",
+                    selected.getName());
+            Optional<String> result = dialog.showAndWait();
+
+            result.ifPresent(selected::setName);
+        });
+        MenuItem deleteBarrier = new MenuItem("Delete barrier");
+        deleteBarrier.setOnAction(event -> tableView_barrier.getItems()
+                .remove(tableView_barrier.getSelectionModel().getSelectedIndex()));
+        MenuItem addBarrier = new MenuItem("Add barrier");
+        addBarrier.setOnAction(event -> addBarrierOnAction());
+
+        ContextMenu fullContextMenu = new ContextMenu(addBarrier, deleteBarrier, renameBarrier);
+        ContextMenu emptyContextMenu = new ContextMenu(addBarrier);
+        tableView_barrier.setContextMenu(emptyContextMenu);
+        tableView_barrier.setContextMenu(fullContextMenu);
+
         tableView_barrier.setRowFactory(param -> {
             TableRow<Barrier> tableRow = new TableRow<>();
 
-            MenuItem renameBarrier = new MenuItem("Rename barrier");
-            renameBarrier.setOnAction(event -> {
-                Barrier selected = tableView_barrier.getSelectionModel().getSelectedItem();
-                TextInputDialog dialog = textInputDialogFactory.createDialog(
-                        "Rename barrier",
-                        "Rename barrier " + selected.getName(),
-                        "Please enter name:",
-                        selected.getName());
-                Optional<String> result = dialog.showAndWait();
-
-                result.ifPresent(selected::setName);
+            tableRow.emptyProperty().addListener((observable, oldValue, newValue) -> {
+                tableRow.setContextMenu((newValue) ? emptyContextMenu : fullContextMenu);
             });
-            MenuItem deleteBarrier = new MenuItem("Delete barrier");
-            deleteBarrier.setOnAction(event -> tableView_barrier.getItems()
-                    .remove(tableView_barrier.getSelectionModel().getSelectedIndex()));
-            MenuItem addBarrier = new MenuItem("Add barrier");
-            addBarrier.setOnAction(event -> addBarrierOnAction());
-            ContextMenu fullContextMenu = new ContextMenu(addBarrier, deleteBarrier, renameBarrier);
-            ContextMenu emptyContextMenu = new ContextMenu(addBarrier);
-
-            tableRow.emptyProperty().addListener((observable, oldValue, newValue) ->
-                    tableRow.setContextMenu(newValue ? emptyContextMenu : fullContextMenu));
             return tableRow;
         });
 
@@ -1386,31 +1395,34 @@ public class ControllerBattle {
         tableColumn_device_condition.setCellValueFactory(
                 param -> param.getValue().getConditionMonitor().currentProperty().asObject());
 
+        MenuItem renameDevice = new MenuItem("Rename device");
+        renameDevice.setOnAction(event -> {
+            Device selected = tableView_devices.getSelectionModel().getSelectedItem();
+            TextInputDialog dialog = textInputDialogFactory.createDialog(
+                    "Rename device",
+                    "Rename device " + selected.getName(),
+                    "Please enter name:",
+                    selected.getName());
+            Optional<String> result = dialog.showAndWait();
+
+            result.ifPresent(selected::setName);
+        });
+        MenuItem deleteDevice = new MenuItem("Delete device");
+        deleteDevice.setOnAction(event -> tableView_devices.getItems()
+                .remove(tableView_devices.getSelectionModel().getSelectedIndex()));
+        MenuItem addDevice = new MenuItem("Add device");
+        addDevice.setOnAction(event -> addDeviceOnAction());
+
+        ContextMenu fullContextMenu = new ContextMenu(addDevice, deleteDevice, renameDevice);
+        ContextMenu emptyContextMenu = new ContextMenu(addDevice);
+        tableView_devices.setContextMenu(emptyContextMenu);
+
         tableView_devices.setRowFactory(param -> {
             TableRow<Device> tableRow = new TableRow<>();
 
-            MenuItem renameDevice = new MenuItem("Rename device");
-            renameDevice.setOnAction(event -> {
-                Device selected = tableView_devices.getSelectionModel().getSelectedItem();
-                TextInputDialog dialog = textInputDialogFactory.createDialog(
-                        "Rename device",
-                        "Rename device " + selected.getName(),
-                        "Please enter name:",
-                        selected.getName());
-                Optional<String> result = dialog.showAndWait();
-
-                result.ifPresent(selected::setName);
+            tableRow.emptyProperty().addListener((observable, oldValue, newValue) -> {
+                tableRow.setContextMenu((newValue) ? emptyContextMenu : fullContextMenu);
             });
-            MenuItem deleteDevice = new MenuItem("Delete device");
-            deleteDevice.setOnAction(event -> tableView_devices.getItems()
-                    .remove(tableView_devices.getSelectionModel().getSelectedIndex()));
-            MenuItem addDevice = new MenuItem("Add device");
-            addDevice.setOnAction(event -> addDeviceOnAction());
-            ContextMenu fullContextMenu = new ContextMenu(addDevice, deleteDevice, renameDevice);
-            ContextMenu emptyContextMenu = new ContextMenu(addDevice);
-
-            tableRow.emptyProperty().addListener((observable, oldValue, newValue) ->
-                    tableRow.setContextMenu(newValue ? emptyContextMenu : fullContextMenu));
             return tableRow;
         });
 
