@@ -89,6 +89,16 @@ public class Device implements Observable {
         return conditionMonitor;
     }
 
+    public void setFrom(Device other) {
+        name.setValue(other.getName());
+        rating.setValue(other.getRating());
+        attack.setValue(other.getAttack());
+        sleeze.setValue(other.getSleeze());
+        firewall.setValue(other.getFirewall());
+        dataProcessing.setValue(other.getDataProcessing());
+        conditionMonitor.setFrom(other.conditionMonitor);
+    }
+
     @Override
     public void addListener(InvalidationListener listener) {
         name.addListener(listener);

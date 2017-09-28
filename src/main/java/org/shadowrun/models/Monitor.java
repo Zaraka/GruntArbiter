@@ -61,6 +61,11 @@ public class Monitor implements Observable {
         }
     }
 
+    public void setFrom(Monitor other) {
+        max.setValue(other.getMax());
+        current.setValue(other.getCurrent());
+    }
+
     @Override
     public void addListener(InvalidationListener listener) {
         current.addListener(listener);

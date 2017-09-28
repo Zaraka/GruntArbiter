@@ -3,6 +3,7 @@ package org.shadowrun.controllers;
 import com.google.gson.Gson;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
@@ -18,7 +19,7 @@ import org.slf4j.LoggerFactory;
 import java.io.InputStreamReader;
 import java.util.Optional;
 
-public class ControllerAddVehicle {
+public class ControllerAddVehicle implements Controller {
 
     private static final Logger LOG = LoggerFactory.getLogger(ControllerAddVehicle.class);
 
@@ -76,7 +77,7 @@ public class ControllerAddVehicle {
         stage.close();
     }
 
-    public void onOpen(Stage stage) {
+    public void onOpen(Stage stage, Vehicle edit) {
         this.stage = stage;
         this.vehicle = null;
 
@@ -145,6 +146,21 @@ public class ControllerAddVehicle {
             }
         });
 
+        if(edit != null) {
+            textField_name.setText(edit.getName());
+            textField_sensor.setText(String.valueOf(edit.getSensor()));
+            textField_pilot.setText(String.valueOf(edit.getPilot()));
+            textField_armor.setText(String.valueOf(edit.getArmor()));
+            textField_body.setText(String.valueOf(edit.getBody()));
+            textField_acceleration_offRoad.setText(String.valueOf(edit.getAcceleration().getOffRoad()));
+            textField_acceleration_onRoad.setText(String.valueOf(edit.getAcceleration().getOnRoad()));
+            textField_speed_offRoad.setText(String.valueOf(edit.getSpeed().getOffRoad()));
+            textField_speed_onRoad.setText(String.valueOf(edit.getSpeed().getOnRoad()));
+            textField_handling_offRoad.setText(String.valueOf(edit.getHandling().getOffRoad()));
+            textField_handling_onRoad.setText(String.valueOf(edit.getHandling().getOnRoad()));
+
+        }
+
     }
 
     public Optional<Vehicle> getVehicle() {
@@ -158,5 +174,10 @@ public class ControllerAddVehicle {
         for(int i = 0; i < vehiclePresset.getChildren().size(); i++) {
             loadPreset(vehiclePresset.getChildren().get(i), newNode.getChildren());
         }
+    }
+
+    @Override
+    public Stage getStage() {
+        return stage;
     }
 }

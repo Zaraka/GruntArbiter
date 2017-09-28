@@ -32,9 +32,10 @@ public class Battle implements Observable {
                     World.REAL,
                     false,
                     false,
+                    false,
                     playerCharacter.getPhysicalMonitor(),
                     playerCharacter.getStunMonitor(),
-                    playerCharacter);
+                    playerCharacter, null);
 
     private ObjectProperty<Host> host;
 

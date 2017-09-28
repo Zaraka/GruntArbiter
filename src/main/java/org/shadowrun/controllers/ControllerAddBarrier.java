@@ -15,7 +15,7 @@ import org.shadowrun.models.Barrier;
 import java.util.Arrays;
 import java.util.Optional;
 
-public class ControllerAddBarrier {
+public class ControllerAddBarrier implements Controller {
 
     private Stage stage;
     private Barrier barrier;
@@ -77,5 +77,10 @@ public class ControllerAddBarrier {
 
     public Optional<Barrier> getBarrier() {
         return Optional.ofNullable(barrier);
+    }
+
+    @Override
+    public Stage getStage() {
+        return stage;
     }
 }

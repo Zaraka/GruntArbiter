@@ -14,7 +14,7 @@ import org.shadowrun.models.Device;
 import java.util.Objects;
 import java.util.Optional;
 
-public class ControllerAddDevice {
+public class ControllerAddDevice implements Controller {
 
     private Device device;
     private Stage stage;
@@ -79,7 +79,7 @@ public class ControllerAddDevice {
     }
 
 
-    public void onOpen(Stage stage, Campaign campaign) {
+    public void onOpen(Stage stage, Campaign campaign, Device edit) {
         this.stage = stage;
         this.campaign = campaign;
         this.device = null;
@@ -118,6 +118,15 @@ public class ControllerAddDevice {
                 comboBox_pressets.getSelectionModel().selectedItemProperty().isNull());
 
         button_savePresset.disableProperty().bind(button_ok.disableProperty());
+        
+        if(edit != null) {
+            textField_name.setText(edit.getName());
+            textField_attack.setText(String.valueOf(edit.getAttack()));
+            textField_dataProcessing.setText(String.valueOf(edit.getDataProcessing()));
+            textField_firewall.setText(String.valueOf(edit.getFirewall()));
+            textField_rating.setText(String.valueOf(edit.getRating()));
+            textField_sleeze.setText(String.valueOf(edit.getSleeze()));
+        }
     }
 
     public Optional<Device> getDevice() {
@@ -152,5 +161,10 @@ public class ControllerAddDevice {
     private Device createDevice() {
         return new Device(textField_name.textProperty().get(),
                 getRating(), getAttack(), getSleeze(), getFirewall(), getDataProcessing());
+    }
+
+    @Override
+    public Stage getStage() {
+        return stage;
     }
 }

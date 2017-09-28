@@ -10,7 +10,7 @@ import org.shadowrun.models.Host;
 
 import java.util.Optional;
 
-public class ControllerAddHost {
+public class ControllerAddHost implements Controller {
 
     private Host host;
     private Stage stage;
@@ -113,5 +113,10 @@ public class ControllerAddHost {
     private int getRating() {
         return (textField_rating.textProperty().isEmpty().get()) ? 0 :
                 Integer.parseInt(textField_rating.textProperty().get());
+    }
+
+    @Override
+    public Stage getStage() {
+        return stage;
     }
 }

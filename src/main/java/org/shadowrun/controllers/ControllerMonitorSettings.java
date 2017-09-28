@@ -10,7 +10,7 @@ import org.shadowrun.models.Monitor;
 
 import java.util.Optional;
 
-public class ControllerMonitorSettings {
+public class ControllerMonitorSettings implements Controller {
 
     private Stage stage;
     private Monitor monitor;
@@ -102,5 +102,10 @@ public class ControllerMonitorSettings {
 
     private int getCurrentValue() {
         return Integer.parseInt(textField_currentValue.getText());
+    }
+
+    @Override
+    public Stage getStage() {
+        return stage;
     }
 }

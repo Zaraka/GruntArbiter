@@ -7,8 +7,11 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
@@ -84,6 +87,21 @@
                      </graphic></RadioButton>
                </children>
             </HBox>
+            <VBox fx:id="vbox_companions" prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <TableView fx:id="tableView_companions">
+                    <columns>
+                      <TableColumn fx:id="tableColumn_companions_name" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="425.0" text="Companion" />
+                    </columns>
+                  </TableView>
+                  <ToolBar>
+                    <items>
+                        <ComboBox fx:id="comboBox_companions" prefWidth="150.0" />
+                      <Button fx:id="button_addToCompanions" mnemonicParsing="false" onAction="#addToCompanionsOnAction" styleClass="button-primary" text="Add" />
+                    </items>
+                  </ToolBar>
+               </children>
+            </VBox>
       </children>
     </VBox>
     <HBox maxHeight="-Infinity" maxWidth="+Infinity" minHeight="-Infinity" minWidth="-Infinity" GridPane.columnIndex="1" GridPane.rowIndex="1">

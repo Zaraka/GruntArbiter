@@ -2,20 +2,16 @@ package org.shadowrun.logic;
 
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.*;
-import javafx.collections.ObservableMap;
 import org.apache.commons.lang3.StringUtils;
 import org.shadowrun.common.constants.ICE;
-import org.shadowrun.common.constants.Weather;
 import org.shadowrun.common.constants.World;
 import org.shadowrun.common.exceptions.NextTurnException;
 import org.shadowrun.models.Battle;
 import org.shadowrun.models.Character;
 import org.shadowrun.models.Host;
-import org.shadowrun.models.PlayerCharacter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.List;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -108,9 +104,10 @@ public class BattleLogic {
                 World.MATRIX,
                 true,
                 true,
+                false,
                 getActiveBattle().getHost().getRating() / 2 + 8,
                 0,
-                null);
+                null, null);
         getActiveBattle().getCharacters().add(ic);
     }
 

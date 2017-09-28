@@ -39,6 +39,10 @@ public class VehicleAttribute implements Observable {
         return offRoad;
     }
 
+    public void setFrom(VehicleAttribute other) {
+        onRoad.setValue(other.getOnRoad());
+        offRoad.setValue(other.getOffRoad());
+    }
 
     @Override
     public void addListener(InvalidationListener listener) {

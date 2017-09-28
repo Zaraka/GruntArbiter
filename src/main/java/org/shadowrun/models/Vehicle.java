@@ -3,6 +3,8 @@ package org.shadowrun.models;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.property.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class Vehicle implements Observable {
 
@@ -23,7 +25,6 @@ public class Vehicle implements Observable {
     private IntegerProperty pilot;
 
     private IntegerProperty sensor;
-
 
     public Vehicle(String name,
                    int handlingOnRoad, int handlingOffRoad,
@@ -103,6 +104,18 @@ public class Vehicle implements Observable {
 
     public IntegerProperty sensorProperty() {
         return sensor;
+    }
+
+    public void setFrom(Vehicle other) {
+
+        name.setValue(other.getName());
+        handling.setFrom(other.getHandling());
+        speed.setFrom(other.getSpeed());
+        acceleration.setFrom(other.getAcceleration());
+        body.setValue(other.getBody());
+        armor.setValue(other.getArmor());
+        pilot.setValue(other.getPilot());
+        sensor.setValue(other.getSensor());
     }
 
     @Override

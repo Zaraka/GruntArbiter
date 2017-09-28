@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import org.apache.commons.lang3.StringUtils;
+import org.shadowrun.common.constants.CharacterType;
 import org.shadowrun.common.factories.CharacterDialogFactory;
 import org.shadowrun.common.factories.TextInputDialogFactory;
 import org.shadowrun.common.nodes.cells.CharacterPresetCell;
@@ -19,7 +20,7 @@ import java.io.IOException;
 import java.util.Objects;
 import java.util.Optional;
 
-public class ControllerManageSquads {
+public class ControllerManageSquads implements Controller {
 
     private static final Logger LOG = LoggerFactory.getLogger(ControllerManageSquads.class);
 
@@ -84,7 +85,10 @@ public class ControllerManageSquads {
     private void createCharacterOnAction() {
 
         try {
-            ControllerAddCharacter controllerAddCharacter = characterDialogFactory.createDialog(campaign, null);
+            ControllerAddCharacter controllerAddCharacter = characterDialogFactory.createDialog(
+                    campaign,
+                    CharacterType.CLASSIC,
+                    null);
             controllerAddCharacter.getStage().showAndWait();
             controllerAddCharacter.getCharacter().ifPresent(playerCharacter -> {
                 tableView_characters.getItems().add(playerCharacter);
@@ -154,7 +158,8 @@ public class ControllerManageSquads {
             editCharacter.setOnAction(event -> {
                 Character selected = tableView_characters.getSelectionModel().getSelectedItem();
                 try {
-                    ControllerAddCharacter controllerAddCharacter = characterDialogFactory.createDialog(campaign, selected);
+                    ControllerAddCharacter controllerAddCharacter = characterDialogFactory.createDialog(
+                            campaign, CharacterType.CLASSIC, selected);
                     controllerAddCharacter.getStage().showAndWait();
 
                     controllerAddCharacter.getCharacter().ifPresent(character -> {
@@ -196,5 +201,10 @@ public class ControllerManageSquads {
 
     public Optional<Squad> getSquad() {
         return Optional.ofNullable(squad);
+    }
+
+    @Override
+    public Stage getStage() {
+        return stage;
     }
 }

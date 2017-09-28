@@ -24,7 +24,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane stylesheets="@../css/dark.css" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.shadowrun.controllers.ControllerBattle">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.shadowrun.controllers.ControllerBattle">
    <children>
       <VBox prefHeight="167.0" prefWidth="1024.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -105,7 +105,7 @@
                      <children>
                         <VBox>
                            <children>
-                              <TitledPane animated="false" text="Spawn menu">
+                              <TitledPane text="Spawn menu">
                                 <content>
                                   <AnchorPane>
                                        <children>
@@ -140,7 +140,7 @@
                                     </AnchorPane>
                                 </content>
                               </TitledPane>
-                              <TitledPane animated="false" text="Meatspace">
+                              <TitledPane text="Meatspace">
                                  <content>
                                     <AnchorPane>
                                        <children>
@@ -171,7 +171,7 @@
                                     </AnchorPane>
                                  </content>
                               </TitledPane>
-                              <TitledPane animated="false" styleClass="matrix-pane" text="Matrix">
+                              <TitledPane styleClass="matrix-pane" text="Matrix">
                                  <content>
                                     <AnchorPane>
                                        <children>
@@ -252,7 +252,7 @@
                                     </AnchorPane>
                                  </content>
                               </TitledPane>
-                              <TitledPane animated="false" styleClass="astral-pane" text="Astral space">
+                              <TitledPane styleClass="astral-pane" text="Astral space">
                                  <content>
                                     <AnchorPane>
                                        <children>
@@ -387,22 +387,29 @@
                   </AnchorPane>
                   <AnchorPane fx:id="anchorPane_selected" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="280.0">
                      <children>
-                        <VBox prefHeight="664.0" prefWidth="250.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0">
+                        <VBox prefWidth="250.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0">
                            <children>
-                              <HBox fx:id="hbox_selected_glyph" alignment="CENTER">
+                              <VBox styleClass="box-highlighted">
                                  <children>
-                                    <FontAwesomeIconView fx:id="fontAwesomeIcon_selected" fill="WHITE" size="48.0" />
+                                    <HBox fx:id="hbox_selected_glyph" alignment="CENTER">
+                                       <children>
+                                          <FontAwesomeIconView fx:id="fontAwesomeIcon_selected" fill="WHITE" size="48.0" />
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER">
+                                       <children>
+                                          <Label fx:id="label_selectedCharacter" contentDisplay="CENTER" text="Selected" textAlignment="CENTER" wrapText="true">
+                                             <font>
+                                                <Font name="System Bold" size="17.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </HBox>
                                  </children>
-                              </HBox>
-                              <HBox alignment="CENTER">
-                                 <children>
-                                    <Label fx:id="label_selectedCharacter" contentDisplay="CENTER" text="Selected" textAlignment="CENTER" wrapText="true">
-                                       <font>
-                                          <Font name="System Bold" size="17.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                              </HBox>
+                                 <padding>
+                                    <Insets bottom="5.0" top="5.0" />
+                                 </padding>
+                              </VBox>
                               <FlowPane fx:id="flowPane_selected_badges">
                                  <padding><Insets bottom="5" top="5" /></padding>
                               </FlowPane>
@@ -422,7 +429,41 @@
                                        </tooltip>
                                     </Button>
                                  </children>
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                                 <padding>
+                                    <Insets bottom="5.0" top="5.0" />
+                                 </padding>
                               </FlowPane>
+                              <VBox fx:id="vbox_selected_companions">
+                                 <children>
+                                    <TitledPane fx:id="titledPane_selected_companions" animated="false" expanded="false" prefWidth="300.0" text="Companions">
+                                      <content>
+                                        <AnchorPane>
+                                             <children>
+                                                <VBox>
+                                                   <children>
+                                                      <TableView fx:id="tableView_selected_companions" prefHeight="200.0">
+                                                        <columns>
+                                                          <TableColumn fx:id="tableColumn_selected_companions_name" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="175.0" text="Name" />
+                                                          <TableColumn fx:id="tableColumn_selected_companions_action" minWidth="-Infinity" prefWidth="100.0" text="Action" />
+                                                        </columns>
+                                                      </TableView>
+                                                      <ToolBar>
+                                                        <items>
+                                                            <ComboBox fx:id="comboBox_selected_companionType" prefWidth="150.0" />
+                                                          <Button fx:id="button_selected_addCompanion" mnemonicParsing="false" onAction="#addCompanionOnAction" styleClass="button-primary" text="Add" />
+                                                        </items>
+                                                      </ToolBar>
+                                                   </children>
+                                                </VBox>
+                                             </children>
+                                          </AnchorPane>
+                                      </content>
+                                    </TitledPane>
+                                 </children>
+                              </VBox>
                               <VBox fx:id="vbox_selected_matrix" alignment="CENTER">
                                  <ToolBar prefHeight="40.0" prefWidth="200.0">
                                     <items>
@@ -696,7 +737,7 @@
                                     </GridPane>
                                  </children>
                               </HBox>
-                              <HBox fx:id="hbox_selected_device" alignment="CENTER" layoutX="10.0" layoutY="140.0">
+                              <HBox fx:id="hbox_selected_device" alignment="CENTER" layoutX="10.0" layoutY="140.0" VBox.vgrow="ALWAYS">
                                  <children>
                                     <GridPane>
                                        <columnConstraints>
@@ -750,7 +791,7 @@
                                     </GridPane>
                                  </children>
                               </HBox>
-                              <HBox fx:id="hbox_selected_vehicle" alignment="CENTER" layoutX="10.0" layoutY="290.0">
+                              <HBox fx:id="hbox_selected_vehicle" alignment="CENTER" layoutX="10.0" layoutY="290.0" VBox.vgrow="ALWAYS">
                                  <children>
                                     <GridPane>
                                        <columnConstraints>

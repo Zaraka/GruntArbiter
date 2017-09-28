@@ -26,15 +26,14 @@ import javafx.util.Pair;
 import javafx.util.converter.NumberStringConverter;
 import org.apache.commons.lang3.StringUtils;
 import org.shadowrun.common.NumericLimitListener;
-import org.shadowrun.common.constants.CssClasses;
-import org.shadowrun.common.constants.ICE;
-import org.shadowrun.common.constants.Weather;
-import org.shadowrun.common.constants.World;
+import org.shadowrun.common.constants.*;
 import org.shadowrun.common.converters.IterationTimeConverter;
 import org.shadowrun.common.converters.SpiritIndexReputationConverter;
 import org.shadowrun.common.exceptions.NextTurnException;
 import org.shadowrun.common.factories.*;
 import org.shadowrun.common.nodes.cells.*;
+import org.shadowrun.common.nodes.rows.CompanionTableRow;
+import org.shadowrun.common.utils.CSSUtils;
 import org.shadowrun.logic.AppLogic;
 import org.shadowrun.logic.BattleLogic;
 import org.shadowrun.models.*;
@@ -52,9 +51,6 @@ public class ControllerBattle {
 
     private static final String LABEL_DISCONNECT = "Disconnect";
     private static final String LABEL_GENERATE_HOST = "Generate Host";
-    private static final double SELECTED_PANE_OPEN_POS = 0.8;
-    private static final String TABLE_ASTRAL = "table-astral";
-    private static final String TABLE_MATRIX = "table-matrix";
 
     private AppLogic appLogic;
     private BattleLogic battleLogic;
@@ -67,6 +63,9 @@ public class ControllerBattle {
     private static final ConfirmationDialogFactory confirmationDialogFactory = new ConfirmationDialogFactory();
     private static final TextInputDialogFactory textInputDialogFactory = new TextInputDialogFactory();
     private static final CharacterDialogFactory characterDialogFactory = new CharacterDialogFactory();
+    private static final SquadDialogFactory squadDialogFactory = new SquadDialogFactory();
+    private static final VehicleDialogFactory vehicleDialogFactory = new VehicleDialogFactory();
+    private static final DeviceDialogFactory deviceDialogFactory = new DeviceDialogFactory();
 
     @FXML
     private TableView<Character> tableView_masterTable;
@@ -141,6 +140,13 @@ public class ControllerBattle {
     private TableColumn<Device, Integer> tableColumn_device_dataProcessing;
 
     @FXML
+    private TableView<Companion> tableView_selected_companions;
+    @FXML
+    private TableColumn<Companion, String> tableColumn_selected_companions_name;
+    @FXML
+    private TableColumn<Companion, Companion> tableColumn_selected_companions_action;
+
+    @FXML
     private VBox vbox_realWorld;
     @FXML
     private VBox vbox_matrix;
@@ -152,6 +158,8 @@ public class ControllerBattle {
     private VBox vbox_selected_player;
     @FXML
     private VBox vbox_selected_matrix;
+    @FXML
+    private VBox vbox_selected_companions;
 
 
     @FXML
@@ -217,6 +225,8 @@ public class ControllerBattle {
     private Button button_spawnPlayer;
     @FXML
     private Button button_selected_matrix;
+    @FXML
+    private Button button_selected_addCompanion;
 
     @FXML
     private TextField textField_selected_initiative;
@@ -227,6 +237,8 @@ public class ControllerBattle {
 
     @FXML
     private ComboBox<Weather> comboBox_weather;
+    @FXML
+    private ComboBox<CompanionType> comboBox_selected_companionType;
 
     @FXML
     private AnchorPane anchorPane_selected;
@@ -249,6 +261,9 @@ public class ControllerBattle {
 
     @FXML
     private FlowPane flowPane_selected_badges;
+
+    @FXML
+    private TitledPane titledPane_selected_companions;
 
     private List<TableView> contentTables;
 
@@ -657,16 +672,10 @@ public class ControllerBattle {
 
     @FXML
     private void addDeviceOnAction() {
-        Parent root;
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("views/addDevice.fxml"));
-            root = loader.load();
-            Stage dialog = new Stage();
-            dialog.setTitle("Create new device");
-            dialog.setScene(new Scene(root));
-            ControllerAddDevice controllerAddDevice = loader.getController();
-            controllerAddDevice.onOpen(dialog, appLogic.getActiveCampaign());
-            dialog.showAndWait();
+            ControllerAddDevice controllerAddDevice =
+                    deviceDialogFactory.createDialog(appLogic.getActiveCampaign(), null);
+            controllerAddDevice.getStage().showAndWait();
             controllerAddDevice.getDevice().ifPresent(device -> battle.getDevices().add(device));
 
         } catch (IOException ex) {
@@ -676,16 +685,9 @@ public class ControllerBattle {
 
     @FXML
     private void addVehicleOnAction() {
-        Parent root;
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("views/addVehicle.fxml"));
-            root = loader.load();
-            Stage dialog = new Stage();
-            dialog.setTitle("Create new vehicle");
-            dialog.setScene(new Scene(root));
-            ControllerAddVehicle controllerAddVehicle = loader.getController();
-            controllerAddVehicle.onOpen(dialog);
-            dialog.showAndWait();
+            ControllerAddVehicle controllerAddVehicle = vehicleDialogFactory.createDialog(null);
+            controllerAddVehicle.getStage().showAndWait();
             controllerAddVehicle.getVehicle().ifPresent(vehicle -> {
                 LOG.info("add vehicle " + vehicle);
                 battle.getVehicles().add(vehicle);
@@ -699,7 +701,7 @@ public class ControllerBattle {
     private void addCharacterOnAction() {
         try {
             ControllerAddCharacter controllerAddCharacter =
-                    characterDialogFactory.createDialog(appLogic.getActiveCampaign(), null);
+                    characterDialogFactory.createDialog(appLogic.getActiveCampaign(), CharacterType.CLASSIC, null);
             controllerAddCharacter.getStage().showAndWait();
             controllerAddCharacter.getCharacter().ifPresent(playerCharacter -> {
                 battle.getCharacters().add(playerCharacter);
@@ -785,17 +787,9 @@ public class ControllerBattle {
 
     @FXML
     private void addSquadOnAction() {
-        Parent root;
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("views/manageSquads.fxml"));
-            root = loader.load();
-            Stage dialog = new Stage();
-            dialog.setTitle("Create new squad");
-            dialog.setScene(new Scene(root));
-
-            ControllerManageSquads controllerManageSquads = loader.getController();
-            controllerManageSquads.onOpen(dialog, appLogic.getActiveCampaign());
-            dialog.showAndWait();
+            ControllerManageSquads controllerManageSquads = squadDialogFactory.createDialog(appLogic.getActiveCampaign());
+            controllerManageSquads.getStage().showAndWait();
             controllerManageSquads.getSquad().ifPresent(squad -> squad.getCharacters().forEach(character -> {
                 setCharacterInitiative(character);
                 battle.getCharacters().add(character);
@@ -803,6 +797,54 @@ public class ControllerBattle {
 
         } catch (IOException ex) {
             LOG.error("Could not load addCharacter dialog: ", ex);
+        }
+    }
+
+    @FXML
+    private void addCompanionOnAction() {
+        Character selectedCharacter = tableView_masterTable.getSelectionModel().getSelectedItem();
+        switch (comboBox_selected_companionType.getSelectionModel().getSelectedItem()) {
+            case CHARACTER:
+                try {
+                    ControllerAddCharacter controllerAddCharacter =
+                            characterDialogFactory.createDialog(
+                                    appLogic.getActiveCampaign(),
+                                    CharacterType.COMPANION,
+                                    null);
+                    controllerAddCharacter.getStage().showAndWait();
+                    controllerAddCharacter.getCharacter().ifPresent(companionCharacter -> {
+                        selectedCharacter.getCompanions().add(new Companion(companionCharacter));
+                    });
+
+                } catch (IOException ex) {
+                    LOG.error("Could not load addCharacter dialog: ", ex);
+                }
+                break;
+            case VEHICLE:
+                try {
+                    ControllerAddVehicle controllerAddVehicle =
+                            vehicleDialogFactory.createDialog(null);
+                    controllerAddVehicle.getStage().showAndWait();
+                    controllerAddVehicle.getVehicle().ifPresent(vehicle -> {
+                        selectedCharacter.getCompanions().add(new Companion(vehicle));
+                    });
+                } catch (IOException ex) {
+                    LOG.error("Could not load addVehicle dialog: ", ex);
+                }
+                break;
+            case DEVICE:
+                try {
+                    ControllerAddDevice controllerAddDevice =
+                            deviceDialogFactory.createDialog(appLogic.getActiveCampaign(), null);
+                    controllerAddDevice.getStage().showAndWait();
+                    controllerAddDevice.getDevice().ifPresent(device -> {
+                        selectedCharacter.getCompanions().add(new Companion(device));
+                    });
+
+                } catch (IOException ex) {
+                    LOG.error("Could not load addDevice dialog: ", ex);
+                }
+                break;
         }
     }
 
@@ -826,6 +868,7 @@ public class ControllerBattle {
         label_selectedCharacter.textProperty().unbind();
 
         vbox_selected_matrix.setVisible(false);
+        vbox_selected_companions.setVisible(false);
         hbox_selected_glyph.setVisible(false);
         hbox_selected_character.setVisible(false);
         hbox_selected_barrier.setVisible(false);
@@ -852,18 +895,18 @@ public class ControllerBattle {
         button_nextTurn.disableProperty().bind(battleLogic.hasBattle());
         button_prevTurn.disableProperty().bind(battleLogic.hasBattle());
 
-        setupMasterTable(battle);
-
+        //Code for table is way too long
+        setupMasterTable();
         setupBarrierTable();
-
         setupDeviceTable();
-
         setupVehicleTable();
+        setupCompanionsTable();
 
         textField_selected_initiative.textProperty()
                 .addListener(new NumericLimitListener(textField_selected_initiative, -100, 100));
 
         vbox_selected_matrix.managedProperty().bind(vbox_selected_matrix.visibleProperty());
+        vbox_selected_companions.managedProperty().bind(vbox_selected_companions.visibleProperty());
         hbox_selected_barrier.managedProperty().bind(hbox_selected_barrier.visibleProperty());
         hbox_selected_character.managedProperty().bind(hbox_selected_character.visibleProperty());
         vbox_selected_player.managedProperty().bind(vbox_selected_player.visibleProperty());
@@ -913,6 +956,11 @@ public class ControllerBattle {
         comboBox_weather.setCellFactory(param -> new WeatherCell());
         comboBox_weather.setButtonCell(new WeatherCell());
 
+        comboBox_selected_companionType.setItems(FXCollections.observableArrayList(CompanionType.values()));
+        comboBox_selected_companionType.setCellFactory(param -> new CompanionTypeCell());
+        comboBox_selected_companionType.setButtonCell(new CompanionTypeCell());
+        button_selected_addCompanion.disableProperty().bind(comboBox_selected_companionType.valueProperty().isNull());
+
         //Items
         ObservableList<Character> firableCharacters = FXCollections.
                 observableArrayList(param -> new Observable[]{param.initiativeProperty()});
@@ -951,21 +999,6 @@ public class ControllerBattle {
                 .bind(battle.actionPhaseProperty().greaterThan(1).not()
                         .or(battle.initiativePassProperty().greaterThan(1).not()
                                 .or(battle.combatTurnProperty().greaterThan(1)).not()));
-
-        battle.maxInitiativeBinding().greaterThan(0).addListener((observable, oldValue, newValue) ->
-                tableColumn_masterTable_turn1.setVisible(newValue));
-        battle.maxInitiativeBinding().greaterThan(10).addListener((observable, oldValue, newValue) ->
-                tableColumn_masterTable_turn2.setVisible(newValue));
-        battle.maxInitiativeBinding().greaterThan(20).addListener((observable, oldValue, newValue) ->
-                tableColumn_masterTable_turn3.setVisible(newValue));
-        battle.maxInitiativeBinding().greaterThan(30).addListener((observable, oldValue, newValue) ->
-                tableColumn_masterTable_turn4.setVisible(newValue));
-        battle.maxInitiativeBinding().greaterThan(40).addListener((observable, oldValue, newValue) ->
-                tableColumn_masterTable_turn5.setVisible(newValue));
-        battle.maxInitiativeBinding().greaterThan(50).addListener((observable, oldValue, newValue) ->
-                tableColumn_masterTable_turn6.setVisible(newValue));
-        battle.maxInitiativeBinding().greaterThan(60).addListener((observable, oldValue, newValue) ->
-                tableColumn_masterTable_turn7.setVisible(newValue));
 
         battle.getHost().ratingProperty().isNotEqualTo(0).addListener((observable, oldValue, newValue) -> {
             if (newValue) {
@@ -1117,7 +1150,7 @@ public class ControllerBattle {
         }
     }
 
-    private void setupMasterTable(Battle battle) {
+    private void setupMasterTable() {
         tableColumn_masterTable_character.setCellFactory(param -> new CharacterCell());
         tableColumn_masterTable_character.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
         tableColumn_masterTable_condition.setCellFactory(param -> new CharacterConditionCell());
@@ -1200,20 +1233,7 @@ public class ControllerBattle {
                     super.updateItem(item, empty);
                     if (!empty) {
                         ObservableList<String> classes = getStyleClass();
-                        switch (item.getWorld()) {
-                            case REAL:
-                                classes.remove(TABLE_ASTRAL);
-                                classes.remove(TABLE_MATRIX);
-                                break;
-                            case ASTRAL:
-                                classes.remove(TABLE_MATRIX);
-                                classes.add(TABLE_ASTRAL);
-                                break;
-                            case MATRIX:
-                                classes.remove(TABLE_ASTRAL);
-                                classes.add(TABLE_MATRIX);
-                                break;
-                        }
+                        CSSUtils.setCharacterBackground(item, classes);
                     } else {
                         setStyle(null);
                     }
@@ -1248,6 +1268,22 @@ public class ControllerBattle {
                             fontAwesomeIcon_selected.setIcon(fontAwesomeIcon);
                             hbox_selected_glyph.setVisible(true);
                         });
+                        label_selectedCharacter.textProperty().bind(newCharacter.nameProperty());
+
+                        if (battle.getHost().getConnectedCharacters().containsKey(newCharacter)) {
+                            vbox_selected_matrix.setVisible(true);
+                            label_overwatchScore.textProperty().bind(
+                                    battle.getHost().getConnectedCharacters().get(newCharacter).asString());
+                            button_selected_matrix.textProperty().setValue("Disconnect");
+                        } else {
+                            button_selected_matrix.textProperty().setValue("Connect");
+                        }
+
+                        if (!newCharacter.isCompanion()) {
+                            tableView_selected_companions.setItems(newCharacter.getCompanions());
+                            titledPane_selected_companions.setExpanded(!newCharacter.getCompanions().isEmpty());
+                            vbox_selected_companions.setVisible(true);
+                        }
 
                         label_selected_physical.textProperty().bind(Bindings.concat(
                                 newCharacter.getPhysicalMonitor().currentProperty(),
@@ -1262,21 +1298,11 @@ public class ControllerBattle {
                         ));
                         textField_selected_initiative.textProperty()
                                 .bindBidirectional(newCharacter.initiativeProperty(), new NumberStringConverter());
-                        label_selectedCharacter.textProperty().bind(newCharacter.nameProperty());
                         if (newCharacter.playerProperty().isNotNull().get()) {
                             textField_selected_spiritIndex.textProperty()
                                     .bindBidirectional(newCharacter.getPlayer().spiritIndexProperty(), new NumberStringConverter());
                             label_selected_astralReputation.textProperty()
                                     .bindBidirectional(newCharacter.getPlayer().spiritIndexProperty(), new SpiritIndexReputationConverter());
-                        }
-
-                        if (battle.getHost().getConnectedCharacters().containsKey(newCharacter)) {
-                            vbox_selected_matrix.setVisible(true);
-                            label_overwatchScore.textProperty().bind(
-                                    battle.getHost().getConnectedCharacters().get(newCharacter).asString());
-                            button_selected_matrix.textProperty().setValue("Disconnect");
-                        } else {
-                            button_selected_matrix.textProperty().setValue("Connect");
                         }
 
                         if (newCharacter.isNpc()) {
@@ -1314,6 +1340,88 @@ public class ControllerBattle {
                         anchorPane_selected.setVisible(true);
                     }
                 });
+
+        battle.maxInitiativeBinding().greaterThan(0).addListener((observable, oldValue, newValue) ->
+                tableColumn_masterTable_turn1.setVisible(newValue));
+        battle.maxInitiativeBinding().greaterThan(10).addListener((observable, oldValue, newValue) ->
+                tableColumn_masterTable_turn2.setVisible(newValue));
+        battle.maxInitiativeBinding().greaterThan(20).addListener((observable, oldValue, newValue) ->
+                tableColumn_masterTable_turn3.setVisible(newValue));
+        battle.maxInitiativeBinding().greaterThan(30).addListener((observable, oldValue, newValue) ->
+                tableColumn_masterTable_turn4.setVisible(newValue));
+        battle.maxInitiativeBinding().greaterThan(40).addListener((observable, oldValue, newValue) ->
+                tableColumn_masterTable_turn5.setVisible(newValue));
+        battle.maxInitiativeBinding().greaterThan(50).addListener((observable, oldValue, newValue) ->
+                tableColumn_masterTable_turn6.setVisible(newValue));
+        battle.maxInitiativeBinding().greaterThan(60).addListener((observable, oldValue, newValue) ->
+                tableColumn_masterTable_turn7.setVisible(newValue));
+    }
+
+    private void setupCompanionsTable() {
+        tableColumn_selected_companions_name.setCellValueFactory(param -> param.getValue().nameProperty());
+        tableColumn_selected_companions_action.setCellFactory(param ->
+                new CompanionActionCell(event ->
+                        spawnCompanion(event.getPayload())));
+        tableColumn_selected_companions_action.setCellValueFactory(param ->
+                new ReadOnlyObjectWrapper<>(param.getValue()));
+
+        tableView_selected_companions.setRowFactory(param -> {
+            TableRow<Companion> tableRow = new CompanionTableRow();
+
+            MenuItem deleteCompanion = new MenuItem("Delete companion");
+            deleteCompanion.setOnAction(event -> {
+                tableView_selected_companions.getItems()
+                        .remove(tableView_selected_companions.getSelectionModel().getSelectedItem());
+            });
+
+            MenuItem spawnCompanionItem = new MenuItem("Spawn companion");
+            spawnCompanionItem.setOnAction(event -> {
+                spawnCompanion(tableView_selected_companions.getSelectionModel().getSelectedItem());
+            });
+
+            MenuItem editCompanion = new MenuItem("Edit companion");
+            editCompanion.setOnAction(event -> {
+                Companion companion = tableView_selected_companions.getSelectionModel().getSelectedItem();
+                try {
+                    switch (companion.getCompanionType()) {
+                        case CHARACTER:
+                            ControllerAddCharacter controllerAddCharacter =
+                                    characterDialogFactory.createDialog(appLogic.getActiveCampaign(),
+                                            CharacterType.COMPANION,
+                                            ((Character) companion.getCompanion()));
+                            controllerAddCharacter.getStage().showAndWait();
+                            controllerAddCharacter.getCharacter().ifPresent(character -> {
+                                ((Character) companion.getCompanion()).setFrom(character);
+                            });
+                            break;
+                        case DEVICE:
+                            ControllerAddDevice controllerAddDevice =
+                                    deviceDialogFactory.createDialog(appLogic.getActiveCampaign(),
+                                            ((Device) companion.getCompanion()));
+                            controllerAddDevice.getStage().showAndWait();
+                            controllerAddDevice.getDevice().ifPresent(device -> {
+                                ((Device) companion.getCompanion()).setFrom(device);
+                            });
+                            break;
+                        case VEHICLE:
+                            ControllerAddVehicle controllerAddVehicle =
+                                    vehicleDialogFactory.createDialog(((Vehicle) companion.getCompanion()));
+                            controllerAddVehicle.getStage().showAndWait();
+                            controllerAddVehicle.getVehicle().ifPresent(vehicle -> {
+                                ((Vehicle) companion.getCompanion()).setFrom(vehicle);
+                            });
+                    }
+                } catch (IOException ex) {
+                    LOG.error(ex.toString());
+                }
+            });
+
+            tableRow.emptyProperty().addListener((observable, oldValue, newValue) -> {
+                tableRow.setContextMenu((newValue) ? null :
+                        new ContextMenu(spawnCompanionItem, editCompanion, deleteCompanion));
+            });
+            return tableRow;
+        });
     }
 
     private void setupBarrierTable() {
@@ -1480,5 +1588,21 @@ public class ControllerBattle {
 
     public Battle getBattle() {
         return battle;
+    }
+
+    private void spawnCompanion(Companion companion) {
+        switch (companion.getCompanionType()) {
+            case CHARACTER:
+                if (!battle.getCharacters().contains((Character) companion.getCompanion()))
+                    battle.getCharacters().add((Character) companion.getCompanion());
+                break;
+            case DEVICE:
+                if (!battle.getDevices().contains((Device) companion.getCompanion()))
+                    battle.getDevices().add((Device) companion.getCompanion());
+                break;
+            case VEHICLE:
+                if (!battle.getVehicles().contains((Vehicle) companion.getCompanion()))
+                    battle.getVehicles().add((Vehicle) companion.getCompanion());
+        }
     }
 }

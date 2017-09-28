@@ -58,9 +58,9 @@
             <TableView fx:id="tableView_characters" prefHeight="300.0">
               <columns>
                 <TableColumn fx:id="tableColumn_characters_name" editable="false" prefWidth="150.0" text="Name" />
-                <TableColumn fx:id="tableColumn_characters_physical" editable="false" prefWidth="150.0" text="Physical monitor" />
-                  <TableColumn fx:id="tableColumn_characters_stun" editable="false" prefWidth="150.0" text="Stun monitor" />
-                  <TableColumn fx:id="tableColumn_characters_actions" editable="false" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="50.0" />
+                <TableColumn fx:id="tableColumn_characters_physical" editable="false" prefWidth="75.0" text="Physical" />
+                  <TableColumn fx:id="tableColumn_characters_stun" editable="false" prefWidth="75.0" text="Stun" />
+                  <TableColumn fx:id="tableColumn_characters_actions" editable="false" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="90.0" text="Attributes" />
               </columns>
             </TableView>
       </children>

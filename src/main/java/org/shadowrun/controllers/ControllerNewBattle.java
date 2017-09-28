@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class ControllerNewBattle {
+public class ControllerNewBattle implements Controller {
     public class PickPlayer {
         private ObjectProperty<PlayerCharacter> playerCharacter;
         private BooleanProperty checked;
@@ -140,5 +140,10 @@ public class ControllerNewBattle {
 
     public String getName() {
         return textField_name.getText();
+    }
+
+    @Override
+    public Stage getStage() {
+        return stage;
     }
 }
