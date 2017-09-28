@@ -9,6 +9,8 @@ public class CSSUtils {
     private static final String TABLE_ASTRAL = "table-astral";
     private static final String TABLE_MATRIX = "table-matrix";
 
+    public static final String BUTTON_PRIMARY = "button-primary";
+
     public static void setCharacterBackground(Character character, List<String> cssClasses) {
         switch (character.getWorld()) {
             case REAL:

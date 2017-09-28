@@ -27,7 +27,7 @@ public class Character implements Comparable<Character>, Observable {
 
     private Monitor stunMonitor;
 
-    private ObjectProperty<PlayerCharacter> player;
+    private StringProperty playerUUID;
 
     private ObservableList<Companion> companions;
 
@@ -43,7 +43,7 @@ public class Character implements Comparable<Character>, Observable {
         this.ice = new SimpleBooleanProperty(ice);
         this.physicalMonitor = new Monitor(physicalMonitor);
         this.stunMonitor = new Monitor((ice) ? 0 : stunMonitor);
-        this.player = new SimpleObjectProperty<>(player);
+        this.playerUUID = new SimpleStringProperty((player == null) ? null : player.getUuid());
         this.companions = (companions == null) ? FXCollections.observableArrayList() : FXCollections.observableArrayList(companions);
         this.companion = new SimpleBooleanProperty(companion);
     }
@@ -56,7 +56,7 @@ public class Character implements Comparable<Character>, Observable {
         this.ice = new SimpleBooleanProperty(character.isIce());
         this.physicalMonitor = new Monitor(character.getPhysicalMonitor());
         this.stunMonitor = new Monitor(character.getStunMonitor());
-        this.player = new SimpleObjectProperty<>(character.getPlayer());
+        this.playerUUID = new SimpleStringProperty(null);
         this.companions = FXCollections.observableArrayList();
         this.companion = new SimpleBooleanProperty(false);
     }
@@ -125,14 +125,6 @@ public class Character implements Comparable<Character>, Observable {
         return ice;
     }
 
-    public PlayerCharacter getPlayer() {
-        return player.get();
-    }
-
-    public ObjectProperty<PlayerCharacter> playerProperty() {
-        return player;
-    }
-
     public ObservableList<Companion> getCompanions() {
         return companions;
     }
@@ -145,6 +137,14 @@ public class Character implements Comparable<Character>, Observable {
         return companion;
     }
 
+    public String getPlayerUUID() {
+        return playerUUID.get();
+    }
+
+    public StringProperty playerUUIDProperty() {
+        return playerUUID;
+    }
+
     public void setFrom(Character other) {
         name.setValue(other.getName());
         initiative.setValue(other.getInitiative());
@@ -153,7 +153,7 @@ public class Character implements Comparable<Character>, Observable {
         ice.setValue(other.isIce());
         physicalMonitor.setFrom(other.getPhysicalMonitor());
         stunMonitor.setFrom(other.getStunMonitor());
-        player.setValue(other.getPlayer());
+        playerUUID.setValue(other.getPlayerUUID());
         companions = other.companions;
         companion.setValue(other.isCompanion());
     }
@@ -172,7 +172,7 @@ public class Character implements Comparable<Character>, Observable {
         world.addListener(listener);
         ice.addListener(listener);
         npc.addListener(listener);
-        player.addListener(listener);
+        playerUUID.addListener(listener);
         physicalMonitor.addListener(listener);
         stunMonitor.addListener(listener);
         companions.addListener(listener);
@@ -186,7 +186,7 @@ public class Character implements Comparable<Character>, Observable {
         world.removeListener(listener);
         ice.removeListener(listener);
         npc.removeListener(listener);
-        player.removeListener(listener);
+        playerUUID.removeListener(listener);
         physicalMonitor.removeListener(listener);
         stunMonitor.removeListener(listener);
         companions.removeListener(listener);

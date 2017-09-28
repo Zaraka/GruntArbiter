@@ -4,6 +4,7 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import org.shadowrun.common.events.CompanionEvent;
+import org.shadowrun.common.utils.CSSUtils;
 import org.shadowrun.models.Companion;
 
 public class CompanionActionCell extends TableCell<Companion, Companion> {
@@ -27,6 +28,7 @@ public class CompanionActionCell extends TableCell<Companion, Companion> {
             spawnButton.setOnAction(event -> {
                 spawnHandler.handle(new CompanionEvent(item));
             });
+            spawnButton.getStyleClass().add(CSSUtils.BUTTON_PRIMARY);
             setText(null);
             setGraphic(spawnButton);
         }

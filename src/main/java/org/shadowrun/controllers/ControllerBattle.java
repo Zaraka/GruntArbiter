@@ -598,14 +598,16 @@ public class ControllerBattle {
     @FXML
     private void spiritIndexPlusOnAction() {
         Character character = tableView_masterTable.getSelectionModel().getSelectedItem();
-        character.getPlayer().setSpiritIndex(character.getPlayer().getSpiritIndex() + 1);
+        PlayerCharacter playerCharacter = appLogic.getPlayer(character.getPlayerUUID());
+        playerCharacter.setSpiritIndex(playerCharacter.getSpiritIndex() + 1);
     }
 
     @FXML
     private void spiritIndexMinusOnAction() {
-        PlayerCharacter player = tableView_masterTable.getSelectionModel().getSelectedItem().getPlayer();
-        if (player.getSpiritIndex() > 0) {
-            player.setSpiritIndex(player.getSpiritIndex() - 1);
+        PlayerCharacter playerCharacter = appLogic.getPlayer(
+                tableView_masterTable.getSelectionModel().getSelectedItem().getPlayerUUID());
+        if (playerCharacter.getSpiritIndex() > 0) {
+            playerCharacter.setSpiritIndex(playerCharacter.getSpiritIndex() - 1);
         }
     }
 
@@ -715,8 +717,8 @@ public class ControllerBattle {
     @FXML
     private void addPlayerOnAction() {
         Set<PlayerCharacter> playersInThisBattle = battle.getCharacters().stream()
-                .filter(character -> character.getPlayer() != null)
-                .map(Character::getPlayer).collect(Collectors.toSet());
+                .filter(character -> character.playerUUIDProperty() != null)
+                .map(character -> appLogic.getPlayer(character.getPlayerUUID())).collect(Collectors.toSet());
 
         List<PlayerCharacter> availablePlayers =
                 appLogic.getActiveCampaign().getPlayers().stream()
@@ -1010,7 +1012,7 @@ public class ControllerBattle {
 
         allPlayersIncluded = Bindings.createBooleanBinding(() ->
                 appLogic.getActiveCampaign().getPlayers().size() <=
-                        battle.getCharacters().stream().filter(character -> character.getPlayer() != null).count());
+                        battle.getCharacters().stream().filter(character -> character.getPlayerUUID() != null).count());
 
         button_spawnPlayer.disableProperty().bind(allPlayersIncluded);
 
@@ -1251,11 +1253,13 @@ public class ControllerBattle {
                         label_selected_stun.textProperty().unbind();
                         label_overwatchScore.textProperty().unbind();
                         textField_selected_initiative.textProperty().unbindBidirectional(oldCharacter.initiativeProperty());
-                        if (oldCharacter.playerProperty().isNotNull().get()) {
+                        if (oldCharacter.playerUUIDProperty().isNotNull().get()) {
                             textField_selected_spiritIndex.textProperty()
-                                    .unbindBidirectional(oldCharacter.getPlayer().spiritIndexProperty());
+                                    .unbindBidirectional(
+                                            appLogic.getPlayer(oldCharacter.getPlayerUUID()).spiritIndexProperty());
                             label_selected_astralReputation.textProperty()
-                                    .unbindBidirectional(oldCharacter.getPlayer().spiritIndexProperty());
+                                    .unbindBidirectional(
+                                            appLogic.getPlayer(oldCharacter.getPlayerUUID()).spiritIndexProperty());
                         }
                     }
 
@@ -1298,11 +1302,14 @@ public class ControllerBattle {
                         ));
                         textField_selected_initiative.textProperty()
                                 .bindBidirectional(newCharacter.initiativeProperty(), new NumberStringConverter());
-                        if (newCharacter.playerProperty().isNotNull().get()) {
+                        if (newCharacter.playerUUIDProperty().isNotNull().get()) {
                             textField_selected_spiritIndex.textProperty()
-                                    .bindBidirectional(newCharacter.getPlayer().spiritIndexProperty(), new NumberStringConverter());
+                                    .bindBidirectional(
+                                            appLogic.getPlayer(newCharacter.getPlayerUUID()).spiritIndexProperty(),
+                                            new NumberStringConverter());
                             label_selected_astralReputation.textProperty()
-                                    .bindBidirectional(newCharacter.getPlayer().spiritIndexProperty(), new SpiritIndexReputationConverter());
+                                    .bindBidirectional(appLogic.getPlayer(newCharacter.getPlayerUUID()).spiritIndexProperty(),
+                                            new SpiritIndexReputationConverter());
                         }
 
                         if (newCharacter.isNpc()) {

@@ -8,7 +8,11 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+import java.util.UUID;
+
 public class PlayerCharacter implements Observable {
+
+    private StringProperty uuid;
 
     private StringProperty name;
 
@@ -23,6 +27,7 @@ public class PlayerCharacter implements Observable {
         this.physicalMonitor = new SimpleIntegerProperty(physicalMonitor);
         this.stunMonitor = new SimpleIntegerProperty(stunMonitor);
         this.spiritIndex = new SimpleIntegerProperty(spiritIndex);
+        this.uuid = new SimpleStringProperty(UUID.randomUUID().toString());
     }
 
     public String getName() {
@@ -71,6 +76,10 @@ public class PlayerCharacter implements Observable {
 
     public void setStunMonitor(int stunMonitor) {
         this.stunMonitor.set(stunMonitor);
+    }
+
+    public String getUuid() {
+        return uuid.get();
     }
 
     @Override

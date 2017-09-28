@@ -8,6 +8,8 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableMap;
 import org.hildan.fxgson.FxGson;
 import org.shadowrun.common.exceptions.IncompatibleVersionsException;
 import org.shadowrun.models.AppConfig;
@@ -19,6 +21,7 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.HashMap;
 
 public class AppLogic {
 
@@ -42,6 +45,8 @@ public class AppLogic {
 
     private BooleanProperty changesSaved;
 
+    private ObservableMap<String, PlayerCharacter> playersMap;
+
 
     public AppLogic() {
         activeCampaign = new SimpleObjectProperty<>(null);
@@ -52,6 +57,7 @@ public class AppLogic {
         changesSaved = new SimpleBooleanProperty(true);
         config = new AppConfig();
         invalidationListener = null;
+        playersMap = FXCollections.observableHashMap();
 
         activeCampaign.addListener((observable, oldValue, newValue) -> {
             if(oldValue != null && invalidationListener != null) {
@@ -75,13 +81,19 @@ public class AppLogic {
     }
 
     public void newCharacter(String name) {
-        activeCampaign.get().getPlayers().add(new PlayerCharacter(name, 10, 10, 0));
+        PlayerCharacter playerCharacter = new PlayerCharacter(name, 10, 10, 0);
+        activeCampaign.get().getPlayers().add(playerCharacter);
+        playersMap.put(playerCharacter.getUuid(), playerCharacter);
     }
 
     public void loadCampaign(File file, Campaign campaign) {
         campaignFile.set(file);
         activeCampaign.setValue(campaign);
         getConfig().insertOrRefreshRecentCampaign(getCampaignFile().toPath());
+        playersMap.clear();
+        campaign.getPlayers().forEach(playerCharacter -> {
+            playersMap.put(playerCharacter.getUuid(), playerCharacter);
+        });
         changesSaved.setValue(true);
     }
 
@@ -193,6 +205,9 @@ public class AppLogic {
 
     public void addCampignListener(InvalidationListener listener) {
         invalidationListener = listener;
+    }
 
+    public PlayerCharacter getPlayer(String UUID) {
+        return playersMap.get(UUID);
     }
 }
