@@ -6,6 +6,9 @@ import org.shadowrun.models.Character;
 import java.util.Optional;
 
 public class CharacterIconFactory {
+
+    private CharacterIconFactory(){};
+
     public static Optional<FontAwesomeIcon> createIcon(Character character) {
         if(!character.isNpc()) {
             return Optional.of(FontAwesomeIcon.USER);
