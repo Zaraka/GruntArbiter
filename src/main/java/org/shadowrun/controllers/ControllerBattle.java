@@ -624,8 +624,8 @@ public class ControllerBattle {
     @FXML
     private void overwatchScorePlusOnAction() {
         Character character = tableView_masterTable.getSelectionModel().getSelectedItem();
-        ObservableMap<Character, IntegerProperty> connectedCharacters = battle.getHost().getConnectedCharacters();
-        IntegerProperty overwatchProperty = connectedCharacters.get(character);
+        ObservableMap<String, IntegerProperty> connectedCharacters = battle.getHost().getConnectedCharacters();
+        IntegerProperty overwatchProperty = connectedCharacters.get(character.getUuid());
 
         int currentValue = overwatchProperty.get();
         if (currentValue < 40)
@@ -635,8 +635,8 @@ public class ControllerBattle {
     @FXML
     private void overwatchScoreMinusOnAction() {
         Character character = tableView_masterTable.getSelectionModel().getSelectedItem();
-        ObservableMap<Character, IntegerProperty> connectedCharacters = battle.getHost().getConnectedCharacters();
-        IntegerProperty overwatchProperty = connectedCharacters.get(character);
+        ObservableMap<String, IntegerProperty> connectedCharacters = battle.getHost().getConnectedCharacters();
+        IntegerProperty overwatchProperty = connectedCharacters.get(character.getUuid());
 
         int currentValue = overwatchProperty.get();
         if (currentValue > 0)
@@ -646,8 +646,8 @@ public class ControllerBattle {
     @FXML
     private void overwatchScoreResetOnAction() {
         Character character = tableView_masterTable.getSelectionModel().getSelectedItem();
-        ObservableMap<Character, IntegerProperty> connectedCharacters = battle.getHost().getConnectedCharacters();
-        IntegerProperty overwatchProperty = connectedCharacters.get(character);
+        ObservableMap<String, IntegerProperty> connectedCharacters = battle.getHost().getConnectedCharacters();
+        IntegerProperty overwatchProperty = connectedCharacters.get(character.getUuid());
 
         overwatchProperty.set(0);
     }
@@ -757,12 +757,12 @@ public class ControllerBattle {
     @FXML
     private void matrixConnectOnAction() {
         Character character = tableView_masterTable.getSelectionModel().getSelectedItem();
-        ObservableMap<Character, IntegerProperty> connectedCharacters = battle.getHost().getConnectedCharacters();
-        if (connectedCharacters.containsKey(character)) {
-            connectedCharacters.remove(character);
+        ObservableMap<String, IntegerProperty> connectedCharacters = battle.getHost().getConnectedCharacters();
+        if (connectedCharacters.containsKey(character.getUuid())) {
+            connectedCharacters.remove(character.getUuid());
             character.setWorld(World.REAL);
         } else {
-            connectedCharacters.put(character, new SimpleIntegerProperty(0));
+            connectedCharacters.put(character.getUuid(), new SimpleIntegerProperty(0));
             character.setWorld(World.MATRIX);
         }
         tableView_masterTable.getSelectionModel().clearSelection();
@@ -1274,10 +1274,10 @@ public class ControllerBattle {
                         });
                         label_selectedCharacter.textProperty().bind(newCharacter.nameProperty());
 
-                        if (battle.getHost().getConnectedCharacters().containsKey(newCharacter)) {
+                        if (battle.getHost().getConnectedCharacters().containsKey(newCharacter.getUuid())) {
                             vbox_selected_matrix.setVisible(true);
                             label_overwatchScore.textProperty().bind(
-                                    battle.getHost().getConnectedCharacters().get(newCharacter).asString());
+                                    battle.getHost().getConnectedCharacters().get(newCharacter.getUuid()).asString());
                             button_selected_matrix.textProperty().setValue("Disconnect");
                         } else {
                             button_selected_matrix.textProperty().setValue("Connect");

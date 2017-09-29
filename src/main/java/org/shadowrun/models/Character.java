@@ -8,8 +8,11 @@ import javafx.collections.ObservableList;
 import org.shadowrun.common.constants.World;
 
 import java.util.List;
+import java.util.UUID;
 
-public class Character implements Comparable<Character>, Observable {
+public class Character implements Comparable<Character>, Identificable, Observable {
+
+    private StringProperty uuid;
 
     private StringProperty name;
 
@@ -46,6 +49,7 @@ public class Character implements Comparable<Character>, Observable {
         this.playerUUID = new SimpleStringProperty((player == null) ? null : player.getUuid());
         this.companions = (companions == null) ? FXCollections.observableArrayList() : FXCollections.observableArrayList(companions);
         this.companion = new SimpleBooleanProperty(companion);
+        this.uuid = new SimpleStringProperty(UUID.randomUUID().toString());
     }
 
     public Character(Character character) {
@@ -59,6 +63,7 @@ public class Character implements Comparable<Character>, Observable {
         this.playerUUID = new SimpleStringProperty(null);
         this.companions = FXCollections.observableArrayList();
         this.companion = new SimpleBooleanProperty(false);
+        this.uuid = new SimpleStringProperty(UUID.randomUUID().toString());
     }
 
     public String getName() {
@@ -191,5 +196,10 @@ public class Character implements Comparable<Character>, Observable {
         stunMonitor.removeListener(listener);
         companions.removeListener(listener);
         companion.removeListener(listener);
+    }
+
+    @Override
+    public String getUuid() {
+        return uuid.get();
     }
 }

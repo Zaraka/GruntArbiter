@@ -22,7 +22,7 @@ public class Host implements Observable {
 
     private IntegerProperty dataProcessing;
 
-    private ObservableMap<Character, IntegerProperty> connectedCharacters;
+    private ObservableMap<String, IntegerProperty> connectedCharacters;
 
     public Host() {
         rating = new SimpleIntegerProperty(0);
@@ -73,7 +73,7 @@ public class Host implements Observable {
         this.dataProcessing.setValue(dataProcessing);
     }
 
-    public ObservableMap<Character, IntegerProperty> getConnectedCharacters() {
+    public ObservableMap<String, IntegerProperty> getConnectedCharacters() {
         return connectedCharacters;
     }
 

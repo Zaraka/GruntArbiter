@@ -10,7 +10,7 @@ import javafx.beans.property.StringProperty;
 
 import java.util.UUID;
 
-public class PlayerCharacter implements Observable {
+public class PlayerCharacter implements Identificable, Observable {
 
     private StringProperty uuid;
 
@@ -78,6 +78,7 @@ public class PlayerCharacter implements Observable {
         this.stunMonitor.set(stunMonitor);
     }
 
+    @Override
     public String getUuid() {
         return uuid.get();
     }
