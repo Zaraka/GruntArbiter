@@ -387,7 +387,7 @@
                   </AnchorPane>
                   <AnchorPane fx:id="anchorPane_selected" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="280.0">
                      <children>
-                        <VBox prefWidth="250.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0">
+                        <VBox prefWidth="250.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <VBox styleClass="box-highlighted">
                                  <children>
@@ -406,8 +406,11 @@
                                        </children>
                                     </HBox>
                                  </children>
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" />
+                                 </VBox.margin>
                                  <padding>
-                                    <Insets bottom="5.0" top="5.0" />
+                                    <Insets bottom="10.0" top="10.0" />
                                  </padding>
                               </VBox>
                               <FlowPane fx:id="flowPane_selected_badges">
@@ -419,6 +422,9 @@
                                        <tooltip>
                                           <Tooltip text="Connect / disconnect from matrix" />
                                        </tooltip>
+                                       <graphic>
+                                          <FontAwesomeIconView glyphName="SIGN_IN" />
+                                       </graphic>
                                     </Button>
                                     <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#removeCharacterOnAction" styleClass="button-primary" text="Delete">
                                        <graphic>
@@ -436,34 +442,6 @@
                                     <Insets bottom="5.0" top="5.0" />
                                  </padding>
                               </FlowPane>
-                              <VBox fx:id="vbox_selected_companions">
-                                 <children>
-                                    <TitledPane fx:id="titledPane_selected_companions" animated="false" expanded="false" prefWidth="300.0" text="Companions">
-                                      <content>
-                                        <AnchorPane>
-                                             <children>
-                                                <VBox>
-                                                   <children>
-                                                      <TableView fx:id="tableView_selected_companions" prefHeight="200.0">
-                                                        <columns>
-                                                          <TableColumn fx:id="tableColumn_selected_companions_name" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="175.0" text="Name" />
-                                                          <TableColumn fx:id="tableColumn_selected_companions_action" minWidth="-Infinity" prefWidth="100.0" text="Action" />
-                                                        </columns>
-                                                      </TableView>
-                                                      <ToolBar>
-                                                        <items>
-                                                            <ComboBox fx:id="comboBox_selected_companionType" prefWidth="150.0" />
-                                                          <Button fx:id="button_selected_addCompanion" mnemonicParsing="false" onAction="#addCompanionOnAction" styleClass="button-primary" text="Add" />
-                                                        </items>
-                                                      </ToolBar>
-                                                   </children>
-                                                </VBox>
-                                             </children>
-                                          </AnchorPane>
-                                      </content>
-                                    </TitledPane>
-                                 </children>
-                              </VBox>
                               <VBox fx:id="vbox_selected_matrix" alignment="CENTER">
                                  <ToolBar prefHeight="40.0" prefWidth="200.0">
                                     <items>
@@ -506,6 +484,34 @@
                                        </Button>
                                     </items>
                                  </ToolBar>
+                              </VBox>
+                              <VBox fx:id="vbox_selected_companions">
+                                 <children>
+                                    <TitledPane fx:id="titledPane_selected_companions" animated="false" expanded="false" prefWidth="300.0" text="Companions">
+                                      <content>
+                                        <AnchorPane>
+                                             <children>
+                                                <VBox>
+                                                   <children>
+                                                      <TableView fx:id="tableView_selected_companions" prefHeight="200.0">
+                                                        <columns>
+                                                          <TableColumn fx:id="tableColumn_selected_companions_name" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="175.0" text="Name" />
+                                                          <TableColumn fx:id="tableColumn_selected_companions_action" minWidth="-Infinity" prefWidth="100.0" text="Action" />
+                                                        </columns>
+                                                      </TableView>
+                                                      <ToolBar>
+                                                        <items>
+                                                            <ComboBox fx:id="comboBox_selected_companionType" prefWidth="150.0" />
+                                                          <Button fx:id="button_selected_addCompanion" mnemonicParsing="false" onAction="#addCompanionOnAction" styleClass="button-primary" text="Add" />
+                                                        </items>
+                                                      </ToolBar>
+                                                   </children>
+                                                </VBox>
+                                             </children>
+                                          </AnchorPane>
+                                      </content>
+                                    </TitledPane>
+                                 </children>
                               </VBox>
                               <HBox fx:id="hbox_selected_character" alignment="CENTER">
                                  <children>
