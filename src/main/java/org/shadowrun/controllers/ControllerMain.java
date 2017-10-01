@@ -209,14 +209,18 @@ public class ControllerMain {
 
     @FXML
     private void aboutOnAction() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        DialogPane dialogPane = alert.getDialogPane();
-        dialogPane.getStylesheets().add(
-                getClass().getClassLoader().getResource("css/dark.css").toExternalForm());
-        alert.setTitle("About Grunt Arbiter");
-        alert.setHeaderText("Grunt Arbiter version: " + appLogic.getConfig().getVersion().toString());
-        alert.setContentText("Created by Zaraka.\nhttp://www.github.com/zaraka/gruntarbiter");
-        alert.showAndWait();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("views/about.fxml"));
+            Parent root = loader.load();
+            Stage dialog = new Stage();
+            dialog.setTitle("About Grunt Arbiter");
+            dialog.setScene(new Scene(root));
+            ControllerAbout controllerAbout = loader.getController();
+            controllerAbout.onOpen(dialog, appLogic.getConfig().getVersion());
+            dialog.showAndWait();
+        } catch (IOException ex) {
+            LOG.error("Cant load about dialog: ", ex);
+        }
     }
 
 
