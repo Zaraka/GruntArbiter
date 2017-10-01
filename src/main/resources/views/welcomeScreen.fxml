@@ -22,6 +22,9 @@
                      <font>
                         <Font name="System Bold" size="37.0" />
                      </font>
+                     <HBox.margin>
+                        <Insets bottom="20.0" top="20.0" />
+                     </HBox.margin>
                   </Text>
                </children>
             </HBox>
