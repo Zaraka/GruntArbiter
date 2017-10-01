@@ -38,8 +38,8 @@
             </GridPane>
             <ToolBar prefHeight="40.0" prefWidth="200.0">
               <items>
-                  <Button mnemonicParsing="false" text="Add new player" />
-                <Button mnemonicParsing="false" text="Create new Battle" />
+                  <Button mnemonicParsing="false" onAction="#addNewPlayerOnAction" styleClass="button-primary" text="Add new player" />
+                <Button mnemonicParsing="false" onAction="#createNewBattleOnAction" styleClass="button-primary" text="Create new Battle" />
               </items>
             </ToolBar>
             <TableView fx:id="tableView_playerCharacters" VBox.vgrow="ALWAYS">

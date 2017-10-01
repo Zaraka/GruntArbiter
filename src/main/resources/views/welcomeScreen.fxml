@@ -45,12 +45,12 @@
                      <children>
                         <ButtonBar>
                           <buttons>
-                            <Button mnemonicParsing="false" onAction="#createNewCampaignOnAction" text="Create new campaign">
+                            <Button mnemonicParsing="false" onAction="#createNewCampaignOnAction" styleClass="button-primary" text="Create new campaign">
                                  <graphic>
                                     <FontAwesomeIconView glyphName="FILE" />
                                  </graphic>
                               </Button>
-                              <Button layoutX="185.0" layoutY="16.0" mnemonicParsing="false" onAction="#openCampaignOnAction" text="Open Campaign">
+                              <Button layoutX="185.0" layoutY="16.0" mnemonicParsing="false" onAction="#openCampaignOnAction" styleClass="button-primary" text="Open Campaign">
                                  <graphic>
                                     <FontAwesomeIconView glyphName="FOLDER" />
                                  </graphic>

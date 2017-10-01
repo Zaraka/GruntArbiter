@@ -45,6 +45,16 @@ public class ControllerCampaignScreen {
     @FXML
     private TextArea textArea_description;
 
+    @FXML
+    private void addNewPlayerOnAction() {
+        controllerMain.addPlayerOnAction();
+    }
+
+    @FXML
+    private void createNewBattleOnAction() {
+        controllerMain.newBattleOnAction();
+    }
+
     public void setStageAndListeners(Stage stage, ControllerMain controllerMain, Campaign campaign) {
         this.stage = stage;
         this.campaign = campaign;

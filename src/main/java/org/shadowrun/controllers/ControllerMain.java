@@ -169,7 +169,7 @@ public class ControllerMain {
     }
 
     @FXML
-    private void newBattleOnAction() {
+    public void newBattleOnAction() {
         Parent root;
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("views/newBattle.fxml"));
