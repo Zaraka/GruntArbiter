@@ -13,19 +13,31 @@ public class NumericLimitListener implements ChangeListener<String> {
 
     private Integer max;
 
+    private boolean allowMinus;
+
     public NumericLimitListener(TextField hooked, Integer min, Integer max) {
         super();
 
         this.hooked = hooked;
         this.min = min;
         this.max = max;
+
+        allowMinus = (min == null || min < 0);
     }
 
     @Override
     public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-        if (!newValue.matches("\\d*")) {
-            hooked.setText(newValue.replaceAll("[^\\d]", ""));
+        if(allowMinus) {
+            if (!newValue.matches("(^\\d*|^-\\d*)")) {
+                hooked.setText(oldValue);
+            }
+        } else {
+            if (!newValue.matches("^\\d*")) {
+                hooked.setText(oldValue);
+            }
         }
+
+
 
         Integer value;
         try {

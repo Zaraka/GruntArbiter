@@ -5,6 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import org.apache.commons.lang3.StringUtils;
 import org.shadowrun.common.NumericLimitListener;
 import org.shadowrun.models.Monitor;
 
@@ -73,16 +74,21 @@ public class ControllerMonitorSettings implements Controller {
 
         textField_currentValue.setText(String.valueOf(monitor.getCurrent()));
         textField_currentValue.textProperty().addListener(
-                new NumericLimitListener(textField_currentValue, 0, null));
+                new NumericLimitListener(textField_currentValue, null, null));
         textField_maxValue.setText(String.valueOf(monitor.getMax()));
         textField_maxValue.textProperty().addListener(
-                new NumericLimitListener(textField_maxValue, 0, null));
+                new NumericLimitListener(textField_maxValue, null, null));
 
         textField_maxValue.textProperty().addListener((observable, oldValue, newValue) -> {
-            if(newValue != null) {
-                if(Integer.parseInt(newValue) < getCurrentValue())
-                    textField_currentValue.setText(newValue);
+            try {
+                if(!StringUtils.isEmpty(newValue)) {
+                    if(Integer.parseInt(newValue) < getCurrentValue())
+                        textField_currentValue.setText(newValue);
+                }
+            } catch (NumberFormatException ignored) {
+
             }
+
         });
 
         button_ok.disableProperty()
@@ -97,11 +103,20 @@ public class ControllerMonitorSettings implements Controller {
     }
 
     private int getMaxValue() {
-        return Integer.parseInt(textField_maxValue.getText());
+        try {
+            return Integer.parseInt(textField_maxValue.getText());
+        } catch (NumberFormatException ex) {
+            return 0;
+        }
+
     }
 
     private int getCurrentValue() {
-        return Integer.parseInt(textField_currentValue.getText());
+        try {
+            return Integer.parseInt(textField_currentValue.getText());
+        } catch (NumberFormatException ex) {
+            return 0;
+        }
     }
 
     @Override

@@ -12,11 +12,17 @@ public class Monitor implements Observable {
     private IntegerProperty current;
 
     public Monitor(int max) {
+        if(max < 0)
+            max = 0;
         this.max = new SimpleIntegerProperty(max);
         this.current = new SimpleIntegerProperty(max);
     }
 
     public Monitor(int max, int current) {
+        if(max < 0)
+            max = 0;
+        if(current > max)
+            current = max;
         this.max = new SimpleIntegerProperty(max);
         this.current = new SimpleIntegerProperty(current);
     }
@@ -56,9 +62,6 @@ public class Monitor implements Observable {
 
     public void decrease(int dec) {
         current.setValue(current.get() - dec);
-        if(current.get() < 0) {
-            current.setValue(0);
-        }
     }
 
     public void setFrom(Monitor other) {
