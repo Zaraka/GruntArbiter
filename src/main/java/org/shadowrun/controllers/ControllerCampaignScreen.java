@@ -1,16 +1,25 @@
 package org.shadowrun.controllers;
 
+import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.shadowrun.common.factories.TextInputDialogFactory;
+import org.shadowrun.common.nodes.cells.PlayerImageCell;
 import org.shadowrun.models.Campaign;
 import org.shadowrun.models.PlayerCharacter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import javax.naming.Context;
+import java.io.File;
+import java.net.MalformedURLException;
 import java.util.Optional;
 
 public class ControllerCampaignScreen {
+
+    private static final Logger LOG = LoggerFactory.getLogger(ControllerCampaignScreen.class);
 
     private static final TextInputDialogFactory textInputDialogFactory = new TextInputDialogFactory();
 
@@ -20,6 +29,8 @@ public class ControllerCampaignScreen {
 
     @FXML
     private TableView<PlayerCharacter> tableView_playerCharacters;
+    @FXML
+    private TableColumn<PlayerCharacter, Image> tableColumn_playerCharacters_portrait;
     @FXML
     private TableColumn<PlayerCharacter, String> tableColumn_playerCharacters_character;
     @FXML
@@ -41,7 +52,8 @@ public class ControllerCampaignScreen {
 
         //Items
         tableView_playerCharacters.setItems(campaign.getPlayers());
-
+        tableColumn_playerCharacters_portrait.setCellValueFactory(param -> param.getValue().getPortrait().imageProperty());
+        tableColumn_playerCharacters_portrait.setCellFactory(param -> new PlayerImageCell());
         tableColumn_playerCharacters_character.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
         tableColumn_playerCharacters_physicalMonitor
                 .setCellValueFactory(param -> param.getValue().physicalMonitorProperty().asObject());
@@ -62,6 +74,35 @@ public class ControllerCampaignScreen {
 
             result.ifPresent(selected::setName);
         });
+        MenuItem setPortrait = new MenuItem("Set player portrait");
+        setPortrait.setOnAction(event -> {
+            FileChooser dialog = new FileChooser();
+            dialog.setTitle("Open image");
+            dialog.getExtensionFilters().add(new FileChooser.ExtensionFilter("All images", "*.*"));
+
+            File file = dialog.showOpenDialog(stage);
+            if (file != null) {
+                PlayerCharacter selected = tableView_playerCharacters.getSelectionModel().getSelectedItem();
+                try {
+                    selected.getPortrait().imageProperty().setValue(new Image(file.toURI().toURL().toExternalForm()));
+                } catch (MalformedURLException ex) {
+                    LOG.error("Can't load image due to URL reasons: ", ex);
+                }
+            }
+        });
+        MenuItem deletePortrait = new MenuItem("Delete portrait");
+        deletePortrait.setOnAction(event -> {
+            PlayerCharacter selected = tableView_playerCharacters.getSelectionModel().getSelectedItem();
+            selected.getPortrait().imageProperty().setValue(null);
+            selected.getPortrait().imageSourceProperty().setValue(null);
+        });
+        deletePortrait.disableProperty().bind(Bindings.createBooleanBinding(() -> {
+                    PlayerCharacter selected = tableView_playerCharacters.getSelectionModel().getSelectedItem();
+                    return selected == null || selected.getPortrait().imageProperty().isNull().get();
+
+                },
+                tableView_playerCharacters.getSelectionModel().selectedItemProperty()));
+
         MenuItem setPhysicalMonitor = new MenuItem("Set physical monitor");
         setPhysicalMonitor.setOnAction(event -> {
             PlayerCharacter selected = tableView_playerCharacters.getSelectionModel().getSelectedItem();
@@ -95,6 +136,8 @@ public class ControllerCampaignScreen {
         ContextMenu fullContextMenu = new ContextMenu(
                 addPlayer,
                 new SeparatorMenuItem(),
+                setPortrait,
+                deletePortrait,
                 renamePlayer,
                 setPhysicalMonitor,
                 setStunMonitor,

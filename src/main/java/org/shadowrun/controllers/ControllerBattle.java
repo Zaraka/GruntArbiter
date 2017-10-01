@@ -20,6 +20,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.util.Pair;
@@ -258,6 +259,8 @@ public class ControllerBattle {
 
     @FXML
     private FontAwesomeIconView fontAwesomeIcon_selected;
+    @FXML
+    private ImageView imageView_selected;
 
     @FXML
     private FlowPane flowPane_selected_badges;
@@ -878,6 +881,8 @@ public class ControllerBattle {
         hbox_selected_vehicle.setVisible(false);
         vbox_selected_player.setVisible(false);
         anchorPane_selected.setVisible(false);
+        fontAwesomeIcon_selected.setVisible(false);
+        imageView_selected.setVisible(false);
 
         flowPane_selected_badges.getChildren().clear();
     }
@@ -915,6 +920,8 @@ public class ControllerBattle {
         hbox_selected_glyph.managedProperty().bind(hbox_selected_glyph.visibleProperty());
         hbox_selected_vehicle.managedProperty().bind(hbox_selected_vehicle.visibleProperty());
         anchorPane_selected.managedProperty().bind(anchorPane_selected.visibleProperty());
+        fontAwesomeIcon_selected.managedProperty().bind(fontAwesomeIcon_selected.visibleProperty());
+        imageView_selected.managedProperty().bind(imageView_selected.visibleProperty());
 
         cleanSelectedPane();
 
@@ -1109,6 +1116,7 @@ public class ControllerBattle {
                 hbox_selected_glyph.setVisible(true);
                 hbox_selected_vehicle.setVisible(true);
                 anchorPane_selected.setVisible(true);
+                fontAwesomeIcon_selected.setVisible(true);
             }
         });
 
@@ -1342,6 +1350,13 @@ public class ControllerBattle {
                                             CssClasses.SUCCESS));
                         }
 
+                        if(newCharacter.getPortrait().imageProperty().get() != null) {
+                            imageView_selected.setImage(newCharacter.getPortrait().imageProperty().getValue());
+                            imageView_selected.setVisible(true);
+                        } else {
+                            fontAwesomeIcon_selected.setVisible(true);
+                        }
+
                         hbox_selected_character.setVisible(true);
                         vbox_selected_player.setVisible(true);
                         anchorPane_selected.setVisible(true);
@@ -1495,6 +1510,7 @@ public class ControllerBattle {
                 hbox_selected_barrier.setVisible(true);
                 hbox_selected_glyph.setVisible(true);
                 anchorPane_selected.setVisible(true);
+                fontAwesomeIcon_selected.setVisible(true);
             }
         });
     }
@@ -1563,6 +1579,7 @@ public class ControllerBattle {
                 hbox_selected_glyph.setVisible(true);
                 hbox_selected_device.setVisible(true);
                 anchorPane_selected.setVisible(true);
+                fontAwesomeIcon_selected.setVisible(true);
             }
         });
     }

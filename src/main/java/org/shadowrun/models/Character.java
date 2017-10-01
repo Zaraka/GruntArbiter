@@ -34,6 +34,8 @@ public class Character implements Comparable<Character>, Identificable, Observab
 
     private ObservableList<Companion> companions;
 
+    private SerializableImage portrait;
+
     public Character(String name,
                      int initiative, World world,
                      boolean npc, boolean ice, boolean companion,
@@ -50,6 +52,10 @@ public class Character implements Comparable<Character>, Identificable, Observab
         this.companions = (companions == null) ? FXCollections.observableArrayList() : FXCollections.observableArrayList(companions);
         this.companion = new SimpleBooleanProperty(companion);
         this.uuid = new SimpleStringProperty(UUID.randomUUID().toString());
+        this.portrait = new SerializableImage();
+        if(player != null) {
+            this.portrait.imageProperty().setValue(player.getPortrait().imageProperty().get());
+        }
     }
 
     public Character(Character character) {
@@ -64,6 +70,7 @@ public class Character implements Comparable<Character>, Identificable, Observab
         this.companions = FXCollections.observableArrayList();
         this.companion = new SimpleBooleanProperty(false);
         this.uuid = new SimpleStringProperty(UUID.randomUUID().toString());
+        this.portrait = new SerializableImage(character.getPortrait());
     }
 
     public String getName() {
@@ -150,6 +157,10 @@ public class Character implements Comparable<Character>, Identificable, Observab
         return playerUUID;
     }
 
+    public SerializableImage getPortrait() {
+        return portrait;
+    }
+
     public void setFrom(Character other) {
         name.setValue(other.getName());
         initiative.setValue(other.getInitiative());
@@ -182,6 +193,7 @@ public class Character implements Comparable<Character>, Identificable, Observab
         stunMonitor.addListener(listener);
         companions.addListener(listener);
         companion.addListener(listener);
+        portrait.addListener(listener);
     }
 
     @Override
@@ -196,6 +208,7 @@ public class Character implements Comparable<Character>, Identificable, Observab
         stunMonitor.removeListener(listener);
         companions.removeListener(listener);
         companion.removeListener(listener);
+        portrait.removeListener(listener);
     }
 
     @Override

@@ -14,6 +14,7 @@
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.FlowPane?>
@@ -393,7 +394,12 @@
                                  <children>
                                     <HBox fx:id="hbox_selected_glyph" alignment="CENTER">
                                        <children>
-                                          <FontAwesomeIconView fx:id="fontAwesomeIcon_selected" fill="WHITE" size="48.0" />
+                                          <VBox>
+                                             <children>
+                                                <FontAwesomeIconView fx:id="fontAwesomeIcon_selected" fill="WHITE" size="48.0" />
+                                                <ImageView fx:id="imageView_selected" preserveRatio="true" />
+                                             </children>
+                                          </VBox>
                                        </children>
                                     </HBox>
                                     <HBox alignment="CENTER">

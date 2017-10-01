@@ -7,10 +7,14 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.UUID;
 
 public class PlayerCharacter implements Identificable, Observable {
+
+    private static final Logger LOG = LoggerFactory.getLogger(PlayerCharacter.class);
 
     private StringProperty uuid;
 
@@ -22,12 +26,15 @@ public class PlayerCharacter implements Identificable, Observable {
 
     private IntegerProperty spiritIndex;
 
+    private SerializableImage portrait;
+
     public PlayerCharacter(String name, int physicalMonitor, int stunMonitor, int spiritIndex) {
         this.name = new SimpleStringProperty(name);
         this.physicalMonitor = new SimpleIntegerProperty(physicalMonitor);
         this.stunMonitor = new SimpleIntegerProperty(stunMonitor);
         this.spiritIndex = new SimpleIntegerProperty(spiritIndex);
         this.uuid = new SimpleStringProperty(UUID.randomUUID().toString());
+        this.portrait = new SerializableImage();
     }
 
     public String getName() {
@@ -78,6 +85,10 @@ public class PlayerCharacter implements Identificable, Observable {
         this.stunMonitor.set(stunMonitor);
     }
 
+    public SerializableImage getPortrait() {
+        return portrait;
+    }
+
     @Override
     public String getUuid() {
         return uuid.get();
@@ -89,6 +100,7 @@ public class PlayerCharacter implements Identificable, Observable {
         physicalMonitor.addListener(listener);
         stunMonitor.addListener(listener);
         spiritIndex.addListener(listener);
+        portrait.addListener(listener);
     }
 
     @Override
@@ -97,5 +109,6 @@ public class PlayerCharacter implements Identificable, Observable {
         physicalMonitor.removeListener(listener);
         stunMonitor.removeListener(listener);
         spiritIndex.removeListener(listener);
+        portrait.removeListener(listener);
     }
 }

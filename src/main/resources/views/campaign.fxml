@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import org.shadowrun.common.factories.CheckBoxCellFactory?>
 
 <AnchorPane stylesheets="@../css/dark.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.shadowrun.controllers.ControllerCampaignScreen">
    <children>
@@ -32,9 +36,23 @@
                   <TextField fx:id="textField_name" GridPane.columnIndex="1" />
                </children>
             </GridPane>
+            <ToolBar prefHeight="40.0" prefWidth="200.0">
+              <items>
+                  <Button mnemonicParsing="false" text="Add new player" />
+                <Button mnemonicParsing="false" text="Create new Battle" />
+              </items>
+            </ToolBar>
             <TableView fx:id="tableView_playerCharacters" VBox.vgrow="ALWAYS">
                <columns>
-                  <TableColumn fx:id="tableColumn_playerCharacters_character" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="500.0" resizable="false" text="Player character" />
+                  <TableColumn fx:id="tableColumn_playerCharacters_portrait" maxWidth="-1.0" minWidth="200.0" prefWidth="-1.0" resizable="false" sortable="false" text="Portrait">
+                     <cellValueFactory>
+                        <PropertyValueFactory property="checked" />
+                     </cellValueFactory>
+                     <cellFactory>
+                        <org.shadowrun.common.factories.CheckBoxCellFactory />
+                     </cellFactory>
+                  </TableColumn>
+                  <TableColumn fx:id="tableColumn_playerCharacters_character" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="300.0" resizable="false" text="Player character name" />
                   <TableColumn fx:id="tableColumn_playerCharacters_physicalMonitor" prefWidth="137.0" text="Physical monitor" />
                   <TableColumn fx:id="tableColumn_playerCharacters_stunMonitor" prefWidth="137.0" text="Stun monitor" />
                   <TableColumn fx:id="tableColumn_playerCharacters_spiritIndex" prefWidth="137.0" text="Spirit index" />
