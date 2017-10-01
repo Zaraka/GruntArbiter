@@ -1027,7 +1027,7 @@ public class ControllerBattle {
         Node barrierDeviceTableNode = splitPane_centerContent.getItems().get(2);
         Node selectedPaneNode = splitPane_horizontal.getItems().get(2);
 
-        Bindings.isEmpty(tableView_vehicles.getItems()).addListener((observable, oldValue, newValue) -> {
+        Bindings.isEmpty(battle.getVehicles()).addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 if (newValue) {
                     splitPane_centerContent.getItems().remove(vehicleTableNode);
@@ -1037,8 +1037,8 @@ public class ControllerBattle {
             }
         });
 
-        Bindings.isEmpty(tableView_barrier.getItems())
-                .and(Bindings.isEmpty(tableView_devices.getItems())).addListener((observable, oldValue, newValue) -> {
+        Bindings.isEmpty(battle.getBarriers())
+                .and(Bindings.isEmpty(battle.getDevices())).addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 if (newValue) {
                     splitPane_centerContent.getItems().remove(barrierDeviceTableNode);
@@ -1064,8 +1064,10 @@ public class ControllerBattle {
             }
         });
 
-        splitPane_centerContent.getItems().remove(barrierDeviceTableNode);
-        splitPane_centerContent.getItems().remove(vehicleTableNode);
+        if(battle.getDevices().isEmpty() && battle.getBarriers().isEmpty())
+            splitPane_centerContent.getItems().remove(barrierDeviceTableNode);
+        if(battle.getVehicles().isEmpty())
+            splitPane_centerContent.getItems().remove(vehicleTableNode);
         splitPane_horizontal.getItems().remove(selectedPaneNode);
 
         if (!loaded) {
