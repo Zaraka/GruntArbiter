@@ -28,7 +28,12 @@ public class ControllerAbout implements Controller {
         stringBuilder.append("Grunt arbiter is licensed under GPLv3 for full license please access https://www.gnu.org/licenses/gpl-3.0.en.html\n\n");
 
         stringBuilder.append("Created by Zaraka\n");
-        stringBuilder.append("GitHub project https://github.com/Zaraka/GruntArbiter/\n");
+        stringBuilder.append("GitHub project https://github.com/Zaraka/GruntArbiter/\n\n");
+
+        stringBuilder.append("By using Grunt Arbiter you agree that you legally own a copy of the Shadowrun rulebook" +
+                "and any sourcebook whose information you select to use. You are solely responsible for determining" +
+                "the appropiatness of using oir redistributing the content You create and assume any risks associated" +
+                "with your exercise of permissions under this license.");
 
 
         textArea_about.setText(stringBuilder.toString());
