@@ -315,7 +315,7 @@ public class ControllerAddCharacter implements Controller {
                 (World) world.getSelectedToggle().getUserData(),
                 checkbox_npc.isSelected(),
                 false,
-                (characterType == CharacterType.COMPANION),
+                characterType,
                 getPhysicalConditionMonitor(),
                 getStunConditionMonitor(),
                 null, tableView_companions.getItems());

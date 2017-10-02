@@ -3,6 +3,7 @@ package org.shadowrun.logic;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.*;
 import org.apache.commons.lang3.StringUtils;
+import org.shadowrun.common.constants.CharacterType;
 import org.shadowrun.common.constants.ICE;
 import org.shadowrun.common.constants.World;
 import org.shadowrun.common.exceptions.NextTurnException;
@@ -104,7 +105,7 @@ public class BattleLogic {
                 World.MATRIX,
                 true,
                 true,
-                false,
+                CharacterType.ICE,
                 getActiveBattle().getHost().getRating() / 2 + 8,
                 0,
                 null, null);

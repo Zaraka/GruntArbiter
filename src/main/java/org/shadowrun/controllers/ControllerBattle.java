@@ -297,9 +297,10 @@ public class ControllerBattle {
         grid.setVgap(10);
         grid.setPadding(new Insets(20, 150, 10, 10));
 
-        ComboBox<String> iceChoice = new ComboBox<>(
-                FXCollections.observableArrayList(
-                        Arrays.stream(ICE.values()).map(ICE::getName).collect(Collectors.toList())));
+        ComboBox<ICE> iceChoice = new ComboBox<>(FXCollections.observableArrayList(ICE.values()));
+        iceChoice.setCellFactory(param -> new ICeCell());
+        iceChoice.setButtonCell(new ICeCell());
+
         TextField initiative = new TextField();
         initiative.setPromptText("6");
 
@@ -327,7 +328,7 @@ public class ControllerBattle {
 
         dialog.setResultConverter(dialogButton -> {
             if (dialogButton == okButtonType) {
-                return new Pair<>(iceChoice.getSelectionModel().getSelectedItem(), initiative.getText());
+                return new Pair<>(iceChoice.getSelectionModel().getSelectedItem().name(), initiative.getText());
             }
             return null;
         });
@@ -1293,7 +1294,7 @@ public class ControllerBattle {
                             button_selected_matrix.textProperty().setValue("Connect");
                         }
 
-                        if (!newCharacter.isCompanion()) {
+                        if (newCharacter.getType().equals(CharacterType.CLASSIC)) {
                             tableView_selected_companions.setItems(newCharacter.getCompanions());
                             titledPane_selected_companions.setExpanded(!newCharacter.getCompanions().isEmpty());
                             vbox_selected_companions.setVisible(true);

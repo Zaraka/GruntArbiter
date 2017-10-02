@@ -5,6 +5,7 @@ import javafx.beans.Observable;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import org.shadowrun.common.constants.CharacterType;
 import org.shadowrun.common.constants.World;
 
 import java.util.List;
@@ -24,7 +25,7 @@ public class Character implements Comparable<Character>, Identificable, Observab
 
     private BooleanProperty ice;
 
-    private BooleanProperty companion;
+    private ObjectProperty<CharacterType> type;
 
     private Monitor physicalMonitor;    //or Matrix or whatever
 
@@ -38,7 +39,7 @@ public class Character implements Comparable<Character>, Identificable, Observab
 
     public Character(String name,
                      int initiative, World world,
-                     boolean npc, boolean ice, boolean companion,
+                     boolean npc, boolean ice, CharacterType type,
                      int physicalMonitor, int stunMonitor,
                      PlayerCharacter player, List<Companion> companions) {
         this.name = new SimpleStringProperty(name);
@@ -50,7 +51,7 @@ public class Character implements Comparable<Character>, Identificable, Observab
         this.stunMonitor = new Monitor((ice) ? 0 : stunMonitor);
         this.playerUUID = new SimpleStringProperty((player == null) ? null : player.getUuid());
         this.companions = (companions == null) ? FXCollections.observableArrayList() : FXCollections.observableArrayList(companions);
-        this.companion = new SimpleBooleanProperty(companion);
+        this.type = new SimpleObjectProperty<>(type);
         this.uuid = new SimpleStringProperty(UUID.randomUUID().toString());
         this.portrait = new SerializableImage();
         if(player != null) {
@@ -68,7 +69,7 @@ public class Character implements Comparable<Character>, Identificable, Observab
         this.stunMonitor = new Monitor(character.getStunMonitor());
         this.playerUUID = new SimpleStringProperty(null);
         this.companions = FXCollections.observableArrayList();
-        this.companion = new SimpleBooleanProperty(false);
+        this.type = new SimpleObjectProperty<CharacterType>(character.getType());
         this.uuid = new SimpleStringProperty(UUID.randomUUID().toString());
         this.portrait = new SerializableImage(character.getPortrait());
     }
@@ -141,12 +142,12 @@ public class Character implements Comparable<Character>, Identificable, Observab
         return companions;
     }
 
-    public boolean isCompanion() {
-        return companion.get();
+    public CharacterType getType() {
+        return type.get();
     }
 
-    public BooleanProperty companionProperty() {
-        return companion;
+    public ObjectProperty<CharacterType> typeProperty() {
+        return type;
     }
 
     public String getPlayerUUID() {
@@ -171,7 +172,7 @@ public class Character implements Comparable<Character>, Identificable, Observab
         stunMonitor.setFrom(other.getStunMonitor());
         playerUUID.setValue(other.getPlayerUUID());
         companions = other.companions;
-        companion.setValue(other.isCompanion());
+        type.setValue(other.getType());
     }
 
     @Override
@@ -192,7 +193,7 @@ public class Character implements Comparable<Character>, Identificable, Observab
         physicalMonitor.addListener(listener);
         stunMonitor.addListener(listener);
         companions.addListener(listener);
-        companion.addListener(listener);
+        type.addListener(listener);
         portrait.addListener(listener);
     }
 
@@ -207,7 +208,7 @@ public class Character implements Comparable<Character>, Identificable, Observab
         physicalMonitor.removeListener(listener);
         stunMonitor.removeListener(listener);
         companions.removeListener(listener);
-        companion.removeListener(listener);
+        type.removeListener(listener);
         portrait.removeListener(listener);
     }
 

@@ -9,6 +9,7 @@ import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.apache.commons.lang3.StringUtils;
+import org.shadowrun.common.constants.CharacterType;
 import org.shadowrun.common.constants.Weather;
 import org.shadowrun.common.constants.World;
 import org.shadowrun.common.exceptions.NextTurnException;
@@ -32,7 +33,7 @@ public class Battle implements Observable {
                     World.REAL,
                     false,
                     false,
-                    false,
+                    CharacterType.CLASSIC,
                     playerCharacter.getPhysicalMonitor(),
                     playerCharacter.getStunMonitor(),
                     playerCharacter, null);

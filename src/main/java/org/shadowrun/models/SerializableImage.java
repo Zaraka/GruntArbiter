@@ -35,7 +35,9 @@ public class SerializableImage implements Observable {
 
     public SerializableImage(SerializableImage other) {
         this.imageSource = new SimpleStringProperty(other.getImageSource());
-        this.image = new SimpleObjectProperty<>(imageFromString(other.getImageSource()));
+        this.image = new SimpleObjectProperty<>(null);
+        if(!other.imageProperty().isNull().get())
+            image.setValue(imageFromString(other.getImageSource()));
 
         injectImage();
     }

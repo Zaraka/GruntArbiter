@@ -56,6 +56,8 @@ public class ControllerAddHost implements Controller {
                 alert.setTitle("Error");
                 alert.setHeaderText("Host attributes conflict");
                 alert.setContentText("Every attribute needs to have unique value.");
+                alert.getDialogPane().getStylesheets().add(
+                        getClass().getClassLoader().getResource("css/dark.css").toExternalForm());
                 alert.showAndWait();
             } else {
                 host = new Host();
