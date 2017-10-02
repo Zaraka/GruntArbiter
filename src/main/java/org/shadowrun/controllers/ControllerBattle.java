@@ -923,6 +923,7 @@ public class ControllerBattle {
         anchorPane_selected.managedProperty().bind(anchorPane_selected.visibleProperty());
         fontAwesomeIcon_selected.managedProperty().bind(fontAwesomeIcon_selected.visibleProperty());
         imageView_selected.managedProperty().bind(imageView_selected.visibleProperty());
+        button_selected_matrix.managedProperty().bind(button_selected_matrix.visibleProperty());
 
         cleanSelectedPane();
 
@@ -1285,13 +1286,18 @@ public class ControllerBattle {
                         });
                         label_selectedCharacter.textProperty().bind(newCharacter.nameProperty());
 
-                        if (battle.getHost().getConnectedCharacters().containsKey(newCharacter.getUuid())) {
-                            vbox_selected_matrix.setVisible(true);
-                            label_overwatchScore.textProperty().bind(
-                                    battle.getHost().getConnectedCharacters().get(newCharacter.getUuid()).asString());
-                            button_selected_matrix.textProperty().setValue("Disconnect");
+                        if(!newCharacter.getType().equals(CharacterType.ICE)) {
+                            button_selected_matrix.setVisible(true);
+                            if (battle.getHost().getConnectedCharacters().containsKey(newCharacter.getUuid())) {
+                                vbox_selected_matrix.setVisible(true);
+                                label_overwatchScore.textProperty().bind(
+                                        battle.getHost().getConnectedCharacters().get(newCharacter.getUuid()).asString());
+                                button_selected_matrix.textProperty().setValue("Disconnect");
+                            } else {
+                                button_selected_matrix.textProperty().setValue("Connect");
+                            }
                         } else {
-                            button_selected_matrix.textProperty().setValue("Connect");
+                            button_selected_matrix.setVisible(false);
                         }
 
                         if (newCharacter.getType().equals(CharacterType.CLASSIC)) {
