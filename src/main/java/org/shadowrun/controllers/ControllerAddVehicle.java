@@ -3,13 +3,11 @@ package org.shadowrun.controllers;
 import com.google.gson.Gson;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Dialog;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import org.hildan.fxgson.FxGson;
 import org.shadowrun.common.NumericLimitListener;
+import org.shadowrun.common.constants.VehicleType;
 import org.shadowrun.common.nodes.cells.VehicleTreeCell;
 import org.shadowrun.models.Vehicle;
 import org.shadowrun.models.VehiclePresset;
@@ -55,6 +53,14 @@ public class ControllerAddVehicle implements Controller {
     private TextField textField_sensor;
 
     @FXML
+    private RadioButton radioButton_type_drone;
+    @FXML
+    private RadioButton radioButton_type_vehicle;
+
+    @FXML
+    private ToggleGroup type;
+
+    @FXML
     private void okOnAction() {
         vehicle = new Vehicle(
                 textField_name.getText(),
@@ -67,7 +73,8 @@ public class ControllerAddVehicle implements Controller {
                 Integer.parseInt(textField_body.getText()),
                 Integer.parseInt(textField_armor.getText()),
                 Integer.parseInt(textField_pilot.getText()),
-                Integer.parseInt(textField_sensor.getText())
+                Integer.parseInt(textField_sensor.getText()),
+                (VehicleType) type.getSelectedToggle().getUserData()
         );
         stage.close();
     }
@@ -102,6 +109,8 @@ public class ControllerAddVehicle implements Controller {
         textField_sensor.textProperty()
                 .addListener(new NumericLimitListener(textField_sensor, 0, null));
 
+        radioButton_type_drone.setUserData(VehicleType.DRONE);
+        radioButton_type_vehicle.setUserData(VehicleType.VEHICLE);
 
         VehiclePresset vehiclePresset = gson.fromJson(
                 new InputStreamReader(getClass().getClassLoader().getResourceAsStream("data/vehicles.json")),
@@ -143,6 +152,7 @@ public class ControllerAddVehicle implements Controller {
                         .setValue(String.valueOf(newValue.getValue().getSensor()));
                 textField_name.textProperty()
                         .setValue(newValue.getValue().getName());
+                selectType(newValue.getValue().getType());
             }
         });
 
@@ -158,9 +168,20 @@ public class ControllerAddVehicle implements Controller {
             textField_speed_onRoad.setText(String.valueOf(edit.getSpeed().getOnRoad()));
             textField_handling_offRoad.setText(String.valueOf(edit.getHandling().getOffRoad()));
             textField_handling_onRoad.setText(String.valueOf(edit.getHandling().getOnRoad()));
-
+            selectType(edit.getType());
         }
 
+    }
+
+    private void selectType(VehicleType edit) {
+        switch (edit) {
+            case DRONE:
+                type.selectToggle(radioButton_type_drone);
+                break;
+            case VEHICLE:
+                type.selectToggle(radioButton_type_vehicle);
+                break;
+        }
     }
 
     public Optional<Vehicle> getVehicle() {

@@ -5,6 +5,7 @@ import javafx.beans.Observable;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import org.shadowrun.common.constants.VehicleType;
 
 public class Vehicle implements Observable {
 
@@ -26,11 +27,13 @@ public class Vehicle implements Observable {
 
     private IntegerProperty sensor;
 
+    private ObjectProperty<VehicleType> type;
+
     public Vehicle(String name,
                    int handlingOnRoad, int handlingOffRoad,
                    int speedOnRoad, int speedOffRoad,
                    int accelerationOnRoad, int accelerationOffRoad,
-                   int body, int armor, int pilot, int sensor) {
+                   int body, int armor, int pilot, int sensor, VehicleType type) {
         this.name = new SimpleStringProperty(name);
         this.handling = new VehicleAttribute(handlingOnRoad, handlingOffRoad);
         this.speed = new VehicleAttribute(speedOnRoad, speedOffRoad);
@@ -39,6 +42,7 @@ public class Vehicle implements Observable {
         this.armor = new SimpleIntegerProperty(armor);
         this.pilot = new SimpleIntegerProperty(pilot);
         this.sensor = new SimpleIntegerProperty(sensor);
+        this.type = new SimpleObjectProperty<>(type);
 
         conditionMonitor = null;
     }
@@ -57,7 +61,8 @@ public class Vehicle implements Observable {
 
     public Monitor getConditionMonitor() {
         if(conditionMonitor == null) {
-            conditionMonitor = new Monitor(12 + new Double(Math.ceil(body.get() / 2)).intValue());
+            conditionMonitor =
+                    new Monitor(type.get().getConditionBase() + new Double(Math.ceil(body.get() / 2)).intValue());
         }
         return conditionMonitor;
     }
@@ -106,8 +111,15 @@ public class Vehicle implements Observable {
         return sensor;
     }
 
-    public void setFrom(Vehicle other) {
+    public VehicleType getType() {
+        return type.get();
+    }
 
+    public ObjectProperty<VehicleType> typeProperty() {
+        return type;
+    }
+
+    public void setFrom(Vehicle other) {
         name.setValue(other.getName());
         handling.setFrom(other.getHandling());
         speed.setFrom(other.getSpeed());
@@ -116,6 +128,7 @@ public class Vehicle implements Observable {
         armor.setValue(other.getArmor());
         pilot.setValue(other.getPilot());
         sensor.setValue(other.getSensor());
+        type.setValue(other.getType());
     }
 
     @Override
@@ -144,6 +157,7 @@ public class Vehicle implements Observable {
         armor.addListener(listener);
         pilot.addListener(listener);
         sensor.addListener(listener);
+        type.addListener(listener);
     }
 
     @Override
@@ -157,5 +171,6 @@ public class Vehicle implements Observable {
         armor.removeListener(listener);
         pilot.removeListener(listener);
         sensor.removeListener(listener);
+        type.removeListener(listener);
     }
 }
