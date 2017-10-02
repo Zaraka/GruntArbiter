@@ -252,7 +252,9 @@
 .badge {
     -fx-border-radius: 5;
     -fx-background-radius: 5;
-    -fx-padding: 5 10 5 10;
+    -fx-padding: 5 5 5 5;
+    -fx-border-insets: 5px;
+    -fx-background-insets: 5px;
     -fx-border-style: solid;
     -fx-border-color: -fx-theme-brand-signature;
     -fx-background-color: -fx-theme-brand-signature;
