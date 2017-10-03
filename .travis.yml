@@ -3,26 +3,12 @@ os:
   - linux
   - osx
 jdk:
-- oraclejdk8
-
+  - oraclejdk8
 all_branches: true
-
-env:
-  matrix:
-    - CUSTOM_JDK="default"
-    - CUSTOM_JDK="oraclejdk8"
-
-matrix:
-  exclude:
-     - os: osx
-       env: CUSTOM_JDK="oraclejdk8"
-     - os: linux
-       env: CUSTOM_JDK="default"
 
 before_install:
   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then export JAVA_HOME=$(/usr/libexec/java_home); fi
-  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then jdk_switcher use "$CUSTOM_JDK"; fi
-
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then jdk_switcher use oraclejdk8; fi
 before_script:
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install build-essential automake1.10 libtool; fi
 
@@ -33,14 +19,13 @@ addons:
       secure: 20d8bb4684014c126bb703586239c81d845782b9
 
 script:
-- mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar
+-  if [ "$TRAVIS_OS_NAME" == "linux" ]; then mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar; fi
 - mvn jfx:native assembly:single
 
 cache:
   directories:
   - "$HOME/.m2/repository"
   - "$HOME/.sonar/cache"
-
 deploy:
   provider: releases
   skip_cleanup: true
