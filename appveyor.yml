@@ -6,6 +6,7 @@ build_script:
   - mvn jfx:native assembly:single
 deploy:
   provider: GitHub
+  release: appveyor
   auth_token:
     secure: g+UnOoH3zZtLf3Lp2Iv6rUCZYFxki+3+A+T9DQ92JptmsfiAGRsaJ3CD7V0xP8S2
   artifact: target/*.zip
