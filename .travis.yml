@@ -15,8 +15,6 @@ addons:
 script:
 - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar
 - mvn jfx:native assembly:single
-- ls
-- ls target
 cache:
   directories:
   - "$HOME/.m2/repository"
@@ -30,3 +28,4 @@ deploy:
     - "target/GruntArbiter-$TRAVIS_TAG-Linux-native.zip"
   on:
     repo: Zaraka/GruntArbiter
+    tags: true
