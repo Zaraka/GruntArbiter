@@ -6,7 +6,7 @@ build_script:
   - mvn jfx:native assembly:single
 
 artifacts:
-  - path: C:\projects\gruntarbiter\target\*.zip
+  - path: target\*.zip
 
 deploy:
   provider: GitHub
