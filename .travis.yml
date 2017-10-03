@@ -1,33 +1,28 @@
 language: java
-
 os:
-  - linux
-
+- linux
 jdk:
-  - oraclejdk8
-
+- oraclejdk8
 all_branches: true
-
 addons:
   apt:
     packages:
-      - oracle-java8-installer
+    - oracle-java8-installer
   sonarcloud:
-      organization: "zaraka-github"
-      token:
-        secure: "20d8bb4684014c126bb703586239c81d845782b9"
-
+    organization: zaraka-github
+    token:
+      secure: 20d8bb4684014c126bb703586239c81d845782b9
 script:
-  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar
-  - mvn jfx:native assembly:single
+- mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar
+- mvn jfx:native assembly:single
 cache:
   directories:
-    - '$HOME/.m2/repository'
-    - '$HOME/.sonar/cache'
-
+  - "$HOME/.m2/repository"
+  - "$HOME/.sonar/cache"
 deploy:
   provider: releases
+  api_key:
+    secure: UzZ5BfXPx0H1uewXyHJ7bR67jdSpK86gzvmRV7e8PFzD7UQTZ/YHHqk8YZwBPETLpp268vCo3sj5SOLvC9XwbDyAkAiMitzcyi/aB7FcojDLoFvQbxeCySk8uetcwzWHWJK0h1oM9R60/XnqzLSilFAUy0NhWPhTpqVe5qc0Stz9paUsMUcGiFUhU20CvuBVFPgSUC4a3xuMw1C6AzKZbU5DFLAVHn5ROmN5hw2zUN965b9uA7G8ITkawF4WQoD6Jt1B1OfRaN0P9Mne3UUOoz3GMEQu5b97WmTE5uBehRFIW32FVHKnRlVeS5mde7cNvQpFqxyH0bmZm/4arGLWdc0RoIeQSIAJLsv7QZ4ZM92rTSCRNljp/MnyocSJkuenN/YYvCABkpX534ugbKfMRsJTHUDhv0Ok/ZmQguxznb2XVshmafvwxlLkVrSG2sNaQw0XT7Iun9ByIb68Tugcy6DIfNy8M8QoaTIukIeIaPQPioQ4465wUPKQpJKUgo6OcbcIf4TLq3+F3uf576cb/qYyrXhn5rPCzGIAlVO+gTvU/n3sHX6Jig/k/VJPQ6x3udCwaiBtQKyp0KRH2DkDflqbmnfzgIlKCiYQZskYTr3/x0whtnSyge6hvHJoN+fY5muuNtPtbVtJDDAq9Fd8bPdPh0E4J6L2ZmUztZezHUI=
   file: "target/*.zip"
-  skip_cleanup: true
   on:
-    tags: true
+    repo: Zaraka/GruntArbiter

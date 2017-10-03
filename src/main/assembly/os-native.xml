@@ -8,7 +8,7 @@
     <fileSets>
         <fileSet>
             <directory>${project.basedir}</directory>
-            <outputDirectory>/</outputDirectory>
+            <outputDirectory></outputDirectory>
             <includes>
                 <include>README*</include>
                 <include>LICENSE*</include>
@@ -17,7 +17,7 @@
         </fileSet>
         <fileSet>
             <directory>${project.build.directory}/jfx/native/${project.build.finalName}</directory>
-            <outputDirectory>/</outputDirectory>
+            <outputDirectory></outputDirectory>
         </fileSet>
         <fileSet>
             <directory>${project.build.directory}/site</directory>
