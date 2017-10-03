@@ -7,10 +7,11 @@ build_script:
 deploy:
   provider: GitHub
   auth_token:
-    secure: bEvKmdPkcR1PUfRIqMyJvPyk9lu2MK35SreDbVKtFiy1ropY1v0CraqyBZ+ErV40
+    secure: g+UnOoH3zZtLf3Lp2Iv6rUCZYFxki+3+A+T9DQ92JptmsfiAGRsaJ3CD7V0xP8S2
   artifact: target/*.zip
   draft: true
   prerelease: false
+  force_update: true
   on:
     branch: master
     appveyor_repo_tag: true
