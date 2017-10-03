@@ -10,13 +10,14 @@
             <directory>${project.basedir}</directory>
             <outputDirectory></outputDirectory>
             <includes>
-                <include>README*</include>
+                <include>ReadMe*</include>
                 <include>LICENSE*</include>
                 <include>NOTICE*</include>
             </includes>
         </fileSet>
         <fileSet>
             <directory>${project.build.directory}/jfx/native/${project.build.finalName}</directory>
+            <directory>${project.build.directory}/jfx/native/*.dmg</directory>
             <outputDirectory></outputDirectory>
         </fileSet>
         <fileSet>
