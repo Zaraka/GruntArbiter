@@ -2,14 +2,11 @@ language: java
 
 os:
   - linux
-  - osx
 
 jdk:
   - oraclejdk8
 
-branches:
-  only:
-  - master
+all_branches: true
 
 addons:
   apt:
