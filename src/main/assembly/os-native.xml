@@ -17,8 +17,14 @@
         </fileSet>
         <fileSet>
             <directory>${project.build.directory}/jfx/native/${project.build.finalName}</directory>
-            <directory>${project.build.directory}/jfx/native/*.dmg</directory>
             <outputDirectory></outputDirectory>
+        </fileSet>
+        <fileSet>
+            <directory>${project.build.directory}/jfx/native/</directory>
+            <outputDirectory></outputDirectory>
+            <includes>
+                <include>*.dmg</include>
+            </includes>
         </fileSet>
         <fileSet>
             <directory>${project.build.directory}/site</directory>
