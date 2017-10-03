@@ -9,7 +9,7 @@ deploy:
   auth_token:
     secure: g+UnOoH3zZtLf3Lp2Iv6rUCZYFxki+3+A+T9DQ92JptmsfiAGRsaJ3CD7V0xP8S2
   artifacts:
-    - path: C:\projects\gruntarbiter\target\*.zip
+  - path: C:\projects\gruntarbiter\target\*.zip
   draft: true
   prerelease: false
   force_update: true
