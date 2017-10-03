@@ -1,6 +1,7 @@
 Grunt Arbiter
 =============
 [![Build Status](https://travis-ci.org/Zaraka/GruntArbiter.svg?branch=master)](https://travis-ci.org/Zaraka/GruntArbiter)
+![Build status](https://ci.appveyor.com/api/projects/status/github/zaraka/GruntArbiter?svg=true)
 
 Handy ~~lightweight~~ app for tracking your battles in Shadowrun 5e. Grunt Arbiter will allow you to:.
   * Manage PC and NPCs though battle. Keep track whom turn it is, who is going next and in which space are they located.
@@ -10,11 +11,11 @@ Handy ~~lightweight~~ app for tracking your battles in Shadowrun 5e. Grunt Arbit
   * Manage vehicles and drones, so you can finally track stats of numerous corporate drones closing on hopeless shadowrunners.
   * Keep track of time spent in a battle, weather condition, astral background count, spirit index and more!
   
-Grunt arbiter (GA) is inteded to be ~~simple~~ app for GMs with laptops. Shadowrun itself is complex enough, so GA should only provide the simplest of controls to balance the weight.
+Grunt arbiter (GA) is intended to be ~~simple~~ app for GMs with laptops. Shadowrun itself is complex enough, so GA should only provide the simplest of controls to balance the weight.
   
 Release?
 --------
-Head over to "Release" tab and download version for our OS.
+Head over to "Release" tab and download version for your OS.
 
 Versioning
 ----------
