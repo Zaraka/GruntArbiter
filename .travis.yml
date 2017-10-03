@@ -2,8 +2,7 @@ language: java
 os:
   - linux
   - osx
-jdk:
-  - oraclejdk8
+  
 all_branches: true
 
 before_install:
