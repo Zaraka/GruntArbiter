@@ -1,24 +1,46 @@
 language: java
 os:
-- linux
+  - linux
+  - osx
 jdk:
 - oraclejdk8
+
 all_branches: true
+
+env:
+  matrix:
+    - CUSTOM_JDK="default"
+    - CUSTOM_JDK="oraclejdk8"
+
+matrix:
+  exclude:
+     - os: osx
+       env: CUSTOM_JDK="oraclejdk8"
+     - os: linux
+       env: CUSTOM_JDK="default"
+
+before_install:
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then export JAVA_HOME=$(/usr/libexec/java_home); fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then jdk_switcher use "$CUSTOM_JDK"; fi
+
+before_script:
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install build-essential automake1.10 libtool; fi
+
 addons:
-  apt:
-    packages:
-    - oracle-java8-installer
   sonarcloud:
     organization: zaraka-github
     token:
       secure: 20d8bb4684014c126bb703586239c81d845782b9
+
 script:
 - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar
 - mvn jfx:native assembly:single
+
 cache:
   directories:
   - "$HOME/.m2/repository"
   - "$HOME/.sonar/cache"
+
 deploy:
   provider: releases
   skip_cleanup: true
@@ -26,8 +48,7 @@ deploy:
   api_key:
     secure: rrnzQ7T2u85cemD5HabC7LgrLwepLbjdgtjmswubP71Uvjr11TjfgFj4BW5m7pyEF3HV8As7B+aEU3EhxJH7CgDJhJBJTnakmUXxsmTcHThN5lnuVbOy4uW0adZFQwV83gs1HEFMWN8zCIuCR8MX9bKHM1fvzSudMIgQ5rM1hOvBSKW7HHtO0sM0GnFuQzI71IcvPcMtQH75rNKm+mjeSi1pormEhXqTxAVXdFBZzfvAUeTwVylA3OtwNiFNNOfLYr86Kd9eENvU9eg/+uj3yR1EEnV4NArSG1BDKfOL3Jrvg+3hbtghT5DUXajINKfYcjWOg+gPwG3pDFOh8KNWqvI23hx4n0/+mc12TvwL54KQs/tlg3xNgi1dSN+xwwT6+4ZY/j9yCD9n4PhedRfFt1I3UGIAyZsbzrTGkyI9SIMQKVb7EbTDv96fAKrp+qHcu5nPQkroSglby5iHj/tYaHpzX8S4u/YmRCpGH0Y0xjz5GUeGJ/KXF8+g/vPVWsC8j1x7GQe5h8Sd11aCA91IeN6F00Z5Q2NIRI/FT0RU+qsbq0K9GIkk+krD0k+F1Pwm8YMwZFqGAS+Tn6ItBJYE/CLDBN93PXuos4h0V9ISlIlPsvLRsge1JlyZk3Dgl7ZAksYJfbixIuSrSXJnHLySf7DEt97BweB38cI3IrNfzEY=
   file:
-          - "/home/travis/build/Zaraka/GruntArbiter/target/GruntArbiter-$TRAVIS_TAG.jar"
-          - "/home/travis/build/Zaraka/GruntArbiter/target/GruntArbiter-$TRAVIS_TAG-Linux-native.zip"
+  - "/home/travis/build/Zaraka/GruntArbiter/target/GruntArbiter-$TRAVIS_TAG-Linux-native.zip"
   on:
     repo: Zaraka/GruntArbiter
     tags: true
