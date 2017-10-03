@@ -24,7 +24,7 @@ cache:
 deploy:
   provider: releases
   api_key:
-    secure: UzZ5BfXPx0H1uewXyHJ7bR67jdSpK86gzvmRV7e8PFzD7UQTZ/YHHqk8YZwBPETLpp268vCo3sj5SOLvC9XwbDyAkAiMitzcyi/aB7FcojDLoFvQbxeCySk8uetcwzWHWJK0h1oM9R60/XnqzLSilFAUy0NhWPhTpqVe5qc0Stz9paUsMUcGiFUhU20CvuBVFPgSUC4a3xuMw1C6AzKZbU5DFLAVHn5ROmN5hw2zUN965b9uA7G8ITkawF4WQoD6Jt1B1OfRaN0P9Mne3UUOoz3GMEQu5b97WmTE5uBehRFIW32FVHKnRlVeS5mde7cNvQpFqxyH0bmZm/4arGLWdc0RoIeQSIAJLsv7QZ4ZM92rTSCRNljp/MnyocSJkuenN/YYvCABkpX534ugbKfMRsJTHUDhv0Ok/ZmQguxznb2XVshmafvwxlLkVrSG2sNaQw0XT7Iun9ByIb68Tugcy6DIfNy8M8QoaTIukIeIaPQPioQ4465wUPKQpJKUgo6OcbcIf4TLq3+F3uf576cb/qYyrXhn5rPCzGIAlVO+gTvU/n3sHX6Jig/k/VJPQ6x3udCwaiBtQKyp0KRH2DkDflqbmnfzgIlKCiYQZskYTr3/x0whtnSyge6hvHJoN+fY5muuNtPtbVtJDDAq9Fd8bPdPh0E4J6L2ZmUztZezHUI=
+    secure: bEvKmdPkcR1PUfRIqMyJvPyk9lu2MK35SreDbVKtFiy1ropY1v0CraqyBZ+ErV40
   file:
     - "/home/travis/build/Zaraka/GruntArbiter/target/GruntArbiter-$TRAVIS_TAG.jar"
     - "/home/travis/build/Zaraka/GruntArbiter/target/GruntArbiter-$TRAVIS_TAG-Linux-native.zip"
