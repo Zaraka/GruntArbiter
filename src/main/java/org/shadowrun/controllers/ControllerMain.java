@@ -1,6 +1,5 @@
 package org.shadowrun.controllers;
 
-import com.sun.deploy.uitoolkit.impl.fx.HostServicesFactory;
 import com.sun.javafx.geom.Vec4d;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
@@ -205,9 +204,9 @@ public class ControllerMain {
 
     @FXML
     private void closeAppOnAction() {
-        checkSave();
-
-        stage.close();
+        if (checkSave()) {
+            stage.close();
+        }
     }
 
     @FXML
@@ -377,14 +376,17 @@ public class ControllerMain {
             Tab campaignScreenTab = new Tab(campaign.getName(), tabLoader.load());
             ControllerCampaignScreen controllerCampaignScreen = tabLoader.getController();
             campaignScreenTab.setUserData(controllerCampaignScreen);
-            campaignScreenTab.setOnClosed(event -> {
-                checkSave();
-                tabPane.getTabs().removeIf(tab -> tab.getUserData() != null &&
-                        tab.getUserData().getClass() == ControllerBattle.class);
-                battleLogic.clear();
-                appLogic.closeCampaign();
-                controllerCampaignScreen.remove();
-                tabPane.getTabs().removeIf(tab -> tab.getUserData() == controllerCampaignScreen);
+            campaignScreenTab.setOnCloseRequest(event -> {
+                if (checkSave()) {
+                    tabPane.getTabs().removeIf(tab -> tab.getUserData() != null &&
+                            tab.getUserData().getClass() == ControllerBattle.class);
+                    battleLogic.clear();
+                    appLogic.closeCampaign();
+                    controllerCampaignScreen.remove();
+                    tabPane.getTabs().removeIf(tab -> tab.getUserData() == controllerCampaignScreen);
+                } else {
+                    event.consume();
+                }
             });
             tabPane.getTabs().add(campaignScreenTab);
             controllerCampaignScreen.setStageAndListeners(stage, this, campaign);
@@ -427,49 +429,64 @@ public class ControllerMain {
 
     public void openCampaign(File file) {
         if (file != null) {
-            checkSave();
-
-            try {
-                appLogic.openCampaign(file);
-                addCampaignHooks();
-            } catch (IOException e) {
-                LOG.error(e.getMessage());
-                Alert alert = exceptionDialogFactory.createExceptionDialog(
-                        "Error!",
-                        "Error occured while opening campaign file.",
-                        "You campaign file could not be read", e);
-                alert.showAndWait();
-            } catch (IncompatibleVersionsException ex) {
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Oh, drek!");
-                alert.setHeaderText("Version of campaign you are trying to load is incompoatible with app version");
-                alert.setContentText("This means, that loading this campaign could crash or corrupt campaign file.\ndo you still want to load?");
-                DialogPane dialogPane = alert.getDialogPane();
-                dialogPane.getStylesheets().add(
-                        getClass().getClassLoader().getResource("css/dark.css").toExternalForm());
-                Optional<ButtonType> result = alert.showAndWait();
-                result.ifPresent(buttonType -> {
-                    if (buttonType == ButtonType.OK) {
-                        appLogic.loadCampaign(file, ex.getCampaign());
-                        addCampaignHooks();
-                    }
-                });
+            if (checkSave()) {
+                try {
+                    appLogic.openCampaign(file);
+                    addCampaignHooks();
+                } catch (IOException e) {
+                    LOG.error(e.getMessage());
+                    Alert alert = exceptionDialogFactory.createExceptionDialog(
+                            "Error!",
+                            "Error occured while opening campaign file.",
+                            "You campaign file could not be read", e);
+                    alert.showAndWait();
+                } catch (IncompatibleVersionsException ex) {
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("Oh, drek!");
+                    alert.setHeaderText("Version of campaign you are trying to load is incompoatible with app version");
+                    alert.setContentText("This means, that loading this campaign could crash or corrupt campaign file.\ndo you still want to load?");
+                    DialogPane dialogPane = alert.getDialogPane();
+                    dialogPane.getStylesheets().add(
+                            getClass().getClassLoader().getResource("css/dark.css").toExternalForm());
+                    Optional<ButtonType> result = alert.showAndWait();
+                    result.ifPresent(buttonType -> {
+                        if (buttonType == ButtonType.OK) {
+                            appLogic.loadCampaign(file, ex.getCampaign());
+                            addCampaignHooks();
+                        }
+                    });
+                }
             }
         }
     }
 
-    private void checkSave() {
+    private boolean checkSave() {
         if (!appLogic.isChangesSaved()) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Unsaved campaign");
             alert.setHeaderText("There are unsaved changes in campaign");
             alert.setContentText("Do you wish to save campaign first?");
+
+            ButtonType buttonYes = new ButtonType("Yes", ButtonBar.ButtonData.YES);
+            ButtonType buttonNo = new ButtonType("No", ButtonBar.ButtonData.NO);
+            ButtonType buttonCancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+            alert.getButtonTypes().setAll(buttonYes, buttonNo, buttonCancel);
+
             DialogPane dialogPane = alert.getDialogPane();
             dialogPane.getStylesheets().add(
                     getClass().getClassLoader().getResource("css/dark.css").toExternalForm());
             Optional<ButtonType> result = alert.showAndWait();
-            result.ifPresent(buttonType -> saveCampaignOnAction());
+            if (result.isPresent()) {
+                if (result.get().getButtonData().equals(ButtonBar.ButtonData.YES)) {
+                    saveCampaignOnAction();
+                    return true;
+                } else if (result.get().getButtonData().equals(ButtonBar.ButtonData.NO)) {
+                    return true;
+                }
+            }
         }
+        return false;
     }
 
 }
