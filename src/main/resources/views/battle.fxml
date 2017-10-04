@@ -331,7 +331,7 @@
                                     </TableView>
                                  </children>
                               </AnchorPane>
-                              <AnchorPane minHeight="100.0">
+                              <AnchorPane fx:id="anchorPane_vehicles" minHeight="100.0">
                                  <children>
                                     <TableView fx:id="tableView_vehicles" prefHeight="400.0" prefWidth="727.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                       <columns>

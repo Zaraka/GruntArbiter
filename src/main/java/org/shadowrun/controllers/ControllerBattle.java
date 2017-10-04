@@ -3,6 +3,7 @@ package org.shadowrun.controllers;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.application.Platform;
+import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
@@ -10,6 +11,7 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
 import javafx.collections.transformation.SortedList;
@@ -247,6 +249,8 @@ public class ControllerBattle {
     private AnchorPane anchorPane_barriers;
     @FXML
     private AnchorPane anchorPane_devices;
+    @FXML
+    private AnchorPane anchorPane_vehicles;
     @FXML
     private AnchorPane anchorPane_bottomTables;
 
@@ -1025,30 +1029,29 @@ public class ControllerBattle {
 
         button_spawnPlayer.disableProperty().bind(allPlayersIncluded);
 
-        Node vehicleTableNode = splitPane_centerContent.getItems().get(1);
-        Node barrierDeviceTableNode = splitPane_centerContent.getItems().get(2);
-        Node selectedPaneNode = splitPane_horizontal.getItems().get(2);
-
-        Bindings.isEmpty(battle.getVehicles()).addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) {
-                if (newValue) {
-                    splitPane_centerContent.getItems().remove(vehicleTableNode);
-                } else {
-                    splitPane_centerContent.getItems().add(vehicleTableNode);
-                }
+        battle.getVehicles().addListener((InvalidationListener) observable -> {
+            if (battle.getVehicles().isEmpty() && (Boolean) anchorPane_vehicles.getUserData()) {
+                splitPane_centerContent.getItems().remove(anchorPane_vehicles);
+                anchorPane_vehicles.setUserData(false);
+            } else if (!battle.getVehicles().isEmpty() && !(Boolean) anchorPane_vehicles.getUserData()) {
+                splitPane_centerContent.getItems().add(anchorPane_vehicles);
+                anchorPane_vehicles.setUserData(true);
             }
         });
 
-        Bindings.isEmpty(battle.getBarriers())
-                .and(Bindings.isEmpty(battle.getDevices())).addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) {
-                if (newValue) {
-                    splitPane_centerContent.getItems().remove(barrierDeviceTableNode);
-                } else {
-                    splitPane_centerContent.getItems().add(barrierDeviceTableNode);
-                }
+        InvalidationListener bottomTablesListener = observable -> {
+            boolean bothEmpty = battle.getBarriers().isEmpty() && battle.getDevices().isEmpty();
+            if (bothEmpty && (Boolean) anchorPane_bottomTables.getUserData()) {
+                splitPane_centerContent.getItems().remove(anchorPane_bottomTables);
+                anchorPane_bottomTables.setUserData(false);
+            } else if (!bothEmpty && !(Boolean) anchorPane_bottomTables.getUserData()) {
+                splitPane_centerContent.getItems().add(anchorPane_bottomTables);
+                anchorPane_bottomTables.setUserData(true);
             }
-        });
+        };
+
+        battle.getBarriers().addListener(bottomTablesListener);
+        battle.getDevices().addListener(bottomTablesListener);
 
         tableView_masterTable.getSelectionModel().selectedItemProperty().isNotNull().or(
                 tableView_vehicles.getSelectionModel().selectedItemProperty().isNotNull().or(
@@ -1059,22 +1062,30 @@ public class ControllerBattle {
         ).addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 if (newValue) {
-                    splitPane_horizontal.getItems().add(selectedPaneNode);
+                    splitPane_horizontal.getItems().add(anchorPane_selected);
                 } else {
-                    splitPane_horizontal.getItems().remove(selectedPaneNode);
+                    splitPane_horizontal.getItems().remove(anchorPane_selected);
                 }
             }
         });
 
-        if(battle.getDevices().isEmpty() && battle.getBarriers().isEmpty())
-            splitPane_centerContent.getItems().remove(barrierDeviceTableNode);
-        if(battle.getVehicles().isEmpty())
-            splitPane_centerContent.getItems().remove(vehicleTableNode);
-        splitPane_horizontal.getItems().remove(selectedPaneNode);
-
         if (!loaded) {
             setNewInitiative();
         }
+
+        boolean bottomTables = battle.getDevices().isEmpty() && battle.getBarriers().isEmpty();
+        anchorPane_bottomTables.setUserData(!bottomTables);
+        if (bottomTables) {
+            splitPane_centerContent.getItems().remove(anchorPane_bottomTables);
+
+        }
+        boolean vehicleTable = battle.getVehicles().isEmpty();
+        anchorPane_vehicles.setUserData(!vehicleTable);
+        if (vehicleTable) {
+            splitPane_centerContent.getItems().remove(anchorPane_vehicles);
+        }
+
+        splitPane_horizontal.getItems().remove(anchorPane_selected);
     }
 
     private void setupVehicleTable() {
@@ -1286,7 +1297,7 @@ public class ControllerBattle {
                         });
                         label_selectedCharacter.textProperty().bind(newCharacter.nameProperty());
 
-                        if(!newCharacter.getType().equals(CharacterType.ICE)) {
+                        if (!newCharacter.getType().equals(CharacterType.ICE)) {
                             button_selected_matrix.setVisible(true);
                             if (battle.getHost().getConnectedCharacters().containsKey(newCharacter.getUuid())) {
                                 vbox_selected_matrix.setVisible(true);
@@ -1359,7 +1370,7 @@ public class ControllerBattle {
                                             CssClasses.SUCCESS));
                         }
 
-                        if(newCharacter.getPortrait().imageProperty().get() != null) {
+                        if (newCharacter.getPortrait().imageProperty().get() != null) {
                             imageView_selected.setImage(newCharacter.getPortrait().imageProperty().getValue());
                             imageView_selected.setVisible(true);
                         } else {
