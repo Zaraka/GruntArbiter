@@ -20,7 +20,7 @@ public class Main extends Application {
         primaryStage.setTitle("Grunt Arbiter");
         primaryStage.setScene(new Scene(root));
         ControllerMain controller = loader.getController();
-        controller.setStageAndListeners(primaryStage);
+        controller.setStageAndListeners(primaryStage, this);
         primaryStage.show();
     }
 
