@@ -118,10 +118,6 @@ public class Character implements Comparable<Character>, Identificable, Observab
         return npc;
     }
 
-    public int countTurn(int turn) {
-        return initiative.get() - (turn - 1) * 10;
-    }
-
     public Monitor getPhysicalMonitor() {
         return physicalMonitor;
     }
