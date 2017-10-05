@@ -24,6 +24,7 @@ public class AppConfig {
     private static final String WINDOW_WIDTH = "WINDOW_WIDTH";
     private static final String WINDOW_HEIGHT = "WINDOW_HEIGHT";
     private static final String WINDOW_MAXIMIZED = "WINDOW_MAXIMIZED";
+    private static final String APPLY_WOUND = "ApplyWound";
 
     private Preferences preferences;
 
@@ -97,6 +98,14 @@ public class AppConfig {
                 preferences.getFloat(WINDOW_Y, 0),
                 preferences.getFloat(WINDOW_WIDTH, 1280),
                 preferences.getFloat(WINDOW_HEIGHT, 720));
+    }
+
+    public boolean getApplyWound() {
+        return preferences.getBoolean(APPLY_WOUND, true);
+    }
+
+    public void setApplyWound(boolean value) {
+        preferences.putBoolean(APPLY_WOUND, value);
     }
 
     public boolean getMaximized() {

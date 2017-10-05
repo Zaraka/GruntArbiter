@@ -11,7 +11,6 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
 import javafx.collections.transformation.SortedList;
@@ -869,13 +868,16 @@ public class ControllerBattle {
     }
 
     private void setCharacterInitiative(Character character) {
-        TextInputDialog dialog = initiativeDialogFactory.createDialog(character);
-        Optional<String> result = dialog.showAndWait();
-        try {
-            character.setInitiative(result.map(Integer::parseInt).orElse(0));
-        } catch (NumberFormatException ex) {
-            character.setInitiative(0);
-        }
+        Dialog<InitiativeDialogFactory.Result> dialog =
+                initiativeDialogFactory.createDialog(character, appLogic.getConfig().getApplyWound());
+        dialog.showAndWait().ifPresent(result -> {
+            try {
+                character.setInitiative(result.getInitiative());
+            } catch (NumberFormatException ex) {
+                character.setInitiative(0);
+            }
+            appLogic.getConfig().setApplyWound(result.getApplyWound());
+        });
     }
 
     private void cleanSelectedPane() {
@@ -1225,10 +1227,15 @@ public class ControllerBattle {
             MenuItem setInitiative = new MenuItem("Set initiative");
             setInitiative.setOnAction(event -> {
                 Character selectedChar = tableView_masterTable.getSelectionModel().getSelectedItem();
-                TextInputDialog dialog = initiativeDialogFactory.createDialog(selectedChar);
-                Optional<String> result = dialog.showAndWait();
-                result.ifPresent(initiative -> {
-                    selectedChar.setInitiative(Integer.parseInt(initiative));
+                Dialog<InitiativeDialogFactory.Result> dialog =
+                        initiativeDialogFactory.createDialog(selectedChar, appLogic.getConfig().getApplyWound());
+                dialog.showAndWait().ifPresent(result -> {
+                    try {
+                        selectedChar.setInitiative(result.getInitiative());
+                    } catch (NumberFormatException ex) {
+                        selectedChar.setInitiative(0);
+                    }
+                    appLogic.getConfig().setApplyWound(result.getApplyWound());
                     battle.updateCurrentCharacter();
                     tableView_masterTable.refresh();
                 });
