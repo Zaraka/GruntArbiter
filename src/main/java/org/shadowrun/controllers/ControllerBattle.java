@@ -1148,6 +1148,7 @@ public class ControllerBattle {
             result.ifPresent(selected::setName);
         });
         MenuItem deleteVehicle = new MenuItem("Delete vehicle");
+        deleteVehicle.setGraphic(new FontAwesomeIconView(FontAwesomeIcon.TRASH));
         deleteVehicle.setOnAction(event -> tableView_vehicles.getItems()
                 .remove(tableView_vehicles.getSelectionModel().getSelectedIndex()));
         MenuItem addVehicle = new MenuItem("Add vehicle");
@@ -1237,6 +1238,7 @@ public class ControllerBattle {
             MenuItem addCharacter = new MenuItem("Add character");
             addCharacter.setOnAction(event -> addCharacterOnAction());
             MenuItem removeCharacter = new MenuItem("Remove character");
+            removeCharacter.setGraphic(new FontAwesomeIconView(FontAwesomeIcon.TRASH));
             removeCharacter.setOnAction(event -> {
                 battle.getCharacters()
                         .remove(tableView_masterTable.getSelectionModel().getSelectedItem());
@@ -1411,6 +1413,7 @@ public class ControllerBattle {
             TableRow<Companion> tableRow = new CompanionTableRow();
 
             MenuItem deleteCompanion = new MenuItem("Delete companion");
+            deleteCompanion.setGraphic(new FontAwesomeIconView(FontAwesomeIcon.TRASH));
             deleteCompanion.setOnAction(event -> {
                 tableView_selected_companions.getItems()
                         .remove(tableView_selected_companions.getSelectionModel().getSelectedItem());
@@ -1486,6 +1489,7 @@ public class ControllerBattle {
             result.ifPresent(selected::setName);
         });
         MenuItem deleteBarrier = new MenuItem("Delete barrier");
+        deleteBarrier.setGraphic(new FontAwesomeIconView(FontAwesomeIcon.TRASH));
         deleteBarrier.setOnAction(event -> tableView_barrier.getItems()
                 .remove(tableView_barrier.getSelectionModel().getSelectedIndex()));
         MenuItem addBarrier = new MenuItem("Add barrier");
@@ -1559,6 +1563,7 @@ public class ControllerBattle {
             result.ifPresent(selected::setName);
         });
         MenuItem deleteDevice = new MenuItem("Delete device");
+        deleteDevice.setGraphic(new FontAwesomeIconView(FontAwesomeIcon.TRASH));
         deleteDevice.setOnAction(event -> tableView_devices.getItems()
                 .remove(tableView_devices.getSelectionModel().getSelectedIndex()));
         MenuItem addDevice = new MenuItem("Add device");

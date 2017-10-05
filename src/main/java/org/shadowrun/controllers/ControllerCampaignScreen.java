@@ -1,5 +1,7 @@
 package org.shadowrun.controllers;
 
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -138,6 +140,7 @@ public class ControllerCampaignScreen {
             result.ifPresent(s -> selected.setStunMonitor(Integer.parseInt(s)));
         });
         MenuItem deletePlayer = new MenuItem("Delete player");
+        deletePlayer.setGraphic(new FontAwesomeIconView(FontAwesomeIcon.TRASH));
         deletePlayer.setOnAction(event -> tableView_playerCharacters.getItems()
                 .remove(tableView_playerCharacters.getSelectionModel().getSelectedIndex()));
         MenuItem addPlayer = new MenuItem("Add player");
