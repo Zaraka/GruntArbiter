@@ -25,6 +25,8 @@ public class AppConfig {
     private static final String WINDOW_HEIGHT = "WINDOW_HEIGHT";
     private static final String WINDOW_MAXIMIZED = "WINDOW_MAXIMIZED";
     private static final String APPLY_WOUND = "ApplyWound";
+    private static final String RECENT_FILE = "recentFile";
+    private static final String RECENT_FILE_SIZE = "recentFileSize";
 
     private Preferences preferences;
 
@@ -45,9 +47,11 @@ public class AppConfig {
 
     public List<Path> getRecentFiles() {
         List<Path> result = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
+        int pathsSize = preferences.getInt(RECENT_FILE_SIZE, 0);
+
+        for (int i = 0; i < pathsSize; i++) {
             try {
-                Path recentFile = Paths.get(URI.create(preferences.get("recentFile" + i, "")));
+                Path recentFile = Paths.get(URI.create(preferences.get(RECENT_FILE + i, "")));
                 result.add(recentFile);
             } catch (SecurityException | FileSystemNotFoundException | IllegalArgumentException ex) {
                 //do nothing
@@ -56,14 +60,15 @@ public class AppConfig {
         return result;
     }
 
-    public void setRecentFiles(List<Path> paths) {
-        for (int i = 0; i < 3; i++) {
-            preferences.remove("recentFile" + i);
+    private void setRecentFiles(List<Path> paths) {
+        for (int i = 0; i < paths.size(); i++) {
+            preferences.remove(RECENT_FILE + i);
         }
 
         for (int i = 0; i < paths.size(); i++) {
-            preferences.put("recentFile" + i, paths.get(i).toUri().toString());
+            preferences.put(RECENT_FILE + i, paths.get(i).toUri().toString());
         }
+        preferences.putInt(RECENT_FILE_SIZE, paths.size());
     }
 
     public void validateRecentFiles() {

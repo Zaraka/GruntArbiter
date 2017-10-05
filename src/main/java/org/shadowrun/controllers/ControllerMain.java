@@ -335,6 +335,8 @@ public class ControllerMain {
         } else {
             int itemIndex = 0;
             for (Path recentCampaign : recentCampaigns) {
+                if(itemIndex > 2)
+                    break;
                 MenuItem recentCampaignMenuItem = menuItems.get(itemIndex);
                 recentCampaignMenuItem.setUserData(recentCampaign);
                 recentCampaignMenuItem.textProperty().setValue(recentCampaign.getFileName().toString());
