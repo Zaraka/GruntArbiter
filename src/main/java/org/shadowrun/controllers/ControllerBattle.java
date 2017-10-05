@@ -264,6 +264,8 @@ public class ControllerBattle {
     @FXML
     private FontAwesomeIconView fontAwesomeIcon_selected;
     @FXML
+    private FontAwesomeIconView fontAwesomeIcon_selected_matrix;
+    @FXML
     private ImageView imageView_selected;
 
     @FXML
@@ -769,9 +771,11 @@ public class ControllerBattle {
         if (connectedCharacters.containsKey(character.getUuid())) {
             connectedCharacters.remove(character.getUuid());
             character.setWorld(World.REAL);
+            fontAwesomeIcon_selected_matrix.setGlyphName(FontAwesomeIcon.SIGN_IN.name());
         } else {
             connectedCharacters.put(character.getUuid(), new SimpleIntegerProperty(0));
             character.setWorld(World.MATRIX);
+            fontAwesomeIcon_selected_matrix.setGlyphName(FontAwesomeIcon.SIGN_OUT.name());
         }
         tableView_masterTable.getSelectionModel().clearSelection();
         tableView_masterTable.getSelectionModel().select(character);
@@ -1306,8 +1310,10 @@ public class ControllerBattle {
                                 label_overwatchScore.textProperty().bind(
                                         battle.getHost().getConnectedCharacters().get(newCharacter.getUuid()).asString());
                                 button_selected_matrix.textProperty().setValue("Disconnect");
+                                fontAwesomeIcon_selected_matrix.setGlyphName(FontAwesomeIcon.SIGN_OUT.name());
                             } else {
                                 button_selected_matrix.textProperty().setValue("Connect");
+                                fontAwesomeIcon_selected_matrix.setGlyphName(FontAwesomeIcon.SIGN_IN.name());
                             }
                         } else {
                             button_selected_matrix.setVisible(false);

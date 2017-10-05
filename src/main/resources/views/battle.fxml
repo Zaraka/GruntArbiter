@@ -429,7 +429,7 @@
                                           <Tooltip text="Connect / disconnect from matrix" />
                                        </tooltip>
                                        <graphic>
-                                          <FontAwesomeIconView glyphName="SIGN_IN" />
+                                          <FontAwesomeIconView fx:id="fontAwesomeIcon_selected_matrix" glyphName="SIGN_IN" />
                                        </graphic>
                                     </Button>
                                     <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#removeCharacterOnAction" styleClass="button-primary" text="Delete">
