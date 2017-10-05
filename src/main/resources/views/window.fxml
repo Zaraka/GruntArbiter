@@ -81,6 +81,7 @@
             </Menu>
                 <Menu text="_Help">
                     <items>
+                  <MenuItem mnemonicParsing="false" onAction="#reportBugOnAction" text="Report a bug" />
                         <MenuItem mnemonicParsing="false" onAction="#aboutOnAction" text="About" />
                     </items>
                <accelerator>

@@ -16,6 +16,10 @@
 
 }
 
+@font-face {
+    src: url("fonts/CourierPrimeSans.ttf");
+}
+
 .root {
     -fx-base: -fx-theme-gray-darker;
     -fx-background: -fx-theme-gray-darker;
@@ -46,6 +50,12 @@
     -fx-box-border: -fx-base;
     -fx-inner-border: -fx-base;
     -fx-inner-border-horizontal: -fx-base;
+}
+
+.text {
+    -fx-font-family: 'Courier Prime Sans';
+    -fx-font-weight: normal;
+    -fx-font-size: 13px;
 }
 
 /* Fix derived prompt color for text fields */

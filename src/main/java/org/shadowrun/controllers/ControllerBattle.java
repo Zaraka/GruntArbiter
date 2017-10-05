@@ -1188,27 +1188,21 @@ public class ControllerBattle {
         tableColumn_masterTable_woundModifier.setCellFactory(param -> new CharacterWoundModifierCell());
         tableColumn_masterTable_woundModifier.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
         tableColumn_masterTable_initiative.setCellValueFactory(cellData -> cellData.getValue().initiativeProperty().asObject());
-        tableColumn_masterTable_turn1.setCellFactory(param -> new TurnTableCell());
-        tableColumn_masterTable_turn2.setCellFactory(param -> new TurnTableCell());
-        tableColumn_masterTable_turn3.setCellFactory(param -> new TurnTableCell());
-        tableColumn_masterTable_turn4.setCellFactory(param -> new TurnTableCell());
-        tableColumn_masterTable_turn5.setCellFactory(param -> new TurnTableCell());
-        tableColumn_masterTable_turn6.setCellFactory(param -> new TurnTableCell());
-        tableColumn_masterTable_turn7.setCellFactory(param -> new TurnTableCell());
-        tableColumn_masterTable_turn1
-                .setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue().countTurn(1)));
-        tableColumn_masterTable_turn2
-                .setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue().countTurn(2)));
-        tableColumn_masterTable_turn3
-                .setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue().countTurn(3)));
-        tableColumn_masterTable_turn4
-                .setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue().countTurn(4)));
-        tableColumn_masterTable_turn5
-                .setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue().countTurn(5)));
-        tableColumn_masterTable_turn6
-                .setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue().countTurn(6)));
-        tableColumn_masterTable_turn7
-                .setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue().countTurn(7)));
+        tableColumn_masterTable_turn1.setCellFactory(param -> new TurnTableCell(0));
+        tableColumn_masterTable_turn2.setCellFactory(param -> new TurnTableCell(1));
+        tableColumn_masterTable_turn3.setCellFactory(param -> new TurnTableCell(2));
+        tableColumn_masterTable_turn4.setCellFactory(param -> new TurnTableCell(3));
+        tableColumn_masterTable_turn5.setCellFactory(param -> new TurnTableCell(4));
+        tableColumn_masterTable_turn6.setCellFactory(param -> new TurnTableCell(5));
+        tableColumn_masterTable_turn7.setCellFactory(param -> new TurnTableCell(6));
+
+        tableColumn_masterTable_turn1.setCellValueFactory(param -> param.getValue().initiativeProperty().asObject());
+        tableColumn_masterTable_turn2.setCellValueFactory(param -> param.getValue().initiativeProperty().asObject());
+        tableColumn_masterTable_turn3.setCellValueFactory(param -> param.getValue().initiativeProperty().asObject());
+        tableColumn_masterTable_turn4.setCellValueFactory(param -> param.getValue().initiativeProperty().asObject());
+        tableColumn_masterTable_turn5.setCellValueFactory(param -> param.getValue().initiativeProperty().asObject());
+        tableColumn_masterTable_turn6.setCellValueFactory(param -> param.getValue().initiativeProperty().asObject());
+        tableColumn_masterTable_turn7.setCellValueFactory(param -> param.getValue().initiativeProperty().asObject());
 
         tableView_masterTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         tableView_masterTable.setRowFactory(param -> {
