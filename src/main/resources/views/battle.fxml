@@ -31,7 +31,7 @@
          <children>
             <ToolBar prefHeight="40.0" prefWidth="200.0">
                <items>
-                  <Button fx:id="button_prevTurn" mnemonicParsing="false" onAction="#prevTurnOnAction">
+                  <Button fx:id="button_prevTurn" mnemonicParsing="false" onAction="#prevTurnOnAction" styleClass="button-primary">
                      <graphic>
                         <FontAwesomeIconView glyphName="CHEVRON_LEFT" />
                      </graphic>
@@ -39,7 +39,7 @@
                         <Tooltip text="Previous turn" />
                      </tooltip>
                   </Button>
-                  <Button fx:id="button_nextTurn" mnemonicParsing="false" onAction="#nextTurnOnAction">
+                  <Button fx:id="button_nextTurn" mnemonicParsing="false" onAction="#nextTurnOnAction" styleClass="button-primary">
                      <graphic>
                         <FontAwesomeIconView glyphName="CHEVRON_RIGHT" text="" />
                      </graphic>
