@@ -1265,6 +1265,10 @@ public class ControllerBattle {
                                             CssClasses.SUCCESS));
                         }
 
+                        if(newCharacter.playerUUIDProperty().isNotEmpty().get()) {
+                            vbox_selected_player.setVisible(true);
+                        }
+
                         if (newCharacter.getPortrait().imageProperty().get() != null) {
                             imageView_selected.setImage(newCharacter.getPortrait().imageProperty().getValue());
                             imageView_selected.setVisible(true);
@@ -1273,7 +1277,6 @@ public class ControllerBattle {
                         }
 
                         hbox_selected_character.setVisible(true);
-                        vbox_selected_player.setVisible(true);
                         anchorPane_selected.setVisible(true);
                     }
                 });
