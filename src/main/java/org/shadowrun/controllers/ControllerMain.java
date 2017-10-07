@@ -5,11 +5,16 @@ import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.application.Application;
 import javafx.collections.transformation.FilteredList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.apache.commons.lang3.StringUtils;
@@ -42,6 +47,7 @@ public class ControllerMain {
     private AppLogic appLogic;
     private BattleLogic battleLogic;
     private Stage stage;
+    private Scene scene;
     private Application application;
 
     //------------------------object injections
@@ -189,12 +195,8 @@ public class ControllerMain {
                         playerCharacters,
                         controllerNewBattle.getWeather(),
                         controllerNewBattle.getTime());
-
-                battleLogic.activeBattleProperty().setValue(battle);
                 appLogic.getActiveCampaign().getBattles().add(battle);
-
                 openBattle(battle, false);
-
             });
 
         } catch (IOException ex) {
@@ -268,11 +270,26 @@ public class ControllerMain {
         }
     }
 
-    public void setStageAndListeners(Stage stage, Application app) {
+    public void setStageAndListeners(Scene scene, Stage stage, Application app) {
         this.stage = stage;
-        appLogic = new AppLogic();
-        battleLogic = new BattleLogic();
+        this.appLogic = new AppLogic();
+        this.battleLogic = new BattleLogic();
         this.application = app;
+        this.scene = scene;
+
+        KeyCombination combinationNextTurn = new KeyCodeCombination(KeyCode.RIGHT,KeyCombination.CONTROL_ANY);
+        KeyCombination combinationPrevTurn = new KeyCodeCombination(KeyCode.LEFT,KeyCombination.CONTROL_ANY);
+
+        scene.addEventFilter(KeyEvent.KEY_RELEASED, event -> {
+            if (combinationNextTurn.match(event) && battleLogic.hasBattle().get()) {
+                battleLogic.nextPhase();
+                event.consume();
+            } else if (combinationPrevTurn.match(event) && battleLogic.hasBattle().get()) {
+                battleLogic.prevPhase();
+                event.consume();
+            }
+        });
+
         Vec4d windowPos = appLogic.getConfig().loadWindowPos();
 
         stage.setX(windowPos.x);
@@ -303,7 +320,7 @@ public class ControllerMain {
                 Object userData = newTab.getUserData();
                 if (userData != null && userData.getClass() == ControllerBattle.class) {
                     ControllerBattle controllerBattle = (ControllerBattle) userData;
-                    battleLogic.activeBattleProperty().setValue(controllerBattle.getBattle());
+                    battleLogic.setActiveBattle(controllerBattle.getBattle(), controllerBattle);
                 }
             }
         });
@@ -422,7 +439,7 @@ public class ControllerMain {
             });
             tabPane.getTabs().add(battleTab);
             controllerBattle.setStageAndListeners(battle, appLogic, battleLogic, loaded);
-            battleLogic.activeBattleProperty().setValue(battle);
+            battleLogic.setActiveBattle(battle, controllerBattle);
             tabPane.getSelectionModel().select(battleTab);
         } catch (IOException ex) {
             LOG.error("Error while loading battle tab ", ex);

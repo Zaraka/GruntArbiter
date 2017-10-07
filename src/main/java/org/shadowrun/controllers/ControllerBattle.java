@@ -347,26 +347,13 @@ public class ControllerBattle {
     }
 
     @FXML
-    private void nextTurnOnAction() {
-        try {
-            battleLogic.nextPhase();
-        } catch (NextTurnException e) {
-            setNewInitiative();
-            battleLogic.refreshPhase();
-        }
-
-        tableView_masterTable.refresh();
+    public void nextTurnOnAction() {
+        battleLogic.nextPhase();
     }
 
     @FXML
-    private void prevTurnOnAction() {
-        try {
-            battleLogic.prevPhase();
-        } catch (NextTurnException e) {
-            setNewInitiative();
-            battleLogic.refreshPhase();
-        }
-        tableView_masterTable.refresh();
+    public void prevTurnOnAction() {
+        battleLogic.prevPhase();
     }
 
     @FXML
@@ -861,7 +848,7 @@ public class ControllerBattle {
         }
     }
 
-    private void setNewInitiative() {
+    public void setNewInitiative() {
         for (Character character : battle.getCharacters()) {
             setCharacterInitiative(character);
         }

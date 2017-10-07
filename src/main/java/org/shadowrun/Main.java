@@ -18,9 +18,10 @@ public class Main extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("views/window.fxml"));
         Parent root = loader.load();
         primaryStage.setTitle("Grunt Arbiter");
-        primaryStage.setScene(new Scene(root));
+        Scene scene = new Scene(root);
+        primaryStage.setScene(scene);
         ControllerMain controller = loader.getController();
-        controller.setStageAndListeners(primaryStage, this);
+        controller.setStageAndListeners(scene, primaryStage, this);
         primaryStage.show();
     }
 

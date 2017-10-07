@@ -2,11 +2,15 @@ package org.shadowrun.logic;
 
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.util.Pair;
 import org.apache.commons.lang3.StringUtils;
 import org.shadowrun.common.constants.CharacterType;
 import org.shadowrun.common.constants.ICE;
 import org.shadowrun.common.constants.World;
 import org.shadowrun.common.exceptions.NextTurnException;
+import org.shadowrun.controllers.ControllerBattle;
 import org.shadowrun.models.Battle;
 import org.shadowrun.models.Character;
 import org.shadowrun.models.Host;
@@ -24,18 +28,21 @@ public class BattleLogic {
 
     private ObjectProperty<Battle> activeBattle;
 
+    private ObjectProperty<ControllerBattle> activeBattleController;
+
     private StringProperty currentCharacterName;
 
     private BooleanProperty hasHost;
 
     public BattleLogic() {
         activeBattle = new SimpleObjectProperty<>(null);
+        activeBattleController = new SimpleObjectProperty<>(null);
         currentCharacterName = new SimpleStringProperty();
         hasHost = new SimpleBooleanProperty(false);
     }
 
     public BooleanBinding hasBattle() {
-        return activeBattle.isNull();
+        return activeBattle.isNotNull();
     }
 
     public boolean hasHost() {
@@ -46,10 +53,6 @@ public class BattleLogic {
         return hasHost;
     }
 
-    public Battle getActiveBattle() {
-        return activeBattle.get();
-    }
-
     public String getCurrentCharacterName() {
         return currentCharacterName.get();
     }
@@ -58,35 +61,47 @@ public class BattleLogic {
         return currentCharacterName;
     }
 
-    public ObjectProperty<Battle> activeBattleProperty() {
-        return activeBattle;
+    public Pair<Battle, ControllerBattle> getActiveBattle() {
+        return new Pair<>(activeBattle.get(), activeBattleController.get());
     }
 
-    public void nextPhase() throws NextTurnException {
-        getActiveBattle().nextPhase();
-        currentCharacterName.setValue(getActiveBattle().currentCharacterProperty().get().getName());
+    public void setActiveBattle(Battle battle, ControllerBattle controllerBattle) {
+        activeBattle.setValue(battle);
+        activeBattleController.setValue(controllerBattle);
     }
 
-    public void prevPhase() throws NextTurnException {
-        getActiveBattle().previousPhase();
-        currentCharacterName.setValue(getActiveBattle().currentCharacterProperty().get().getName());
+    public void nextPhase() {
+        try {
+            activeBattle.get().nextPhase();
+        } catch (NextTurnException e) {
+            activeBattleController.get().setNewInitiative();
+            activeBattle.get().refreshPhase();
+        } finally {
+            currentCharacterName.setValue(activeBattle.get().currentCharacterProperty().get().getName());
+        }
     }
 
-    public void refreshPhase() {
-        getActiveBattle().refreshPhase();
-        currentCharacterName.setValue(getActiveBattle().currentCharacterProperty().get().getName());
+    public void prevPhase() {
+        try {
+            activeBattle.get().previousPhase();
+        } catch (NextTurnException e) {
+            activeBattleController.get().setNewInitiative();
+            activeBattle.get().refreshPhase();
+        } finally {
+            currentCharacterName.setValue(activeBattle.get().currentCharacterProperty().get().getName());
+        }
     }
 
     public void raiseBackgroundCount() {
-        getActiveBattle().backgroundCountProperty().setValue(
-                getActiveBattle().getBackgroundCount() + 1
+        activeBattle.get().backgroundCountProperty().setValue(
+                activeBattle.get().getBackgroundCount() + 1
         );
     }
 
     public void decreaseBackgroundCount() {
-        if (getActiveBattle().getBackgroundCount() > 0) {
-            getActiveBattle().backgroundCountProperty().setValue(
-                    getActiveBattle().getBackgroundCount() - 1
+        if (activeBattle.get().getBackgroundCount() > 0) {
+            activeBattle.get().backgroundCountProperty().setValue(
+                    activeBattle.get().getBackgroundCount() - 1
             );
         }
     }
@@ -106,14 +121,14 @@ public class BattleLogic {
                 true,
                 true,
                 CharacterType.ICE,
-                getActiveBattle().getHost().getRating() / 2 + 8,
+                activeBattle.get().getHost().getRating() / 2 + 8,
                 0,
                 null, null);
-        getActiveBattle().getCharacters().add(ic);
+        activeBattle.get().getCharacters().add(ic);
     }
 
     public void setHost(Host host) {
-        Host activeHost = getActiveBattle().getHost();
+        Host activeHost = activeBattle.get().getHost();
         activeHost.setRating(host.getRating());
         activeHost.setAttack(host.getAttack());
         activeHost.setSleeze(host.getSleeze());
@@ -123,14 +138,14 @@ public class BattleLogic {
     }
 
     public void disconectFromHost() {
-        Host activeHost = getActiveBattle().getHost();
+        Host activeHost = activeBattle.get().getHost();
         activeHost.setRating(0);
         activeHost.setAttack(0);
         activeHost.setSleeze(0);
         activeHost.setFirewall(0);
         activeHost.setDataProcessing(0);
 
-        getActiveBattle().getCharacters().removeIf(Character::isIce);
+        activeBattle.get().getCharacters().removeIf(Character::isIce);
         hasHost.setValue(false);
     }
 
