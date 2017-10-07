@@ -907,13 +907,13 @@ public class ControllerBattle {
                         .or(battle.initiativePassProperty().greaterThan(1).not()
                                 .or(battle.combatTurnProperty().greaterThan(1)).not()));
 
-        battle.getHost().ratingProperty().isNotEqualTo(0).addListener((observable, oldValue, newValue) -> {
-            if (newValue) {
-                button_hostAction.textProperty().setValue(LABEL_DISCONNECT);
+        button_hostAction.textProperty().bind(Bindings.createStringBinding(() -> {
+            if(battle.getHost().getRating() > 0) {
+                return LABEL_DISCONNECT;
             } else {
-                button_hostAction.textProperty().setValue(LABEL_GENERATE_HOST);
+                return LABEL_GENERATE_HOST;
             }
-        });
+        }, battle.getHost().ratingProperty()));
 
         allPlayersIncluded = Bindings.createBooleanBinding(() ->
                 appLogic.getActiveCampaign().getPlayers().size() <=
