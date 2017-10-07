@@ -86,6 +86,9 @@
                     <vendor>GA</vendor>
                     <mainClass>org.shadowrun.Main</mainClass>
                     <identifier>GruntArbiter</identifier>
+                    <bundleArguments>
+                        <icon>${project.basedir}/src/main/resources/icons/</icon>
+                    </bundleArguments>
                 </configuration>
             </plugin>
             <plugin>
