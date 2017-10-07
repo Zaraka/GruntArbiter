@@ -397,23 +397,15 @@ public class ControllerBattle {
     @FXML
     private void physicalMonitorSettingsOnAction() {
         Character character = tableView_masterTable.getSelectionModel().getSelectedItem();
-        Parent root;
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("views/monitorSettings.fxml"));
-            root = loader.load();
-            Stage dialog = new Stage();
-            dialog.setTitle("Physical monitor settings");
-            dialog.setScene(new Scene(root));
-            ControllerMonitorSettings controllerMonitorSettings = loader.getController();
-            controllerMonitorSettings.onOpen(dialog, character.getPhysicalMonitor(), "Physical monitor");
-            dialog.showAndWait();
+            ControllerMonitorSettings controllerMonitorSettings =
+                    dialogFactory.createMonitorDialog(character.getPhysicalMonitor(), "Physical monitor");
+            controllerMonitorSettings.getStage().showAndWait();
             controllerMonitorSettings.getMonitor().ifPresent(monitor -> {
-                character.getPhysicalMonitor().maxProperty().setValue(monitor.getMax());
-                character.getPhysicalMonitor().currentProperty().setValue(monitor.getCurrent());
+                character.getPhysicalMonitor().setFrom(monitor);
             });
-
         } catch (IOException ex) {
-            LOG.error("Could not load momnitorSettings dialog: ", ex);
+            LOG.error("Could not load monitorSettings dialog: ", ex);
         }
     }
 
@@ -434,23 +426,15 @@ public class ControllerBattle {
     @FXML
     private void stunMonitorSettingsOnAction() {
         Character character = tableView_masterTable.getSelectionModel().getSelectedItem();
-        Parent root;
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("views/monitorSettings.fxml"));
-            root = loader.load();
-            Stage dialog = new Stage();
-            dialog.setTitle("Stun monitor settings");
-            dialog.setScene(new Scene(root));
-            ControllerMonitorSettings controllerMonitorSettings = loader.getController();
-            controllerMonitorSettings.onOpen(dialog, character.getStunMonitor(), "Stun monitor");
-            dialog.showAndWait();
+            ControllerMonitorSettings controllerMonitorSettings =
+                    dialogFactory.createMonitorDialog(character.getStunMonitor(), "Stun monitor");
+            controllerMonitorSettings.getStage().showAndWait();
             controllerMonitorSettings.getMonitor().ifPresent(monitor -> {
-                character.getStunMonitor().maxProperty().setValue(monitor.getMax());
-                character.getStunMonitor().currentProperty().setValue(monitor.getCurrent());
+                character.getStunMonitor().setFrom(monitor);
             });
-
         } catch (IOException ex) {
-            LOG.error("Could not load momnitorSettings dialog: ", ex);
+            LOG.error("Could not load monitorSettings dialog: ", ex);
         }
     }
 
@@ -483,23 +467,15 @@ public class ControllerBattle {
     @FXML
     private void structureMonitorSettingsOnAction() {
         Barrier barrier = tableView_barrier.getSelectionModel().getSelectedItem();
-        Parent root;
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("views/monitorSettings.fxml"));
-            root = loader.load();
-            Stage dialog = new Stage();
-            dialog.setTitle("Structure monitor settings");
-            dialog.setScene(new Scene(root));
-            ControllerMonitorSettings controllerMonitorSettings = loader.getController();
-            controllerMonitorSettings.onOpen(dialog, barrier.getStructureMonitor(), "Structure monitor");
-            dialog.showAndWait();
+            ControllerMonitorSettings controllerMonitorSettings =
+                    dialogFactory.createMonitorDialog(barrier.getStructureMonitor(), "Structure monitor");
+            controllerMonitorSettings.getStage().showAndWait();
             controllerMonitorSettings.getMonitor().ifPresent(monitor -> {
-                barrier.getStructureMonitor().maxProperty().setValue(monitor.getMax());
-                barrier.getStructureMonitor().currentProperty().setValue(monitor.getCurrent());
+                barrier.getStructureMonitor().setFrom(monitor);
             });
-
         } catch (IOException ex) {
-            LOG.error("Could not load momnitorSettings dialog: ", ex);
+            LOG.error("Could not load monitorSettings dialog: ", ex);
         }
     }
 
@@ -533,23 +509,16 @@ public class ControllerBattle {
     @FXML
     private void conditionMonitorSettingsOnAction() {
         Device device = tableView_devices.getSelectionModel().getSelectedItem();
-        Parent root;
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("views/monitorSettings.fxml"));
-            root = loader.load();
-            Stage dialog = new Stage();
-            dialog.setTitle("Condition monitor settings");
-            dialog.setScene(new Scene(root));
-            ControllerMonitorSettings controllerMonitorSettings = loader.getController();
-            controllerMonitorSettings.onOpen(dialog, device.getConditionMonitor(), "Condition monitor");
-            dialog.showAndWait();
-            controllerMonitorSettings.getMonitor().ifPresent(monitor -> {
-                device.getConditionMonitor().maxProperty().setValue(monitor.getMax());
-                device.getConditionMonitor().currentProperty().setValue(monitor.getCurrent());
-            });
 
+        try {
+            ControllerMonitorSettings controllerMonitorSettings =
+                    dialogFactory.createMonitorDialog(device.getConditionMonitor(), "Condition monitor");
+            controllerMonitorSettings.getStage().showAndWait();
+            controllerMonitorSettings.getMonitor().ifPresent(monitor -> {
+                device.getConditionMonitor().setFrom(monitor);
+            });
         } catch (IOException ex) {
-            LOG.error("Could not load momnitorSettings dialog: ", ex);
+            LOG.error("Could not load monitorSettings dialog: ", ex);
         }
     }
 
@@ -568,23 +537,16 @@ public class ControllerBattle {
     @FXML
     private void vehicleConditionMonitorSettingsOnAction() {
         Vehicle vehicle = tableView_vehicles.getSelectionModel().getSelectedItem();
-        Parent root;
+        
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("views/monitorSettings.fxml"));
-            root = loader.load();
-            Stage dialog = new Stage();
-            dialog.setTitle("Vehicle condition monitor settings");
-            dialog.setScene(new Scene(root));
-            ControllerMonitorSettings controllerMonitorSettings = loader.getController();
-            controllerMonitorSettings.onOpen(dialog, vehicle.getConditionMonitor(), "Vehicle condition monitor");
-            dialog.showAndWait();
+            ControllerMonitorSettings controllerMonitorSettings =
+                    dialogFactory.createMonitorDialog(vehicle.getConditionMonitor(), "Vehicle condition monitor");
+            controllerMonitorSettings.getStage().showAndWait();
             controllerMonitorSettings.getMonitor().ifPresent(monitor -> {
-                vehicle.getConditionMonitor().maxProperty().setValue(monitor.getMax());
-                vehicle.getConditionMonitor().currentProperty().setValue(monitor.getCurrent());
+                vehicle.getConditionMonitor().setFrom(monitor);
             });
-
         } catch (IOException ex) {
-            LOG.error("Could not load momnitorSettings dialog: ", ex);
+            LOG.error("Could not load monitorSettings dialog: ", ex);
         }
     }
 

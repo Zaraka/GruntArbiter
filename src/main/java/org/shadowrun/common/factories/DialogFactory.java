@@ -9,14 +9,9 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
 import org.shadowrun.common.constants.CharacterType;
-import org.shadowrun.controllers.ControllerAddCharacter;
-import org.shadowrun.controllers.ControllerAddDevice;
-import org.shadowrun.controllers.ControllerAddVehicle;
-import org.shadowrun.controllers.ControllerManageSquads;
-import org.shadowrun.models.Campaign;
+import org.shadowrun.controllers.*;
+import org.shadowrun.models.*;
 import org.shadowrun.models.Character;
-import org.shadowrun.models.Device;
-import org.shadowrun.models.Vehicle;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -59,7 +54,7 @@ public class DialogFactory {
 
         ControllerManageSquads controllerManageSquads = loader.getController();
         controllerManageSquads.onOpen(dialog, campaign);
-        return  controllerManageSquads;
+        return controllerManageSquads;
     }
 
     public ControllerAddCharacter createCharacterDialog(
@@ -91,6 +86,20 @@ public class DialogFactory {
         controllerAddVehicle.onOpen(dialog, edit);
 
         return controllerAddVehicle;
+    }
+
+    public ControllerMonitorSettings createMonitorDialog(Monitor monitor, String monitorName) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("views/monitorSettings.fxml"));
+        Parent root = loader.load();
+        Stage dialog = new Stage();
+        dialog.getIcons().add(icon);
+        dialog.setTitle(monitorName + " settings");
+        dialog.setScene(new Scene(root));
+
+        ControllerMonitorSettings controllerMonitorSettings = loader.getController();
+        controllerMonitorSettings.onOpen(dialog, monitor, monitorName);
+
+        return controllerMonitorSettings;
     }
 
     public Alert createExceptionDialog(String title, String header, String content, Exception exception) {
