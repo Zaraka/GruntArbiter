@@ -1,8 +1,10 @@
 package org.shadowrun.common.factories;
 
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -10,8 +12,11 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
+import javafx.util.Pair;
 import org.shadowrun.common.NumericLimitListener;
 import org.shadowrun.common.constants.CharacterType;
+import org.shadowrun.common.constants.ICE;
+import org.shadowrun.common.nodes.cells.ICeCell;
 import org.shadowrun.controllers.*;
 import org.shadowrun.models.*;
 import org.shadowrun.models.Character;
@@ -44,6 +49,20 @@ public class DialogFactory {
         controllerAddDevice.onOpen(dialog, campaign, edit);
 
         return controllerAddDevice;
+    }
+
+    public ControllerAddBarrier createBarrierDialog() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("views/addBarrier.fxml"));
+        Parent root = loader.load();
+        Stage dialog = new Stage();
+        dialog.getIcons().add(icon);
+        dialog.setTitle("Create new barrier");
+        dialog.setScene(new Scene(root));
+
+        ControllerAddBarrier controllerAddBarrier = loader.getController();
+        controllerAddBarrier.onOpen(dialog);
+
+        return controllerAddBarrier;
     }
 
     public ControllerManageSquads createSquadDialog(Campaign campaign) throws IOException {
@@ -103,6 +122,20 @@ public class DialogFactory {
         controllerMonitorSettings.onOpen(dialog, monitor, monitorName);
 
         return controllerMonitorSettings;
+    }
+
+    public ControllerAddHost createHostDialog() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("views/addHost.fxml"));
+        Parent root = loader.load();
+        Stage dialog = new Stage();
+        dialog.setTitle("Generate new host");
+        dialog.setScene(new Scene(root));
+        dialog.getIcons().add(icon);
+
+        ControllerAddHost controllerAddHost = loader.getController();
+        controllerAddHost.onOpen(dialog);
+
+        return controllerAddHost;
     }
 
     public Alert createExceptionDialog(String title, String header, String content, Exception exception) {
@@ -219,6 +252,59 @@ public class DialogFactory {
                 return new InitiativeDialogResult(
                         (checkBox_applyWound.isSelected()) ? wounded : initiative,
                         checkBox_applyWound.isSelected());
+            }
+            return null;
+        });
+
+        return dialog;
+    }
+
+    public Dialog<Pair<String, String>> createICeDialog(Host host) {
+        Dialog<Pair<String, String>> dialog = new Dialog<>();
+        dialog.setTitle("ICe");
+        dialog.setHeaderText("Create new ICe");
+
+        ButtonType okButtonType = new ButtonType("Add", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(okButtonType, ButtonType.CANCEL);
+
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(20, 150, 10, 10));
+
+        ComboBox<ICE> iceChoice = new ComboBox<>(FXCollections.observableArrayList(ICE.values()));
+        iceChoice.setCellFactory(param -> new ICeCell());
+        iceChoice.setButtonCell(new ICeCell());
+
+        TextField initiative = new TextField();
+        initiative.setPromptText("6");
+
+        grid.add(new Label("ICE:"), 0, 0);
+        grid.add(iceChoice, 1, 0);
+        grid.add(new Label("Initiative " + host.getDataProcessing() + " + 4d6 ="), 0, 1);
+        grid.add(initiative, 1, 1);
+
+        Node addButton = dialog.getDialogPane().lookupButton(okButtonType);
+        addButton.setDisable(true);
+
+        initiative.textProperty().addListener((observable, oldValue, newValue) -> {
+            addButton.setDisable(newValue.trim().isEmpty());
+            if (!newValue.matches("\\d*")) {
+                initiative.setText(newValue.replaceAll("[^\\d]", ""));
+            }
+        });
+
+        DialogPane dialogPane = dialog.getDialogPane();
+        dialogPane.getStylesheets().add(style);
+        Stage stage = (Stage) dialogPane.getScene().getWindow();
+        stage.getIcons().add(icon);
+
+        dialogPane.setContent(grid);
+        Platform.runLater(iceChoice::requestFocus);
+
+        dialog.setResultConverter(dialogButton -> {
+            if (dialogButton == okButtonType) {
+                return new Pair<>(iceChoice.getSelectionModel().getSelectedItem().name(), initiative.getText());
             }
             return null;
         });

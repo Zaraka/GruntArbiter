@@ -284,53 +284,7 @@ public class ControllerBattle {
             }
         }
 
-        Dialog<Pair<String, String>> dialog = new Dialog<>();
-        dialog.setTitle("ICe");
-        dialog.setHeaderText("Create new ICe");
-
-        ButtonType okButtonType = new ButtonType("Add", ButtonBar.ButtonData.OK_DONE);
-        dialog.getDialogPane().getButtonTypes().addAll(okButtonType, ButtonType.CANCEL);
-
-        GridPane grid = new GridPane();
-        grid.setHgap(10);
-        grid.setVgap(10);
-        grid.setPadding(new Insets(20, 150, 10, 10));
-
-        ComboBox<ICE> iceChoice = new ComboBox<>(FXCollections.observableArrayList(ICE.values()));
-        iceChoice.setCellFactory(param -> new ICeCell());
-        iceChoice.setButtonCell(new ICeCell());
-
-        TextField initiative = new TextField();
-        initiative.setPromptText("6");
-
-        grid.add(new Label("ICE:"), 0, 0);
-        grid.add(iceChoice, 1, 0);
-        grid.add(new Label("Initiative " + battle.getHost().getDataProcessing() + " + 4d6 ="), 0, 1);
-        grid.add(initiative, 1, 1);
-
-        Node addButton = dialog.getDialogPane().lookupButton(okButtonType);
-        addButton.setDisable(true);
-
-        initiative.textProperty().addListener((observable, oldValue, newValue) -> {
-            addButton.setDisable(newValue.trim().isEmpty());
-            if (!newValue.matches("\\d*")) {
-                initiative.setText(newValue.replaceAll("[^\\d]", ""));
-            }
-        });
-
-        DialogPane dialogPane = dialog.getDialogPane();
-        dialogPane.getStylesheets().add(
-                getClass().getClassLoader().getResource("css/dark.css").toExternalForm());
-
-        dialogPane.setContent(grid);
-        Platform.runLater(iceChoice::requestFocus);
-
-        dialog.setResultConverter(dialogButton -> {
-            if (dialogButton == okButtonType) {
-                return new Pair<>(iceChoice.getSelectionModel().getSelectedItem().name(), initiative.getText());
-            }
-            return null;
-        });
+        Dialog<Pair<String, String>> dialog = dialogFactory.createICeDialog(battle.getHost());
 
         Optional<Pair<String, String>> result = dialog.showAndWait();
         result.ifPresent(res -> {
@@ -358,16 +312,10 @@ public class ControllerBattle {
         if (battleLogic.hasHost()) {
             battleLogic.disconectFromHost();
         } else {
-            Parent root;
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("views/addHost.fxml"));
-                root = loader.load();
-                Stage dialog = new Stage();
-                dialog.setTitle("Generate new host");
-                dialog.setScene(new Scene(root));
-                ControllerAddHost controllerAddHost = loader.getController();
-                controllerAddHost.onOpen(dialog);
-                dialog.showAndWait();
+                ControllerAddHost controllerAddHost = dialogFactory.createHostDialog();
+
+                controllerAddHost.getStage().showAndWait();
                 controllerAddHost.getHost().ifPresent(host -> {
                     battleLogic.setHost(host);
                 });
@@ -608,16 +556,9 @@ public class ControllerBattle {
 
     @FXML
     private void addBarrierOnAction() {
-        Parent root;
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("views/addBarrier.fxml"));
-            root = loader.load();
-            Stage dialog = new Stage();
-            dialog.setTitle("Create new barrier");
-            dialog.setScene(new Scene(root));
-            ControllerAddBarrier controllerAddBarrier = loader.getController();
-            controllerAddBarrier.onOpen(dialog);
-            dialog.showAndWait();
+           ControllerAddBarrier controllerAddBarrier = dialogFactory.createBarrierDialog();
+            controllerAddBarrier.getStage().showAndWait();
             controllerAddBarrier.getBarrier()
                     .ifPresent(barrier -> battle.getBarriers().add(barrier));
 
