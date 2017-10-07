@@ -442,7 +442,7 @@ public class ControllerMain {
     }
 
     public void openCampaign(File file) {
-        if (file != null) {
+        if (file != null && file.exists()) {
             if (checkSave()) {
                 try {
                     appLogic.openCampaign(file);
@@ -492,15 +492,15 @@ public class ControllerMain {
                     getClass().getClassLoader().getResource("css/dark.css").toExternalForm());
             Optional<ButtonType> result = alert.showAndWait();
             if (result.isPresent()) {
-                if (result.get().getButtonData().equals(ButtonBar.ButtonData.YES)) {
+                if(result.get().getButtonData().equals(ButtonBar.ButtonData.CANCEL_CLOSE)) {
+                    return false;
+                }
+                else if (result.get().getButtonData().equals(ButtonBar.ButtonData.YES)) {
                     saveCampaignOnAction();
-                    return true;
-                } else if (result.get().getButtonData().equals(ButtonBar.ButtonData.NO)) {
-                    return true;
                 }
             }
         }
-        return false;
+        return true;
     }
 
 }
