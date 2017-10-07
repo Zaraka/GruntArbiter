@@ -897,8 +897,8 @@ public class ControllerBattle {
                 tableView_barrier
         );
 
-        button_nextTurn.disableProperty().bind(battleLogic.hasBattle());
-        button_prevTurn.disableProperty().bind(battleLogic.hasBattle());
+        button_nextTurn.disableProperty().bind(battleLogic.hasBattle().not());
+        button_prevTurn.disableProperty().bind(battleLogic.hasBattle().not());
 
         //Code for table is way too long
         setupMasterTable();

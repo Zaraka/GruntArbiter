@@ -77,7 +77,9 @@ public class BattleLogic {
             activeBattleController.get().setNewInitiative();
             activeBattle.get().refreshPhase();
         } finally {
-            currentCharacterName.setValue(activeBattle.get().currentCharacterProperty().get().getName());
+            if(activeBattle.get().currentCharacterProperty().isNotNull().get()) {
+                currentCharacterName.setValue(activeBattle.get().currentCharacterProperty().get().getName());
+            }
         }
     }
 
@@ -88,7 +90,9 @@ public class BattleLogic {
             activeBattleController.get().setNewInitiative();
             activeBattle.get().refreshPhase();
         } finally {
-            currentCharacterName.setValue(activeBattle.get().currentCharacterProperty().get().getName());
+            if(activeBattle.get().currentCharacterProperty().isNotNull().get()) {
+                currentCharacterName.setValue(activeBattle.get().currentCharacterProperty().get().getName());
+            }
         }
     }
 
