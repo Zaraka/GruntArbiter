@@ -5,7 +5,6 @@ import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.application.Application;
 import javafx.collections.transformation.FilteredList;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -19,9 +18,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.apache.commons.lang3.StringUtils;
 import org.shadowrun.common.exceptions.IncompatibleVersionsException;
-import org.shadowrun.common.factories.ConfirmationDialogFactory;
-import org.shadowrun.common.factories.ExceptionDialogFactory;
-import org.shadowrun.common.factories.TextInputDialogFactory;
+import org.shadowrun.common.factories.DialogFactory;
 import org.shadowrun.logic.AppLogic;
 import org.shadowrun.logic.BattleLogic;
 import org.shadowrun.models.Battle;
@@ -40,9 +37,7 @@ public class ControllerMain {
 
     private static final Logger LOG = LoggerFactory.getLogger(ControllerMain.class);
 
-    private static final ExceptionDialogFactory exceptionDialogFactory = new ExceptionDialogFactory();
-    private static final ConfirmationDialogFactory confirmationDialogFactory = new ConfirmationDialogFactory();
-    private static final TextInputDialogFactory textInputDialogFactory = new TextInputDialogFactory();
+    private static final DialogFactory dialogFactory = new DialogFactory();
 
     private AppLogic appLogic;
     private BattleLogic battleLogic;
@@ -77,7 +72,7 @@ public class ControllerMain {
     //------------------------method hooks
     @FXML
     public void addPlayerOnAction() {
-        TextInputDialog dialog = textInputDialogFactory.createDialog(
+        TextInputDialog dialog = dialogFactory.createTextInputDialog(
                 "New player",
                 "Create new player",
                 "Please enter name for new player:",
@@ -93,7 +88,7 @@ public class ControllerMain {
     public void newCampaignOnAction() {
         closeCampaignOnAction();
 
-        TextInputDialog dialog = textInputDialogFactory.createDialog(
+        TextInputDialog dialog = dialogFactory.createTextInputDialog(
                 "New campaign",
                 "Create new campaign",
                 "Please enter name for new campaign:",
@@ -129,7 +124,7 @@ public class ControllerMain {
                 appLogic.saveCampaign();
             } catch (IOException e) {
                 LOG.error(e.getMessage());
-                Alert alert = exceptionDialogFactory.createExceptionDialog(
+                Alert alert = dialogFactory.createExceptionDialog(
                         "Error!",
                         "Error occured while saving campaign.",
                         "I/O exception", e);
@@ -157,7 +152,7 @@ public class ControllerMain {
                 appLogic.saveAsCampaign(file);
             } catch (IOException e) {
                 LOG.error(e.getMessage());
-                Alert alert = exceptionDialogFactory.createExceptionDialog(
+                Alert alert = dialogFactory.createExceptionDialog(
                         "Error!",
                         "Error occured while saving campaign.",
                         "I/O exception", e);
@@ -423,7 +418,7 @@ public class ControllerMain {
             battleTab.setUserData(controllerBattle);
             battleTab.setGraphic(new FontAwesomeIconView(FontAwesomeIcon.FIRE));
             battleTab.setOnCloseRequest(event -> {
-                Alert alert = confirmationDialogFactory.createDialog(
+                Alert alert = dialogFactory.createConfirmationDialog(
                         "Close battle",
                         "Are you sure you want to close battle " + battle.getName(),
                         "The battle will be deleted.");
@@ -454,7 +449,7 @@ public class ControllerMain {
                     addCampaignHooks();
                 } catch (IOException e) {
                     LOG.error(e.getMessage());
-                    Alert alert = exceptionDialogFactory.createExceptionDialog(
+                    Alert alert = dialogFactory.createExceptionDialog(
                             "Error!",
                             "Error occured while opening campaign file.",
                             "You campaign file could not be read", e);

@@ -6,8 +6,7 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import org.apache.commons.lang3.StringUtils;
 import org.shadowrun.common.constants.CharacterType;
-import org.shadowrun.common.factories.CharacterDialogFactory;
-import org.shadowrun.common.factories.TextInputDialogFactory;
+import org.shadowrun.common.factories.DialogFactory;
 import org.shadowrun.common.nodes.cells.CharacterPresetCell;
 import org.shadowrun.common.nodes.cells.SquadPressetCell;
 import org.shadowrun.models.Campaign;
@@ -24,8 +23,7 @@ public class ControllerManageSquads implements Controller {
 
     private static final Logger LOG = LoggerFactory.getLogger(ControllerManageSquads.class);
 
-    private static final TextInputDialogFactory textInputDialogFactory = new TextInputDialogFactory();
-    private static final CharacterDialogFactory characterDialogFactory = new CharacterDialogFactory();
+    private static final DialogFactory dialogFactory = new DialogFactory();
 
     private Campaign campaign;
 
@@ -85,7 +83,7 @@ public class ControllerManageSquads implements Controller {
     private void createCharacterOnAction() {
 
         try {
-            ControllerAddCharacter controllerAddCharacter = characterDialogFactory.createDialog(
+            ControllerAddCharacter controllerAddCharacter = dialogFactory.createCharacterDialog(
                     campaign,
                     CharacterType.CLASSIC,
                     null);
@@ -145,7 +143,7 @@ public class ControllerManageSquads implements Controller {
             MenuItem renameCharacter = new MenuItem("Rename character");
             renameCharacter.setOnAction(event -> {
                 Character selected = tableView_characters.getSelectionModel().getSelectedItem();
-                TextInputDialog dialog = textInputDialogFactory.createDialog(
+                TextInputDialog dialog = dialogFactory.createTextInputDialog(
                         "Rename character",
                         "Rename character " + selected.getName(),
                         "Please enter name:",
@@ -158,7 +156,7 @@ public class ControllerManageSquads implements Controller {
             editCharacter.setOnAction(event -> {
                 Character selected = tableView_characters.getSelectionModel().getSelectedItem();
                 try {
-                    ControllerAddCharacter controllerAddCharacter = characterDialogFactory.createDialog(
+                    ControllerAddCharacter controllerAddCharacter = dialogFactory.createCharacterDialog(
                             campaign, CharacterType.CLASSIC, selected);
                     controllerAddCharacter.getStage().showAndWait();
 

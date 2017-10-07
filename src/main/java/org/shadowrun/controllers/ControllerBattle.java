@@ -31,8 +31,10 @@ import org.shadowrun.common.NumericLimitListener;
 import org.shadowrun.common.constants.*;
 import org.shadowrun.common.converters.IterationTimeConverter;
 import org.shadowrun.common.converters.SpiritIndexReputationConverter;
-import org.shadowrun.common.exceptions.NextTurnException;
-import org.shadowrun.common.factories.*;
+import org.shadowrun.common.factories.BadgeFactory;
+import org.shadowrun.common.factories.CharacterIconFactory;
+import org.shadowrun.common.factories.DialogFactory;
+import org.shadowrun.common.factories.InitiativeDialogFactory;
 import org.shadowrun.common.nodes.cells.*;
 import org.shadowrun.common.nodes.rows.CompanionTableRow;
 import org.shadowrun.common.utils.CSSUtils;
@@ -61,13 +63,7 @@ public class ControllerBattle {
     private BooleanBinding allPlayersIncluded;
 
     private static final InitiativeDialogFactory initiativeDialogFactory = new InitiativeDialogFactory();
-    private static final ExceptionDialogFactory exceptionDialogFactory = new ExceptionDialogFactory();
-    private static final ConfirmationDialogFactory confirmationDialogFactory = new ConfirmationDialogFactory();
-    private static final TextInputDialogFactory textInputDialogFactory = new TextInputDialogFactory();
-    private static final CharacterDialogFactory characterDialogFactory = new CharacterDialogFactory();
-    private static final SquadDialogFactory squadDialogFactory = new SquadDialogFactory();
-    private static final VehicleDialogFactory vehicleDialogFactory = new VehicleDialogFactory();
-    private static final DeviceDialogFactory deviceDialogFactory = new DeviceDialogFactory();
+    private static final DialogFactory dialogFactory = new DialogFactory();
 
     @FXML
     private TableView<Character> tableView_masterTable;
@@ -280,7 +276,7 @@ public class ControllerBattle {
     @FXML
     private void addICeOnAction() {
         if (battle.getICe().size() >= battle.getHost().getRating()) {
-            Alert alert = confirmationDialogFactory.createDialog(
+            Alert alert = dialogFactory.createConfirmationDialog(
                     "Too much ICe",
                     "ICe number exceeds host rating",
                     "Spawn another anyway?");
@@ -674,7 +670,7 @@ public class ControllerBattle {
     private void addDeviceOnAction() {
         try {
             ControllerAddDevice controllerAddDevice =
-                    deviceDialogFactory.createDialog(appLogic.getActiveCampaign(), null);
+                    dialogFactory.createDeviceDialog(appLogic.getActiveCampaign(), null);
             controllerAddDevice.getStage().showAndWait();
             controllerAddDevice.getDevice().ifPresent(device -> battle.getDevices().add(device));
 
@@ -686,7 +682,7 @@ public class ControllerBattle {
     @FXML
     private void addVehicleOnAction() {
         try {
-            ControllerAddVehicle controllerAddVehicle = vehicleDialogFactory.createDialog(null);
+            ControllerAddVehicle controllerAddVehicle = dialogFactory.createVehicleDialog(null);
             controllerAddVehicle.getStage().showAndWait();
             controllerAddVehicle.getVehicle().ifPresent(vehicle -> {
                 LOG.info("add vehicle " + vehicle);
@@ -701,7 +697,7 @@ public class ControllerBattle {
     private void addCharacterOnAction() {
         try {
             ControllerAddCharacter controllerAddCharacter =
-                    characterDialogFactory.createDialog(appLogic.getActiveCampaign(), CharacterType.CLASSIC, null);
+                    dialogFactory.createCharacterDialog(appLogic.getActiveCampaign(), CharacterType.CLASSIC, null);
             controllerAddCharacter.getStage().showAndWait();
             controllerAddCharacter.getCharacter().ifPresent(playerCharacter -> {
                 battle.getCharacters().add(playerCharacter);
@@ -790,7 +786,7 @@ public class ControllerBattle {
     @FXML
     private void addSquadOnAction() {
         try {
-            ControllerManageSquads controllerManageSquads = squadDialogFactory.createDialog(appLogic.getActiveCampaign());
+            ControllerManageSquads controllerManageSquads = dialogFactory.createSquadDialog(appLogic.getActiveCampaign());
             controllerManageSquads.getStage().showAndWait();
             controllerManageSquads.getSquad().ifPresent(squad -> squad.getCharacters().forEach(character -> {
                 setCharacterInitiative(character);
@@ -809,7 +805,7 @@ public class ControllerBattle {
             case CHARACTER:
                 try {
                     ControllerAddCharacter controllerAddCharacter =
-                            characterDialogFactory.createDialog(
+                            dialogFactory.createCharacterDialog(
                                     appLogic.getActiveCampaign(),
                                     CharacterType.COMPANION,
                                     null);
@@ -825,7 +821,7 @@ public class ControllerBattle {
             case VEHICLE:
                 try {
                     ControllerAddVehicle controllerAddVehicle =
-                            vehicleDialogFactory.createDialog(null);
+                            dialogFactory.createVehicleDialog(null);
                     controllerAddVehicle.getStage().showAndWait();
                     controllerAddVehicle.getVehicle().ifPresent(vehicle -> {
                         selectedCharacter.getCompanions().add(new Companion(vehicle));
@@ -837,7 +833,7 @@ public class ControllerBattle {
             case DEVICE:
                 try {
                     ControllerAddDevice controllerAddDevice =
-                            deviceDialogFactory.createDialog(appLogic.getActiveCampaign(), null);
+                            dialogFactory.createDeviceDialog(appLogic.getActiveCampaign(), null);
                     controllerAddDevice.getStage().showAndWait();
                     controllerAddDevice.getDevice().ifPresent(device -> {
                         selectedCharacter.getCompanions().add(new Companion(device));
@@ -1133,7 +1129,7 @@ public class ControllerBattle {
         MenuItem renameVehicle = new MenuItem("Rename vehicle");
         renameVehicle.setOnAction(event -> {
             Vehicle selected = tableView_vehicles.getSelectionModel().getSelectedItem();
-            TextInputDialog dialog = textInputDialogFactory.createDialog(
+            TextInputDialog dialog = dialogFactory.createTextInputDialog(
                     "Rename vehicle",
                     "Rename vehicle " + selected.getName(),
                     "Please enter name:",
@@ -1427,7 +1423,7 @@ public class ControllerBattle {
                     switch (companion.getCompanionType()) {
                         case CHARACTER:
                             ControllerAddCharacter controllerAddCharacter =
-                                    characterDialogFactory.createDialog(appLogic.getActiveCampaign(),
+                                    dialogFactory.createCharacterDialog(appLogic.getActiveCampaign(),
                                             CharacterType.COMPANION,
                                             ((Character) companion.getCompanion()));
                             controllerAddCharacter.getStage().showAndWait();
@@ -1437,7 +1433,7 @@ public class ControllerBattle {
                             break;
                         case DEVICE:
                             ControllerAddDevice controllerAddDevice =
-                                    deviceDialogFactory.createDialog(appLogic.getActiveCampaign(),
+                                    dialogFactory.createDeviceDialog(appLogic.getActiveCampaign(),
                                             ((Device) companion.getCompanion()));
                             controllerAddDevice.getStage().showAndWait();
                             controllerAddDevice.getDevice().ifPresent(device -> {
@@ -1446,7 +1442,7 @@ public class ControllerBattle {
                             break;
                         case VEHICLE:
                             ControllerAddVehicle controllerAddVehicle =
-                                    vehicleDialogFactory.createDialog(((Vehicle) companion.getCompanion()));
+                                    dialogFactory.createVehicleDialog((Vehicle) companion.getCompanion());
                             controllerAddVehicle.getStage().showAndWait();
                             controllerAddVehicle.getVehicle().ifPresent(vehicle -> {
                                 ((Vehicle) companion.getCompanion()).setFrom(vehicle);
@@ -1475,7 +1471,7 @@ public class ControllerBattle {
         MenuItem renameBarrier = new MenuItem("Rename barrier");
         renameBarrier.setOnAction(event -> {
             Barrier selected = tableView_barrier.getSelectionModel().getSelectedItem();
-            TextInputDialog dialog = textInputDialogFactory.createDialog(
+            TextInputDialog dialog = dialogFactory.createTextInputDialog(
                     "Rename barrier",
                     "Rename barrier " + selected.getName(),
                     "Please enter name:",
@@ -1549,7 +1545,7 @@ public class ControllerBattle {
         MenuItem renameDevice = new MenuItem("Rename device");
         renameDevice.setOnAction(event -> {
             Device selected = tableView_devices.getSelectionModel().getSelectedItem();
-            TextInputDialog dialog = textInputDialogFactory.createDialog(
+            TextInputDialog dialog = dialogFactory.createTextInputDialog(
                     "Rename device",
                     "Rename device " + selected.getName(),
                     "Please enter name:",

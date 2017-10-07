@@ -10,9 +10,7 @@ import org.shadowrun.common.NumericLimitListener;
 import org.shadowrun.common.constants.CharacterType;
 import org.shadowrun.common.constants.CompanionType;
 import org.shadowrun.common.constants.World;
-import org.shadowrun.common.factories.CharacterDialogFactory;
-import org.shadowrun.common.factories.DeviceDialogFactory;
-import org.shadowrun.common.factories.VehicleDialogFactory;
+import org.shadowrun.common.factories.DialogFactory;
 import org.shadowrun.common.nodes.cells.CharacterPresetCell;
 import org.shadowrun.common.nodes.cells.CompanionTypeCell;
 import org.shadowrun.common.nodes.rows.CompanionTableRow;
@@ -29,9 +27,7 @@ public class ControllerAddCharacter implements Controller {
 
     private static final Logger LOG = LoggerFactory.getLogger(ControllerAddCharacter.class);
 
-    private static final CharacterDialogFactory characterDialogFactory = new CharacterDialogFactory();
-    private static final VehicleDialogFactory vehicleDialogFactory = new VehicleDialogFactory();
-    private static final DeviceDialogFactory deviceDialogFactory = new DeviceDialogFactory();
+    private static final DialogFactory dialogFactory = new DialogFactory();
 
     private Character character;
     private Stage stage;
@@ -115,7 +111,7 @@ public class ControllerAddCharacter implements Controller {
             case CHARACTER:
                 try {
                     ControllerAddCharacter controllerAddCharacter =
-                            characterDialogFactory.createDialog(
+                            dialogFactory.createCharacterDialog(
                                     campaign,
                                     CharacterType.COMPANION,
                                     null);
@@ -131,7 +127,7 @@ public class ControllerAddCharacter implements Controller {
             case VEHICLE:
                 try {
                     ControllerAddVehicle controllerAddVehicle =
-                            vehicleDialogFactory.createDialog(null);
+                            dialogFactory.createVehicleDialog(null);
                     controllerAddVehicle.getStage().showAndWait();
                     controllerAddVehicle.getVehicle().ifPresent(vehicle -> {
                         tableView_companions.getItems().add(new Companion(vehicle));
@@ -143,7 +139,7 @@ public class ControllerAddCharacter implements Controller {
             case DEVICE:
                 try {
                     ControllerAddDevice controllerAddDevice =
-                            deviceDialogFactory.createDialog(campaign, null);
+                            dialogFactory.createDeviceDialog(campaign, null);
                     controllerAddDevice.getStage().showAndWait();
                     controllerAddDevice.getDevice().ifPresent(device -> {
                         tableView_companions.getItems().add(new Companion(device));
@@ -228,7 +224,7 @@ public class ControllerAddCharacter implements Controller {
                         switch (companion.getCompanionType()) {
                             case CHARACTER:
                                 ControllerAddCharacter controllerAddCharacter =
-                                        characterDialogFactory.createDialog(campaign,
+                                        dialogFactory.createCharacterDialog(campaign,
                                                 CharacterType.COMPANION,
                                                 ((Character) companion.getCompanion()));
                                 controllerAddCharacter.getStage().showAndWait();
@@ -238,7 +234,7 @@ public class ControllerAddCharacter implements Controller {
                                 break;
                             case DEVICE:
                                 ControllerAddDevice controllerAddDevice =
-                                        deviceDialogFactory.createDialog(campaign,
+                                        dialogFactory.createDeviceDialog(campaign,
                                                 ((Device) companion.getCompanion()));
                                 controllerAddDevice.getStage().showAndWait();
                                 controllerAddDevice.getDevice().ifPresent(device -> {
@@ -247,7 +243,7 @@ public class ControllerAddCharacter implements Controller {
                                 break;
                             case VEHICLE:
                                 ControllerAddVehicle controllerAddVehicle =
-                                        vehicleDialogFactory.createDialog(((Vehicle) companion.getCompanion()));
+                                        dialogFactory.createVehicleDialog(((Vehicle) companion.getCompanion()));
                                 controllerAddVehicle.getStage().showAndWait();
                                 controllerAddVehicle.getVehicle().ifPresent(vehicle -> {
                                     ((Vehicle) companion.getCompanion()).setFrom(vehicle);

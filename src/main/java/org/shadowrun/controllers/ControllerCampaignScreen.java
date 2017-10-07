@@ -8,7 +8,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import org.shadowrun.common.factories.TextInputDialogFactory;
+import org.shadowrun.common.factories.DialogFactory;
 import org.shadowrun.common.nodes.cells.PlayerImageCell;
 import org.shadowrun.models.Campaign;
 import org.shadowrun.models.PlayerCharacter;
@@ -23,7 +23,7 @@ public class ControllerCampaignScreen {
 
     private static final Logger LOG = LoggerFactory.getLogger(ControllerCampaignScreen.class);
 
-    private static final TextInputDialogFactory textInputDialogFactory = new TextInputDialogFactory();
+    private static final DialogFactory dialogFactory = new DialogFactory();
 
     private Stage stage;
     private Campaign campaign;
@@ -77,7 +77,7 @@ public class ControllerCampaignScreen {
         MenuItem renamePlayer = new MenuItem("Rename player");
         renamePlayer.setOnAction(event -> {
             PlayerCharacter selected = tableView_playerCharacters.getSelectionModel().getSelectedItem();
-            TextInputDialog dialog = textInputDialogFactory.createDialog(
+            TextInputDialog dialog = dialogFactory.createTextInputDialog(
                     "Rename player",
                     "Rename player " + selected.getName(),
                     "Please enter new name:",
@@ -118,7 +118,7 @@ public class ControllerCampaignScreen {
         MenuItem setPhysicalMonitor = new MenuItem("Set physical monitor");
         setPhysicalMonitor.setOnAction(event -> {
             PlayerCharacter selected = tableView_playerCharacters.getSelectionModel().getSelectedItem();
-            TextInputDialog dialog = textInputDialogFactory.createDialog(
+            TextInputDialog dialog = dialogFactory.createTextInputDialog(
                     "Set physical monitor",
                     "Set " + selected.getName() + " monitor",
                     "Please enter new max physical monitor:",
@@ -130,7 +130,7 @@ public class ControllerCampaignScreen {
         MenuItem setStunMonitor = new MenuItem("Set stun monitor");
         setStunMonitor.setOnAction(event -> {
             PlayerCharacter selected = tableView_playerCharacters.getSelectionModel().getSelectedItem();
-            TextInputDialog dialog = textInputDialogFactory.createDialog(
+            TextInputDialog dialog = dialogFactory.createTextInputDialog(
                     "Set stun monitor",
                     "Set " + selected.getName() + " monitor",
                     "Please enter new max stun monitor:",
