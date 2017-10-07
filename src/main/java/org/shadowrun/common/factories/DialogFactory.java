@@ -1,6 +1,8 @@
 package org.shadowrun.common.factories;
 
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -8,6 +10,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
+import org.shadowrun.common.NumericLimitListener;
 import org.shadowrun.common.constants.CharacterType;
 import org.shadowrun.controllers.*;
 import org.shadowrun.models.*;
@@ -156,6 +159,70 @@ public class DialogFactory {
         dialogPane.getStylesheets().add(style);
         Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
         stage.getIcons().add(icon);
+        return dialog;
+    }
+
+    public class InitiativeDialogResult {
+        private Integer initiative;
+        private Boolean applyWound;
+
+        InitiativeDialogResult(int initiative, boolean applyWound) {
+            this.applyWound = applyWound;
+            this.initiative = initiative;
+        }
+
+        public Integer getInitiative() {
+            return initiative;
+        }
+
+        public Boolean getApplyWound() {
+            return applyWound;
+        }
+    }
+
+    public Dialog<InitiativeDialogResult> createInitiativeDialog(Character character, boolean applyWound) {
+        Dialog<InitiativeDialogResult> dialog = new Dialog<>();
+        dialog.setTitle("Set initiative");
+        dialog.setHeaderText("Set initiative for " + character.getName());
+
+        ButtonType okButtonType = new ButtonType("Add", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(okButtonType, ButtonType.CANCEL);
+
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(20, 150, 10, 10));
+
+        TextField textField_initiative = new TextField("0");
+        textField_initiative.textProperty().addListener(new NumericLimitListener(textField_initiative, 0, null));
+
+        CheckBox checkBox_applyWound = new CheckBox("Apply wound modifier");
+        checkBox_applyWound.setSelected(applyWound);
+
+        grid.add(new Label("Please enter initative:"), 0, 0);
+        grid.add(textField_initiative, 1, 0);
+        grid.add(checkBox_applyWound, 0, 1);
+
+        DialogPane dialogPane = dialog.getDialogPane();
+        dialogPane.getStylesheets().add(style);
+        Stage stage = (Stage) dialogPane.getScene().getWindow();
+        stage.getIcons().add(icon);
+
+        dialogPane.setContent(grid);
+        Platform.runLater(textField_initiative::requestFocus);
+
+        dialog.setResultConverter(dialogButton -> {
+            if (dialogButton == okButtonType) {
+                int initiative = Integer.parseInt(textField_initiative.getText());
+                int wounded = initiative - (character.getPhysicalMonitor().countWoundModifier() +
+                        character.getStunMonitor().countWoundModifier());
+                return new InitiativeDialogResult(
+                        (checkBox_applyWound.isSelected()) ? wounded : initiative,
+                        checkBox_applyWound.isSelected());
+            }
+            return null;
+        });
+
         return dialog;
     }
 }

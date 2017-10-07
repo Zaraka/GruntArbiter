@@ -34,7 +34,6 @@ import org.shadowrun.common.converters.SpiritIndexReputationConverter;
 import org.shadowrun.common.factories.BadgeFactory;
 import org.shadowrun.common.factories.CharacterIconFactory;
 import org.shadowrun.common.factories.DialogFactory;
-import org.shadowrun.common.factories.InitiativeDialogFactory;
 import org.shadowrun.common.nodes.cells.*;
 import org.shadowrun.common.nodes.rows.CompanionTableRow;
 import org.shadowrun.common.utils.CSSUtils;
@@ -62,7 +61,6 @@ public class ControllerBattle {
 
     private BooleanBinding allPlayersIncluded;
 
-    private static final InitiativeDialogFactory initiativeDialogFactory = new InitiativeDialogFactory();
     private static final DialogFactory dialogFactory = new DialogFactory();
 
     @FXML
@@ -537,7 +535,7 @@ public class ControllerBattle {
     @FXML
     private void vehicleConditionMonitorSettingsOnAction() {
         Vehicle vehicle = tableView_vehicles.getSelectionModel().getSelectedItem();
-        
+
         try {
             ControllerMonitorSettings controllerMonitorSettings =
                     dialogFactory.createMonitorDialog(vehicle.getConditionMonitor(), "Vehicle condition monitor");
@@ -815,8 +813,8 @@ public class ControllerBattle {
     }
 
     private void setCharacterInitiative(Character character) {
-        Dialog<InitiativeDialogFactory.Result> dialog =
-                initiativeDialogFactory.createDialog(character, appLogic.getConfig().getApplyWound());
+        Dialog<DialogFactory.InitiativeDialogResult> dialog =
+                dialogFactory.createInitiativeDialog(character, appLogic.getConfig().getApplyWound());
         dialog.showAndWait().ifPresent(result -> {
             try {
                 character.setInitiative(result.getInitiative());
@@ -1174,8 +1172,8 @@ public class ControllerBattle {
             MenuItem setInitiative = new MenuItem("Set initiative");
             setInitiative.setOnAction(event -> {
                 Character selectedChar = tableView_masterTable.getSelectionModel().getSelectedItem();
-                Dialog<InitiativeDialogFactory.Result> dialog =
-                        initiativeDialogFactory.createDialog(selectedChar, appLogic.getConfig().getApplyWound());
+                Dialog<DialogFactory.InitiativeDialogResult> dialog =
+                        dialogFactory.createInitiativeDialog(selectedChar, appLogic.getConfig().getApplyWound());
                 dialog.showAndWait().ifPresent(result -> {
                     try {
                         selectedChar.setInitiative(result.getInitiative());
