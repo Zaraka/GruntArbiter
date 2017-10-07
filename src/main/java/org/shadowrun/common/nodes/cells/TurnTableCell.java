@@ -7,6 +7,9 @@ import org.shadowrun.models.Character;
 
 public class TurnTableCell extends TableCell<Character, Integer>  {
 
+    private static final String TURN_CELL_FULL = "turn-cell-full";
+    private static final String TURN_CELL_EMPTY = "turn-cell-empty";
+
     private int turn;
 
     public TurnTableCell(int turn) {
@@ -22,9 +25,11 @@ public class TurnTableCell extends TableCell<Character, Integer>  {
             setText(String.valueOf(result));
             ObservableList<String> cellClasses = getStyleClass();
             if(result < 1) {
-                cellClasses.add("turn-cell-empty");
+                cellClasses.remove(TURN_CELL_FULL);
+                cellClasses.add(TURN_CELL_EMPTY);
             } else {
-                cellClasses.add("turn-cell-full");
+                cellClasses.remove(TURN_CELL_EMPTY);
+                cellClasses.add(TURN_CELL_FULL);
             }
         } else {
             setText(null);

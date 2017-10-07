@@ -349,11 +349,13 @@ public class ControllerBattle {
     @FXML
     public void nextTurnOnAction() {
         battleLogic.nextPhase();
+        tableView_masterTable.refresh();
     }
 
     @FXML
     public void prevTurnOnAction() {
         battleLogic.prevPhase();
+        tableView_masterTable.refresh();
     }
 
     @FXML

@@ -197,8 +197,6 @@ public class Battle implements Observable {
                 throw new NextTurnException();
             }
         }
-
-        refreshPhase();
     }
 
     private int passLimit() {
@@ -219,7 +217,6 @@ public class Battle implements Observable {
                     throw new NextTurnException();
                 }
             }
-            refreshPhase();
         }
     }
 

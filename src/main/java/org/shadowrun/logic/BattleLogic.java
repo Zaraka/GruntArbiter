@@ -75,8 +75,8 @@ public class BattleLogic {
             activeBattle.get().nextPhase();
         } catch (NextTurnException e) {
             activeBattleController.get().setNewInitiative();
-            activeBattle.get().refreshPhase();
         } finally {
+            activeBattle.get().refreshPhase();
             if(activeBattle.get().currentCharacterProperty().isNotNull().get()) {
                 currentCharacterName.setValue(activeBattle.get().currentCharacterProperty().get().getName());
             }
