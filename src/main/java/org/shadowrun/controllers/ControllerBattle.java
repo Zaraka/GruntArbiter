@@ -779,6 +779,7 @@ public class ControllerBattle {
         vbox_selected_player.setVisible(false);
         anchorPane_selected.setVisible(false);
         fontAwesomeIcon_selected.setVisible(false);
+        button_selected_matrix.setVisible(false);
         imageView_selected.setVisible(false);
 
         flowPane_selected_badges.getChildren().clear();
@@ -1202,8 +1203,6 @@ public class ControllerBattle {
                                 button_selected_matrix.textProperty().setValue("Connect");
                                 fontAwesomeIcon_selected_matrix.setGlyphName(FontAwesomeIcon.SIGN_IN.name());
                             }
-                        } else {
-                            button_selected_matrix.setVisible(false);
                         }
 
                         if (newCharacter.getType().equals(CharacterType.CLASSIC)) {
