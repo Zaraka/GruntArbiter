@@ -1,0 +1,16 @@
+Future
+    Fix Non characters can't now connect to matrix
+    Fix loaded portraits are properly scaled
+
+0.2.2
+    Fixed opening savefiles
+    Fixed showing Spirit index to NPCs
+    Refactored dialogs, optimizations and bugfixes
+
+0.2.1
+    Turn keys are now colored, with hotkeys (CTRL + LEFT/RIGHT).
+    New application icon
+    Several styling fixes
+    Several NpE bugfixes
+    Master table will now properly update
+    New initiative dialog have now option to apply wound modifier

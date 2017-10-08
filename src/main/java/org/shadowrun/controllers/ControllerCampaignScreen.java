@@ -10,6 +10,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.shadowrun.common.factories.DialogFactory;
 import org.shadowrun.common.nodes.cells.PlayerImageCell;
+import org.shadowrun.common.utils.ImageUtils;
 import org.shadowrun.models.Campaign;
 import org.shadowrun.models.PlayerCharacter;
 import org.slf4j.Logger;
@@ -96,7 +97,7 @@ public class ControllerCampaignScreen {
             if (file != null) {
                 PlayerCharacter selected = tableView_playerCharacters.getSelectionModel().getSelectedItem();
                 try {
-                    selected.getPortrait().imageProperty().setValue(new Image(file.toURI().toURL().toExternalForm()));
+                    selected.getPortrait().imageProperty().setValue(ImageUtils.loadAndCrop(file.toURI().toURL()));
                 } catch (MalformedURLException ex) {
                     LOG.error("Can't load image due to URL reasons: ", ex);
                 }

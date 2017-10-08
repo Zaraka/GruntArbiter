@@ -6,6 +6,8 @@ import java.util.List;
 
 public class CSSUtils {
 
+    private CSSUtils() {}
+
     private static final String TABLE_ASTRAL = "table-astral";
     private static final String TABLE_MATRIX = "table-matrix";
 
