@@ -1,6 +1,7 @@
 Future
     Fix Non characters can't now connect to matrix
-    Fix loaded portraits are properly scaled
+    Fix loaded portraits are now properly scaled
+    Fix weather combo box insufficient size
 
 0.2.2
     Fixed opening savefiles

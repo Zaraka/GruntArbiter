@@ -61,7 +61,7 @@
                      </children>
                   </HBox>
                   <Label text="Weather" GridPane.rowIndex="2" />
-                  <ComboBox fx:id="comboBox_weather" prefHeight="26.0" prefWidth="175.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <ComboBox fx:id="comboBox_weather" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <Label text="Name" />
                   <TextField fx:id="textField_name" GridPane.columnIndex="1" />
                </children>

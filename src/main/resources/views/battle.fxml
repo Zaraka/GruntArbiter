@@ -149,7 +149,7 @@
                                              <children>
                                                 <ToolBar prefHeight="40.0" prefWidth="220.0">
                                                    <items>
-                                                      <ComboBox fx:id="comboBox_weather" minWidth="200.0" />
+                                                      <ComboBox fx:id="comboBox_weather" />
                                                    </items>
                                                 </ToolBar>
                                                 <ToolBar prefHeight="40.0" prefWidth="220.0">
