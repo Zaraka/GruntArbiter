@@ -36,7 +36,7 @@
                         <FontAwesomeIconView glyphName="CHEVRON_LEFT" />
                      </graphic>
                      <tooltip>
-                        <Tooltip text="Previous turn" />
+                        <Tooltip text="Previous turn (HotKey CTRL + LEFT)" />
                      </tooltip>
                   </Button>
                   <Button fx:id="button_nextTurn" mnemonicParsing="false" onAction="#nextTurnOnAction" styleClass="button-primary">
@@ -44,7 +44,7 @@
                         <FontAwesomeIconView glyphName="CHEVRON_RIGHT" text="" />
                      </graphic>
                      <tooltip>
-                        <Tooltip text="Next turn" />
+                        <Tooltip text="Next turn (HotKey CTRL + RIGHT)" />
                      </tooltip>
                   </Button>
                   <Separator prefWidth="5.0" />
@@ -132,6 +132,9 @@
                                                          <graphic>
                                                             <FontAwesomeIconView glyphName="USER" />
                                                          </graphic>
+                                                         <tooltip>
+                                                            <Tooltip text="Spawn player from campaign that is still missing in battle" />
+                                                         </tooltip>
                                                       </Button>
                                                    </items>
                                                 </ToolBar>
@@ -158,6 +161,9 @@
                                                          <graphic>
                                                             <FontAwesomeIconView glyphName="TH" />
                                                          </graphic>
+                                                         <tooltip>
+                                                            <Tooltip text="Spawn barriers like walls, barricades, windows, for Red Faction simulation experience" />
+                                                         </tooltip>
                                                       </Button>
                                                       <Button mnemonicParsing="false" onAction="#addVehicleOnAction" styleClass="button-primary" text="Add vehicle">
                                                          <graphic>
