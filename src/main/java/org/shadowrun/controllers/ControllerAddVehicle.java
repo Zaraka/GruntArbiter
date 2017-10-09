@@ -1,6 +1,8 @@
 package org.shadowrun.controllers;
 
 import com.google.gson.Gson;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -27,7 +29,7 @@ public class ControllerAddVehicle implements Controller {
     private Vehicle vehicle;
 
     @FXML
-    private TreeView<Vehicle> treeView_pressets;
+    private TreeView<VehiclePresset> treeView_pressets;
 
     @FXML
     private TextField textField_name;
@@ -116,7 +118,7 @@ public class ControllerAddVehicle implements Controller {
                 new InputStreamReader(getClass().getClassLoader().getResourceAsStream("data/vehicles.json")),
                 VehiclePresset.class);
 
-        TreeItem<Vehicle> rootNode = new TreeItem<>(vehiclePresset.getVehicle());
+        TreeItem<VehiclePresset> rootNode = new TreeItem<>(vehiclePresset);
 
         for(VehiclePresset rootVehiclePressets : vehiclePresset.getChildren()) {
             loadPreset(rootVehiclePressets, rootNode.getChildren());
@@ -129,30 +131,30 @@ public class ControllerAddVehicle implements Controller {
         treeView_pressets.setCellFactory(param -> new VehicleTreeCell());
 
         treeView_pressets.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if(newValue != null) {
+            if(newValue != null && !newValue.getValue().isCategory()) {
                 textField_handling_onRoad.textProperty()
-                        .setValue(String.valueOf(newValue.getValue().getHandling().getOnRoad()));
+                        .setValue(String.valueOf(newValue.getValue().getVehicle().getHandling().getOnRoad()));
                 textField_handling_offRoad.textProperty()
-                        .setValue(String.valueOf(newValue.getValue().getHandling().getOffRoad()));
+                        .setValue(String.valueOf(newValue.getValue().getVehicle().getHandling().getOffRoad()));
                 textField_speed_onRoad.textProperty()
-                        .setValue(String.valueOf(newValue.getValue().getSpeed().getOnRoad()));
+                        .setValue(String.valueOf(newValue.getValue().getVehicle().getSpeed().getOnRoad()));
                 textField_speed_offRoad.textProperty()
-                        .setValue(String.valueOf(newValue.getValue().getSpeed().getOffRoad()));
+                        .setValue(String.valueOf(newValue.getValue().getVehicle().getSpeed().getOffRoad()));
                 textField_acceleration_onRoad.textProperty()
-                        .setValue(String.valueOf(newValue.getValue().getAcceleration().getOnRoad()));
+                        .setValue(String.valueOf(newValue.getValue().getVehicle().getAcceleration().getOnRoad()));
                 textField_acceleration_offRoad.textProperty()
-                        .setValue(String.valueOf(newValue.getValue().getAcceleration().getOffRoad()));
+                        .setValue(String.valueOf(newValue.getValue().getVehicle().getAcceleration().getOffRoad()));
                 textField_body.textProperty()
-                        .setValue(String.valueOf(newValue.getValue().getBody()));
+                        .setValue(String.valueOf(newValue.getValue().getVehicle().getBody()));
                 textField_armor.textProperty()
-                        .setValue(String.valueOf(newValue.getValue().getArmor()));
+                        .setValue(String.valueOf(newValue.getValue().getVehicle().getArmor()));
                 textField_pilot.textProperty()
-                        .setValue(String.valueOf(newValue.getValue().getPilot()));
+                        .setValue(String.valueOf(newValue.getValue().getVehicle().getPilot()));
                 textField_sensor.textProperty()
-                        .setValue(String.valueOf(newValue.getValue().getSensor()));
+                        .setValue(String.valueOf(newValue.getValue().getVehicle().getSensor()));
                 textField_name.textProperty()
-                        .setValue(newValue.getValue().getName());
-                selectType(newValue.getValue().getType());
+                        .setValue(newValue.getValue().getVehicle().getName());
+                selectType(newValue.getValue().getVehicle().getType());
             }
         });
 
@@ -188,8 +190,8 @@ public class ControllerAddVehicle implements Controller {
         return Optional.ofNullable(vehicle);
     }
 
-    private void loadPreset(VehiclePresset vehiclePresset, ObservableList<TreeItem<Vehicle>> node) {
-        TreeItem<Vehicle> newNode = new TreeItem<>(vehiclePresset.getVehicle());
+    private void loadPreset(VehiclePresset vehiclePresset, ObservableList<TreeItem<VehiclePresset>> node) {
+        TreeItem<VehiclePresset> newNode = new TreeItem<>(vehiclePresset);
         node.add(newNode);
 
         for(int i = 0; i < vehiclePresset.getChildren().size(); i++) {

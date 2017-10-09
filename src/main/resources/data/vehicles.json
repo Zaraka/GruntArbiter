@@ -1,4 +1,6 @@
 {
+  "category": true,
+  "icon": null,
   "vehicle": {
     "name": "root",
     "handling": {
@@ -22,6 +24,8 @@
   },
   "children": [
     {
+      "category": true,
+      "icon": null,
       "vehicle": {
         "name": "Vehicles",
         "handling": {
@@ -45,6 +49,8 @@
       },
       "children": [
         {
+          "category": true,
+          "icon": "CAR",
           "vehicle": {
             "name": "Groundcraft",
             "handling": {
@@ -68,6 +74,8 @@
           },
           "children": [
             {
+              "category": true,
+              "icon": "MOTORCYCLE",
               "vehicle": {
                 "name": "Bike",
                 "handling": {
@@ -91,6 +99,8 @@
               },
               "children": [
                 {
+                  "category": false,
+                  "icon": "MOTORCYCLE",
                   "vehicle": {
                     "name": "Dodge Scoot",
                     "handling": {
@@ -116,6 +126,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "MOTORCYCLE",
                   "vehicle": {
                     "name": "Harley-Davidson Scorpion",
                     "handling": {
@@ -141,6 +153,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "MOTORCYCLE",
                   "vehicle": {
                     "name": "Yamaha Growler",
                     "handling": {
@@ -166,6 +180,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "MOTORCYCLE",
                   "vehicle": {
                     "name": "Suzuki Mirage",
                     "handling": {
@@ -191,6 +207,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "MOTORCYCLE",
                   "vehicle": {
                     "name": "Cocotaxi HT",
                     "handling": {
@@ -216,6 +234,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "MOTORCYCLE",
                   "vehicle": {
                     "name": "Cyclops",
                     "handling": {
@@ -241,6 +261,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "MOTORCYCLE",
                   "vehicle": {
                     "name": "Falcon-EX",
                     "handling": {
@@ -266,6 +288,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "MOTORCYCLE",
                   "vehicle": {
                     "name": "Horseman",
                     "handling": {
@@ -291,6 +315,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "MOTORCYCLE",
                   "vehicle": {
                     "name": "Kaburaya",
                     "handling": {
@@ -316,6 +342,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "MOTORCYCLE",
                   "vehicle": {
                     "name": "Mustang",
                     "handling": {
@@ -341,6 +369,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "MOTORCYCLE",
                   "vehicle": {
                     "name": "Nightmare",
                     "handling": {
@@ -366,6 +396,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "MOTORCYCLE",
                   "vehicle": {
                     "name": "Nodachi",
                     "handling": {
@@ -391,6 +423,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "MOTORCYCLE",
                   "vehicle": {
                     "name": "Revolution",
                     "handling": {
@@ -416,6 +450,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "MOTORCYCLE",
                   "vehicle": {
                     "name": "Spartan",
                     "handling": {
@@ -441,6 +477,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "MOTORCYCLE",
                   "vehicle": {
                     "name": "Terrier",
                     "handling": {
@@ -466,6 +504,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "MOTORCYCLE",
                   "vehicle": {
                     "name": "Zip",
                     "handling": {
@@ -493,6 +533,8 @@
               ]
             },
             {
+              "category": true,
+              "icon": null,
               "vehicle": {
                 "name": "Limo",
                 "handling": {
@@ -516,6 +558,8 @@
               },
               "children": [
                 {
+                  "category": false,
+                  "icon": null,
                   "vehicle": {
                     "name": "Mitsubishi Nightsky",
                     "handling": {
@@ -541,6 +585,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": null,
                   "vehicle": {
                     "name": "Phaeton",
                     "handling": {
@@ -568,6 +614,8 @@
               ]
             },
             {
+              "category": true,
+              "icon": "CAR",
               "vehicle": {
                 "name": "Car",
                 "handling": {
@@ -591,6 +639,8 @@
               },
               "children": [
                 {
+                  "category": false,
+                  "icon": "CAR",
                   "vehicle": {
                     "name": "Chrysler-Nissan Jackrabbit",
                     "handling": {
@@ -616,6 +666,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "CAR",
                   "vehicle": {
                     "name": "Honda Spirit",
                     "handling": {
@@ -641,6 +693,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "CAR",
                   "vehicle": {
                     "name": "Hyundai Shin-Hyung",
                     "handling": {
@@ -666,6 +720,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "CAR",
                   "vehicle": {
                     "name": "Eurocar Westwind 3000",
                     "handling": {
@@ -691,6 +747,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "CAR",
                   "vehicle": {
                     "name": "Ford Americar",
                     "handling": {
@@ -716,6 +774,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "CAR",
                   "vehicle": {
                     "name": "Saeder-Krupp-Bentley Concordat",
                     "handling": {
@@ -741,6 +801,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "CAR",
                   "vehicle": {
                     "name": "Comet",
                     "handling": {
@@ -766,6 +828,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "CAR",
                   "vehicle": {
                     "name": "Artemis",
                     "handling": {
@@ -791,6 +855,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "CAR",
                   "vehicle": {
                     "name": "Chameleon",
                     "handling": {
@@ -816,6 +882,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "CAR",
                   "vehicle": {
                     "name": "Dynamit",
                     "handling": {
@@ -841,6 +909,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "CAR",
                   "vehicle": {
                     "name": "Equus",
                     "handling": {
@@ -866,6 +936,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "CAR",
                   "vehicle": {
                     "name": "FunOne",
                     "handling": {
@@ -891,6 +963,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "CAR",
                   "vehicle": {
                     "name": "Gladius",
                     "handling": {
@@ -916,6 +990,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "CAR",
                   "vehicle": {
                     "name": "Journey",
                     "handling": {
@@ -941,6 +1017,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "CAR",
                   "vehicle": {
                     "name": "Longboard",
                     "handling": {
@@ -966,6 +1044,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "CAR",
                   "vehicle": {
                     "name": "MetaWay",
                     "handling": {
@@ -991,6 +1071,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "CAR",
                   "vehicle": {
                     "name": "Phoenix",
                     "handling": {
@@ -1016,6 +1098,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "CAR",
                   "vehicle": {
                     "name": "Xenon",
                     "handling": {
@@ -1043,6 +1127,8 @@
               ]
             },
             {
+              "category": true,
+              "icon": "TRUCK",
               "vehicle": {
                 "name": "Truck",
                 "handling": {
@@ -1066,6 +1152,8 @@
               },
               "children": [
                 {
+                  "category": false,
+                  "icon": "TRUCK",
                   "vehicle": {
                     "name": "Toyota Gopher",
                     "handling": {
@@ -1091,6 +1179,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "TRUCK",
                   "vehicle": {
                     "name": "Armadillo",
                     "handling": {
@@ -1116,6 +1206,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "TRUCK",
                   "vehicle": {
                     "name": "Escalade",
                     "handling": {
@@ -1141,6 +1233,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "TRUCK",
                   "vehicle": {
                     "name": "Hauler",
                     "handling": {
@@ -1166,6 +1260,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "TRUCK",
                   "vehicle": {
                     "name": "Hotspur",
                     "handling": {
@@ -1191,6 +1287,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "TRUCK",
                   "vehicle": {
                     "name": "Minotaur",
                     "handling": {
@@ -1216,6 +1314,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "TRUCK",
                   "vehicle": {
                     "name": "Morgan",
                     "handling": {
@@ -1241,6 +1341,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "TRUCK",
                   "vehicle": {
                     "name": "Northstar",
                     "handling": {
@@ -1266,6 +1368,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "TRUCK",
                   "vehicle": {
                     "name": "Percheron",
                     "handling": {
@@ -1291,6 +1395,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "TRUCK",
                   "vehicle": {
                     "name": "Sidewinder",
                     "handling": {
@@ -1316,6 +1422,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "TRUCK",
                   "vehicle": {
                     "name": "Talon",
                     "handling": {
@@ -1341,6 +1449,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "TRUCK",
                   "vehicle": {
                     "name": "Trailblazer",
                     "handling": {
@@ -1366,6 +1476,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "TRUCK",
                   "vehicle": {
                     "name": "Watcher",
                     "handling": {
@@ -1393,6 +1505,8 @@
               ]
             },
             {
+              "category": true,
+              "icon": "TRUCK",
               "vehicle": {
                 "name": "Van",
                 "handling": {
@@ -1416,6 +1530,8 @@
               },
               "children": [
                 {
+                  "category": false,
+                  "icon": "TRUCK",
                   "vehicle": {
                     "name": "GMC Bulldog",
                     "handling": {
@@ -1441,6 +1557,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "TRUCK",
                   "vehicle": {
                     "name": "Rover Model 2072",
                     "handling": {
@@ -1466,6 +1584,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "TRUCK",
                   "vehicle": {
                     "name": "Ares Roadmaster",
                     "handling": {
@@ -1491,6 +1611,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "TRUCK",
                   "vehicle": {
                     "name": "Caravaner",
                     "handling": {
@@ -1516,6 +1638,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "TRUCK",
                   "vehicle": {
                     "name": "Chuck Wagon",
                     "handling": {
@@ -1541,6 +1665,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "TRUCK",
                   "vehicle": {
                     "name": "Econovan",
                     "handling": {
@@ -1566,6 +1692,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "TRUCK",
                   "vehicle": {
                     "name": "Endurance",
                     "handling": {
@@ -1591,6 +1719,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "TRUCK",
                   "vehicle": {
                     "name": "S-K LT-21",
                     "handling": {
@@ -1616,6 +1746,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "TRUCK",
                   "vehicle": {
                     "name": "Universe",
                     "handling": {
@@ -1643,6 +1775,8 @@
               ]
             },
             {
+              "category": false,
+              "icon": null,
               "vehicle": {
                 "name": "RV",
                 "handling": {
@@ -1666,6 +1800,8 @@
               },
               "children": [
                 {
+                  "category": false,
+                  "icon": null,
                   "vehicle": {
                     "name": "Chinook",
                     "handling": {
@@ -1691,6 +1827,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": null,
                   "vehicle": {
                     "name": "Outback",
                     "handling": {
@@ -1716,6 +1854,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": null,
                   "vehicle": {
                     "name": "Preserve",
                     "handling": {
@@ -1743,6 +1883,8 @@
               ]
             },
             {
+              "category": true,
+              "icon": null,
               "vehicle": {
                 "name": "Tractor/Trailer",
                 "handling": {
@@ -1766,6 +1908,8 @@
               },
               "children": [
                 {
+                  "category": false,
+                  "icon": null,
                   "vehicle": {
                     "name": "Conestoga Trailblazer",
                     "handling": {
@@ -1791,6 +1935,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": null,
                   "vehicle": {
                     "name": "Hellhound",
                     "handling": {
@@ -1816,6 +1962,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": null,
                   "vehicle": {
                     "name": "Trailer (Trailblazer)",
                     "handling": {
@@ -1843,6 +1991,8 @@
               ]
             },
             {
+              "category": true,
+              "icon": "BUS",
               "vehicle": {
                 "name": "Bus",
                 "handling": {
@@ -1866,6 +2016,8 @@
               },
               "children": [
                 {
+                  "category": false,
+                  "icon": "BUS",
                   "vehicle": {
                     "name": "Camellos HT",
                     "handling": {
@@ -1891,6 +2043,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "BUS",
                   "vehicle": {
                     "name": "Omnibus",
                     "handling": {
@@ -1918,6 +2072,8 @@
               ]
             },
             {
+              "category": true,
+              "icon": null,
               "vehicle": {
                 "name": "Commercial",
                 "handling": {
@@ -1941,6 +2097,8 @@
               },
               "children": [
                 {
+                  "category": false,
+                  "icon": null,
                   "vehicle": {
                     "name": "Commercial D-Compact",
                     "handling": {
@@ -1966,6 +2124,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": null,
                   "vehicle": {
                     "name": "Commercial D-Series",
                     "handling": {
@@ -1991,6 +2151,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": null,
                   "vehicle": {
                     "name": "Commercial DD",
                     "handling": {
@@ -2016,6 +2178,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": null,
                   "vehicle": {
                     "name": "Commercial G-series",
                     "handling": {
@@ -2041,6 +2205,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": null,
                   "vehicle": {
                     "name": "Konstructors",
                     "handling": {
@@ -2066,6 +2232,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": null,
                   "vehicle": {
                     "name": "Ram Industrail Narrow",
                     "handling": {
@@ -2091,6 +2259,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": null,
                   "vehicle": {
                     "name": "Ram Industrial Large",
                     "handling": {
@@ -2118,6 +2288,8 @@
               ]
             },
             {
+              "category": true,
+              "icon": null,
               "vehicle": {
                 "name": "Security",
                 "handling": {
@@ -2141,6 +2313,8 @@
               },
               "children": [
                 {
+                  "category": false,
+                  "icon": null,
                   "vehicle": {
                     "name": "Blitzkrieg",
                     "handling": {
@@ -2166,6 +2340,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": null,
                   "vehicle": {
                     "name": "Charger",
                     "handling": {
@@ -2191,6 +2367,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": null,
                   "vehicle": {
                     "name": "Command (General)",
                     "handling": {
@@ -2216,6 +2394,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": null,
                   "vehicle": {
                     "name": "Goliath",
                     "handling": {
@@ -2241,6 +2421,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": null,
                   "vehicle": {
                     "name": "i8 Interceptor",
                     "handling": {
@@ -2266,6 +2448,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": null,
                   "vehicle": {
                     "name": "Luxus",
                     "handling": {
@@ -2291,6 +2475,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": null,
                   "vehicle": {
                     "name": "Rhino",
                     "handling": {
@@ -2316,6 +2502,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": null,
                   "vehicle": {
                     "name": "Stallion",
                     "handling": {
@@ -2341,6 +2529,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": null,
                   "vehicle": {
                     "name": "Stürmwagon",
                     "handling": {
@@ -2366,6 +2556,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": null,
                   "vehicle": {
                     "name": "Teufelkatze",
                     "handling": {
@@ -2391,6 +2583,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": null,
                   "vehicle": {
                     "name": "Trailer (General)",
                     "handling": {
@@ -2416,6 +2610,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": null,
                   "vehicle": {
                     "name": "Wolf II",
                     "handling": {
@@ -2445,6 +2641,8 @@
           ]
         },
         {
+          "category": true,
+          "icon": "SHIP",
           "vehicle": {
             "name": "Watercraft",
             "handling": {
@@ -2468,6 +2666,8 @@
           },
           "children": [
             {
+              "category": true,
+              "icon": "SHIP",
               "vehicle": {
                 "name": "Boat",
                 "handling": {
@@ -2491,6 +2691,8 @@
               },
               "children": [
                 {
+                  "category": false,
+                  "icon": "SHIP",
                   "vehicle": {
                     "name": "Samuvani Criscraft Otter",
                     "handling": {
@@ -2516,6 +2718,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "SHIP",
                   "vehicle": {
                     "name": "Yongkang Gala Trinity",
                     "handling": {
@@ -2541,6 +2745,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "SHIP",
                   "vehicle": {
                     "name": "Morgan Cutlass",
                     "handling": {
@@ -2566,6 +2772,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "SHIP",
                   "vehicle": {
                     "name": "AirRanger",
                     "handling": {
@@ -2591,6 +2799,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "SHIP",
                   "vehicle": {
                     "name": "AirRanger Heavy",
                     "handling": {
@@ -2616,6 +2826,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "SHIP",
                   "vehicle": {
                     "name": "Aquavida 1",
                     "handling": {
@@ -2641,6 +2853,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "SHIP",
                   "vehicle": {
                     "name": "Aquavida 2",
                     "handling": {
@@ -2666,6 +2880,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "SHIP",
                   "vehicle": {
                     "name": "Classic 111",
                     "handling": {
@@ -2691,6 +2907,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "SHIP",
                   "vehicle": {
                     "name": "Cottonmouth",
                     "handling": {
@@ -2716,6 +2934,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "SHIP",
                   "vehicle": {
                     "name": "Kingfisher",
                     "handling": {
@@ -2741,6 +2961,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "SHIP",
                   "vehicle": {
                     "name": "Lake King",
                     "handling": {
@@ -2766,6 +2988,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "SHIP",
                   "vehicle": {
                     "name": "Manta Ray",
                     "handling": {
@@ -2791,6 +3015,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "SHIP",
                   "vehicle": {
                     "name": "Mobius",
                     "handling": {
@@ -2816,6 +3042,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "SHIP",
                   "vehicle": {
                     "name": "Nightrunner",
                     "handling": {
@@ -2841,6 +3069,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "SHIP",
                   "vehicle": {
                     "name": "Riverine Military",
                     "handling": {
@@ -2866,6 +3096,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "SHIP",
                   "vehicle": {
                     "name": "Riverine Police",
                     "handling": {
@@ -2891,6 +3123,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "SHIP",
                   "vehicle": {
                     "name": "Riverine Security",
                     "handling": {
@@ -2916,6 +3150,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "SHIP",
                   "vehicle": {
                     "name": "Stingray",
                     "handling": {
@@ -2941,6 +3177,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "SHIP",
                   "vehicle": {
                     "name": "Water Strider",
                     "handling": {
@@ -2966,6 +3204,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "SHIP",
                   "vehicle": {
                     "name": "Waterbug",
                     "handling": {
@@ -2991,6 +3231,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "SHIP",
                   "vehicle": {
                     "name": "Waterking",
                     "handling": {
@@ -3016,6 +3258,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "SHIP",
                   "vehicle": {
                     "name": "Waveskipper",
                     "handling": {
@@ -3041,6 +3285,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "SHIP",
                   "vehicle": {
                     "name": "Zodiac Scorpio",
                     "handling": {
@@ -3068,6 +3314,8 @@
               ]
             },
             {
+              "category": true,
+              "icon": null,
               "vehicle": {
                 "name": "Sailboat",
                 "handling": {
@@ -3091,6 +3339,8 @@
               },
               "children": [
                 {
+                  "category": false,
+                  "icon": null,
                   "vehicle": {
                     "name": "Elysium",
                     "handling": {
@@ -3116,6 +3366,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": null,
                   "vehicle": {
                     "name": "Panther",
                     "handling": {
@@ -3141,6 +3393,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": null,
                   "vehicle": {
                     "name": "Trident",
                     "handling": {
@@ -3166,6 +3420,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": null,
                   "vehicle": {
                     "name": "Triton",
                     "handling": {
@@ -3193,6 +3449,8 @@
               ]
             },
             {
+              "category": true,
+              "icon": null,
               "vehicle": {
                 "name": "Submarine",
                 "handling": {
@@ -3216,6 +3474,8 @@
               },
               "children": [
                 {
+                  "category": false,
+                  "icon": null,
                   "vehicle": {
                     "name": "Proteus Lamprey",
                     "handling": {
@@ -3241,6 +3501,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": null,
                   "vehicle": {
                     "name": "Vulkan Electronaut",
                     "handling": {
@@ -3270,6 +3532,8 @@
           ]
         },
         {
+          "category": true,
+          "icon": "PLANE",
           "vehicle": {
             "name": "Aircraft",
             "handling": {
@@ -3293,6 +3557,8 @@
           },
           "children": [
             {
+              "category": true,
+              "icon": "PLANE",
               "vehicle": {
                 "name": "Fixed-Wing",
                 "handling": {
@@ -3316,6 +3582,8 @@
               },
               "children": [
                 {
+                  "category": false,
+                  "icon": "PLANE",
                   "vehicle": {
                     "name": "Artemis Industries Nightwing",
                     "handling": {
@@ -3341,6 +3609,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "PLANE",
                   "vehicle": {
                     "name": "Cessna C750",
                     "handling": {
@@ -3366,6 +3636,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "PLANE",
                   "vehicle": {
                     "name": "Renault-Fiat Fokker Tundra-9",
                     "handling": {
@@ -3391,6 +3663,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "PLANE",
                   "vehicle": {
                     "name": "PBY-70 Catalina II",
                     "handling": {
@@ -3418,6 +3692,8 @@
               ]
             },
             {
+              "category": true,
+              "icon": null,
               "vehicle": {
                 "name": "Rotorcraft",
                 "handling": {
@@ -3441,6 +3717,8 @@
               },
               "children": [
                 {
+                  "category": false,
+                  "icon": null,
                   "vehicle": {
                     "name": "Ares Dragon",
                     "handling": {
@@ -3466,6 +3744,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": null,
                   "vehicle": {
                     "name": "Nissan Hound",
                     "handling": {
@@ -3491,6 +3771,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": null,
                   "vehicle": {
                     "name": "Northrup Wasp",
                     "handling": {
@@ -3516,6 +3798,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": null,
                   "vehicle": {
                     "name": "Agular GX-2",
                     "handling": {
@@ -3541,6 +3825,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": null,
                   "vehicle": {
                     "name": "Agular GX-3AT",
                     "handling": {
@@ -3566,6 +3852,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": null,
                   "vehicle": {
                     "name": "Lift-Ticket ALS-669",
                     "handling": {
@@ -3591,6 +3879,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": null,
                   "vehicle": {
                     "name": "Sea Sprite",
                     "handling": {
@@ -3616,6 +3906,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": null,
                   "vehicle": {
                     "name": "SKA-008",
                     "handling": {
@@ -3641,6 +3933,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": null,
                   "vehicle": {
                     "name": "Stallion",
                     "handling": {
@@ -3668,6 +3962,8 @@
               ]
             },
             {
+              "category": true,
+              "icon": "SPACE_SHUTTLE",
               "vehicle": {
                 "name": "VTOL/VSTOL",
                 "handling": {
@@ -3691,6 +3987,8 @@
               },
               "children": [
                 {
+                  "category": false,
+                  "icon": "SPACE_SHUTTLE",
                   "vehicle": {
                     "name": "Ares Venture",
                     "handling": {
@@ -3716,6 +4014,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "SPACE_SHUTTLE",
                   "vehicle": {
                     "name": "GMC Banshee",
                     "handling": {
@@ -3741,6 +4041,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "SPACE_SHUTTLE",
                   "vehicle": {
                     "name": "Federated Boeing Commuter",
                     "handling": {
@@ -3766,6 +4068,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "SPACE_SHUTTLE",
                   "vehicle": {
                     "name": "Gryphon",
                     "handling": {
@@ -3791,6 +4095,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": "SPACE_SHUTTLE",
                   "vehicle": {
                     "name": "Krime Wing 4",
                     "handling": {
@@ -3818,6 +4124,8 @@
               ]
             },
             {
+              "category": true,
+              "icon": null,
               "vehicle": {
                 "name": "Airship",
                 "handling": {
@@ -3841,6 +4149,8 @@
               },
               "children": [
                 {
+                  "category": false,
+                  "icon": null,
                   "vehicle": {
                     "name": "LZP-2070",
                     "handling": {
@@ -3866,6 +4176,8 @@
                   ]
                 },
                 {
+                  "category": false,
+                  "icon": null,
                   "vehicle": {
                     "name": "Mothership LAVH",
                     "handling": {
@@ -3897,6 +4209,8 @@
       ]
     },
     {
+      "category": true,
+      "icon": null,
       "vehicle": {
         "name": "Drones",
         "handling": {
@@ -3920,6 +4234,8 @@
       },
       "children": [
         {
+          "category": true,
+          "icon": null,
           "vehicle": {
             "name": "Micro",
             "handling": {
@@ -3943,6 +4259,8 @@
           },
           "children": [
             {
+              "category": false,
+              "icon": null,
               "vehicle": {
                 "name": "Shiawase Kanmushi",
                 "handling": {
@@ -3968,6 +4286,8 @@
               ]
             },
             {
+              "category": false,
+              "icon": null,
               "vehicle": {
                 "name": "Silkorsky-Bell Microskimmer",
                 "handling": {
@@ -3993,6 +4313,8 @@
               ]
             },
             {
+              "category": false,
+              "icon": null,
               "vehicle": {
                 "name": "Goldfish",
                 "handling": {
@@ -4018,6 +4340,8 @@
               ]
             },
             {
+              "category": false,
+              "icon": null,
               "vehicle": {
                 "name": "NoizQuito",
                 "handling": {
@@ -4045,6 +4369,8 @@
           ]
         },
         {
+          "category": true,
+          "icon": null,
           "vehicle": {
             "name": "Mini",
             "handling": {
@@ -4068,6 +4394,8 @@
           },
           "children": [
             {
+              "category": false,
+              "icon": null,
               "vehicle": {
                 "name": "MCT Fly-Spy",
                 "handling": {
@@ -4093,6 +4421,8 @@
               ]
             },
             {
+              "category": false,
+              "icon": null,
               "vehicle": {
                 "name": "Horizon Flying Eye",
                 "handling": {
@@ -4118,6 +4448,8 @@
               ]
             },
             {
+              "category": false,
+              "icon": null,
               "vehicle": {
                 "name": "Condor",
                 "handling": {
@@ -4143,6 +4475,8 @@
               ]
             },
             {
+              "category": false,
+              "icon": null,
               "vehicle": {
                 "name": "Dragonfly",
                 "handling": {
@@ -4168,6 +4502,8 @@
               ]
             },
             {
+              "category": false,
+              "icon": null,
               "vehicle": {
                 "name": "Gerbil",
                 "handling": {
@@ -4193,6 +4529,8 @@
               ]
             },
             {
+              "category": false,
+              "icon": null,
               "vehicle": {
                 "name": "Hedgehog",
                 "handling": {
@@ -4218,6 +4556,8 @@
               ]
             },
             {
+              "category": false,
+              "icon": null,
               "vehicle": {
                 "name": "Horizon CU^3",
                 "handling": {
@@ -4243,6 +4583,8 @@
               ]
             },
             {
+              "category": false,
+              "icon": null,
               "vehicle": {
                 "name": "Pigeon 2.0",
                 "handling": {
@@ -4270,6 +4612,8 @@
           ]
         },
         {
+          "category": true,
+          "icon": null,
           "vehicle": {
             "name": "Small",
             "handling": {
@@ -4293,6 +4637,8 @@
           },
           "children": [
             {
+              "category": false,
+              "icon": null,
               "vehicle": {
                 "name": "Aztechnology Crawler",
                 "handling": {
@@ -4318,6 +4664,8 @@
               ]
             },
             {
+              "category": false,
+              "icon": null,
               "vehicle": {
                 "name": "Lockheed Optic-X2",
                 "handling": {
@@ -4343,6 +4691,8 @@
               ]
             },
             {
+              "category": false,
+              "icon": null,
               "vehicle": {
                 "name": "Bloodhound",
                 "handling": {
@@ -4368,6 +4718,8 @@
               ]
             },
             {
+              "category": false,
+              "icon": null,
               "vehicle": {
                 "name": "Castle Guard",
                 "handling": {
@@ -4393,6 +4745,8 @@
               ]
             },
             {
+              "category": false,
+              "icon": null,
               "vehicle": {
                 "name": "Ferret RPD-5X",
                 "handling": {
@@ -4418,6 +4772,8 @@
               ]
             },
             {
+              "category": false,
+              "icon": null,
               "vehicle": {
                 "name": "Gun Turret",
                 "handling": {
@@ -4443,6 +4799,8 @@
               ]
             },
             {
+              "category": false,
+              "icon": null,
               "vehicle": {
                 "name": "Jardinero",
                 "handling": {
@@ -4468,6 +4826,8 @@
               ]
             },
             {
+              "category": false,
+              "icon": null,
               "vehicle": {
                 "name": "Job-a-Mat",
                 "handling": {
@@ -4493,6 +4853,8 @@
               ]
             },
             {
+              "category": false,
+              "icon": null,
               "vehicle": {
                 "name": "Knight Errant P5",
                 "handling": {
@@ -4518,6 +4880,8 @@
               ]
             },
             {
+              "category": false,
+              "icon": null,
               "vehicle": {
                 "name": "Krake",
                 "handling": {
@@ -4543,6 +4907,8 @@
               ]
             },
             {
+              "category": false,
+              "icon": null,
               "vehicle": {
                 "name": "Mini-Zep",
                 "handling": {
@@ -4568,6 +4934,8 @@
               ]
             },
             {
+              "category": false,
+              "icon": null,
               "vehicle": {
                 "name": "Pelican",
                 "handling": {
@@ -4593,6 +4961,8 @@
               ]
             },
             {
+              "category": false,
+              "icon": null,
               "vehicle": {
                 "name": "Prairie Dog",
                 "handling": {
@@ -4618,6 +4988,8 @@
               ]
             },
             {
+              "category": false,
+              "icon": null,
               "vehicle": {
                 "name": "Proletarian",
                 "handling": {
@@ -4643,6 +5015,8 @@
               ]
             },
             {
+              "category": false,
+              "icon": null,
               "vehicle": {
                 "name": "Renraku Dove",
                 "handling": {
@@ -4668,6 +5042,8 @@
               ]
             },
             {
+              "category": false,
+              "icon": null,
               "vehicle": {
                 "name": "Sentry V",
                 "handling": {
@@ -4693,6 +5069,8 @@
               ]
             },
             {
+              "category": false,
+              "icon": null,
               "vehicle": {
                 "name": "Seven (Wheelie)",
                 "handling": {
@@ -4718,6 +5096,8 @@
               ]
             },
             {
+              "category": false,
+              "icon": null,
               "vehicle": {
                 "name": "Seven (Treads)",
                 "handling": {
@@ -4743,6 +5123,8 @@
               ]
             },
             {
+              "category": false,
+              "icon": null,
               "vehicle": {
                 "name": "Seven (Dirty)",
                 "handling": {
@@ -4768,6 +5150,8 @@
               ]
             },
             {
+              "category": false,
+              "icon": null,
               "vehicle": {
                 "name": "Seven (Quad)",
                 "handling": {
@@ -4793,6 +5177,8 @@
               ]
             },
             {
+              "category": false,
+              "icon": null,
               "vehicle": {
                 "name": "Seven (Swims)",
                 "handling": {
@@ -4818,6 +5204,8 @@
               ]
             },
             {
+              "category": false,
+              "icon": null,
               "vehicle": {
                 "name": "Seven (Hovers)",
                 "handling": {
@@ -4843,6 +5231,8 @@
               ]
             },
             {
+              "category": false,
+              "icon": null,
               "vehicle": {
                 "name": "Seven (Soars)",
                 "handling": {
@@ -4868,6 +5258,8 @@
               ]
             },
             {
+              "category": false,
+              "icon": null,
               "vehicle": {
                 "name": "Sewer Snake",
                 "handling": {
@@ -4893,6 +5285,8 @@
               ]
             },
             {
+              "category": false,
+              "icon": null,
               "vehicle": {
                 "name": "Shamus",
                 "handling": {
@@ -4918,6 +5312,8 @@
               ]
             },
             {
+              "category": false,
+              "icon": null,
               "vehicle": {
                 "name": "Smoke Generator",
                 "handling": {
@@ -4943,6 +5339,8 @@
               ]
             },
             {
+              "category": false,
+              "icon": null,
               "vehicle": {
                 "name": "Sundowner",
                 "handling": {
@@ -4968,6 +5366,8 @@
               ]
             },
             {
+              "category": false,
+              "icon": null,
               "vehicle": {
                 "name": "Wolfhound",
                 "handling": {
@@ -4995,6 +5395,8 @@
           ]
         },
         {
+          "category": true,
+          "icon": null,
           "vehicle": {
             "name": "Medium",
             "handling": {
@@ -5018,6 +5420,8 @@
           },
           "children": [
             {
+              "category": false,
+              "icon": null,
               "vehicle": {
                 "name": "Ares Duelist",
                 "handling": {
@@ -5043,6 +5447,8 @@
               ]
             },
             {
+              "category": false,
+              "icon": null,
               "vehicle": {
                 "name": "GM-Nissan Doberman",
                 "handling": {
@@ -5068,6 +5474,8 @@
               ]
             },
             {
+              "category": false,
+              "icon": null,
               "vehicle": {
                 "name": "MCT-Nissan Roto-Drone",
                 "handling": {
@@ -5093,6 +5501,8 @@
               ]
             },
             {
+              "category": false,
+              "icon": null,
               "vehicle": {
                 "name": "Cheetah",
                 "handling": {
@@ -5118,6 +5528,8 @@
               ]
             },
             {
+              "category": false,
+              "icon": null,
               "vehicle": {
                 "name": "Evo Krokodil",
                 "handling": {
@@ -5143,6 +5555,8 @@
               ]
             },
             {
+              "category": false,
+              "icon": null,
               "vehicle": {
                 "name": "F-B Kull",
                 "handling": {
@@ -5168,6 +5582,8 @@
               ]
             },
             {
+              "category": false,
+              "icon": null,
               "vehicle": {
                 "name": "LEBD-2",
                 "handling": {
@@ -5193,6 +5609,8 @@
               ]
             },
             {
+              "category": false,
+              "icon": null,
               "vehicle": {
                 "name": "Steed",
                 "handling": {
@@ -5218,6 +5636,8 @@
               ]
             },
             {
+              "category": false,
+              "icon": null,
               "vehicle": {
                 "name": "Tunneler",
                 "handling": {
@@ -5245,6 +5665,8 @@
           ]
         },
         {
+          "category": true,
+          "icon": null,
           "vehicle": {
             "name": "Large",
             "handling": {
@@ -5268,6 +5690,8 @@
           },
           "children": [
             {
+              "category": false,
+              "icon": null,
               "vehicle": {
                 "name": "Cyberspace Designs Dalmation",
                 "handling": {
@@ -5293,6 +5717,8 @@
               ]
             },
             {
+              "category": false,
+              "icon": null,
               "vehicle": {
                 "name": "Steel Lynx Combat Drone",
                 "handling": {
@@ -5318,6 +5744,8 @@
               ]
             },
             {
+              "category": false,
+              "icon": null,
               "vehicle": {
                 "name": "Malakim",
                 "handling": {
@@ -5343,6 +5771,8 @@
               ]
             },
             {
+              "category": false,
+              "icon": null,
               "vehicle": {
                 "name": "Matilda",
                 "handling": {
@@ -5368,6 +5798,8 @@
               ]
             },
             {
+              "category": false,
+              "icon": null,
               "vehicle": {
                 "name": "MediCart",
                 "handling": {
@@ -5393,6 +5825,8 @@
               ]
             },
             {
+              "category": false,
+              "icon": null,
               "vehicle": {
                 "name": "Mule",
                 "handling": {
@@ -5418,6 +5852,8 @@
               ]
             },
             {
+              "category": false,
+              "icon": null,
               "vehicle": {
                 "name": "Neptune",
                 "handling": {
@@ -5443,6 +5879,8 @@
               ]
             },
             {
+              "category": false,
+              "icon": null,
               "vehicle": {
                 "name": "Paladin",
                 "handling": {
@@ -5468,6 +5906,8 @@
               ]
             },
             {
+              "category": false,
+              "icon": null,
               "vehicle": {
                 "name": "Tower",
                 "handling": {
@@ -5495,6 +5935,8 @@
           ]
         },
         {
+          "category": true,
+          "icon": null,
           "vehicle": {
             "name": "Huge",
             "handling": {
@@ -5518,6 +5960,8 @@
           },
           "children": [
             {
+              "category": false,
+              "icon": null,
               "vehicle": {
                 "name": "Ares KN-Y0 (Deimos)",
                 "handling": {
@@ -5543,6 +5987,8 @@
               ]
             },
             {
+              "category": false,
+              "icon": null,
               "vehicle": {
                 "name": "Ares KN-Y0 (Eris)",
                 "handling": {
@@ -5568,6 +6014,8 @@
               ]
             },
             {
+              "category": false,
+              "icon": null,
               "vehicle": {
                 "name": "Ares KN-Y0 (Phobos)",
                 "handling": {
@@ -5593,6 +6041,8 @@
               ]
             },
             {
+              "category": false,
+              "icon": null,
               "vehicle": {
                 "name": "Avenging Angel",
                 "handling": {
@@ -5618,6 +6068,8 @@
               ]
             },
             {
+              "category": false,
+              "icon": null,
               "vehicle": {
                 "name": "Kodiak",
                 "handling": {
@@ -5645,6 +6097,8 @@
           ]
         },
         {
+          "category": true,
+          "icon": null,
           "vehicle": {
             "name": "Anthro",
             "handling": {
@@ -5668,6 +6122,8 @@
           },
           "children": [
             {
+              "category": false,
+              "icon": null,
               "vehicle": {
                 "name": "Criado Juan",
                 "handling": {
@@ -5693,6 +6149,8 @@
               ]
             },
             {
+              "category": false,
+              "icon": null,
               "vehicle": {
                 "name": "Direktionssekretar",
                 "handling": {
@@ -5718,6 +6176,8 @@
               ]
             },
             {
+              "category": false,
+              "icon": null,
               "vehicle": {
                 "name": "Juggernaught",
                 "handling": {
@@ -5743,6 +6203,8 @@
               ]
             },
             {
+              "category": false,
+              "icon": null,
               "vehicle": {
                 "name": "Kenchiku-Kikai",
                 "handling": {
@@ -5768,6 +6230,8 @@
               ]
             },
             {
+              "category": false,
+              "icon": null,
               "vehicle": {
                 "name": "Little Buddy",
                 "handling": {
@@ -5793,6 +6257,8 @@
               ]
             },
             {
+              "category": false,
+              "icon": null,
               "vehicle": {
                 "name": "Shiawase i-Doll",
                 "handling": {
@@ -5820,6 +6286,8 @@
           ]
         },
         {
+          "category": true,
+          "icon": null,
           "vehicle": {
             "name": "Missile",
             "handling": {
@@ -5843,6 +6311,8 @@
           },
           "children": [
             {
+              "category": false,
+              "icon": null,
               "vehicle": {
                 "name": "Garuda 6",
                 "handling": {
