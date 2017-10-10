@@ -418,13 +418,18 @@ public class ControllerMain {
             battleTab.setUserData(controllerBattle);
             battleTab.setGraphic(new FontAwesomeIconView(FontAwesomeIcon.FIRE));
             battleTab.setOnCloseRequest(event -> {
-                Alert alert = dialogFactory.createConfirmationDialog(
-                        "Close battle",
-                        "Are you sure you want to close battle " + battle.getName(),
-                        "The battle will be deleted.");
-                Optional<ButtonType> result = alert.showAndWait();
-                if (!result.isPresent() || result.get() != ButtonType.OK) {
-                    event.consume();
+                if(!appLogic.getConfig().getBattleClosePrompt()) {
+                    Dialog<Boolean> dialog =
+                            dialogFactory.createClosePromptDialog(
+                                    "Close battle",
+                                    "Are you sure you want to close battle " + battle.getName(),
+                                    "The battle will be deleted.");
+                    Optional<Boolean> result = dialog.showAndWait();
+                    if (!result.isPresent()) {
+                        event.consume();
+                    } else {
+                        appLogic.getConfig().setBattleClosePrompt(result.get());
+                    }
                 }
             });
             battleTab.setOnClosed(event -> {

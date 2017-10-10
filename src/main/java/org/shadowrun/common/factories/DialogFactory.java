@@ -259,6 +259,41 @@ public class DialogFactory {
         return dialog;
     }
 
+    public Dialog<Boolean> createClosePromptDialog(String title, String header, String content) {
+        Dialog<Boolean> dialog = new Dialog<>();
+        dialog.setTitle(title);
+        dialog.setHeaderText(header);
+
+        dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(20, 150, 10, 10));
+
+        CheckBox checkBox_dontShow = new CheckBox("Don't show this dialog again");
+        checkBox_dontShow.setSelected(false);
+
+        grid.add(new Label(content), 0, 0);
+        grid.add(checkBox_dontShow, 0, 1);
+
+        DialogPane dialogPane = dialog.getDialogPane();
+        dialogPane.getStylesheets().add(style);
+        Stage stage = (Stage) dialogPane.getScene().getWindow();
+        stage.getIcons().add(icon);
+
+        dialogPane.setContent(grid);
+
+        dialog.setResultConverter(dialogButton -> {
+            if (dialogButton == ButtonType.OK) {
+                return checkBox_dontShow.isSelected();
+            }
+            return null;
+        });
+
+        return dialog;
+    }
+
     public Dialog<Pair<String, String>> createICeDialog(Host host) {
         Dialog<Pair<String, String>> dialog = new Dialog<>();
         dialog.setTitle("ICe");

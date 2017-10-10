@@ -27,6 +27,7 @@ public class AppConfig {
     private static final String APPLY_WOUND = "ApplyWound";
     private static final String RECENT_FILE = "recentFile";
     private static final String RECENT_FILE_SIZE = "recentFileSize";
+    private static final String BATTLE_CLOSE_PROMPT = "battleClosePrompt";
 
     private Preferences preferences;
 
@@ -119,5 +120,13 @@ public class AppConfig {
 
     public void setMaximized(boolean maximized) {
         preferences.putBoolean(WINDOW_MAXIMIZED, maximized);
+    }
+
+    public boolean getBattleClosePrompt() {
+        return preferences.getBoolean(BATTLE_CLOSE_PROMPT, false);
+    }
+
+    public void setBattleClosePrompt(boolean value) {
+        preferences.putBoolean(BATTLE_CLOSE_PROMPT, value);
     }
 }
