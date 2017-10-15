@@ -4,6 +4,7 @@ Future
     Fix weather combo box insufficient size
     Added several new tooltips
     Added vehicles now have custom presets
+    Added background noise with presets
 
 0.2.2
     Fixed opening savefiles

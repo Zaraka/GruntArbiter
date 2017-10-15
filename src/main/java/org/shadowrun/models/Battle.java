@@ -42,6 +42,8 @@ public class Battle implements Observable {
 
     private IntegerProperty backgroundCount;
 
+    private IntegerProperty backgroundNoise;
+
     private IntegerProperty combatTurn;
 
     private IntegerProperty initiativePass;
@@ -66,8 +68,9 @@ public class Battle implements Observable {
 
     private StringProperty name;
 
-    public Battle(String name, List<PlayerCharacter> players, Weather weather, Integer startingTime) {
+    public Battle(String name, List<PlayerCharacter> players, Weather weather, Integer startingTime, Integer noise) {
         backgroundCount = new SimpleIntegerProperty(0);
+        backgroundNoise = new SimpleIntegerProperty(noise);
         combatTurn = new SimpleIntegerProperty(1);
         initiativePass = new SimpleIntegerProperty(1);
         actionPhase = new SimpleIntegerProperty(1);
@@ -180,6 +183,14 @@ public class Battle implements Observable {
         return vehicles;
     }
 
+    public int getBackgroundNoise() {
+        return backgroundNoise.get();
+    }
+
+    public IntegerProperty backgroundNoiseProperty() {
+        return backgroundNoise;
+    }
+
     public void updateCurrentCharacter() {
         Optional<Character> current = characters.stream().max(Comparator.comparingInt(Character::getInitiative));
         current.ifPresent(character -> currentCharacter.setValue(character));
@@ -264,6 +275,7 @@ public class Battle implements Observable {
         currentCharacter.addListener(listener);
         selectedWeather.addListener(listener);
         name.addListener(listener);
+        backgroundNoise.addListener(listener);
     }
 
     @Override
@@ -281,5 +293,6 @@ public class Battle implements Observable {
         currentCharacter.removeListener(listener);
         selectedWeather.removeListener(listener);
         name.removeListener(listener);
+        backgroundNoise.removeListener(listener);
     }
 }

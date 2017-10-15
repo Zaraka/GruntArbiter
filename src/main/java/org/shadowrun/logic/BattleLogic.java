@@ -110,6 +110,20 @@ public class BattleLogic {
         }
     }
 
+    public void raiseBackgroundNoise() {
+        activeBattle.get().backgroundNoiseProperty().setValue(
+                activeBattle.get().getBackgroundNoise() + 1
+        );
+    }
+
+    public void decreaseBackgroundNoise() {
+        if (activeBattle.get().getBackgroundNoise() > 0) {
+            activeBattle.get().backgroundNoiseProperty().setValue(
+                    activeBattle.get().getBackgroundNoise() - 1
+            );
+        }
+    }
+
     public void spawnICe(ICE ice, Integer initiative) {
         String UUIDs = UUID.randomUUID().toString();
         Matcher matcher = UUID_GROUP_PATTERN.matcher(UUIDs);

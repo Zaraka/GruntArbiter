@@ -10,6 +10,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import org.shadowrun.common.NumericLimitListener;
+import org.shadowrun.common.constants.NoisePreset;
+import org.shadowrun.common.nodes.cells.NoisePresetCell;
 import org.shadowrun.common.nodes.cells.WeatherCell;
 import org.shadowrun.common.constants.Weather;
 import org.shadowrun.models.PlayerCharacter;
@@ -70,6 +72,8 @@ public class ControllerNewBattle implements Controller {
 
     @FXML
     private ComboBox<Weather> comboBox_weather;
+    @FXML
+    private ComboBox<NoisePreset> comboBox_backgroundNoise;
 
     @FXML
     private CheckBox checkBox_includeAll;
@@ -119,7 +123,9 @@ public class ControllerNewBattle implements Controller {
         textField_name.setText(initialName);
         textField_name.selectAll();
 
-
+        comboBox_backgroundNoise.setCellFactory(param -> new NoisePresetCell());
+        comboBox_backgroundNoise.setButtonCell(new NoisePresetCell());
+        comboBox_backgroundNoise.setItems(FXCollections.observableArrayList(NoisePreset.values()));
 
         button_ok.disableProperty().bind(textField_name.textProperty().isEmpty());
 
@@ -140,6 +146,11 @@ public class ControllerNewBattle implements Controller {
 
     public String getName() {
         return textField_name.getText();
+    }
+
+    public Integer getNoise() {
+        NoisePreset noisePreset = comboBox_backgroundNoise.getSelectionModel().getSelectedItem();
+        return (noisePreset == null) ? 0 : noisePreset.getNoise();
     }
 
     @Override

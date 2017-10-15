@@ -172,6 +172,48 @@
                                                       </Button>
                                                    </items>
                                                 </ToolBar>
+                                                <GridPane VBox.vgrow="ALWAYS">
+                                                   <columnConstraints>
+                                                      <ColumnConstraints hgrow="NEVER" />
+                                                      <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="75.0" />
+                                                      <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" />
+                                                      <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="30.0" />
+                                                   </columnConstraints>
+                                                   <rowConstraints>
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                   </rowConstraints>
+                                                   <children>
+                                                      <Label text="Background noise" />
+                                                      <TextField fx:id="textField_backgroundNoise" GridPane.columnIndex="1" />
+                                                      <Button mnemonicParsing="false" onAction="#backgroundNoisePlusOnAction" GridPane.columnIndex="2">
+                                                         <graphic>
+                                                            <FontAwesomeIconView glyphName="PLUS" />
+                                                         </graphic>
+                                                         <tooltip>
+                                                            <Tooltip text="Increase astral background count" />
+                                                         </tooltip>
+                                                         <styleClass>
+                                                            <String fx:value="button-pill" />
+                                                            <String fx:value="button-success" />
+                                                         </styleClass>
+                                                      </Button>
+                                                      <Button layoutX="229.0" layoutY="12.0" mnemonicParsing="false" onAction="#backgroundNoiseMinusOnAction" GridPane.columnIndex="3">
+                                                         <graphic>
+                                                            <FontAwesomeIconView glyphName="MINUS" />
+                                                         </graphic>
+                                                         <tooltip>
+                                                            <Tooltip text="Decrease astral background count" />
+                                                         </tooltip>
+                                                         <styleClass>
+                                                            <String fx:value="button-pill" />
+                                                            <String fx:value="button-danger" />
+                                                         </styleClass>
+                                                      </Button>
+                                                   </children>
+                                                   <VBox.margin>
+                                                      <Insets bottom="10.0" top="15.0" />
+                                                   </VBox.margin>
+                                                </GridPane>
                                              </children>
                                           </VBox>
                                        </children>

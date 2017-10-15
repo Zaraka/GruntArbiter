@@ -224,6 +224,8 @@ public class ControllerBattle {
     private TextField textField_selected_spiritIndex;
     @FXML
     private TextField textField_backgroundCount;
+    @FXML
+    private TextField textField_backgroundNoise;
 
     @FXML
     private ComboBox<Weather> comboBox_weather;
@@ -515,6 +517,16 @@ public class ControllerBattle {
     @FXML
     private void backgroundCountMinusOnAction() {
         battleLogic.decreaseBackgroundCount();
+    }
+
+    @FXML
+    private void backgroundNoisePlusOnAction() {
+        battleLogic.raiseBackgroundNoise();
+    }
+
+    @FXML
+    private void backgroundNoiseMinusOnAction() {
+        battleLogic.decreaseBackgroundNoise();
     }
 
     @FXML
@@ -886,7 +898,10 @@ public class ControllerBattle {
         label_host_firewall.textProperty().bind(battle.getHost().firewallProperty().asString());
         label_host_dataProcessing.textProperty().bind(battle.getHost().dataProcessingProperty().asString());
         label_host_rating.textProperty().bind(battle.getHost().ratingProperty().asString());
-        textField_backgroundCount.textProperty().bindBidirectional(battle.backgroundCountProperty(), new NumberStringConverter());
+        textField_backgroundCount.textProperty().bindBidirectional(battle.backgroundCountProperty(),
+                new NumberStringConverter());
+        textField_backgroundNoise.textProperty().bindBidirectional(battle.backgroundNoiseProperty(),
+                new NumberStringConverter());
         vbox_matrixProperties.visibleProperty().bind(battle.getHost().isInitalized());
         Bindings.bindBidirectional(label_time.textProperty(), battle.combatTurnProperty(), new IterationTimeConverter(battle.getTime()));
         comboBox_weather.valueProperty().bindBidirectional(battle.selectedWeatherProperty());

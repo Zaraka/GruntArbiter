@@ -48,6 +48,7 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
               </rowConstraints>
                <children>
                   <Label text="Time" GridPane.rowIndex="1" />
@@ -64,6 +65,8 @@
                   <ComboBox fx:id="comboBox_weather" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <Label text="Name" />
                   <TextField fx:id="textField_name" GridPane.columnIndex="1" />
+                  <Label text="Background noise" GridPane.rowIndex="3" />
+                  <ComboBox fx:id="comboBox_backgroundNoise" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                </children>
             </GridPane>
             <HBox VBox.vgrow="ALWAYS">

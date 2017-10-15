@@ -293,3 +293,8 @@
 .box-highlighted {
     -fx-background-color: -fx-theme-brand-signature;
 }
+
+.comboBox-primary {
+    -fx-background-color: -fx-theme-brand-info;
+    -fx-font-weight: bold;
+}

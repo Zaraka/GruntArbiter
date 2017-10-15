@@ -189,7 +189,8 @@ public class ControllerMain {
                         controllerNewBattle.getName(),
                         playerCharacters,
                         controllerNewBattle.getWeather(),
-                        controllerNewBattle.getTime());
+                        controllerNewBattle.getTime(),
+                        controllerNewBattle.getNoise());
                 appLogic.getActiveCampaign().getBattles().add(battle);
                 openBattle(battle, false);
             });
