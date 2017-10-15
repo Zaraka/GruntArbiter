@@ -2,12 +2,12 @@ package org.shadowrun.common.nodes.cells;
 
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.scene.control.TreeCell;
-import org.shadowrun.models.VehiclePresset;
+import org.shadowrun.models.VehiclePreset;
 
-public class VehicleTreeCell extends TreeCell<VehiclePresset>{
+public class VehicleTreeCell extends TreeCell<VehiclePreset>{
 
     @Override
-    protected void updateItem(VehiclePresset item, boolean empty) {
+    protected void updateItem(VehiclePreset item, boolean empty) {
         super.updateItem(item, empty);
 
         if(empty) {

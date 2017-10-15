@@ -29,11 +29,13 @@ public class Campaign implements Observable {
 
     private ObservableList<Character> characterPresets;
 
-    private ObservableList<Device> devicePressets;
+    private ObservableList<Device> devicePresets;
 
     private ObservableList<Squad> squads;
 
     private ObservableList<Battle> battles;
+
+    private ObservableList<Vehicle> vehicles;
 
     public Campaign(String name, SemanticVersion version) {
         this.name = new SimpleStringProperty(name);
@@ -41,9 +43,10 @@ public class Campaign implements Observable {
         this.version = new SimpleObjectProperty<>(version);
         this.players = FXCollections.observableArrayList();
         this.characterPresets = FXCollections.observableArrayList();
-        this.devicePressets = FXCollections.observableArrayList();
+        this.devicePresets = FXCollections.observableArrayList();
         this.battles = FXCollections.observableArrayList();
         this.squads = FXCollections.observableArrayList();
+        this.vehicles = FXCollections.observableArrayList();
     }
 
     public String getName() {
@@ -102,8 +105,12 @@ public class Campaign implements Observable {
         return squads;
     }
 
-    public ObservableList<Device> getDevicePressets() {
-        return devicePressets;
+    public ObservableList<Device> getDevicePresets() {
+        return devicePresets;
+    }
+
+    public ObservableList<Vehicle> getVehicles() {
+        return vehicles;
     }
 
     @Override
@@ -111,8 +118,9 @@ public class Campaign implements Observable {
         players = FXCollections.observableList(players, param -> new Observable[]{param});
         characterPresets = FXCollections.observableList(characterPresets, param -> new Observable[]{param});
         squads = FXCollections.observableList(squads, param -> new Observable[]{param});
-        devicePressets = FXCollections.observableList(devicePressets, param -> new Observable[]{param});
+        devicePresets = FXCollections.observableList(devicePresets, param -> new Observable[]{param});
         battles = FXCollections.observableList(battles, param -> new Observable[]{param});
+        vehicles = FXCollections.observableList(vehicles, param -> new Observable[]{param});
 
         name.addListener(listener);
         description.addListener(listener);
@@ -120,8 +128,9 @@ public class Campaign implements Observable {
         players.addListener(listener);
         characterPresets.addListener(listener);
         squads.addListener(listener);
-        devicePressets.addListener(listener);
+        devicePresets.addListener(listener);
         battles.addListener(listener);
+        vehicles.addListener(listener);
     }
 
     @Override
@@ -132,7 +141,8 @@ public class Campaign implements Observable {
         players.removeListener(listener);
         characterPresets.removeListener(listener);
         squads.removeListener(listener);
-        devicePressets.removeListener(listener);
+        devicePresets.removeListener(listener);
         battles.removeListener(listener);
+        vehicles.removeListener(listener);
     }
 }

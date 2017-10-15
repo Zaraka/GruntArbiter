@@ -44,12 +44,12 @@
               </Label>
                   <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <children>
-                        <ComboBox fx:id="comboBox_pressets" />
+                        <ComboBox fx:id="comboBox_presets" />
                         <Button fx:id="button_addSquad" mnemonicParsing="false" onAction="#addToSquadOnAction" styleClass="button-primary" text="Add from preset" />
                         <Button mnemonicParsing="false" onAction="#createCharacterOnAction" text="Create new" />
                      </children>
                   </HBox>
-                  <Label text="Squad pressets" />
+                  <Label text="Squad presets" />
                   <ComboBox fx:id="comboBox_squads" prefWidth="150.0" GridPane.columnIndex="1" />
                   <Label text="Squad name" GridPane.rowIndex="1" />
                   <TextField fx:id="textField_name" GridPane.columnIndex="1" GridPane.rowIndex="1" />

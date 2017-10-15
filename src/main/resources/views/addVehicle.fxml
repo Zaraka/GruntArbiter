@@ -27,7 +27,7 @@
                         <Label styleClass="header" text="Vehicle presets" />
                      </children>
                   </HBox>
-                  <TreeView fx:id="treeView_pressets" prefHeight="400.0" prefWidth="300.0" />
+                  <TreeView fx:id="treeView_presets" prefHeight="400.0" prefWidth="300.0" />
                </children>
             </VBox>
           <VBox spacing="7.0">
@@ -104,6 +104,18 @@
           <HBox.margin>
             <Insets />
           </HBox.margin>
+               <children>
+                  <Button fx:id="button_savePreset" mnemonicParsing="false" onAction="#savePresetOnAction" styleClass="button-success" text="Save preset">
+                     <graphic>
+                        <FontAwesomeIconView glyphName="SAVE" />
+                     </graphic>
+                  </Button>
+                  <Button fx:id="button_deletePreset" mnemonicParsing="false" onAction="#deletePresetOnAction" styleClass="button-danger" text="Delete preset">
+                     <graphic>
+                        <FontAwesomeIconView glyphName="TRASH" styleClass="button-danger" />
+                     </graphic>
+                  </Button>
+               </children>
         </HBox>
         <Pane maxWidth="+Infinity" HBox.hgrow="ALWAYS" />
         <Button fx:id="cancelButton" cancelButton="true" minWidth="80.0" mnemonicParsing="false" onAction="#cancelOnAction" text="Cancel" HBox.hgrow="NEVER">

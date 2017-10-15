@@ -127,7 +127,7 @@ public class ControllerAddCharacter implements Controller {
             case VEHICLE:
                 try {
                     ControllerAddVehicle controllerAddVehicle =
-                            dialogFactory.createVehicleDialog(null);
+                            dialogFactory.createVehicleDialog(campaign, null);
                     controllerAddVehicle.getStage().showAndWait();
                     controllerAddVehicle.getVehicle().ifPresent(vehicle -> {
                         tableView_companions.getItems().add(new Companion(vehicle));
@@ -243,7 +243,7 @@ public class ControllerAddCharacter implements Controller {
                                 break;
                             case VEHICLE:
                                 ControllerAddVehicle controllerAddVehicle =
-                                        dialogFactory.createVehicleDialog(((Vehicle) companion.getCompanion()));
+                                        dialogFactory.createVehicleDialog(campaign, ((Vehicle) companion.getCompanion()));
                                 controllerAddVehicle.getStage().showAndWait();
                                 controllerAddVehicle.getVehicle().ifPresent(vehicle -> {
                                     ((Vehicle) companion.getCompanion()).setFrom(vehicle);

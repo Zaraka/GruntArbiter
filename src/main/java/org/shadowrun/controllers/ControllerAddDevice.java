@@ -7,7 +7,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.apache.commons.lang3.StringUtils;
 import org.shadowrun.common.NumericLimitListener;
-import org.shadowrun.common.nodes.cells.DevicePressetCell;
+import org.shadowrun.common.nodes.cells.DevicePresetCell;
 import org.shadowrun.models.Campaign;
 import org.shadowrun.models.Device;
 
@@ -21,16 +21,16 @@ public class ControllerAddDevice implements Controller {
     private Campaign campaign;
 
     @FXML
-    private ComboBox<Device> comboBox_pressets;
+    private ComboBox<Device> comboBox_presets;
 
     @FXML
     private Button button_ok;
     @FXML
     private Button button_cancel;
     @FXML
-    private Button button_savePresset;
+    private Button button_savePreset;
     @FXML
-    private Button button_deletePresset;
+    private Button button_deletePreset;
 
     @FXML
     private TextField textField_name;
@@ -58,17 +58,17 @@ public class ControllerAddDevice implements Controller {
     }
 
     @FXML
-    private void savePressetOnAction() {
-        campaign.getDevicePressets()
+    private void savePresetOnAction() {
+        campaign.getDevicePresets()
                 .removeIf(device1 -> Objects.equals(device1.getName(), textField_name.getText()));
         Device device = createDevice();
-        campaign.getDevicePressets().add(device);
-        comboBox_pressets.getSelectionModel().select(device);
+        campaign.getDevicePresets().add(device);
+        comboBox_presets.getSelectionModel().select(device);
     }
 
     @FXML
-    private void deletePressetOnAction() {
-        campaign.getDevicePressets().remove(comboBox_pressets.getSelectionModel().getSelectedItem());;
+    private void deletePresetOnAction() {
+        campaign.getDevicePresets().remove(comboBox_presets.getSelectionModel().getSelectedItem());;
         textField_name.setText(StringUtils.EMPTY);
         textField_attack.setText(StringUtils.EMPTY);
         textField_dataProcessing.setText(StringUtils.EMPTY);
@@ -84,11 +84,11 @@ public class ControllerAddDevice implements Controller {
         this.campaign = campaign;
         this.device = null;
 
-        comboBox_pressets.setCellFactory(param -> new DevicePressetCell());
-        comboBox_pressets.setButtonCell(new DevicePressetCell());
-        comboBox_pressets.setItems(campaign.getDevicePressets());
+        comboBox_presets.setCellFactory(param -> new DevicePresetCell());
+        comboBox_presets.setButtonCell(new DevicePresetCell());
+        comboBox_presets.setItems(campaign.getDevicePresets());
 
-        comboBox_pressets.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+        comboBox_presets.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if(newValue != null) {
                 textField_name.setText(newValue.getName());
                 textField_sleeze.setText(String.valueOf(newValue.getSleeze()));
@@ -114,10 +114,10 @@ public class ControllerAddDevice implements Controller {
                                                         textField_name.textProperty().isEmpty()
                                                 ))))));
 
-        button_deletePresset.disableProperty().bind(
-                comboBox_pressets.getSelectionModel().selectedItemProperty().isNull());
+        button_deletePreset.disableProperty().bind(
+                comboBox_presets.getSelectionModel().selectedItemProperty().isNull());
 
-        button_savePresset.disableProperty().bind(button_ok.disableProperty());
+        button_savePreset.disableProperty().bind(button_ok.disableProperty());
         
         if(edit != null) {
             textField_name.setText(edit.getName());

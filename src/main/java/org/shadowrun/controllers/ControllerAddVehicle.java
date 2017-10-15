@@ -1,8 +1,6 @@
 package org.shadowrun.controllers;
 
 import com.google.gson.Gson;
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -11,13 +9,15 @@ import org.hildan.fxgson.FxGson;
 import org.shadowrun.common.NumericLimitListener;
 import org.shadowrun.common.constants.VehicleType;
 import org.shadowrun.common.nodes.cells.VehicleTreeCell;
+import org.shadowrun.models.Campaign;
 import org.shadowrun.models.Vehicle;
-import org.shadowrun.models.VehiclePresset;
+import org.shadowrun.models.VehiclePreset;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.InputStreamReader;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class ControllerAddVehicle implements Controller {
 
@@ -27,9 +27,11 @@ public class ControllerAddVehicle implements Controller {
 
     private Stage stage;
     private Vehicle vehicle;
+    private Campaign campaign;
+    private TreeItem<VehiclePreset> customPresets;
 
     @FXML
-    private TreeView<VehiclePresset> treeView_pressets;
+    private TreeView<VehiclePreset> treeView_presets;
 
     @FXML
     private TextField textField_name;
@@ -60,24 +62,16 @@ public class ControllerAddVehicle implements Controller {
     private RadioButton radioButton_type_vehicle;
 
     @FXML
+    private Button button_savePreset;
+    @FXML
+    private Button button_deletePreset;
+
+    @FXML
     private ToggleGroup type;
 
     @FXML
     private void okOnAction() {
-        vehicle = new Vehicle(
-                textField_name.getText(),
-                Integer.parseInt(textField_handling_onRoad.getText()),
-                Integer.parseInt(textField_handling_offRoad.getText()),
-                Integer.parseInt(textField_speed_onRoad.getText()),
-                Integer.parseInt(textField_speed_offRoad.getText()),
-                Integer.parseInt(textField_acceleration_onRoad.getText()),
-                Integer.parseInt(textField_acceleration_offRoad.getText()),
-                Integer.parseInt(textField_body.getText()),
-                Integer.parseInt(textField_armor.getText()),
-                Integer.parseInt(textField_pilot.getText()),
-                Integer.parseInt(textField_sensor.getText()),
-                (VehicleType) type.getSelectedToggle().getUserData()
-        );
+        vehicle = createVehicle();
         stage.close();
     }
 
@@ -86,9 +80,23 @@ public class ControllerAddVehicle implements Controller {
         stage.close();
     }
 
-    public void onOpen(Stage stage, Vehicle edit) {
+    @FXML
+    private void savePresetOnAction() {
+        campaign.getVehicles().removeIf(vehicle1 -> vehicle1.getName().equals(textField_name.getText()));
+        campaign.getVehicles().add(createVehicle());
+        setupPresets();
+    }
+
+    @FXML
+    private void deletePresetOnAction() {
+        campaign.getVehicles().remove(treeView_presets.getSelectionModel().getSelectedItem().getValue().getVehicle());
+        setupPresets();
+    }
+
+    public void onOpen(Stage stage, Campaign campaign, Vehicle edit) {
         this.stage = stage;
         this.vehicle = null;
+        this.campaign = campaign;
 
         textField_handling_onRoad.textProperty()
                 .addListener(new NumericLimitListener(textField_handling_onRoad, 0, null));
@@ -114,24 +122,12 @@ public class ControllerAddVehicle implements Controller {
         radioButton_type_drone.setUserData(VehicleType.DRONE);
         radioButton_type_vehicle.setUserData(VehicleType.VEHICLE);
 
-        VehiclePresset vehiclePresset = gson.fromJson(
-                new InputStreamReader(getClass().getClassLoader().getResourceAsStream("data/vehicles.json")),
-                VehiclePresset.class);
+        setupPresets();
 
-        TreeItem<VehiclePresset> rootNode = new TreeItem<>(vehiclePresset);
+        treeView_presets.setCellFactory(param -> new VehicleTreeCell());
 
-        for(VehiclePresset rootVehiclePressets : vehiclePresset.getChildren()) {
-            loadPreset(rootVehiclePressets, rootNode.getChildren());
-        }
-
-        rootNode.setExpanded(true);
-        treeView_pressets.setRoot(rootNode);
-        treeView_pressets.setShowRoot(false);
-
-        treeView_pressets.setCellFactory(param -> new VehicleTreeCell());
-
-        treeView_pressets.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if(newValue != null && !newValue.getValue().isCategory()) {
+        treeView_presets.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null && !newValue.getValue().isCategory()) {
                 textField_handling_onRoad.textProperty()
                         .setValue(String.valueOf(newValue.getValue().getVehicle().getHandling().getOnRoad()));
                 textField_handling_offRoad.textProperty()
@@ -158,7 +154,7 @@ public class ControllerAddVehicle implements Controller {
             }
         });
 
-        if(edit != null) {
+        if (edit != null) {
             textField_name.setText(edit.getName());
             textField_sensor.setText(String.valueOf(edit.getSensor()));
             textField_pilot.setText(String.valueOf(edit.getPilot()));
@@ -173,6 +169,50 @@ public class ControllerAddVehicle implements Controller {
             selectType(edit.getType());
         }
 
+        button_savePreset.disableProperty().bind(textField_name.textProperty().isEmpty());
+        button_deletePreset.disableProperty().setValue(true);
+        treeView_presets.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                TreeItem<VehiclePreset> node = newValue;
+                boolean custom = true;
+                while (node.getParent() != null) {
+                    if (node.getParent().equals(customPresets)) {
+                        custom = false;
+                    }
+                    node = node.getParent();
+                }
+                button_deletePreset.disableProperty().setValue(custom);
+            }
+        });
+
+    }
+
+    private void setupPresets() {
+        VehiclePreset vehiclePreset = gson.fromJson(
+                new InputStreamReader(getClass().getClassLoader().getResourceAsStream("data/vehicles.json")),
+                VehiclePreset.class);
+
+        TreeItem<VehiclePreset> rootNode = new TreeItem<>(vehiclePreset);
+
+        for (VehiclePreset rootVehiclePresets : vehiclePreset.getChildren()) {
+            loadPreset(rootVehiclePresets, rootNode.getChildren());
+        }
+
+        TreeItem<VehiclePreset> customPresets = new TreeItem<>(new VehiclePreset(new Vehicle()));
+        customPresets.getValue().categoryProperty().setValue(true);
+        customPresets.getValue().getVehicle().setName("Custom presets");
+        customPresets.getChildren().addAll(
+                campaign.getVehicles()
+                        .stream()
+                        .map(VehiclePreset::new)
+                        .map(TreeItem::new)
+                        .collect(Collectors.toList()));
+        rootNode.getChildren().add(customPresets);
+
+        rootNode.setExpanded(true);
+        treeView_presets.setRoot(rootNode);
+        treeView_presets.setShowRoot(false);
+        this.customPresets = customPresets;
     }
 
     private void selectType(VehicleType edit) {
@@ -190,13 +230,30 @@ public class ControllerAddVehicle implements Controller {
         return Optional.ofNullable(vehicle);
     }
 
-    private void loadPreset(VehiclePresset vehiclePresset, ObservableList<TreeItem<VehiclePresset>> node) {
-        TreeItem<VehiclePresset> newNode = new TreeItem<>(vehiclePresset);
+    private void loadPreset(VehiclePreset vehiclePreset, ObservableList<TreeItem<VehiclePreset>> node) {
+        TreeItem<VehiclePreset> newNode = new TreeItem<>(vehiclePreset);
         node.add(newNode);
 
-        for(int i = 0; i < vehiclePresset.getChildren().size(); i++) {
-            loadPreset(vehiclePresset.getChildren().get(i), newNode.getChildren());
+        for (int i = 0; i < vehiclePreset.getChildren().size(); i++) {
+            loadPreset(vehiclePreset.getChildren().get(i), newNode.getChildren());
         }
+    }
+
+    private Vehicle createVehicle() {
+        return new Vehicle(
+                textField_name.getText(),
+                Integer.parseInt(textField_handling_onRoad.getText()),
+                Integer.parseInt(textField_handling_offRoad.getText()),
+                Integer.parseInt(textField_speed_onRoad.getText()),
+                Integer.parseInt(textField_speed_offRoad.getText()),
+                Integer.parseInt(textField_acceleration_onRoad.getText()),
+                Integer.parseInt(textField_acceleration_offRoad.getText()),
+                Integer.parseInt(textField_body.getText()),
+                Integer.parseInt(textField_armor.getText()),
+                Integer.parseInt(textField_pilot.getText()),
+                Integer.parseInt(textField_sensor.getText()),
+                (VehicleType) type.getSelectedToggle().getUserData()
+        );
     }
 
     @Override

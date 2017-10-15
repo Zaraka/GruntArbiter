@@ -52,7 +52,7 @@
                    <Label text="Data processing" GridPane.rowIndex="6" />
                    <TextField fx:id="textField_dataProcessing" text="0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                   <Label text="Preset" />
-                  <ComboBox fx:id="comboBox_pressets" prefWidth="150.0" GridPane.columnIndex="1" />
+                  <ComboBox fx:id="comboBox_presets" prefWidth="150.0" GridPane.columnIndex="1" />
                </children>
             </GridPane>
       </children>
@@ -64,12 +64,12 @@
             <Insets />
           </HBox.margin>
                <children>
-                  <Button fx:id="button_savePresset" mnemonicParsing="false" onAction="#savePressetOnAction" styleClass="button-success" text="Save presset">
+                  <Button fx:id="button_savePreset" mnemonicParsing="false" onAction="#savePresetOnAction" styleClass="button-success" text="Save preset">
                      <graphic>
                         <FontAwesomeIconView glyphName="SAVE" />
                      </graphic>
                   </Button>
-                  <Button fx:id="button_deletePresset" mnemonicParsing="false" onAction="#deletePressetOnAction" styleClass="button-danger" text="Delete presset">
+                  <Button fx:id="button_deletePreset" mnemonicParsing="false" onAction="#deletePresetOnAction" styleClass="button-danger" text="Delete preset">
                      <graphic>
                         <FontAwesomeIconView glyphName="TRASH" />
                      </graphic>

@@ -96,7 +96,7 @@ public class DialogFactory {
         return controllerAddCharacter;
     }
 
-    public ControllerAddVehicle createVehicleDialog(Vehicle edit) throws IOException {
+    public ControllerAddVehicle createVehicleDialog(Campaign campaign, Vehicle edit) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("views/addVehicle.fxml"));
         Parent root = loader.load();
         Stage dialog = new Stage();
@@ -105,7 +105,7 @@ public class DialogFactory {
         dialog.setScene(new Scene(root));
 
         ControllerAddVehicle controllerAddVehicle = loader.getController();
-        controllerAddVehicle.onOpen(dialog, edit);
+        controllerAddVehicle.onOpen(dialog, campaign, edit);
 
         return controllerAddVehicle;
     }

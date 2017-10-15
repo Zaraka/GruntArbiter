@@ -5,6 +5,7 @@ import javafx.beans.Observable;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import org.apache.commons.lang3.StringUtils;
 import org.shadowrun.common.constants.VehicleType;
 
 public class Vehicle implements Observable {
@@ -28,6 +29,20 @@ public class Vehicle implements Observable {
     private IntegerProperty sensor;
 
     private ObjectProperty<VehicleType> type;
+
+    public  Vehicle() {
+        this.name = new SimpleStringProperty(StringUtils.EMPTY);
+        this.handling = new VehicleAttribute(0);
+        this.speed = new VehicleAttribute(0);
+        this.acceleration = new VehicleAttribute(0);
+        this.body = new SimpleIntegerProperty(0);
+        this.armor = new SimpleIntegerProperty(0);
+        this.pilot = new SimpleIntegerProperty(0);
+        this.sensor = new SimpleIntegerProperty(0);
+        this.type = new SimpleObjectProperty<>(VehicleType.VEHICLE);
+
+        conditionMonitor = null;
+    }
 
     public Vehicle(String name,
                    int handlingOnRoad, int handlingOffRoad,

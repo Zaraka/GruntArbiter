@@ -3,6 +3,7 @@ Future
     Fix loaded portraits are now properly scaled
     Fix weather combo box insufficient size
     Added several new tooltips
+    Added vehicles now have custom presets
 
 0.2.2
     Fixed opening savefiles

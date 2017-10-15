@@ -2,7 +2,6 @@ package org.shadowrun.controllers;
 
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
-import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
@@ -15,15 +14,9 @@ import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.stage.Stage;
 import javafx.util.Pair;
 import javafx.util.converter.NumberStringConverter;
 import org.apache.commons.lang3.StringUtils;
@@ -58,6 +51,7 @@ public class ControllerBattle {
     private AppLogic appLogic;
     private BattleLogic battleLogic;
     private Battle battle;
+    private Campaign campaign;
 
     private BooleanBinding allPlayersIncluded;
 
@@ -583,7 +577,8 @@ public class ControllerBattle {
     @FXML
     private void addVehicleOnAction() {
         try {
-            ControllerAddVehicle controllerAddVehicle = dialogFactory.createVehicleDialog(null);
+            ControllerAddVehicle controllerAddVehicle =
+                    dialogFactory.createVehicleDialog(appLogic.getActiveCampaign(), null);
             controllerAddVehicle.getStage().showAndWait();
             controllerAddVehicle.getVehicle().ifPresent(vehicle -> {
                 LOG.info("add vehicle " + vehicle);
@@ -722,7 +717,7 @@ public class ControllerBattle {
             case VEHICLE:
                 try {
                     ControllerAddVehicle controllerAddVehicle =
-                            dialogFactory.createVehicleDialog(null);
+                            dialogFactory.createVehicleDialog(appLogic.getActiveCampaign(), null);
                     controllerAddVehicle.getStage().showAndWait();
                     controllerAddVehicle.getVehicle().ifPresent(vehicle -> {
                         selectedCharacter.getCompanions().add(new Companion(vehicle));
@@ -1345,7 +1340,7 @@ public class ControllerBattle {
                             break;
                         case VEHICLE:
                             ControllerAddVehicle controllerAddVehicle =
-                                    dialogFactory.createVehicleDialog((Vehicle) companion.getCompanion());
+                                    dialogFactory.createVehicleDialog(campaign, (Vehicle) companion.getCompanion());
                             controllerAddVehicle.getStage().showAndWait();
                             controllerAddVehicle.getVehicle().ifPresent(vehicle -> {
                                 ((Vehicle) companion.getCompanion()).setFrom(vehicle);

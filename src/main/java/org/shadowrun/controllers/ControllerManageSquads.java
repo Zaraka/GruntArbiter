@@ -8,7 +8,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.shadowrun.common.constants.CharacterType;
 import org.shadowrun.common.factories.DialogFactory;
 import org.shadowrun.common.nodes.cells.CharacterPresetCell;
-import org.shadowrun.common.nodes.cells.SquadPressetCell;
+import org.shadowrun.common.nodes.cells.SquadPresetCell;
 import org.shadowrun.models.Campaign;
 import org.shadowrun.models.Character;
 import org.shadowrun.models.Squad;
@@ -44,7 +44,7 @@ public class ControllerManageSquads implements Controller {
     @FXML
     private ComboBox<Squad> comboBox_squads;
     @FXML
-    private ComboBox<Character> comboBox_pressets;
+    private ComboBox<Character> comboBox_presets;
 
     @FXML
     private TableView<Character> tableView_characters;
@@ -76,7 +76,7 @@ public class ControllerManageSquads implements Controller {
 
     @FXML
     private void addToSquadOnAction() {
-        tableView_characters.getItems().add(new Character(comboBox_pressets.getSelectionModel().getSelectedItem()));
+        tableView_characters.getItems().add(new Character(comboBox_presets.getSelectionModel().getSelectedItem()));
     }
 
     @FXML
@@ -116,8 +116,8 @@ public class ControllerManageSquads implements Controller {
         this.squad = null;
 
         comboBox_squads.setItems(campaign.getSquads());
-        comboBox_squads.setButtonCell(new SquadPressetCell());
-        comboBox_squads.setCellFactory(param -> new SquadPressetCell());
+        comboBox_squads.setButtonCell(new SquadPresetCell());
+        comboBox_squads.setCellFactory(param -> new SquadPresetCell());
 
         comboBox_squads.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if(newValue != null) {
@@ -127,9 +127,9 @@ public class ControllerManageSquads implements Controller {
         });
 
 
-        comboBox_pressets.setItems(campaign.getCharacterPresets());
-        comboBox_pressets.setButtonCell(new CharacterPresetCell());
-        comboBox_pressets.setCellFactory(param -> new CharacterPresetCell());
+        comboBox_presets.setItems(campaign.getCharacterPresets());
+        comboBox_presets.setButtonCell(new CharacterPresetCell());
+        comboBox_presets.setCellFactory(param -> new CharacterPresetCell());
 
         tableColumn_characters_name.setCellValueFactory(param -> param.getValue().nameProperty());
         tableColumn_characters_physical.setCellValueFactory(param ->
@@ -183,7 +183,7 @@ public class ControllerManageSquads implements Controller {
         });
 
 
-        button_addSquad.disableProperty().bind(comboBox_pressets.getSelectionModel().selectedItemProperty().isNull());
+        button_addSquad.disableProperty().bind(comboBox_presets.getSelectionModel().selectedItemProperty().isNull());
 
         button_deleteSquad.disableProperty().bind(comboBox_squads.getSelectionModel().selectedItemProperty().isNull());
         button_saveSquad.disableProperty().bind(textField_name.textProperty().isEmpty());

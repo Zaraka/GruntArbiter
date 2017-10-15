@@ -8,16 +8,16 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-public class VehiclePresset {
+public class VehiclePreset {
     private ObjectProperty<Vehicle> vehicle;
 
-    private ObservableList<VehiclePresset> children;
+    private ObservableList<VehiclePreset> children;
 
     private BooleanProperty category;
 
     private ObjectProperty<FontAwesomeIcon> icon;
 
-    public VehiclePresset(Vehicle vehicle) {
+    public VehiclePreset(Vehicle vehicle) {
         this.vehicle = new SimpleObjectProperty<>(vehicle);
         category = new SimpleBooleanProperty(false);
         children = FXCollections.observableArrayList();
@@ -32,7 +32,7 @@ public class VehiclePresset {
         return vehicle;
     }
 
-    public ObservableList<VehiclePresset> getChildren() {
+    public ObservableList<VehiclePreset> getChildren() {
         return children;
     }
 
