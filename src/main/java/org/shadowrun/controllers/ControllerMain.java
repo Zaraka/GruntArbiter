@@ -167,7 +167,7 @@ public class ControllerMain {
         FilteredList<Tab> campaignTabs = tabPane.getTabs().filtered(tab -> tab.getUserData() != null
                 && tab.getUserData().getClass() == ControllerCampaignScreen.class);
         if (!campaignTabs.isEmpty()) {
-            campaignTabs.get(0).getOnClosed().handle(null);
+            campaignTabs.get(0).getOnCloseRequest().handle(null);
         }
     }
 
