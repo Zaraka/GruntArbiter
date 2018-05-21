@@ -1,5 +1,6 @@
 package org.shadowrun.controllers;
 
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -109,6 +110,7 @@ public class ControllerNewBattle implements Controller {
         this.players = FXCollections.observableArrayList(players.stream().map(PickPlayer::new).collect(Collectors.toList()));
 
         tableView_players.setItems(this.players);
+        tableView_players.prefHeightProperty().bind(tableView_players.fixedCellSizeProperty().multiply(Bindings.size(this.players).add(2.0)));
         tableColumn_character.setCellValueFactory(cellData -> cellData.getValue().getPlayerCharacter().nameProperty());
         tableColumn_include.setCellValueFactory(cellData -> cellData.getValue().checkedProperty());
 
