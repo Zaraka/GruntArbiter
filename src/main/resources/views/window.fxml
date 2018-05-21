@@ -9,7 +9,7 @@
 <?import javafx.scene.input.KeyCodeCombination?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1024.0" stylesheets="@../css/dark.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.shadowrun.controllers.ControllerMain">
+<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1024.0" stylesheets="@../css/dark.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.shadowrun.controllers.ControllerMain">
     <children>
         <MenuBar>
             <menus>
@@ -59,7 +59,10 @@
                 </Menu>
                 <Menu fx:id="menu_campaign" text="_Campaign">
                     <items>
-                        <MenuItem fx:id="menuItem_addPlayer" mnemonicParsing="false" onAction="#addPlayerOnAction" text="Add player" />
+                        <MenuItem fx:id="menuItem_addPlayer" mnemonicParsing="false" onAction="#addPlayerOnAction" text="Add player">
+                     <graphic>
+                        <FontAwesomeIconView glyphName="USERS" />
+                     </graphic></MenuItem>
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem fx:id="menuItem_newBattle" mnemonicParsing="false" onAction="#newBattleOnAction" text="New battle">
                             <accelerator>
@@ -71,7 +74,7 @@
                   <KeyCodeCombination alt="ANY" code="C" control="UP" meta="UP" shift="UP" shortcut="UP" />
                </accelerator>
                 </Menu>
-            <Menu text="_Views">
+            <Menu text="_View">
               <items>
                 <MenuItem mnemonicParsing="false" onAction="#openWelcomeScreenOnAction" text="Open welcome screen" />
               </items>
