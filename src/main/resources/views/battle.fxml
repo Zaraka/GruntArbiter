@@ -118,11 +118,17 @@
                                                          <graphic>
                                                             <FontAwesomeIconView glyphName="MALE" />
                                                          </graphic>
+                                                         <tooltip>
+                                                            <Tooltip text="Spawn Non Player Character and it's companions" />
+                                                         </tooltip>
                                                       </Button>
-                                                      <Button mnemonicParsing="false" onAction="#addSquadOnAction" styleClass="button-primary" text="Add squad">
+                                                      <Button mnemonicParsing="false" onAction="#addSquadOnAction" styleClass="button-primary" text="Spawn squad">
                                                          <graphic>
                                                             <FontAwesomeIconView glyphName="USERS" />
                                                          </graphic>
+                                                         <tooltip>
+                                                            <Tooltip text="Spawn full squad of NPCs with their companions, great for stacking grunts agains players" />
+                                                         </tooltip>
                                                       </Button>
                                                    </items>
                                                 </ToolBar>
@@ -133,7 +139,7 @@
                                                             <FontAwesomeIconView glyphName="USER" />
                                                          </graphic>
                                                          <tooltip>
-                                                            <Tooltip text="Spawn player from campaign that is still missing in battle" />
+                                                            <Tooltip text="Spawn player from campaign that is still missing in this battle" />
                                                          </tooltip>
                                                       </Button>
                                                    </items>
@@ -157,7 +163,7 @@
                                                 </ToolBar>
                                                 <ToolBar prefHeight="40.0" prefWidth="220.0">
                                                    <items>
-                                                      <Button mnemonicParsing="false" onAction="#addBarrierOnAction" styleClass="button-primary" text="Add barrier">
+                                                      <Button mnemonicParsing="false" onAction="#addBarrierOnAction" styleClass="button-primary" text="Spawn barrier">
                                                          <graphic>
                                                             <FontAwesomeIconView glyphName="TH" />
                                                          </graphic>
@@ -165,7 +171,7 @@
                                                             <Tooltip text="Spawn barriers like walls, barricades, windows, for Red Faction simulation experience" />
                                                          </tooltip>
                                                       </Button>
-                                                      <Button mnemonicParsing="false" onAction="#addVehicleOnAction" styleClass="button-primary" text="Add vehicle">
+                                                      <Button mnemonicParsing="false" onAction="#addVehicleOnAction" styleClass="button-primary" text="Spawn vehicle">
                                                          <graphic>
                                                             <FontAwesomeIconView glyphName="CAR" />
                                                          </graphic>
@@ -190,7 +196,7 @@
                                                             <FontAwesomeIconView glyphName="PLUS" />
                                                          </graphic>
                                                          <tooltip>
-                                                            <Tooltip text="Increase astral background count" />
+                                                            <Tooltip text="Increase matrix background noise" />
                                                          </tooltip>
                                                          <styleClass>
                                                             <String fx:value="button-pill" />
@@ -202,7 +208,7 @@
                                                             <FontAwesomeIconView glyphName="MINUS" />
                                                          </graphic>
                                                          <tooltip>
-                                                            <Tooltip text="Decrease astral background count" />
+                                                            <Tooltip text="Decrease matrix background noise" />
                                                          </tooltip>
                                                          <styleClass>
                                                             <String fx:value="button-pill" />
@@ -232,11 +238,17 @@
                                                          <graphic>
                                                             <FontAwesomeIconView glyphName="SERVER" />
                                                          </graphic>
+                                                         <tooltip>
+                                                            <Tooltip text="Generate matrix Host, randomly generate its attributes according to the rules or pick them manually." />
+                                                         </tooltip>
                                                       </Button>
-                                                      <Button mnemonicParsing="false" onAction="#addDeviceOnAction" styleClass="button-primary" text="Add device">
+                                                      <Button mnemonicParsing="false" onAction="#addDeviceOnAction" styleClass="button-primary" text="Spawn device">
                                                          <graphic>
                                                             <FontAwesomeIconView glyphName="MOBILE" />
                                                          </graphic>
+                                                         <tooltip>
+                                                            <Tooltip text="Spawn device such as commlinks, bugs, terminals, sky is the limit!" />
+                                                         </tooltip>
                                                       </Button>
                                                    </items>
                                                 </ToolBar>
@@ -290,7 +302,7 @@
                                                                </tooltip>
                                                             </Label>
                                                             <Label fx:id="label_host_dataProcessing" prefWidth="18.0" text="5" />
-                                                            <Button mnemonicParsing="false" onAction="#addICeOnAction" styleClass="button-primary" text="Add ICe" />
+                                                            <Button mnemonicParsing="false" onAction="#addICeOnAction" styleClass="button-primary" text="Spawn ICe" />
                                                          </items>
                                                       </ToolBar>
                                                    </children>
@@ -485,7 +497,7 @@
                                           <FontAwesomeIconView glyphName="TRASH" />
                                        </graphic>
                                        <tooltip>
-                                          <Tooltip text="Delete character from battle" />
+                                          <Tooltip text="Delete character from battle (kill it)" />
                                        </tooltip>
                                     </Button>
                                  </children>
