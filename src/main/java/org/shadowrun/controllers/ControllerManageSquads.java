@@ -9,6 +9,7 @@ import org.shadowrun.common.constants.CharacterType;
 import org.shadowrun.common.factories.DialogFactory;
 import org.shadowrun.common.nodes.cells.CharacterPresetCell;
 import org.shadowrun.common.nodes.cells.SquadPresetCell;
+import org.shadowrun.logic.AppLogic;
 import org.shadowrun.models.Campaign;
 import org.shadowrun.models.Character;
 import org.shadowrun.models.Squad;
@@ -30,6 +31,8 @@ public class ControllerManageSquads implements Controller {
     private Stage stage;
 
     private Squad squad;
+
+    private AppLogic appLogic;
 
     @FXML
     private Button button_saveSquad;
@@ -86,7 +89,8 @@ public class ControllerManageSquads implements Controller {
             ControllerAddCharacter controllerAddCharacter = dialogFactory.createCharacterDialog(
                     campaign,
                     CharacterType.CLASSIC,
-                    null);
+                    null,
+                    appLogic);
             controllerAddCharacter.getStage().showAndWait();
             controllerAddCharacter.getCharacter().ifPresent(playerCharacter -> {
                 tableView_characters.getItems().add(playerCharacter);
@@ -110,10 +114,11 @@ public class ControllerManageSquads implements Controller {
         stage.close();
     }
 
-    public void onOpen(Stage stage, Campaign campaign) {
+    public void onOpen(Stage stage, Campaign campaign, AppLogic appLogic) {
         this.stage = stage;
         this.campaign = campaign;
         this.squad = null;
+        this.appLogic = appLogic;
 
         comboBox_squads.setItems(campaign.getSquads());
         comboBox_squads.setButtonCell(new SquadPresetCell());
@@ -157,7 +162,7 @@ public class ControllerManageSquads implements Controller {
                 Character selected = tableView_characters.getSelectionModel().getSelectedItem();
                 try {
                     ControllerAddCharacter controllerAddCharacter = dialogFactory.createCharacterDialog(
-                            campaign, CharacterType.CLASSIC, selected);
+                            campaign, CharacterType.CLASSIC, selected, appLogic);
                     controllerAddCharacter.getStage().showAndWait();
 
                     controllerAddCharacter.getCharacter().ifPresent(character -> {

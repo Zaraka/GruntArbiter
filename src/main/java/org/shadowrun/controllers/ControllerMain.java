@@ -76,11 +76,12 @@ public class ControllerMain {
                 "New player",
                 "Create new player",
                 "Please enter name for new player:",
-                "John Doe");
+                appLogic.getConfig().getLatestPlayerName());
 
         Optional<String> result = dialog.showAndWait();
         result.ifPresent(name -> {
             appLogic.newCharacter(name);
+            appLogic.getConfig().setLatestPlayerName(name);
         });
     }
 
@@ -404,7 +405,7 @@ public class ControllerMain {
                 }
             });
             tabPane.getTabs().add(campaignScreenTab);
-            controllerCampaignScreen.setStageAndListeners(stage, this, campaign);
+            controllerCampaignScreen.setStageAndListeners(stage, this, campaign, appLogic);
             tabPane.getSelectionModel().select(campaignScreenTab);
         } catch (IOException ex) {
             LOG.error("Error while loading campaign screen tab ", ex);

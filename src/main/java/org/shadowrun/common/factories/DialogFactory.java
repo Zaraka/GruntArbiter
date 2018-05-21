@@ -18,6 +18,7 @@ import org.shadowrun.common.constants.CharacterType;
 import org.shadowrun.common.constants.ICE;
 import org.shadowrun.common.nodes.cells.ICeCell;
 import org.shadowrun.controllers.*;
+import org.shadowrun.logic.AppLogic;
 import org.shadowrun.models.*;
 import org.shadowrun.models.Character;
 
@@ -65,7 +66,7 @@ public class DialogFactory {
         return controllerAddBarrier;
     }
 
-    public ControllerManageSquads createSquadDialog(Campaign campaign) throws IOException {
+    public ControllerManageSquads createSquadDialog(Campaign campaign, AppLogic appLogic) throws IOException {
         Parent root;
         FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("views/manageSquads.fxml"));
         root = loader.load();
@@ -75,12 +76,12 @@ public class DialogFactory {
         dialog.setScene(new Scene(root));
 
         ControllerManageSquads controllerManageSquads = loader.getController();
-        controllerManageSquads.onOpen(dialog, campaign);
+        controllerManageSquads.onOpen(dialog, campaign, appLogic);
         return controllerManageSquads;
     }
 
     public ControllerAddCharacter createCharacterDialog(
-            Campaign campaign, CharacterType characterType, Character edit) throws IOException {
+            Campaign campaign, CharacterType characterType, Character edit, AppLogic appLogic) throws IOException {
 
         Parent root;
         FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("views/addCharacter.fxml"));
@@ -91,7 +92,7 @@ public class DialogFactory {
         dialog.setScene(new Scene(root));
 
         ControllerAddCharacter controllerAddCharacter = loader.getController();
-        controllerAddCharacter.onOpen(dialog, campaign, characterType, edit);
+        controllerAddCharacter.onOpen(dialog, campaign, characterType, edit, appLogic);
 
         return controllerAddCharacter;
     }

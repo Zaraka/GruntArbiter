@@ -1,6 +1,7 @@
 package org.shadowrun.models;
 
 import com.sun.javafx.geom.Vec4d;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,6 +29,10 @@ public class AppConfig {
     private static final String RECENT_FILE = "recentFile";
     private static final String RECENT_FILE_SIZE = "recentFileSize";
     private static final String BATTLE_CLOSE_PROMPT = "battleClosePrompt";
+    private static final String LATEST_PLAYER_NAME = "latestPlayerName";
+    private static final String LATEST_CHARACTER_NAME = "latestCharacterName";
+    private static final String LATEST_CHARACTER_INITIATIVE = "latestCharacterInitiative";
+
 
     private Preferences preferences;
 
@@ -128,5 +133,29 @@ public class AppConfig {
 
     public void setBattleClosePrompt(boolean value) {
         preferences.putBoolean(BATTLE_CLOSE_PROMPT, value);
+    }
+
+    public String getLatestPlayerName() {
+        return preferences.get(LATEST_PLAYER_NAME, "John Doe");
+    }
+
+    public void setLatestPlayerName(String latestPlayerName) {
+        preferences.put(LATEST_PLAYER_NAME, latestPlayerName);
+    }
+
+    public String getLatestCharacterName() {
+        return preferences.get(LATEST_CHARACTER_NAME, StringUtils.EMPTY);
+    }
+
+    public void setLatestCharacterName(String latestCharacterName) {
+        preferences.put(LATEST_CHARACTER_NAME, latestCharacterName);
+    }
+
+    public int getLatestCharacterInitiative() {
+        return preferences.getInt(LATEST_CHARACTER_INITIATIVE, 0);
+    }
+
+    public void setLatestCharacterInitiative(int latestCharacterInitiative) {
+        preferences.putInt(LATEST_CHARACTER_INITIATIVE, latestCharacterInitiative);
     }
 }

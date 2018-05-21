@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 import org.shadowrun.common.factories.DialogFactory;
 import org.shadowrun.common.nodes.cells.PlayerImageCell;
 import org.shadowrun.common.utils.ImageUtils;
+import org.shadowrun.logic.AppLogic;
 import org.shadowrun.models.Campaign;
 import org.shadowrun.models.PlayerCharacter;
 import org.slf4j.Logger;
@@ -29,6 +30,7 @@ public class ControllerCampaignScreen {
     private Stage stage;
     private Campaign campaign;
     private ControllerMain controllerMain;
+    private AppLogic appLogic;
 
     @FXML
     private TableView<PlayerCharacter> tableView_playerCharacters;
@@ -58,10 +60,11 @@ public class ControllerCampaignScreen {
         controllerMain.newBattleOnAction();
     }
 
-    public void setStageAndListeners(Stage stage, ControllerMain controllerMain, Campaign campaign) {
+    public void setStageAndListeners(Stage stage, ControllerMain controllerMain, Campaign campaign, AppLogic appLogic) {
         this.stage = stage;
         this.campaign = campaign;
         this.controllerMain = controllerMain;
+        this.appLogic = appLogic;
 
         //Items
         tableView_playerCharacters.setItems(campaign.getPlayers());

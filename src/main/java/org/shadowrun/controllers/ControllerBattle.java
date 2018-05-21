@@ -605,10 +605,12 @@ public class ControllerBattle {
     private void addCharacterOnAction() {
         try {
             ControllerAddCharacter controllerAddCharacter =
-                    dialogFactory.createCharacterDialog(appLogic.getActiveCampaign(), CharacterType.CLASSIC, null);
+                    dialogFactory.createCharacterDialog(appLogic.getActiveCampaign(), CharacterType.CLASSIC, null, appLogic);
             controllerAddCharacter.getStage().showAndWait();
-            controllerAddCharacter.getCharacter().ifPresent(playerCharacter -> {
-                battle.getCharacters().add(playerCharacter);
+            controllerAddCharacter.getCharacter().ifPresent(character -> {
+                battle.getCharacters().add(character);
+                appLogic.getConfig().setLatestCharacterName(character.getName());
+                appLogic.getConfig().setLatestCharacterInitiative(character.getInitiative());
             });
 
         } catch (IOException ex) {
@@ -694,7 +696,8 @@ public class ControllerBattle {
     @FXML
     private void addSquadOnAction() {
         try {
-            ControllerManageSquads controllerManageSquads = dialogFactory.createSquadDialog(appLogic.getActiveCampaign());
+            ControllerManageSquads controllerManageSquads = dialogFactory.createSquadDialog(
+                    appLogic.getActiveCampaign(), appLogic);
             controllerManageSquads.getStage().showAndWait();
             controllerManageSquads.getSquad().ifPresent(squad -> squad.getCharacters().forEach(character -> {
                 setCharacterInitiative(character);
@@ -716,7 +719,8 @@ public class ControllerBattle {
                             dialogFactory.createCharacterDialog(
                                     appLogic.getActiveCampaign(),
                                     CharacterType.COMPANION,
-                                    null);
+                                    null,
+                                    appLogic);
                     controllerAddCharacter.getStage().showAndWait();
                     controllerAddCharacter.getCharacter().ifPresent(companionCharacter -> {
                         selectedCharacter.getCompanions().add(new Companion(companionCharacter));
@@ -1338,7 +1342,8 @@ public class ControllerBattle {
                             ControllerAddCharacter controllerAddCharacter =
                                     dialogFactory.createCharacterDialog(appLogic.getActiveCampaign(),
                                             CharacterType.COMPANION,
-                                            ((Character) companion.getCompanion()));
+                                            ((Character) companion.getCompanion()),
+                                            appLogic);
                             controllerAddCharacter.getStage().showAndWait();
                             controllerAddCharacter.getCharacter().ifPresent(character -> {
                                 ((Character) companion.getCompanion()).setFrom(character);

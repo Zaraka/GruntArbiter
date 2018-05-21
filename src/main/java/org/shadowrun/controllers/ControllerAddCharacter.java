@@ -14,6 +14,7 @@ import org.shadowrun.common.factories.DialogFactory;
 import org.shadowrun.common.nodes.cells.CharacterPresetCell;
 import org.shadowrun.common.nodes.cells.CompanionTypeCell;
 import org.shadowrun.common.nodes.rows.CompanionTableRow;
+import org.shadowrun.logic.AppLogic;
 import org.shadowrun.models.*;
 import org.shadowrun.models.Character;
 import org.slf4j.Logger;
@@ -33,6 +34,7 @@ public class ControllerAddCharacter implements Controller {
     private Stage stage;
     private Campaign campaign;
     private CharacterType characterType;
+    private AppLogic appLogic;
 
     @FXML
     private ComboBox<Character> comboBox_preset;
@@ -114,7 +116,8 @@ public class ControllerAddCharacter implements Controller {
                             dialogFactory.createCharacterDialog(
                                     campaign,
                                     CharacterType.COMPANION,
-                                    null);
+                                    null,
+                                    appLogic);
                     controllerAddCharacter.getStage().showAndWait();
                     controllerAddCharacter.getCharacter().ifPresent(companionCharacter -> {
                         tableView_companions.getItems().add(new Companion(companionCharacter));
@@ -152,11 +155,12 @@ public class ControllerAddCharacter implements Controller {
         }
     }
 
-    public void onOpen(Stage stage, Campaign campaign, CharacterType characterType, Character edit) {
+    public void onOpen(Stage stage, Campaign campaign, CharacterType characterType, Character edit, AppLogic appLogic) {
         this.stage = stage;
         this.character = null;
         this.campaign = campaign;
         this.characterType = characterType;
+        this.appLogic = appLogic;
 
         textField_initiative.textProperty()
                 .addListener(new NumericLimitListener(textField_initiative, 0, null));
@@ -226,7 +230,8 @@ public class ControllerAddCharacter implements Controller {
                                 ControllerAddCharacter controllerAddCharacter =
                                         dialogFactory.createCharacterDialog(campaign,
                                                 CharacterType.COMPANION,
-                                                ((Character) companion.getCompanion()));
+                                                ((Character) companion.getCompanion()),
+                                                appLogic);
                                 controllerAddCharacter.getStage().showAndWait();
                                 controllerAddCharacter.getCharacter().ifPresent(character -> {
                                     ((Character) companion.getCompanion()).setFrom(character);
@@ -273,6 +278,9 @@ public class ControllerAddCharacter implements Controller {
             if (!characterType.equals(CharacterType.COMPANION)) {
                 tableView_companions.setItems(FXCollections.observableArrayList(edit.getCompanions()));
             }
+        } else if (!characterType.equals(CharacterType.COMPANION)) {
+            textField_name.setText(appLogic.getConfig().getLatestCharacterName());
+            textField_initiative.setText(String.valueOf(appLogic.getConfig().getLatestCharacterInitiative()));
         }
 
         button_deletePreset.disableProperty().bind(comboBox_preset.getSelectionModel().selectedItemProperty().isNull());
