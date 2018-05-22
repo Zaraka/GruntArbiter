@@ -52,7 +52,7 @@ public class DialogFactory {
         return controllerAddDevice;
     }
 
-    public ControllerAddBarrier createBarrierDialog() throws IOException {
+    public ControllerAddBarrier createBarrierDialog(AppLogic appLogic) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("views/addBarrier.fxml"));
         Parent root = loader.load();
         Stage dialog = new Stage();
@@ -61,7 +61,7 @@ public class DialogFactory {
         dialog.setScene(new Scene(root));
 
         ControllerAddBarrier controllerAddBarrier = loader.getController();
-        controllerAddBarrier.onOpen(dialog);
+        controllerAddBarrier.onOpen(dialog, appLogic);
 
         return controllerAddBarrier;
     }

@@ -6,17 +6,21 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import org.shadowrun.common.constants.BarrierType;
 
 public class Barrier implements Observable {
 
     private StringProperty name;
 
+    private BarrierType type;
+
     private Monitor structureMonitor;
 
     private IntegerProperty armor;
 
-    public Barrier(String name, Integer structure, Integer armor) {
+    public Barrier(String name, BarrierType barrierType, Integer structure, Integer armor) {
         this.name = new SimpleStringProperty(name);
+        this.type = barrierType;
         this.structureMonitor = new Monitor(structure);
         this.armor = new SimpleIntegerProperty(armor);
     }
@@ -43,6 +47,14 @@ public class Barrier implements Observable {
 
     public void setName(String name) {
         this.name.set(name);
+    }
+
+    public BarrierType getType() {
+        return type;
+    }
+
+    public void setType(BarrierType type) {
+        this.type = type;
     }
 
     @Override

@@ -10,6 +10,7 @@
     Added vehicles now have custom presets
     Added background noise with presets
     Added last used attributes will be used in dialogs (mostly names of objects)
+    Added barriers now have extra name and mandatory preset
 
 0.2.2
     Fixed opening savefiles

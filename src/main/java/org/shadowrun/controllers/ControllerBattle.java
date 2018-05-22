@@ -108,6 +108,8 @@ public class ControllerBattle {
     @FXML
     private TableColumn<Barrier, Barrier> tableColumn_barrier_object;
     @FXML
+    private TableColumn<Barrier, String> tableColumn_barrier_type;
+    @FXML
     private TableColumn<Barrier, Integer> tableColumn_barrier_structure;
     @FXML
     private TableColumn<Barrier, Integer> tableColumn_barrier_armor;
@@ -563,10 +565,13 @@ public class ControllerBattle {
     @FXML
     private void addBarrierOnAction() {
         try {
-           ControllerAddBarrier controllerAddBarrier = dialogFactory.createBarrierDialog();
+           ControllerAddBarrier controllerAddBarrier = dialogFactory.createBarrierDialog(appLogic);
             controllerAddBarrier.getStage().showAndWait();
             controllerAddBarrier.getBarrier()
-                    .ifPresent(barrier -> battle.getBarriers().add(barrier));
+                    .ifPresent(barrier -> {
+                        battle.getBarriers().add(barrier);
+                        appLogic.getConfig().setLatestBarrierName(barrier.getName());
+                    });
 
         } catch (IOException ex) {
             LOG.error("Could not load addBarier dialog: ", ex);
@@ -1366,6 +1371,7 @@ public class ControllerBattle {
     private void setupBarrierTable() {
         tableColumn_barrier_object.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
         tableColumn_barrier_object.setCellFactory(param -> new ObjectCell());
+        tableColumn_barrier_type.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue().getType().getName()));
         tableColumn_barrier_armor.setCellValueFactory(param -> param.getValue().armorProperty().asObject());
         tableColumn_barrier_structure.setCellValueFactory(param -> param.getValue()
                 .getStructureMonitor().currentProperty().asObject());

@@ -32,6 +32,7 @@ public class AppConfig {
     private static final String LATEST_PLAYER_NAME = "latestPlayerName";
     private static final String LATEST_CHARACTER_NAME = "latestCharacterName";
     private static final String LATEST_CHARACTER_INITIATIVE = "latestCharacterInitiative";
+    private static final String LATEST_BARRIER_NAME = "latestBarrierName";
 
 
     private Preferences preferences;
@@ -157,5 +158,13 @@ public class AppConfig {
 
     public void setLatestCharacterInitiative(int latestCharacterInitiative) {
         preferences.putInt(LATEST_CHARACTER_INITIATIVE, latestCharacterInitiative);
+    }
+
+    public String getLatestBarrierName() {
+        return preferences.get(LATEST_BARRIER_NAME, "");
+    }
+
+    public void setLatestBarrierName(String latestBarrierName) {
+        preferences.put(LATEST_BARRIER_NAME, latestBarrierName);
     }
 }

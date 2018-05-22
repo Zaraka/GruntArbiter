@@ -1,6 +1,6 @@
 package org.shadowrun.common.constants;
 
-public enum BarrierPreset {
+public enum BarrierType {
 
     FRAGILE("Fragile", "Example: standard glass", 1, 2),
     CHEAP_MATERIAL("Cheap Material", "Example: Drywall, plaster, door, regural tire", 2, 4),
@@ -20,7 +20,7 @@ public enum BarrierPreset {
 
     private int armor;
 
-    BarrierPreset(String name, String description, int structure, int armor) {
+    BarrierType(String name, String description, int structure, int armor) {
         this.name = name;
         this.description = description;
         this.structure = structure;
