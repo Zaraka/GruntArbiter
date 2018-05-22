@@ -1,13 +1,15 @@
-Future
+1.0.0
     Fix design problems with vehicles and devices in right panel
     Fix properly closing campaigns
     Fix Non characters can't now connect to matrix
     Fix loaded portraits are now properly scaled
     Fix weather combo box insufficient size
+    Fix Fixed New Battle dialog design issues
+    Fix right panel sometimes didn't show up
     Added several new tooltips
     Added vehicles now have custom presets
     Added background noise with presets
-    Added last used attributes will be used in dialogs (mostly names)
+    Added last used attributes will be used in dialogs (mostly names of objects)
 
 0.2.2
     Fixed opening savefiles

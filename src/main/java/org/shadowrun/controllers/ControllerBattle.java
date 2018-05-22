@@ -960,21 +960,6 @@ public class ControllerBattle {
         battle.getBarriers().addListener(bottomTablesListener);
         battle.getDevices().addListener(bottomTablesListener);
 
-        tableView_masterTable.getSelectionModel().selectedItemProperty().isNotNull().or(
-                tableView_vehicles.getSelectionModel().selectedItemProperty().isNotNull().or(
-                        tableView_barrier.getSelectionModel().selectedItemProperty().isNotNull().or(
-                                tableView_devices.getSelectionModel().selectedItemProperty().isNotNull()
-                        )
-                )
-        ).addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) {
-                if (newValue) {
-                    splitPane_horizontal.getItems().add(anchorPane_selected);
-                } else {
-                    splitPane_horizontal.getItems().remove(anchorPane_selected);
-                }
-            }
-        });
 
         if (!loaded) {
             setNewInitiative();
@@ -992,7 +977,6 @@ public class ControllerBattle {
             splitPane_centerContent.getItems().remove(anchorPane_vehicles);
         }
 
-        splitPane_horizontal.getItems().remove(anchorPane_selected);
     }
 
     private void setupVehicleTable() {
