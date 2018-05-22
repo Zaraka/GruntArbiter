@@ -20,6 +20,10 @@
     src: url("fonts/CourierPrimeSans.ttf");
 }
 
+@font-face {
+    src: url('fonts/Digital-7 Mono.ttf');
+}
+
 .root {
     -fx-base: -fx-theme-gray-darker;
     -fx-background: -fx-theme-gray-darker;
@@ -52,11 +56,20 @@
     -fx-inner-border-horizontal: -fx-base;
 }
 
+#clock {
+    -fx-font-family: 'Digital-7 Mono' !important;
+    -fx-font-weight: normal;
+    -fx-font-size: 25px;
+}
+
 .text {
     -fx-font-family: 'Courier Prime Sans';
     -fx-font-weight: normal;
     -fx-font-size: 13px;
 }
+
+
+
 
 /* Fix derived prompt color for text fields */
 .text-input {

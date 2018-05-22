@@ -92,7 +92,7 @@
                      </font>
                   </Label>
                   <Separator layoutX="192.0" layoutY="10.0" prefWidth="5.0" />
-                  <Label fx:id="label_time" text="00:00">
+                  <Label id="clock" fx:id="label_time" text="00:00">
                      <font>
                         <Font size="16.0" />
                      </font>

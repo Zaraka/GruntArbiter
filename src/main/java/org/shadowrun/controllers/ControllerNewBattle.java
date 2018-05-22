@@ -9,6 +9,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import org.shadowrun.common.NumericLimitListener;
 import org.shadowrun.common.constants.NoisePreset;
@@ -16,12 +17,19 @@ import org.shadowrun.common.nodes.cells.NoisePresetCell;
 import org.shadowrun.common.nodes.cells.WeatherCell;
 import org.shadowrun.common.constants.Weather;
 import org.shadowrun.models.PlayerCharacter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.io.File;
+import java.net.URL;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class ControllerNewBattle implements Controller {
+
+    private static final Logger LOG = LoggerFactory.getLogger(ControllerNewBattle.class);
+
     public class PickPlayer {
         private ObjectProperty<PlayerCharacter> playerCharacter;
         private BooleanProperty checked;
