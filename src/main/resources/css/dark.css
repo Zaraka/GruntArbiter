@@ -311,3 +311,7 @@
     -fx-background-color: -fx-theme-brand-info;
     -fx-font-weight: bold;
 }
+
+.current-pass {
+    -fx-background-color: rgba(139,12,36,0.4);
+}

@@ -266,6 +266,7 @@ public class ControllerBattle {
     private TitledPane titledPane_selected_companions;
 
     private List<TableView> contentTables;
+    private List<TableColumn<Character, Integer>> turnTableColumns;
 
     //------------------FXML methods-------------------
 
@@ -295,13 +296,13 @@ public class ControllerBattle {
     @FXML
     public void nextTurnOnAction() {
         battleLogic.nextPhase();
-        tableView_masterTable.refresh();
+        refreshMasterTable();
     }
 
     @FXML
     public void prevTurnOnAction() {
         battleLogic.prevPhase();
-        tableView_masterTable.refresh();
+        refreshMasterTable();
     }
 
     @FXML
@@ -813,6 +814,16 @@ public class ControllerBattle {
                 tableView_barrier
         );
 
+        turnTableColumns = Arrays.asList(
+                tableColumn_masterTable_turn1,
+                tableColumn_masterTable_turn2,
+                tableColumn_masterTable_turn3,
+                tableColumn_masterTable_turn4,
+                tableColumn_masterTable_turn5,
+                tableColumn_masterTable_turn6,
+                tableColumn_masterTable_turn7
+        );
+
         button_nextTurn.disableProperty().bind(battleLogic.hasBattle().not());
         button_prevTurn.disableProperty().bind(battleLogic.hasBattle().not());
 
@@ -1127,7 +1138,7 @@ public class ControllerBattle {
                     }
                     appLogic.getConfig().setApplyWound(result.getApplyWound());
                     battle.updateCurrentCharacter();
-                    tableView_masterTable.refresh();
+                    refreshMasterTable();
                 });
             });
             MenuItem addCharacter = new MenuItem("Add character");
@@ -1553,5 +1564,33 @@ public class ControllerBattle {
                 if (!battle.getVehicles().contains((Vehicle) companion.getCompanion()))
                     battle.getVehicles().add((Vehicle) companion.getCompanion());
         }
+    }
+
+    private TableColumn<Character, Integer> passToColumn(int initiativePass) {
+        switch (initiativePass) {
+            default:
+            case 1:
+                return tableColumn_masterTable_turn1;
+            case 2:
+                return tableColumn_masterTable_turn2;
+            case 3:
+                return tableColumn_masterTable_turn3;
+            case 4:
+                return tableColumn_masterTable_turn4;
+            case 5:
+                return tableColumn_masterTable_turn5;
+            case 6:
+                return tableColumn_masterTable_turn6;
+            case 7:
+                return tableColumn_masterTable_turn7;
+        }
+    }
+
+    private void refreshMasterTable() {
+        tableView_masterTable.refresh();
+        for(TableColumn<Character, Integer> tableColumn : turnTableColumns) {
+            tableColumn.getStyleClass().remove("current-pass");
+        }
+        passToColumn(battle.getInitiativePass()).getStyleClass().add("current-pass");
     }
 }

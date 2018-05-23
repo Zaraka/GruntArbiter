@@ -12,6 +12,7 @@
     Added last used attributes will be used in dialogs (mostly names of objects)
     Added barriers now have extra name and mandatory preset
     Added roll dice button to ICe dialog
+    Added master table now highlight column with current initiative pass
 
 0.2.2
     Fixed opening savefiles
