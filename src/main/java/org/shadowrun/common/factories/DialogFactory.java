@@ -1,5 +1,6 @@
 package org.shadowrun.common.factories;
 
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXMLLoader;
@@ -10,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
 import javafx.util.Pair;
@@ -25,6 +27,7 @@ import org.shadowrun.models.Character;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class DialogFactory {
 
@@ -315,10 +318,23 @@ public class DialogFactory {
         TextField initiative = new TextField();
         initiative.setPromptText("6");
 
+        Button rollDiceButton = new Button("Roll dice");
+        rollDiceButton.setOnAction(event -> {
+            int initiativeRoll = host.getRating();
+            for(int i = 0; i < 4; i++) {
+                initiativeRoll += ThreadLocalRandom.current().nextInt(1, 6 + 1);
+            }
+            initiative.setText(String.valueOf(initiativeRoll));
+        });
+
+        HBox comboButton = new HBox();
+        comboButton.getChildren().add(initiative);
+        comboButton.getChildren().add(rollDiceButton);
+
         grid.add(new Label("ICE:"), 0, 0);
         grid.add(iceChoice, 1, 0);
         grid.add(new Label("Initiative " + host.getDataProcessing() + " + 4d6 ="), 0, 1);
-        grid.add(initiative, 1, 1);
+        grid.add(comboButton, 1, 1);
 
         Node addButton = dialog.getDialogPane().lookupButton(okButtonType);
         addButton.setDisable(true);
