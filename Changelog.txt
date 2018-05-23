@@ -11,6 +11,7 @@
     Added background noise with presets
     Added last used attributes will be used in dialogs (mostly names of objects)
     Added barriers now have extra name and mandatory preset
+    Added roll dice button to ICe dialog
 
 0.2.2
     Fixed opening savefiles
