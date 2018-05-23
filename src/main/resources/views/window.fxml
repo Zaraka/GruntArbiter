@@ -39,11 +39,17 @@
                             <accelerator>
                                 <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                             </accelerator>
+                     <graphic>
+                        <FontAwesomeIconView glyphName="FLOPPY_ALT" />
+                     </graphic>
                         </MenuItem>
                         <MenuItem fx:id="menuItem_saveAsCampaign" mnemonicParsing="false" onAction="#saveAsCampaignOnAction" text="Save As campaign">
                             <accelerator>
                                 <KeyCodeCombination alt="DOWN" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                             </accelerator>
+                     <graphic>
+                        <FontAwesomeIconView glyphName="FLOPPY_ALT" />
+                     </graphic>
                         </MenuItem>
                         <MenuItem fx:id="menuItem_closeCampaign" mnemonicParsing="false" onAction="#closeCampaignOnAction" text="Close campaign">
                             <accelerator>
@@ -84,7 +90,10 @@
             </Menu>
                 <Menu text="_Help">
                     <items>
-                  <MenuItem mnemonicParsing="false" onAction="#reportBugOnAction" text="Report a bug" />
+                  <MenuItem mnemonicParsing="false" onAction="#reportBugOnAction" text="Report a bug">
+                     <graphic>
+                        <FontAwesomeIconView glyphName="BUG" />
+                     </graphic></MenuItem>
                         <MenuItem mnemonicParsing="false" onAction="#aboutOnAction" text="About" />
                     </items>
                <accelerator>
