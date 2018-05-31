@@ -284,14 +284,14 @@ public class VehicleChaseCanvas extends Canvas {
         for(Vehicle vehicle : battle.getVehicles()) {
             Double vehicleAmplitude = amplitude.get(vehicle);
             if(vehicleAmplitude == null) {
-                vehicleAmplitude = ThreadLocalRandom.current().nextDouble(1, 4) * 4;
+                vehicleAmplitude = ThreadLocalRandom.current().nextDouble(1, 4) * 3;
                 amplitude.put(vehicle, vehicleAmplitude);
             }
 
 
             Double vehicleSpeed = speed.get(vehicle);
             if(vehicleSpeed == null) {
-                vehicleSpeed = ThreadLocalRandom.current().nextDouble(2, 4) * 3;
+                vehicleSpeed = ThreadLocalRandom.current().nextDouble(2, 4) * 2;
                 speed.put(vehicle, vehicleSpeed);
             }
 

@@ -165,6 +165,8 @@ public class ControllerBattle {
     @FXML
     private VBox vbox_selected_companions;
     @FXML
+    private VBox vbox_selected_vehicle;
+    @FXML
     private VBox vbox_vehicleChase;
 
 
@@ -285,6 +287,8 @@ public class ControllerBattle {
 
     @FXML
     private TitledPane titledPane_selected_companions;
+    @FXML
+    private TitledPane titledPane_selcted_passengers;
 
     private List<TableView> contentTables;
     private List<TableColumn<Character, Integer>> turnTableColumns;
@@ -808,6 +812,10 @@ public class ControllerBattle {
 
                 if(vehicleCombat.getValues().isPresent()) {
                     battle.vehicleChaseProperty().setValue(vehicleCombat.getValues().get());
+
+                    for(Map.Entry<Character, String> playerVehicle : vehicleCombat.getCharacterVehicleMap().entrySet()) {
+                        playerVehicle.getKey().vehicleProperty().set(playerVehicle.getValue());
+                    }
                     initializeCanvas();
                 }
             } catch (IOException ex) {
@@ -905,6 +913,9 @@ public class ControllerBattle {
         imageView_selected.managedProperty().bind(imageView_selected.visibleProperty());
         button_selected_matrix.managedProperty().bind(button_selected_matrix.visibleProperty());
         vbox_vehicleChase.managedProperty().bindBidirectional(vbox_vehicleChase.visibleProperty());
+        vbox_selected_vehicle.managedProperty().bindBidirectional(vbox_selected_vehicle.visibleProperty());
+        tableView_selected_passengers.managedProperty().bindBidirectional(tableView_selected_passengers.visibleProperty());
+        titledPane_selcted_passengers.managedProperty().bindBidirectional(titledPane_selcted_passengers.visibleProperty());
 
         cleanSelectedPane();
 
@@ -1086,8 +1097,8 @@ public class ControllerBattle {
         tableColumn_vehicles_armor.setCellValueFactory(param -> param.getValue().armorProperty().asObject());
         tableColumn_vehicles_pilot.setCellValueFactory(param -> param.getValue().pilotProperty().asObject());
         tableColumn_vehicles_sensor.setCellValueFactory(param -> param.getValue().sensorProperty().asObject());
-
         tableColumn_selected_passengers_name.setCellValueFactory(param -> param.getValue().nameProperty());
+        tableView_selected_passengers.setPlaceholder(new Label("No passengers in this vehicle"));
 
         tableView_vehicles.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (oldValue != null) {
@@ -1127,6 +1138,8 @@ public class ControllerBattle {
                                     CssClasses.INFO));
                 }
 
+                titledPane_selcted_passengers.setVisible(newValue.getType() == VehicleType.VEHICLE);
+
                 if(battle.getVehicleChase() != null) {
                     if(battle.getVehicleChase().getChaseRoles().get(newValue.getUuid()) == VehicleChaseRole.PURSUER) {
                         flowPane_selected_badges.getChildren()
@@ -1141,6 +1154,8 @@ public class ControllerBattle {
                                         "This vehicle is escapee in ongoing vehicle chase",
                                         CssClasses.SUCCESS));
                     }
+
+                    vbox_selected_vehicle.setVisible(true);
 
                     tableView_selected_passengers.setItems(FXCollections.observableArrayList(
                             battle.getCharacters().stream()

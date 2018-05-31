@@ -1,8 +1,8 @@
 package org.shadowrun.logic;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import javafx.beans.InvalidationListener;
-import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
@@ -21,13 +21,13 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.HashMap;
 
 public class AppLogic {
 
     private static final Logger LOG = LoggerFactory.getLogger(AppLogic.class);
 
-    private static final Gson gson = FxGson.createWithExtras();
+    private static final Gson gson = FxGson.addFxSupport(new GsonBuilder().setPrettyPrinting()).create();
+            //FxGson.createWithExtras();
 
     private ObjectProperty<Campaign> activeCampaign;
 

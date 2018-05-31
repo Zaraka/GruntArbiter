@@ -171,4 +171,8 @@ public class VehicleCombat implements Controller {
     public Optional<VehicleChase> getValues() {
         return Optional.ofNullable(vehicleChase);
     }
+
+    public Map<Character, String> getCharacterVehicleMap() {
+        return characterVehicleMap;
+    }
 }
