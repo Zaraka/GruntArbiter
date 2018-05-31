@@ -116,6 +116,7 @@ public class NewBattle implements Controller {
 
         tableView_players.setItems(this.players);
         tableView_players.prefHeightProperty().bind(tableView_players.fixedCellSizeProperty().multiply(Bindings.size(this.players).add(2.0)));
+        tableView_players.setPlaceholder(new Label("No players in this campaign"));
         tableColumn_character.setCellValueFactory(cellData -> cellData.getValue().getPlayerCharacter().nameProperty());
         tableColumn_include.setCellValueFactory(cellData -> cellData.getValue().checkedProperty());
 

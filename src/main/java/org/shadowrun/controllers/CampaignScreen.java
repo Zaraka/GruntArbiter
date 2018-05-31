@@ -68,6 +68,7 @@ public class CampaignScreen {
 
         //Items
         tableView_playerCharacters.setItems(campaign.getPlayers());
+        tableView_playerCharacters.setPlaceholder(new Label("No players in campaign"));
         tableColumn_playerCharacters_portrait.setCellValueFactory(param -> param.getValue().getPortrait().imageProperty());
         tableColumn_playerCharacters_portrait.setCellFactory(param -> new PlayerImageCell());
         tableColumn_playerCharacters_character.setCellValueFactory(cellData -> cellData.getValue().nameProperty());

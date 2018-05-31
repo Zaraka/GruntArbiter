@@ -1098,6 +1098,7 @@ public class ControllerBattle {
         tableColumn_vehicles_pilot.setCellValueFactory(param -> param.getValue().pilotProperty().asObject());
         tableColumn_vehicles_sensor.setCellValueFactory(param -> param.getValue().sensorProperty().asObject());
         tableColumn_selected_passengers_name.setCellValueFactory(param -> param.getValue().nameProperty());
+        tableView_vehicles.setPlaceholder(new Label("No vehicles in combat"));
         tableView_selected_passengers.setPlaceholder(new Label("No passengers in this vehicle"));
 
         tableView_vehicles.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
@@ -1240,6 +1241,7 @@ public class ControllerBattle {
         tableColumn_masterTable_turn6.setCellValueFactory(param -> param.getValue().initiativeProperty().asObject());
         tableColumn_masterTable_turn7.setCellValueFactory(param -> param.getValue().initiativeProperty().asObject());
 
+        tableView_masterTable.setPlaceholder(new Label("No characters in combat"));
         tableView_masterTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         tableView_masterTable.setRowFactory(param -> {
             MenuItem moveToRealWorld = new MenuItem("Move to meatspace");
@@ -1451,6 +1453,7 @@ public class ControllerBattle {
         tableColumn_selected_companions_action.setCellValueFactory(param ->
                 new ReadOnlyObjectWrapper<>(param.getValue()));
 
+        tableView_selected_companions.setPlaceholder(new Label("No companions for this character"));
         tableView_selected_companions.setRowFactory(param -> {
             TableRow<Companion> tableRow = new CompanionTableRow();
 
@@ -1519,6 +1522,7 @@ public class ControllerBattle {
         tableColumn_barrier_armor.setCellValueFactory(param -> param.getValue().armorProperty().asObject());
         tableColumn_barrier_structure.setCellValueFactory(param -> param.getValue()
                 .getStructureMonitor().currentProperty().asObject());
+        tableView_barrier.setPlaceholder(new Label("No barriers in combat"));
 
         MenuItem renameBarrier = new MenuItem("Rename barrier");
         renameBarrier.setOnAction(event -> {
@@ -1593,6 +1597,7 @@ public class ControllerBattle {
                 param -> param.getValue().dataProcessingProperty().asObject());
         tableColumn_device_condition.setCellValueFactory(
                 param -> param.getValue().getConditionMonitor().currentProperty().asObject());
+        tableView_devices.setPlaceholder(new Label("No devices in combat"));
 
         MenuItem renameDevice = new MenuItem("Rename device");
         renameDevice.setOnAction(event -> {
