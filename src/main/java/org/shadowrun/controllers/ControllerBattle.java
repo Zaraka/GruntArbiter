@@ -862,6 +862,7 @@ public class ControllerBattle {
         fontAwesomeIcon_selected.setVisible(false);
         button_selected_matrix.setVisible(false);
         imageView_selected.setVisible(false);
+        vbox_selected_vehicle.setVisible(false);
 
         flowPane_selected_badges.getChildren().clear();
     }
