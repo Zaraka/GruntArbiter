@@ -126,6 +126,7 @@ public class NewBattle implements Controller {
         comboBox_weather.setCellFactory(param -> new WeatherCell());
         comboBox_weather.setButtonCell(new WeatherCell());
         comboBox_weather.setItems(FXCollections.observableArrayList(Weather.values()));
+        comboBox_weather.getSelectionModel().select(Weather.NIGHT_CLEAR);
 
         textField_name.setText(initialName);
         textField_name.selectAll();
@@ -133,6 +134,7 @@ public class NewBattle implements Controller {
         comboBox_backgroundNoise.setCellFactory(param -> new NoisePresetCell());
         comboBox_backgroundNoise.setButtonCell(new NoisePresetCell());
         comboBox_backgroundNoise.setItems(FXCollections.observableArrayList(NoisePreset.values()));
+        comboBox_backgroundNoise.getSelectionModel().select(NoisePreset.NONE);
 
         button_ok.disableProperty().bind(textField_name.textProperty().isEmpty());
 

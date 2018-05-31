@@ -6,7 +6,7 @@ import org.shadowrun.common.constants.NoisePreset;
 
 public class NoisePresetCell extends ListCell<NoisePreset> {
 
-    public static final String COMBO_BOX_PRIMARY = "comboBox-primary";
+    private static final String COMBO_BOX_PRIMARY = "comboBox-primary";
 
     @Override
     protected void updateItem(NoisePreset item, boolean empty) {
