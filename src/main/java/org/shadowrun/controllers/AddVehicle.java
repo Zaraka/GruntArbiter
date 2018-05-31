@@ -16,6 +16,7 @@ import org.shadowrun.models.VehiclePreset;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.script.Bindings;
 import java.io.InputStreamReader;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -68,6 +69,8 @@ public class AddVehicle implements Controller {
     private Button button_savePreset;
     @FXML
     private Button button_deletePreset;
+    @FXML
+    private Button okButton;
 
     @FXML
     private ToggleGroup type;
@@ -197,6 +200,18 @@ public class AddVehicle implements Controller {
             }
         });
 
+
+        okButton.disableProperty().bind(textField_acceleration_offRoad.textProperty().isEmpty().or(textField_acceleration_onRoad.textProperty().isEmpty()).or(
+                textField_handling_offRoad.textProperty().isEmpty().or(textField_acceleration_onRoad.textProperty().isEmpty()).or(
+                        textField_speed_offRoad.textProperty().isEmpty().or(textField_speed_onRoad.textProperty().isEmpty()).or(
+                                textField_name.textProperty().isEmpty().or(textField_sensor.textProperty().isEmpty()).or(
+                                        textField_pilot.textProperty().isEmpty().or(textField_armor.textProperty().isEmpty()).or(
+                                            textField_body.textProperty().isEmpty()
+                                        )
+                                )
+                        )
+                )
+        ));
     }
 
     private void setupPresets() {
