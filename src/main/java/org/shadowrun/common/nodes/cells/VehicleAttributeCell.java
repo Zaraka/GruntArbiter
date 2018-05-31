@@ -1,6 +1,5 @@
 package org.shadowrun.common.nodes.cells;
 
-import javafx.collections.ObservableList;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.Tooltip;
 import org.shadowrun.models.Vehicle;

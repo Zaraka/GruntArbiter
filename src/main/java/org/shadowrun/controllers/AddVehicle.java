@@ -191,6 +191,12 @@ public class AddVehicle implements Controller {
             }
         });
 
+        treeView_presets.setOnMouseClicked(event -> {
+            if(event.getClickCount() == 2) {
+                okOnAction();
+            }
+        });
+
     }
 
     private void setupPresets() {
