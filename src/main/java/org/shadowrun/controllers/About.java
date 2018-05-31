@@ -6,7 +6,7 @@ import javafx.stage.Stage;
 import org.shadowrun.models.SemanticVersion;
 
 
-public class ControllerAbout implements Controller {
+public class About implements Controller {
 
     private Stage stage;
 

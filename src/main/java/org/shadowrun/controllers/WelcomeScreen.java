@@ -2,18 +2,16 @@ package org.shadowrun.controllers;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.control.ContextMenu;
 import javafx.scene.control.ListView;
-import javafx.scene.control.MenuItem;
 import javafx.stage.Stage;
 import org.shadowrun.common.nodes.cells.CampaignCell;
 import org.shadowrun.logic.AppLogic;
 
 import java.nio.file.Path;
 
-public class ControllerWelcomeScreen {
+public class WelcomeScreen {
 
-    private ControllerMain controllerMain;
+    private Main main;
     private AppLogic appLogic;
     private Stage stage;
 
@@ -22,27 +20,27 @@ public class ControllerWelcomeScreen {
 
     @FXML
     private void createNewCampaignOnAction() {
-        controllerMain.newCampaignOnAction();
+        main.newCampaignOnAction();
     }
 
     @FXML
     private void openCampaignOnAction() {
-        controllerMain.openCampaignOnAction();
+        main.openCampaignOnAction();
     }
 
-    public void setStageAndListeners(Stage stage, ControllerMain controllerMain, AppLogic appLogic) {
+    public void setStageAndListeners(Stage stage, Main main, AppLogic appLogic) {
         this.stage = stage;
-        this.controllerMain = controllerMain;
+        this.main = main;
         this.appLogic = appLogic;
 
         listView_latestCampaigns.setItems(FXCollections.observableArrayList(appLogic.getConfig().getRecentFiles()));
-        listView_latestCampaigns.setCellFactory(param -> new CampaignCell(controllerMain));
+        listView_latestCampaigns.setCellFactory(param -> new CampaignCell(main));
         listView_latestCampaigns.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
                 Path selectedItem = listView_latestCampaigns.getSelectionModel().getSelectedItem();
                 if (selectedItem != null) {
-                    controllerMain.closeCampaignOnAction();
-                    controllerMain.openCampaign(selectedItem.toFile());
+                    main.closeCampaignOnAction();
+                    main.openCampaign(selectedItem.toFile());
                 }
             }
         });

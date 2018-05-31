@@ -6,7 +6,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import org.shadowrun.controllers.ControllerMain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,7 +23,7 @@ public class Main extends Application {
                 .getClassLoader().getResource("icons/icon.png").toExternalForm()));
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
-        ControllerMain controller = loader.getController();
+        org.shadowrun.controllers.Main controller = loader.getController();
         controller.setStageAndListeners(scene, primaryStage, this);
         primaryStage.show();
     }

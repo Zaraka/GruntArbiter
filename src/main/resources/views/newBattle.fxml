@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
@@ -17,7 +18,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import org.shadowrun.common.factories.CheckBoxCellFactory?>
 
-<AnchorPane stylesheets="@../css/dark.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.shadowrun.controllers.ControllerNewBattle">
+<AnchorPane stylesheets="@../css/dark.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.shadowrun.controllers.NewBattle">
    <children>
       <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -41,6 +42,9 @@
                   </TableView>
                   <CheckBox fx:id="checkBox_includeAll" mnemonicParsing="false" onAction="#includeAllOnAction" selected="true" text="Include all players" />
                </children>
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin>
             </VBox>
             <GridPane VBox.vgrow="ALWAYS">
               <columnConstraints>
@@ -71,6 +75,9 @@
                   <Label text="Background noise" GridPane.rowIndex="3" />
                   <ComboBox fx:id="comboBox_backgroundNoise" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                </children>
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin>
             </GridPane>
             <HBox VBox.vgrow="ALWAYS">
                <children>

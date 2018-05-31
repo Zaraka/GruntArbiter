@@ -16,7 +16,7 @@ import org.shadowrun.models.Barrier;
 import java.util.Arrays;
 import java.util.Optional;
 
-public class ControllerAddBarrier implements Controller {
+public class AddBarrier implements Controller {
 
     private Stage stage;
     private Barrier barrier;

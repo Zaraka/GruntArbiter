@@ -1,6 +1,5 @@
 package org.shadowrun.common.factories;
 
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXMLLoader;
@@ -41,7 +40,21 @@ public class DialogFactory {
                 .getClassLoader().getResource("icons/icon.png").toExternalForm());
     }
 
-    public ControllerAddDevice createDeviceDialog(Campaign campaign, Device edit) throws IOException {
+    public VehicleCombat createVehicleChaseDialog(Battle battle) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("views/addVehicleCombat.fxml"));
+        Parent root = loader.load();
+        Stage dialog = new Stage();
+        dialog.getIcons().add(icon);
+        dialog.setTitle("Engage vehicle combat");
+        dialog.setScene(new Scene(root));
+
+        VehicleCombat vehicleCombat = loader.getController();
+        vehicleCombat.onOpen(dialog, battle);
+
+        return vehicleCombat;
+    }
+
+    public AddDevice createDeviceDialog(Campaign campaign, Device edit) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("views/addDevice.fxml"));
         Parent root = loader.load();
         Stage dialog = new Stage();
@@ -49,13 +62,13 @@ public class DialogFactory {
         dialog.setTitle("Create new device");
         dialog.setScene(new Scene(root));
 
-        ControllerAddDevice controllerAddDevice = loader.getController();
-        controllerAddDevice.onOpen(dialog, campaign, edit);
+        AddDevice addDevice = loader.getController();
+        addDevice.onOpen(dialog, campaign, edit);
 
-        return controllerAddDevice;
+        return addDevice;
     }
 
-    public ControllerAddBarrier createBarrierDialog(AppLogic appLogic) throws IOException {
+    public AddBarrier createBarrierDialog(AppLogic appLogic) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("views/addBarrier.fxml"));
         Parent root = loader.load();
         Stage dialog = new Stage();
@@ -63,13 +76,13 @@ public class DialogFactory {
         dialog.setTitle("Create new barrier");
         dialog.setScene(new Scene(root));
 
-        ControllerAddBarrier controllerAddBarrier = loader.getController();
-        controllerAddBarrier.onOpen(dialog, appLogic);
+        AddBarrier addBarrier = loader.getController();
+        addBarrier.onOpen(dialog, appLogic);
 
-        return controllerAddBarrier;
+        return addBarrier;
     }
 
-    public ControllerManageSquads createSquadDialog(Campaign campaign, AppLogic appLogic) throws IOException {
+    public ManageSquads createSquadDialog(Campaign campaign, AppLogic appLogic) throws IOException {
         Parent root;
         FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("views/manageSquads.fxml"));
         root = loader.load();
@@ -78,12 +91,12 @@ public class DialogFactory {
         dialog.setTitle("Create new squad");
         dialog.setScene(new Scene(root));
 
-        ControllerManageSquads controllerManageSquads = loader.getController();
-        controllerManageSquads.onOpen(dialog, campaign, appLogic);
-        return controllerManageSquads;
+        ManageSquads manageSquads = loader.getController();
+        manageSquads.onOpen(dialog, campaign, appLogic);
+        return manageSquads;
     }
 
-    public ControllerAddCharacter createCharacterDialog(
+    public AddCharacter createCharacterDialog(
             Campaign campaign, CharacterType characterType, Character edit, AppLogic appLogic) throws IOException {
 
         Parent root;
@@ -94,13 +107,13 @@ public class DialogFactory {
         dialog.setTitle("Create new character");
         dialog.setScene(new Scene(root));
 
-        ControllerAddCharacter controllerAddCharacter = loader.getController();
-        controllerAddCharacter.onOpen(dialog, campaign, characterType, edit, appLogic);
+        AddCharacter addCharacter = loader.getController();
+        addCharacter.onOpen(dialog, campaign, characterType, edit, appLogic);
 
-        return controllerAddCharacter;
+        return addCharacter;
     }
 
-    public ControllerAddVehicle createVehicleDialog(Campaign campaign, Vehicle edit) throws IOException {
+    public AddVehicle createVehicleDialog(Campaign campaign, Vehicle edit) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("views/addVehicle.fxml"));
         Parent root = loader.load();
         Stage dialog = new Stage();
@@ -108,13 +121,13 @@ public class DialogFactory {
         dialog.setTitle("Create new vehicle");
         dialog.setScene(new Scene(root));
 
-        ControllerAddVehicle controllerAddVehicle = loader.getController();
-        controllerAddVehicle.onOpen(dialog, campaign, edit);
+        AddVehicle addVehicle = loader.getController();
+        addVehicle.onOpen(dialog, campaign, edit);
 
-        return controllerAddVehicle;
+        return addVehicle;
     }
 
-    public ControllerMonitorSettings createMonitorDialog(Monitor monitor, String monitorName) throws IOException {
+    public MonitorSettings createMonitorDialog(Monitor monitor, String monitorName) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("views/monitorSettings.fxml"));
         Parent root = loader.load();
         Stage dialog = new Stage();
@@ -122,13 +135,13 @@ public class DialogFactory {
         dialog.setTitle(monitorName + " settings");
         dialog.setScene(new Scene(root));
 
-        ControllerMonitorSettings controllerMonitorSettings = loader.getController();
-        controllerMonitorSettings.onOpen(dialog, monitor, monitorName);
+        MonitorSettings monitorSettings = loader.getController();
+        monitorSettings.onOpen(dialog, monitor, monitorName);
 
-        return controllerMonitorSettings;
+        return monitorSettings;
     }
 
-    public ControllerAddHost createHostDialog() throws IOException {
+    public AddHost createHostDialog() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("views/addHost.fxml"));
         Parent root = loader.load();
         Stage dialog = new Stage();
@@ -136,10 +149,10 @@ public class DialogFactory {
         dialog.setScene(new Scene(root));
         dialog.getIcons().add(icon);
 
-        ControllerAddHost controllerAddHost = loader.getController();
-        controllerAddHost.onOpen(dialog);
+        AddHost addHost = loader.getController();
+        addHost.onOpen(dialog);
 
-        return controllerAddHost;
+        return addHost;
     }
 
     public Alert createExceptionDialog(String title, String header, String content, Exception exception) {

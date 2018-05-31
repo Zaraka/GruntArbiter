@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<GridPane hgap="14.0" maxHeight="+Infinity" maxWidth="+Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="510.0" stylesheets="@../css/dark.css" vgap="20.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.shadowrun.controllers.VehicleCombat">
+    <children>
+        <VBox maxHeight="+Infinity" maxWidth="+Infinity" minHeight="-Infinity" prefWidth="400.0" spacing="7.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
+            <children>
+                <Label fx:id="messageLabel" text="Engage vehicle combat" textAlignment="LEFT" wrapText="true">
+                    <font>
+                        <Font name="System Bold" size="13.0" />
+                    </font>
+                </Label>
+            <TableView fx:id="tableView_passengers" editable="true" prefHeight="200.0" prefWidth="200.0">
+              <columns>
+                <TableColumn fx:id="tableColumn_passengers_name" editable="false" prefWidth="150.0" text="Name" />
+                <TableColumn fx:id="tableColumn_passengers_vehicle" prefWidth="293.0" text="Vehicle" />
+              </columns>
+            </TableView>
+            <TableView fx:id="tableView_vehicles" editable="true" prefHeight="200.0" prefWidth="200.0">
+              <columns>
+                <TableColumn fx:id="tableColumn_vehicles_name" editable="false" prefWidth="139.0" text="Name" />
+                <TableColumn fx:id="tableColumn_vehicles_role" prefWidth="137.0" text="Role" />
+                  <TableColumn fx:id="tableColumn_vehicles_position" prefWidth="79.0" text="Position" />
+              </columns>
+            </TableView>
+                <GridPane>
+                    <columnConstraints>
+                        <ColumnConstraints maxWidth="1.7976931348623157E308" minWidth="15.0" prefWidth="150.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                    <children>
+                        <Label text="Terrain modifier" />
+                        <ComboBox fx:id="comboBox_terrainModifier" prefWidth="150.0" GridPane.columnIndex="1" />
+                  <Label text="Terrain type" GridPane.rowIndex="1" />
+                  <HBox GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <children>
+                        <ComboBox fx:id="comboBox_terrainType" prefWidth="150.0" />
+                     </children>
+                  </HBox>
+                    </children>
+                </GridPane>
+            </children>
+        </VBox>
+        <HBox maxHeight="-Infinity" maxWidth="+Infinity" minHeight="-Infinity" minWidth="-Infinity" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <children>
+                <HBox fx:id="actionParent" alignment="CENTER">
+                    <HBox.margin>
+                        <Insets />
+                    </HBox.margin>
+                </HBox>
+                <Pane maxWidth="+Infinity" HBox.hgrow="ALWAYS" />
+                <Button fx:id="button_cancel" cancelButton="true" minWidth="80.0" mnemonicParsing="false" onAction="#cancelOnAction" text="Cancel" HBox.hgrow="NEVER">
+                    <HBox.margin>
+                        <Insets />
+                    </HBox.margin>
+                </Button>
+                <HBox fx:id="okParent" alignment="CENTER">
+                    <children>
+                        <Button fx:id="button_ok" defaultButton="true" minWidth="80.0" mnemonicParsing="false" onAction="#okOnAction" text="Ok" HBox.hgrow="NEVER">
+                            <HBox.margin>
+                                <Insets left="14.0" />
+                            </HBox.margin>
+                        </Button>
+                    </children>
+                </HBox>
+            </children>
+        </HBox>
+    </children>
+    <columnConstraints>
+        <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" />
+        <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="+Infinity" minWidth="-Infinity" />
+    </columnConstraints>
+    <padding>
+        <Insets bottom="14.0" left="14.0" right="14.0" top="14.0" />
+    </padding>
+    <rowConstraints>
+        <RowConstraints maxHeight="+Infinity" minHeight="-Infinity" valignment="CENTER" vgrow="ALWAYS" />
+        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" vgrow="NEVER" />
+    </rowConstraints>
+</GridPane>

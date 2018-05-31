@@ -33,9 +33,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class ControllerMain {
+public class Main {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ControllerMain.class);
+    private static final Logger LOG = LoggerFactory.getLogger(Main.class);
 
     private static final DialogFactory dialogFactory = new DialogFactory();
 
@@ -166,7 +166,7 @@ public class ControllerMain {
     @FXML
     public void closeCampaignOnAction() {
         FilteredList<Tab> campaignTabs = tabPane.getTabs().filtered(tab -> tab.getUserData() != null
-                && tab.getUserData().getClass() == ControllerCampaignScreen.class);
+                && tab.getUserData().getClass() == CampaignScreen.class);
         if (!campaignTabs.isEmpty()) {
             campaignTabs.get(0).getOnCloseRequest().handle(null);
         }
@@ -181,17 +181,17 @@ public class ControllerMain {
             Stage dialog = new Stage();
             dialog.setTitle("Create new battle");
             dialog.setScene(new Scene(root));
-            ControllerNewBattle controllerNewBattle = loader.getController();
+            NewBattle newBattle = loader.getController();
             String battleSampleName = "Battle " + appLogic.getActiveCampaign().getBattles().size();
-            controllerNewBattle.onOpen(dialog, battleSampleName, appLogic.getActiveCampaign().getPlayers());
+            newBattle.onOpen(dialog, battleSampleName, appLogic.getActiveCampaign().getPlayers());
             dialog.showAndWait();
-            controllerNewBattle.getIncludedPlayers().ifPresent(playerCharacters -> {
+            newBattle.getIncludedPlayers().ifPresent(playerCharacters -> {
                 Battle battle = new Battle(
-                        controllerNewBattle.getName(),
+                        newBattle.getName(),
                         playerCharacters,
-                        controllerNewBattle.getWeather(),
-                        controllerNewBattle.getTime(),
-                        controllerNewBattle.getNoise());
+                        newBattle.getWeather(),
+                        newBattle.getTime(),
+                        newBattle.getNoise());
                 appLogic.getActiveCampaign().getBattles().add(battle);
                 openBattle(battle, false);
             });
@@ -216,8 +216,8 @@ public class ControllerMain {
             Stage dialog = new Stage();
             dialog.setTitle("About Grunt Arbiter");
             dialog.setScene(new Scene(root));
-            ControllerAbout controllerAbout = loader.getController();
-            controllerAbout.onOpen(dialog, appLogic.getConfig().getVersion());
+            About about = loader.getController();
+            about.onOpen(dialog, appLogic.getConfig().getVersion());
             dialog.showAndWait();
         } catch (IOException ex) {
             LOG.error("Cant load about dialog: ", ex);
@@ -243,7 +243,7 @@ public class ControllerMain {
     @FXML
     private void openWelcomeScreenOnAction() {
         FilteredList<Tab> welcomeScreens = tabPane.getTabs()
-                .filtered(tab -> tab.getUserData() != null && tab.getUserData().getClass() == ControllerWelcomeScreen.class);
+                .filtered(tab -> tab.getUserData() != null && tab.getUserData().getClass() == WelcomeScreen.class);
         if (welcomeScreens.isEmpty()) {
             openWelcomeScreen();
         } else {
@@ -372,14 +372,14 @@ public class ControllerMain {
         try {
             FXMLLoader tabLoader = new FXMLLoader(getClass().getClassLoader().getResource("views/welcomeScreen.fxml"));
             Tab welcomeScreenTab = new Tab("Welcome screen", tabLoader.load());
-            ControllerWelcomeScreen controllerWelcomeScreen = tabLoader.getController();
-            welcomeScreenTab.setUserData(controllerWelcomeScreen);
+            WelcomeScreen welcomeScreen = tabLoader.getController();
+            welcomeScreenTab.setUserData(welcomeScreen);
             welcomeScreenTab.setOnClosed(event -> {
-                controllerWelcomeScreen.remove();
-                tabPane.getTabs().removeIf(tab -> tab.getUserData() == controllerWelcomeScreen);
+                welcomeScreen.remove();
+                tabPane.getTabs().removeIf(tab -> tab.getUserData() == welcomeScreen);
             });
             tabPane.getTabs().add(welcomeScreenTab);
-            controllerWelcomeScreen.setStageAndListeners(stage, this, appLogic);
+            welcomeScreen.setStageAndListeners(stage, this, appLogic);
             tabPane.getSelectionModel().select(welcomeScreenTab);
         } catch (IOException ex) {
             LOG.error("Error while loading welcome screen tab ", ex);
@@ -390,22 +390,22 @@ public class ControllerMain {
         try {
             FXMLLoader tabLoader = new FXMLLoader(getClass().getClassLoader().getResource("views/campaign.fxml"));
             Tab campaignScreenTab = new Tab(campaign.getName(), tabLoader.load());
-            ControllerCampaignScreen controllerCampaignScreen = tabLoader.getController();
-            campaignScreenTab.setUserData(controllerCampaignScreen);
+            CampaignScreen campaignScreen = tabLoader.getController();
+            campaignScreenTab.setUserData(campaignScreen);
             campaignScreenTab.setOnCloseRequest(event -> {
                 if (checkSave()) {
                     tabPane.getTabs().removeIf(tab -> tab.getUserData() != null &&
                             tab.getUserData().getClass() == ControllerBattle.class);
                     battleLogic.clear();
                     appLogic.closeCampaign();
-                    controllerCampaignScreen.remove();
-                    tabPane.getTabs().removeIf(tab -> tab.getUserData() == controllerCampaignScreen);
+                    campaignScreen.remove();
+                    tabPane.getTabs().removeIf(tab -> tab.getUserData() == campaignScreen);
                 } else {
                     event.consume();
                 }
             });
             tabPane.getTabs().add(campaignScreenTab);
-            controllerCampaignScreen.setStageAndListeners(stage, this, campaign, appLogic);
+            campaignScreen.setStageAndListeners(stage, this, campaign, appLogic);
             tabPane.getSelectionModel().select(campaignScreenTab);
         } catch (IOException ex) {
             LOG.error("Error while loading campaign screen tab ", ex);

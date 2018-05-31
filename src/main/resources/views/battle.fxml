@@ -22,8 +22,10 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import org.shadowrun.common.nodes.VehicleChaseCanvas?>
 
 <AnchorPane minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.shadowrun.controllers.ControllerBattle">
    <children>
@@ -106,7 +108,7 @@
                      <children>
                         <VBox>
                            <children>
-                              <TitledPane text="Spawn menu">
+                              <TitledPane text="Global">
                                 <content>
                                   <AnchorPane>
                                        <children>
@@ -154,72 +156,128 @@
                                  <content>
                                     <AnchorPane>
                                        <children>
-                                          <VBox fx:id="vbox_realWorld" prefHeight="67.0" prefWidth="315.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                          <VBox>
                                              <children>
-                                                <ToolBar prefHeight="40.0" prefWidth="220.0">
-                                                   <items>
-                                                      <ComboBox fx:id="comboBox_weather" />
-                                                   </items>
-                                                </ToolBar>
-                                                <ToolBar prefHeight="40.0" prefWidth="220.0">
-                                                   <items>
-                                                      <Button mnemonicParsing="false" onAction="#addBarrierOnAction" styleClass="button-primary" text="Spawn barrier">
-                                                         <graphic>
-                                                            <FontAwesomeIconView glyphName="TH" />
-                                                         </graphic>
-                                                         <tooltip>
-                                                            <Tooltip text="Spawn barriers like walls, barricades, windows, for Red Faction simulation experience" />
-                                                         </tooltip>
-                                                      </Button>
-                                                      <Button mnemonicParsing="false" onAction="#addVehicleOnAction" styleClass="button-primary" text="Spawn vehicle">
-                                                         <graphic>
-                                                            <FontAwesomeIconView glyphName="CAR" />
-                                                         </graphic>
-                                                      </Button>
-                                                   </items>
-                                                </ToolBar>
-                                                <GridPane VBox.vgrow="ALWAYS">
-                                                   <columnConstraints>
-                                                      <ColumnConstraints hgrow="NEVER" />
-                                                      <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="75.0" />
-                                                      <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" />
-                                                      <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="30.0" />
-                                                   </columnConstraints>
-                                                   <rowConstraints>
-                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                   </rowConstraints>
+                                                <VBox fx:id="vbox_realWorld" prefHeight="67.0" prefWidth="315.0">
                                                    <children>
-                                                      <Label text="Background noise" />
-                                                      <TextField fx:id="textField_backgroundNoise" GridPane.columnIndex="1" />
-                                                      <Button mnemonicParsing="false" onAction="#backgroundNoisePlusOnAction" GridPane.columnIndex="2">
-                                                         <graphic>
-                                                            <FontAwesomeIconView glyphName="PLUS" />
-                                                         </graphic>
-                                                         <tooltip>
-                                                            <Tooltip text="Increase matrix background noise" />
-                                                         </tooltip>
-                                                         <styleClass>
-                                                            <String fx:value="button-pill" />
-                                                            <String fx:value="button-success" />
-                                                         </styleClass>
-                                                      </Button>
-                                                      <Button layoutX="229.0" layoutY="12.0" mnemonicParsing="false" onAction="#backgroundNoiseMinusOnAction" GridPane.columnIndex="3">
-                                                         <graphic>
-                                                            <FontAwesomeIconView glyphName="MINUS" />
-                                                         </graphic>
-                                                         <tooltip>
-                                                            <Tooltip text="Decrease matrix background noise" />
-                                                         </tooltip>
-                                                         <styleClass>
-                                                            <String fx:value="button-pill" />
-                                                            <String fx:value="button-danger" />
-                                                         </styleClass>
-                                                      </Button>
+                                                      <ToolBar prefHeight="40.0" prefWidth="220.0">
+                                                         <items>
+                                                            <ComboBox fx:id="comboBox_weather" />
+                                                         </items>
+                                                      </ToolBar>
+                                                      <ToolBar prefHeight="40.0" prefWidth="220.0">
+                                                         <items>
+                                                            <Button mnemonicParsing="false" onAction="#addBarrierOnAction" styleClass="button-primary" text="Spawn barrier">
+                                                               <graphic>
+                                                                  <FontAwesomeIconView glyphName="TH" />
+                                                               </graphic>
+                                                               <tooltip>
+                                                                  <Tooltip text="Spawn barriers like walls, barricades, windows, for Red Faction simulation experience" />
+                                                               </tooltip>
+                                                            </Button>
+                                                            <Button mnemonicParsing="false" onAction="#addVehicleOnAction" styleClass="button-primary" text="Spawn vehicle">
+                                                               <graphic>
+                                                                  <FontAwesomeIconView glyphName="CAR" />
+                                                               </graphic>
+                                                            </Button>
+                                                         </items>
+                                                      </ToolBar>
+                                                      <ToolBar prefHeight="40.0" prefWidth="200.0">
+                                                        <items>
+                                                          <Button fx:id="button_vehicleCombat" mnemonicParsing="false" onAction="#engageVehicleCombat" styleClass="button-primary" text="Engage vehicle combat">
+                                                               <graphic>
+                                                                  <FontAwesomeIconView glyphName="FLASH" />
+                                                               </graphic>
+                                                            </Button>
+                                                        </items>
+                                                      </ToolBar>
+                                                      <GridPane VBox.vgrow="ALWAYS">
+                                                         <columnConstraints>
+                                                            <ColumnConstraints hgrow="NEVER" prefWidth="125.0" />
+                                                            <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="75.0" />
+                                                            <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" />
+                                                            <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="30.0" />
+                                                         </columnConstraints>
+                                                         <rowConstraints>
+                                                            <RowConstraints minHeight="-Infinity" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                         </rowConstraints>
+                                                         <children>
+                                                            <Label text="Background noise" />
+                                                            <TextField fx:id="textField_backgroundNoise" GridPane.columnIndex="1" />
+                                                            <Button mnemonicParsing="false" onAction="#backgroundNoisePlusOnAction" GridPane.columnIndex="2">
+                                                               <graphic>
+                                                                  <FontAwesomeIconView glyphName="PLUS" />
+                                                               </graphic>
+                                                               <tooltip>
+                                                                  <Tooltip text="Increase matrix background noise" />
+                                                               </tooltip>
+                                                               <styleClass>
+                                                                  <String fx:value="button-pill" />
+                                                                  <String fx:value="button-success" />
+                                                               </styleClass>
+                                                            </Button>
+                                                            <Button layoutX="229.0" layoutY="12.0" mnemonicParsing="false" onAction="#backgroundNoiseMinusOnAction" GridPane.columnIndex="3">
+                                                               <graphic>
+                                                                  <FontAwesomeIconView glyphName="MINUS" />
+                                                               </graphic>
+                                                               <tooltip>
+                                                                  <Tooltip text="Decrease matrix background noise" />
+                                                               </tooltip>
+                                                               <styleClass>
+                                                                  <String fx:value="button-pill" />
+                                                                  <String fx:value="button-danger" />
+                                                               </styleClass>
+                                                            </Button>
+                                                         </children>
+                                                         <VBox.margin>
+                                                            <Insets bottom="10.0" top="15.0" />
+                                                         </VBox.margin>
+                                                      </GridPane>
                                                    </children>
-                                                   <VBox.margin>
-                                                      <Insets bottom="10.0" top="15.0" />
-                                                   </VBox.margin>
-                                                </GridPane>
+                                                </VBox>
+                                                <VBox fx:id="vbox_vehicleChase">
+                                                   <children>
+                                                      <GridPane>
+                                                         <columnConstraints>
+                                                            <ColumnConstraints hgrow="NEVER" prefWidth="125.0" />
+                                                            <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="75.0" />
+                                                            <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" />
+                                                            <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="30.0" />
+                                                         </columnConstraints>
+                                                         <rowConstraints>
+                                                            <RowConstraints minHeight="-Infinity" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                         </rowConstraints>
+                                                         <children>
+                                                            <Label text="Terrain modifier" />
+                                                            <TextField fx:id="textField_terrainModifier" GridPane.columnIndex="1" />
+                                                            <Button mnemonicParsing="false" onAction="#terrainModifierPlusOnAction" GridPane.columnIndex="2">
+                                                               <graphic>
+                                                                  <FontAwesomeIconView glyphName="PLUS" />
+                                                               </graphic>
+                                                               <tooltip>
+                                                                  <Tooltip text="Increase matrix background noise" />
+                                                               </tooltip>
+                                                               <styleClass>
+                                                                  <String fx:value="button-pill" />
+                                                                  <String fx:value="button-success" />
+                                                               </styleClass>
+                                                            </Button>
+                                                            <Button layoutX="229.0" layoutY="12.0" mnemonicParsing="false" onAction="#terrainModifierMinusOnAction" GridPane.columnIndex="3">
+                                                               <graphic>
+                                                                  <FontAwesomeIconView glyphName="MINUS" />
+                                                               </graphic>
+                                                               <tooltip>
+                                                                  <Tooltip text="Decrease matrix background noise" />
+                                                               </tooltip>
+                                                               <styleClass>
+                                                                  <String fx:value="button-pill" />
+                                                                  <String fx:value="button-danger" />
+                                                               </styleClass>
+                                                            </Button>
+                                                         </children>
+                                                      </GridPane>
+                                                   </children>
+                                                </VBox>
                                              </children>
                                           </VBox>
                                        </children>
@@ -370,9 +428,14 @@
                   </AnchorPane>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                      <children>
-                        <SplitPane fx:id="splitPane_centerContent" dividerPositions="0.5, 0.7" orientation="VERTICAL" prefHeight="664.0" prefWidth="734.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <SplitPane fx:id="splitPane_centerContent" dividerPositions="0.5, 0.7, 0.5" orientation="VERTICAL" prefHeight="664.0" prefWidth="734.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <items>
-                              <AnchorPane minHeight="100.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                              <StackPane fx:id="anchorPane_chaseScreen">
+                                 <children>
+                                    <VehicleChaseCanvas fx:id="canvas_chaseScreen" />
+                                 </children>
+                              </StackPane>
+                              <AnchorPane>
                                  <children>
                                     <TableView id="tableView_turnTable" fx:id="tableView_masterTable" minWidth="250.0" prefHeight="327.0" prefWidth="732.0" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <columns>
@@ -864,60 +927,83 @@
                                     </GridPane>
                                  </children>
                               </HBox>
-                              <HBox fx:id="hbox_selected_vehicle" alignment="CENTER" layoutX="10.0" layoutY="290.0">
+                              <VBox fx:id="vbox_selected_vehicle">
                                  <children>
-                                    <GridPane>
-                                       <columnConstraints>
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="20.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="80.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="75.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="30.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="30.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="30.0" />
-                                       </columnConstraints>
-                                       <rowConstraints>
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                       </rowConstraints>
+                                    <ToolBar prefHeight="40.0" prefWidth="200.0">
+                                      <items>
+                                        <Button mnemonicParsing="false" styleClass="button-signature" text="Catch up" />
+                                          <Button mnemonicParsing="false" styleClass="button-signature" text="Break away" />
+                                      </items>
+                                    </ToolBar>
+                                    <HBox fx:id="hbox_selected_vehicle" alignment="CENTER">
                                        <children>
-                                          <Label text="Condition" GridPane.columnIndex="1" />
-                                          <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#vehicleConditionPlusOnAction" styleClass="button-pill, button-success" GridPane.columnIndex="3">
-                                             <graphic>
-                                                <FontAwesomeIconView glyphName="PLUS" />
-                                             </graphic>
-                                             <tooltip>
-                                                <Tooltip text="Increase condition" />
-                                             </tooltip>
-                                          </Button>
-                                          <Button mnemonicParsing="false" onAction="#vehicleConditionMinusOnAction" styleClass="button-pill, button-danger" GridPane.columnIndex="4">
-                                             <graphic>
-                                                <FontAwesomeIconView glyphName="MINUS" text="" />
-                                             </graphic>
-                                             <tooltip>
-                                                <Tooltip text="Decrease condition" />
-                                             </tooltip>
-                                          </Button>
-                                          <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2">
+                                          <GridPane>
+                                             <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="20.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="80.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="75.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="30.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="30.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="30.0" />
+                                             </columnConstraints>
+                                             <rowConstraints>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                             </rowConstraints>
                                              <children>
-                                                <Label fx:id="label_selected_vehicleCondition" text="Label" />
+                                                <Label text="Condition" GridPane.columnIndex="1" />
+                                                <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#vehicleConditionPlusOnAction" styleClass="button-pill, button-success" GridPane.columnIndex="3">
+                                                   <graphic>
+                                                      <FontAwesomeIconView glyphName="PLUS" />
+                                                   </graphic>
+                                                   <tooltip>
+                                                      <Tooltip text="Increase condition" />
+                                                   </tooltip>
+                                                </Button>
+                                                <Button mnemonicParsing="false" onAction="#vehicleConditionMinusOnAction" styleClass="button-pill, button-danger" GridPane.columnIndex="4">
+                                                   <graphic>
+                                                      <FontAwesomeIconView glyphName="MINUS" text="" />
+                                                   </graphic>
+                                                   <tooltip>
+                                                      <Tooltip text="Decrease condition" />
+                                                   </tooltip>
+                                                </Button>
+                                                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2">
+                                                   <children>
+                                                      <Label fx:id="label_selected_vehicleCondition" text="Label" />
+                                                   </children>
+                                                </HBox>
+                                                <HBox alignment="CENTER">
+                                                   <children>
+                                                      <FontAwesomeIconView glyphName="COGS" size="14.0" />
+                                                   </children>
+                                                </HBox>
+                                                <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#vehicleConditionMonitorSettingsOnAction" styleClass="button-pill" GridPane.columnIndex="5">
+                                                   <graphic>
+                                                      <FontAwesomeIconView glyphName="COG" />
+                                                   </graphic>
+                                                   <tooltip>
+                                                      <Tooltip text="Decrease structure" />
+                                                   </tooltip>
+                                                </Button>
                                              </children>
-                                          </HBox>
-                                          <HBox alignment="CENTER">
-                                             <children>
-                                                <FontAwesomeIconView glyphName="COGS" size="14.0" />
-                                             </children>
-                                          </HBox>
-                                          <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#vehicleConditionMonitorSettingsOnAction" styleClass="button-pill" GridPane.columnIndex="5">
-                                             <graphic>
-                                                <FontAwesomeIconView glyphName="COG" />
-                                             </graphic>
-                                             <tooltip>
-                                                <Tooltip text="Decrease structure" />
-                                             </tooltip>
-                                          </Button>
+                                          </GridPane>
                                        </children>
-                                    </GridPane>
+                                    </HBox>
                                  </children>
-                              </HBox>
+                              </VBox>
+                              <TitledPane animated="false" expanded="false" text="Passengers">
+                                <content>
+                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                       <children>
+                                          <TableView fx:id="tableView_selected_passengers" layoutX="39.0" layoutY="-27.0" prefHeight="167.0" prefWidth="278.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                            <columns>
+                                              <TableColumn fx:id="tableColumn_selected_passengers_name" prefWidth="253.00000607967377" text="Name" />
+                                            </columns>
+                                          </TableView>
+                                       </children>
+                                    </AnchorPane>
+                                </content>
+                              </TitledPane>
                            </children>
                         </VBox>
                      </children>

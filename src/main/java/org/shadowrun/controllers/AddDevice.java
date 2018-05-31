@@ -14,7 +14,7 @@ import org.shadowrun.models.Device;
 import java.util.Objects;
 import java.util.Optional;
 
-public class ControllerAddDevice implements Controller {
+public class AddDevice implements Controller {
 
     private Device device;
     private Stage stage;

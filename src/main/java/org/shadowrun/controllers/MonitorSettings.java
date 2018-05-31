@@ -11,7 +11,7 @@ import org.shadowrun.models.Monitor;
 
 import java.util.Optional;
 
-public class ControllerMonitorSettings implements Controller {
+public class MonitorSettings implements Controller {
 
     private Stage stage;
     private Monitor monitor;

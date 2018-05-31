@@ -3,12 +3,14 @@ package org.shadowrun.models;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.property.*;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import org.apache.commons.lang3.StringUtils;
 import org.shadowrun.common.constants.VehicleType;
 
-public class Vehicle implements Observable {
+import java.util.UUID;
+
+public class Vehicle implements Observable, Identificable {
+
+    private StringProperty uuid;
 
     private StringProperty name;
 
@@ -30,7 +32,10 @@ public class Vehicle implements Observable {
 
     private ObjectProperty<VehicleType> type;
 
+    private StringProperty image;
+
     public  Vehicle() {
+        this.uuid = new SimpleStringProperty(UUID.randomUUID().toString());
         this.name = new SimpleStringProperty(StringUtils.EMPTY);
         this.handling = new VehicleAttribute(0);
         this.speed = new VehicleAttribute(0);
@@ -40,6 +45,7 @@ public class Vehicle implements Observable {
         this.pilot = new SimpleIntegerProperty(0);
         this.sensor = new SimpleIntegerProperty(0);
         this.type = new SimpleObjectProperty<>(VehicleType.VEHICLE);
+        this.image = new SimpleStringProperty(StringUtils.EMPTY);
 
         conditionMonitor = null;
     }
@@ -48,7 +54,9 @@ public class Vehicle implements Observable {
                    int handlingOnRoad, int handlingOffRoad,
                    int speedOnRoad, int speedOffRoad,
                    int accelerationOnRoad, int accelerationOffRoad,
-                   int body, int armor, int pilot, int sensor, VehicleType type) {
+                   int body, int armor, int pilot, int sensor, VehicleType type,
+                   String image) {
+        this.uuid = new SimpleStringProperty(UUID.randomUUID().toString());
         this.name = new SimpleStringProperty(name);
         this.handling = new VehicleAttribute(handlingOnRoad, handlingOffRoad);
         this.speed = new VehicleAttribute(speedOnRoad, speedOffRoad);
@@ -58,6 +66,7 @@ public class Vehicle implements Observable {
         this.pilot = new SimpleIntegerProperty(pilot);
         this.sensor = new SimpleIntegerProperty(sensor);
         this.type = new SimpleObjectProperty<>(type);
+        this.image = new SimpleStringProperty(image);
 
         conditionMonitor = null;
     }
@@ -134,6 +143,14 @@ public class Vehicle implements Observable {
         return type;
     }
 
+    public String getImage() {
+        return image.get();
+    }
+
+    public StringProperty imageProperty() {
+        return image;
+    }
+
     public void setFrom(Vehicle other) {
         name.setValue(other.getName());
         handling.setFrom(other.getHandling());
@@ -144,6 +161,7 @@ public class Vehicle implements Observable {
         pilot.setValue(other.getPilot());
         sensor.setValue(other.getSensor());
         type.setValue(other.getType());
+        image.setValue(other.getImage());
     }
 
     @Override
@@ -173,6 +191,7 @@ public class Vehicle implements Observable {
         pilot.addListener(listener);
         sensor.addListener(listener);
         type.addListener(listener);
+        image.addListener(listener);
     }
 
     @Override
@@ -187,5 +206,11 @@ public class Vehicle implements Observable {
         pilot.removeListener(listener);
         sensor.removeListener(listener);
         type.removeListener(listener);
+        image.removeListener(listener);
+    }
+
+    @Override
+    public String getUuid() {
+        return uuid.get();
     }
 }

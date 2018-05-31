@@ -21,15 +21,15 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.util.Optional;
 
-public class ControllerCampaignScreen {
+public class CampaignScreen {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ControllerCampaignScreen.class);
+    private static final Logger LOG = LoggerFactory.getLogger(CampaignScreen.class);
 
     private static final DialogFactory dialogFactory = new DialogFactory();
 
     private Stage stage;
     private Campaign campaign;
-    private ControllerMain controllerMain;
+    private Main main;
     private AppLogic appLogic;
 
     @FXML
@@ -52,18 +52,18 @@ public class ControllerCampaignScreen {
 
     @FXML
     private void addNewPlayerOnAction() {
-        controllerMain.addPlayerOnAction();
+        main.addPlayerOnAction();
     }
 
     @FXML
     private void createNewBattleOnAction() {
-        controllerMain.newBattleOnAction();
+        main.newBattleOnAction();
     }
 
-    public void setStageAndListeners(Stage stage, ControllerMain controllerMain, Campaign campaign, AppLogic appLogic) {
+    public void setStageAndListeners(Stage stage, Main main, Campaign campaign, AppLogic appLogic) {
         this.stage = stage;
         this.campaign = campaign;
-        this.controllerMain = controllerMain;
+        this.main = main;
         this.appLogic = appLogic;
 
         //Items
@@ -148,7 +148,7 @@ public class ControllerCampaignScreen {
         deletePlayer.setOnAction(event -> tableView_playerCharacters.getItems()
                 .remove(tableView_playerCharacters.getSelectionModel().getSelectedIndex()));
         MenuItem addPlayer = new MenuItem("Add player");
-        addPlayer.setOnAction(event -> controllerMain.addPlayerOnAction());
+        addPlayer.setOnAction(event -> main.addPlayerOnAction());
 
         ContextMenu fullContextMenu = new ContextMenu(
                 addPlayer,

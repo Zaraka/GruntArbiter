@@ -9,11 +9,13 @@ import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -27,6 +29,7 @@ import org.shadowrun.common.converters.SpiritIndexReputationConverter;
 import org.shadowrun.common.factories.BadgeFactory;
 import org.shadowrun.common.factories.CharacterIconFactory;
 import org.shadowrun.common.factories.DialogFactory;
+import org.shadowrun.common.nodes.VehicleChaseCanvas;
 import org.shadowrun.common.nodes.cells.*;
 import org.shadowrun.common.nodes.rows.CompanionTableRow;
 import org.shadowrun.common.utils.CSSUtils;
@@ -52,6 +55,7 @@ public class ControllerBattle {
     private BattleLogic battleLogic;
     private Battle battle;
     private Campaign campaign;
+    private GraphicsContext context;
 
     private BooleanBinding allPlayersIncluded;
 
@@ -139,6 +143,14 @@ public class ControllerBattle {
     private TableColumn<Companion, Companion> tableColumn_selected_companions_action;
 
     @FXML
+    private TableView<Character> tableView_selected_passengers;
+    @FXML
+    private TableColumn<Character, String> tableColumn_selected_passengers_name;
+
+    @FXML
+    private VehicleChaseCanvas canvas_chaseScreen;
+
+    @FXML
     private VBox vbox_realWorld;
     @FXML
     private VBox vbox_matrix;
@@ -152,6 +164,8 @@ public class ControllerBattle {
     private VBox vbox_selected_matrix;
     @FXML
     private VBox vbox_selected_companions;
+    @FXML
+    private VBox vbox_vehicleChase;
 
 
     @FXML
@@ -219,6 +233,8 @@ public class ControllerBattle {
     private Button button_selected_matrix;
     @FXML
     private Button button_selected_addCompanion;
+    @FXML
+    private Button button_vehicleCombat;
 
     @FXML
     private TextField textField_selected_initiative;
@@ -228,6 +244,8 @@ public class ControllerBattle {
     private TextField textField_backgroundCount;
     @FXML
     private TextField textField_backgroundNoise;
+    @FXML
+    private TextField textField_terrainModifier;
 
     @FXML
     private ComboBox<Weather> comboBox_weather;
@@ -244,6 +262,9 @@ public class ControllerBattle {
     private AnchorPane anchorPane_vehicles;
     @FXML
     private AnchorPane anchorPane_bottomTables;
+
+    @FXML
+    private StackPane anchorPane_chaseScreen;
 
     @FXML
     private SplitPane splitPane_horizontal;
@@ -312,10 +333,10 @@ public class ControllerBattle {
             battleLogic.disconectFromHost();
         } else {
             try {
-                ControllerAddHost controllerAddHost = dialogFactory.createHostDialog();
+                AddHost addHost = dialogFactory.createHostDialog();
 
-                controllerAddHost.getStage().showAndWait();
-                controllerAddHost.getHost().ifPresent(host -> {
+                addHost.getStage().showAndWait();
+                addHost.getHost().ifPresent(host -> {
                     battleLogic.setHost(host);
                 });
 
@@ -343,10 +364,10 @@ public class ControllerBattle {
     private void physicalMonitorSettingsOnAction() {
         Character character = tableView_masterTable.getSelectionModel().getSelectedItem();
         try {
-            ControllerMonitorSettings controllerMonitorSettings =
+            MonitorSettings monitorSettings =
                     dialogFactory.createMonitorDialog(character.getPhysicalMonitor(), "Physical monitor");
-            controllerMonitorSettings.getStage().showAndWait();
-            controllerMonitorSettings.getMonitor().ifPresent(monitor -> {
+            monitorSettings.getStage().showAndWait();
+            monitorSettings.getMonitor().ifPresent(monitor -> {
                 character.getPhysicalMonitor().setFrom(monitor);
             });
         } catch (IOException ex) {
@@ -372,10 +393,10 @@ public class ControllerBattle {
     private void stunMonitorSettingsOnAction() {
         Character character = tableView_masterTable.getSelectionModel().getSelectedItem();
         try {
-            ControllerMonitorSettings controllerMonitorSettings =
+            MonitorSettings monitorSettings =
                     dialogFactory.createMonitorDialog(character.getStunMonitor(), "Stun monitor");
-            controllerMonitorSettings.getStage().showAndWait();
-            controllerMonitorSettings.getMonitor().ifPresent(monitor -> {
+            monitorSettings.getStage().showAndWait();
+            monitorSettings.getMonitor().ifPresent(monitor -> {
                 character.getStunMonitor().setFrom(monitor);
             });
         } catch (IOException ex) {
@@ -413,10 +434,10 @@ public class ControllerBattle {
     private void structureMonitorSettingsOnAction() {
         Barrier barrier = tableView_barrier.getSelectionModel().getSelectedItem();
         try {
-            ControllerMonitorSettings controllerMonitorSettings =
+            MonitorSettings monitorSettings =
                     dialogFactory.createMonitorDialog(barrier.getStructureMonitor(), "Structure monitor");
-            controllerMonitorSettings.getStage().showAndWait();
-            controllerMonitorSettings.getMonitor().ifPresent(monitor -> {
+            monitorSettings.getStage().showAndWait();
+            monitorSettings.getMonitor().ifPresent(monitor -> {
                 barrier.getStructureMonitor().setFrom(monitor);
             });
         } catch (IOException ex) {
@@ -456,10 +477,10 @@ public class ControllerBattle {
         Device device = tableView_devices.getSelectionModel().getSelectedItem();
 
         try {
-            ControllerMonitorSettings controllerMonitorSettings =
+            MonitorSettings monitorSettings =
                     dialogFactory.createMonitorDialog(device.getConditionMonitor(), "Condition monitor");
-            controllerMonitorSettings.getStage().showAndWait();
-            controllerMonitorSettings.getMonitor().ifPresent(monitor -> {
+            monitorSettings.getStage().showAndWait();
+            monitorSettings.getMonitor().ifPresent(monitor -> {
                 device.getConditionMonitor().setFrom(monitor);
             });
         } catch (IOException ex) {
@@ -484,10 +505,10 @@ public class ControllerBattle {
         Vehicle vehicle = tableView_vehicles.getSelectionModel().getSelectedItem();
 
         try {
-            ControllerMonitorSettings controllerMonitorSettings =
+            MonitorSettings monitorSettings =
                     dialogFactory.createMonitorDialog(vehicle.getConditionMonitor(), "Vehicle condition monitor");
-            controllerMonitorSettings.getStage().showAndWait();
-            controllerMonitorSettings.getMonitor().ifPresent(monitor -> {
+            monitorSettings.getStage().showAndWait();
+            monitorSettings.getMonitor().ifPresent(monitor -> {
                 vehicle.getConditionMonitor().setFrom(monitor);
             });
         } catch (IOException ex) {
@@ -495,6 +516,20 @@ public class ControllerBattle {
         }
     }
 
+
+    @FXML
+    private void terrainModifierPlusOnAction() {
+        battle.getVehicleChase().terrainModifierProperty().setValue(
+                battle.getVehicleChase().getTerrainModifier() + 1
+        );
+    }
+
+    @FXML
+    private void terrainModifierMinusOnAction() {
+        battle.getVehicleChase().terrainModifierProperty().setValue(
+                battle.getVehicleChase().getTerrainModifier() - 1
+        );
+    }
 
     @FXML
     private void spiritIndexPlusOnAction() {
@@ -566,9 +601,9 @@ public class ControllerBattle {
     @FXML
     private void addBarrierOnAction() {
         try {
-           ControllerAddBarrier controllerAddBarrier = dialogFactory.createBarrierDialog(appLogic);
-            controllerAddBarrier.getStage().showAndWait();
-            controllerAddBarrier.getBarrier()
+           AddBarrier addBarrier = dialogFactory.createBarrierDialog(appLogic);
+            addBarrier.getStage().showAndWait();
+            addBarrier.getBarrier()
                     .ifPresent(barrier -> {
                         battle.getBarriers().add(barrier);
                         appLogic.getConfig().setLatestBarrierName(barrier.getName());
@@ -582,10 +617,10 @@ public class ControllerBattle {
     @FXML
     private void addDeviceOnAction() {
         try {
-            ControllerAddDevice controllerAddDevice =
+            AddDevice addDevice =
                     dialogFactory.createDeviceDialog(appLogic.getActiveCampaign(), null);
-            controllerAddDevice.getStage().showAndWait();
-            controllerAddDevice.getDevice().ifPresent(device -> battle.getDevices().add(device));
+            addDevice.getStage().showAndWait();
+            addDevice.getDevice().ifPresent(device -> battle.getDevices().add(device));
 
         } catch (IOException ex) {
             LOG.error("Could not load addDevice dialog: ", ex);
@@ -595,10 +630,10 @@ public class ControllerBattle {
     @FXML
     private void addVehicleOnAction() {
         try {
-            ControllerAddVehicle controllerAddVehicle =
+            AddVehicle addVehicle =
                     dialogFactory.createVehicleDialog(appLogic.getActiveCampaign(), null);
-            controllerAddVehicle.getStage().showAndWait();
-            controllerAddVehicle.getVehicle().ifPresent(vehicle -> {
+            addVehicle.getStage().showAndWait();
+            addVehicle.getVehicle().ifPresent(vehicle -> {
                 LOG.info("add vehicle " + vehicle);
                 battle.getVehicles().add(vehicle);
             });
@@ -610,10 +645,10 @@ public class ControllerBattle {
     @FXML
     private void addCharacterOnAction() {
         try {
-            ControllerAddCharacter controllerAddCharacter =
+            AddCharacter addCharacter =
                     dialogFactory.createCharacterDialog(appLogic.getActiveCampaign(), CharacterType.CLASSIC, null, appLogic);
-            controllerAddCharacter.getStage().showAndWait();
-            controllerAddCharacter.getCharacter().ifPresent(character -> {
+            addCharacter.getStage().showAndWait();
+            addCharacter.getCharacter().ifPresent(character -> {
                 battle.getCharacters().add(character);
                 appLogic.getConfig().setLatestCharacterName(character.getName());
                 appLogic.getConfig().setLatestCharacterInitiative(character.getInitiative());
@@ -702,10 +737,10 @@ public class ControllerBattle {
     @FXML
     private void addSquadOnAction() {
         try {
-            ControllerManageSquads controllerManageSquads = dialogFactory.createSquadDialog(
+            ManageSquads manageSquads = dialogFactory.createSquadDialog(
                     appLogic.getActiveCampaign(), appLogic);
-            controllerManageSquads.getStage().showAndWait();
-            controllerManageSquads.getSquad().ifPresent(squad -> squad.getCharacters().forEach(character -> {
+            manageSquads.getStage().showAndWait();
+            manageSquads.getSquad().ifPresent(squad -> squad.getCharacters().forEach(character -> {
                 setCharacterInitiative(character);
                 battle.getCharacters().add(character);
             }));
@@ -721,14 +756,14 @@ public class ControllerBattle {
         switch (comboBox_selected_companionType.getSelectionModel().getSelectedItem()) {
             case CHARACTER:
                 try {
-                    ControllerAddCharacter controllerAddCharacter =
+                    AddCharacter addCharacter =
                             dialogFactory.createCharacterDialog(
                                     appLogic.getActiveCampaign(),
                                     CharacterType.COMPANION,
                                     null,
                                     appLogic);
-                    controllerAddCharacter.getStage().showAndWait();
-                    controllerAddCharacter.getCharacter().ifPresent(companionCharacter -> {
+                    addCharacter.getStage().showAndWait();
+                    addCharacter.getCharacter().ifPresent(companionCharacter -> {
                         selectedCharacter.getCompanions().add(new Companion(companionCharacter));
                     });
 
@@ -738,10 +773,10 @@ public class ControllerBattle {
                 break;
             case VEHICLE:
                 try {
-                    ControllerAddVehicle controllerAddVehicle =
+                    AddVehicle addVehicle =
                             dialogFactory.createVehicleDialog(appLogic.getActiveCampaign(), null);
-                    controllerAddVehicle.getStage().showAndWait();
-                    controllerAddVehicle.getVehicle().ifPresent(vehicle -> {
+                    addVehicle.getStage().showAndWait();
+                    addVehicle.getVehicle().ifPresent(vehicle -> {
                         selectedCharacter.getCompanions().add(new Companion(vehicle));
                     });
                 } catch (IOException ex) {
@@ -750,10 +785,10 @@ public class ControllerBattle {
                 break;
             case DEVICE:
                 try {
-                    ControllerAddDevice controllerAddDevice =
+                    AddDevice addDevice =
                             dialogFactory.createDeviceDialog(appLogic.getActiveCampaign(), null);
-                    controllerAddDevice.getStage().showAndWait();
-                    controllerAddDevice.getDevice().ifPresent(device -> {
+                    addDevice.getStage().showAndWait();
+                    addDevice.getDevice().ifPresent(device -> {
                         selectedCharacter.getCompanions().add(new Companion(device));
                     });
 
@@ -762,6 +797,27 @@ public class ControllerBattle {
                 }
                 break;
         }
+    }
+
+    @FXML
+    public void engageVehicleCombat() {
+        if(battle.getVehicleChase() == null) {
+            try {
+                VehicleCombat vehicleCombat = dialogFactory.createVehicleChaseDialog(battle);
+                vehicleCombat.getStage().showAndWait();
+
+                if(vehicleCombat.getValues().isPresent()) {
+                    battle.vehicleChaseProperty().setValue(vehicleCombat.getValues().get());
+                    initializeCanvas();
+                }
+            } catch (IOException ex) {
+                LOG.error("Could not load addVehicleCombat dialog: ", ex);
+            }
+        } else {
+            deinitializeCanvas();
+            battle.vehicleChaseProperty().setValue(null);
+        }
+
     }
 
     public void setNewInitiative() {
@@ -848,6 +904,7 @@ public class ControllerBattle {
         fontAwesomeIcon_selected.managedProperty().bind(fontAwesomeIcon_selected.visibleProperty());
         imageView_selected.managedProperty().bind(imageView_selected.visibleProperty());
         button_selected_matrix.managedProperty().bind(button_selected_matrix.visibleProperty());
+        vbox_vehicleChase.managedProperty().bindBidirectional(vbox_vehicleChase.visibleProperty());
 
         cleanSelectedPane();
 
@@ -993,6 +1050,20 @@ public class ControllerBattle {
             splitPane_centerContent.getItems().remove(anchorPane_vehicles);
         }
 
+        splitPane_centerContent.getItems().remove(anchorPane_chaseScreen);
+
+        canvas_chaseScreen.setBattle(battle);
+        vbox_vehicleChase.setVisible(false);
+        Bindings.isNull(battle.vehicleChaseProperty()).addListener((observable, oldValue, newValue) -> {
+            vbox_vehicleChase.setVisible(!newValue);
+            if(newValue) {
+                button_vehicleCombat.textProperty().setValue("Engage vehicle combat");
+                textField_terrainModifier.textProperty().unbind();
+            } else {
+                button_vehicleCombat.textProperty().setValue("Disengage vehicle combat");
+                textField_terrainModifier.textProperty().bind(battle.getVehicleChase().terrainModifierProperty().asString());
+            }
+        });
     }
 
     private void setupVehicleTable() {
@@ -1015,6 +1086,8 @@ public class ControllerBattle {
         tableColumn_vehicles_armor.setCellValueFactory(param -> param.getValue().armorProperty().asObject());
         tableColumn_vehicles_pilot.setCellValueFactory(param -> param.getValue().pilotProperty().asObject());
         tableColumn_vehicles_sensor.setCellValueFactory(param -> param.getValue().sensorProperty().asObject());
+
+        tableColumn_selected_passengers_name.setCellValueFactory(param -> param.getValue().nameProperty());
 
         tableView_vehicles.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (oldValue != null) {
@@ -1039,6 +1112,51 @@ public class ControllerBattle {
                 hbox_selected_vehicle.setVisible(true);
                 anchorPane_selected.setVisible(true);
                 fontAwesomeIcon_selected.setVisible(true);
+
+                if(newValue.getType() == VehicleType.VEHICLE) {
+                    flowPane_selected_badges.getChildren()
+                            .add(BadgeFactory.createBadge(
+                                    "Vehicle",
+                                    "This vehicle is a vehicle!",
+                                    CssClasses.INFO));
+                } else {
+                    flowPane_selected_badges.getChildren()
+                            .add(BadgeFactory.createBadge(
+                                    "Drone",
+                                    "This vehicle is a drone.",
+                                    CssClasses.INFO));
+                }
+
+                if(battle.getVehicleChase() != null) {
+                    if(battle.getVehicleChase().getChaseRoles().get(newValue.getUuid()) == VehicleChaseRole.PURSUER) {
+                        flowPane_selected_badges.getChildren()
+                                .add(BadgeFactory.createBadge(
+                                        "Pursuer",
+                                        "This vehicle is pursuer in ongoing vehicle chase",
+                                        CssClasses.WARNING));
+                    } else {
+                        flowPane_selected_badges.getChildren()
+                                .add(BadgeFactory.createBadge(
+                                        "Runner",
+                                        "This vehicle is escapee in ongoing vehicle chase",
+                                        CssClasses.SUCCESS));
+                    }
+
+                    tableView_selected_passengers.setItems(FXCollections.observableArrayList(
+                            battle.getCharacters().stream()
+                            .filter(character -> character.getVehicle().equals(newValue.getUuid()))
+                            .collect(Collectors.toList())));
+                }
+
+            }
+
+            canvas_chaseScreen.selectedVehicleProperty().setValue(newValue);
+
+        });
+
+        canvas_chaseScreen.selectedVehicleProperty().addListener((observable, oldValue, newValue) -> {
+            if(newValue != tableView_vehicles.selectionModelProperty().getValue().getSelectedItem()) {
+                tableView_vehicles.selectionModelProperty().getValue().select(newValue);
             }
         });
 
@@ -1339,30 +1457,30 @@ public class ControllerBattle {
                 try {
                     switch (companion.getCompanionType()) {
                         case CHARACTER:
-                            ControllerAddCharacter controllerAddCharacter =
+                            AddCharacter addCharacter =
                                     dialogFactory.createCharacterDialog(appLogic.getActiveCampaign(),
                                             CharacterType.COMPANION,
                                             ((Character) companion.getCompanion()),
                                             appLogic);
-                            controllerAddCharacter.getStage().showAndWait();
-                            controllerAddCharacter.getCharacter().ifPresent(character -> {
+                            addCharacter.getStage().showAndWait();
+                            addCharacter.getCharacter().ifPresent(character -> {
                                 ((Character) companion.getCompanion()).setFrom(character);
                             });
                             break;
                         case DEVICE:
-                            ControllerAddDevice controllerAddDevice =
+                            AddDevice addDevice =
                                     dialogFactory.createDeviceDialog(appLogic.getActiveCampaign(),
                                             ((Device) companion.getCompanion()));
-                            controllerAddDevice.getStage().showAndWait();
-                            controllerAddDevice.getDevice().ifPresent(device -> {
+                            addDevice.getStage().showAndWait();
+                            addDevice.getDevice().ifPresent(device -> {
                                 ((Device) companion.getCompanion()).setFrom(device);
                             });
                             break;
                         case VEHICLE:
-                            ControllerAddVehicle controllerAddVehicle =
+                            AddVehicle addVehicle =
                                     dialogFactory.createVehicleDialog(campaign, (Vehicle) companion.getCompanion());
-                            controllerAddVehicle.getStage().showAndWait();
-                            controllerAddVehicle.getVehicle().ifPresent(vehicle -> {
+                            addVehicle.getStage().showAndWait();
+                            addVehicle.getVehicle().ifPresent(vehicle -> {
                                 ((Vehicle) companion.getCompanion()).setFrom(vehicle);
                             });
                     }
@@ -1593,4 +1711,17 @@ public class ControllerBattle {
         }
         passToColumn(battle.getInitiativePass()).getStyleClass().add("current-pass");
     }
+
+    private void initializeCanvas() {
+        splitPane_centerContent.getItems().add(0, anchorPane_chaseScreen);
+        canvas_chaseScreen.heightProperty().bind(anchorPane_chaseScreen.heightProperty());
+        canvas_chaseScreen.widthProperty().bind(anchorPane_chaseScreen.widthProperty());
+    }
+
+    private void deinitializeCanvas() {
+        canvas_chaseScreen.heightProperty().unbind();
+        canvas_chaseScreen.widthProperty().unbind();
+        splitPane_centerContent.getItems().remove(anchorPane_chaseScreen);
+    }
+
 }

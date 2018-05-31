@@ -5,6 +5,7 @@ import javafx.beans.Observable;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import org.apache.commons.lang3.StringUtils;
 import org.shadowrun.common.constants.CharacterType;
 import org.shadowrun.common.constants.World;
 
@@ -37,6 +38,8 @@ public class Character implements Comparable<Character>, Identificable, Observab
 
     private SerializableImage portrait;
 
+    private StringProperty vehicle;
+
     public Character(String name,
                      int initiative, World world,
                      boolean npc, boolean ice, CharacterType type,
@@ -54,6 +57,7 @@ public class Character implements Comparable<Character>, Identificable, Observab
         this.type = new SimpleObjectProperty<>(type);
         this.uuid = new SimpleStringProperty(UUID.randomUUID().toString());
         this.portrait = new SerializableImage();
+        this.vehicle = new SimpleStringProperty(StringUtils.EMPTY);
         if(player != null) {
             this.portrait.imageProperty().setValue(player.getPortrait().imageProperty().get());
         }
@@ -72,6 +76,7 @@ public class Character implements Comparable<Character>, Identificable, Observab
         this.type = new SimpleObjectProperty<CharacterType>(character.getType());
         this.uuid = new SimpleStringProperty(UUID.randomUUID().toString());
         this.portrait = new SerializableImage(character.getPortrait());
+        this.vehicle = new SimpleStringProperty(character.getVehicle());
     }
 
     public String getName() {
@@ -158,6 +163,14 @@ public class Character implements Comparable<Character>, Identificable, Observab
         return portrait;
     }
 
+    public String getVehicle() {
+        return vehicle.get();
+    }
+
+    public StringProperty vehicleProperty() {
+        return vehicle;
+    }
+
     public void setFrom(Character other) {
         name.setValue(other.getName());
         initiative.setValue(other.getInitiative());
@@ -169,6 +182,7 @@ public class Character implements Comparable<Character>, Identificable, Observab
         playerUUID.setValue(other.getPlayerUUID());
         companions = other.companions;
         type.setValue(other.getType());
+        vehicle.setValue(other.getVehicle());
     }
 
     @Override

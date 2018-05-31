@@ -10,7 +10,7 @@ import org.shadowrun.models.Host;
 
 import java.util.Optional;
 
-public class ControllerAddHost implements Controller {
+public class AddHost implements Controller {
 
     private Host host;
     private Stage stage;

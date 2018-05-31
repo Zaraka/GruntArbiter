@@ -3,20 +3,20 @@ package org.shadowrun.common.nodes.cells;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.MenuItem;
-import org.shadowrun.controllers.ControllerMain;
+import org.shadowrun.controllers.Main;
 
 import java.nio.file.Path;
 
 public class CampaignCell extends ListCell<Path> {
 
-    private ControllerMain controllerMain;
+    private Main main;
 
-    public CampaignCell(ControllerMain controllerMain) {
-        this.controllerMain = controllerMain;
+    public CampaignCell(Main main) {
+        this.main = main;
         MenuItem openCampaign = new MenuItem("Open campaign");
         openCampaign.setOnAction(event -> {
-            controllerMain.closeCampaignOnAction();
-            controllerMain.openCampaign(itemProperty().get().toFile());
+            main.closeCampaignOnAction();
+            main.openCampaign(itemProperty().get().toFile());
         });
         ContextMenu contextMenu = new ContextMenu(openCampaign);
 

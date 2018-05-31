@@ -24,9 +24,9 @@ import java.io.IOException;
 import java.util.Objects;
 import java.util.Optional;
 
-public class ControllerAddCharacter implements Controller {
+public class AddCharacter implements Controller {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ControllerAddCharacter.class);
+    private static final Logger LOG = LoggerFactory.getLogger(AddCharacter.class);
 
     private static final DialogFactory dialogFactory = new DialogFactory();
 
@@ -112,14 +112,14 @@ public class ControllerAddCharacter implements Controller {
         switch (comboBox_companions.getSelectionModel().getSelectedItem()) {
             case CHARACTER:
                 try {
-                    ControllerAddCharacter controllerAddCharacter =
+                    AddCharacter addCharacter =
                             dialogFactory.createCharacterDialog(
                                     campaign,
                                     CharacterType.COMPANION,
                                     null,
                                     appLogic);
-                    controllerAddCharacter.getStage().showAndWait();
-                    controllerAddCharacter.getCharacter().ifPresent(companionCharacter -> {
+                    addCharacter.getStage().showAndWait();
+                    addCharacter.getCharacter().ifPresent(companionCharacter -> {
                         tableView_companions.getItems().add(new Companion(companionCharacter));
                     });
 
@@ -129,10 +129,10 @@ public class ControllerAddCharacter implements Controller {
                 break;
             case VEHICLE:
                 try {
-                    ControllerAddVehicle controllerAddVehicle =
+                    AddVehicle addVehicle =
                             dialogFactory.createVehicleDialog(campaign, null);
-                    controllerAddVehicle.getStage().showAndWait();
-                    controllerAddVehicle.getVehicle().ifPresent(vehicle -> {
+                    addVehicle.getStage().showAndWait();
+                    addVehicle.getVehicle().ifPresent(vehicle -> {
                         tableView_companions.getItems().add(new Companion(vehicle));
                     });
                 } catch (IOException ex) {
@@ -141,10 +141,10 @@ public class ControllerAddCharacter implements Controller {
                 break;
             case DEVICE:
                 try {
-                    ControllerAddDevice controllerAddDevice =
+                    AddDevice addDevice =
                             dialogFactory.createDeviceDialog(campaign, null);
-                    controllerAddDevice.getStage().showAndWait();
-                    controllerAddDevice.getDevice().ifPresent(device -> {
+                    addDevice.getStage().showAndWait();
+                    addDevice.getDevice().ifPresent(device -> {
                         tableView_companions.getItems().add(new Companion(device));
                     });
 
@@ -227,30 +227,30 @@ public class ControllerAddCharacter implements Controller {
                     try {
                         switch (companion.getCompanionType()) {
                             case CHARACTER:
-                                ControllerAddCharacter controllerAddCharacter =
+                                AddCharacter addCharacter =
                                         dialogFactory.createCharacterDialog(campaign,
                                                 CharacterType.COMPANION,
                                                 ((Character) companion.getCompanion()),
                                                 appLogic);
-                                controllerAddCharacter.getStage().showAndWait();
-                                controllerAddCharacter.getCharacter().ifPresent(character -> {
+                                addCharacter.getStage().showAndWait();
+                                addCharacter.getCharacter().ifPresent(character -> {
                                     ((Character) companion.getCompanion()).setFrom(character);
                                 });
                                 break;
                             case DEVICE:
-                                ControllerAddDevice controllerAddDevice =
+                                AddDevice addDevice =
                                         dialogFactory.createDeviceDialog(campaign,
                                                 ((Device) companion.getCompanion()));
-                                controllerAddDevice.getStage().showAndWait();
-                                controllerAddDevice.getDevice().ifPresent(device -> {
+                                addDevice.getStage().showAndWait();
+                                addDevice.getDevice().ifPresent(device -> {
                                     ((Device) companion.getCompanion()).setFrom(device);
                                 });
                                 break;
                             case VEHICLE:
-                                ControllerAddVehicle controllerAddVehicle =
+                                AddVehicle addVehicle =
                                         dialogFactory.createVehicleDialog(campaign, ((Vehicle) companion.getCompanion()));
-                                controllerAddVehicle.getStage().showAndWait();
-                                controllerAddVehicle.getVehicle().ifPresent(vehicle -> {
+                                addVehicle.getStage().showAndWait();
+                                addVehicle.getVehicle().ifPresent(vehicle -> {
                                     ((Vehicle) companion.getCompanion()).setFrom(vehicle);
                                 });
                         }

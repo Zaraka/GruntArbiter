@@ -20,9 +20,9 @@ import java.io.IOException;
 import java.util.Objects;
 import java.util.Optional;
 
-public class ControllerManageSquads implements Controller {
+public class ManageSquads implements Controller {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ControllerManageSquads.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ManageSquads.class);
 
     private static final DialogFactory dialogFactory = new DialogFactory();
 
@@ -86,13 +86,13 @@ public class ControllerManageSquads implements Controller {
     private void createCharacterOnAction() {
 
         try {
-            ControllerAddCharacter controllerAddCharacter = dialogFactory.createCharacterDialog(
+            AddCharacter addCharacter = dialogFactory.createCharacterDialog(
                     campaign,
                     CharacterType.CLASSIC,
                     null,
                     appLogic);
-            controllerAddCharacter.getStage().showAndWait();
-            controllerAddCharacter.getCharacter().ifPresent(playerCharacter -> {
+            addCharacter.getStage().showAndWait();
+            addCharacter.getCharacter().ifPresent(playerCharacter -> {
                 tableView_characters.getItems().add(playerCharacter);
             });
 
@@ -161,11 +161,11 @@ public class ControllerManageSquads implements Controller {
             editCharacter.setOnAction(event -> {
                 Character selected = tableView_characters.getSelectionModel().getSelectedItem();
                 try {
-                    ControllerAddCharacter controllerAddCharacter = dialogFactory.createCharacterDialog(
+                    AddCharacter addCharacter = dialogFactory.createCharacterDialog(
                             campaign, CharacterType.CLASSIC, selected, appLogic);
-                    controllerAddCharacter.getStage().showAndWait();
+                    addCharacter.getStage().showAndWait();
 
-                    controllerAddCharacter.getCharacter().ifPresent(character -> {
+                    addCharacter.getCharacter().ifPresent(character -> {
                         int index = tableView_characters.getSelectionModel().getSelectedIndex();
                         tableView_characters.getItems().remove(index);
                         tableView_characters.getItems().add(index, character);

@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import org.apache.commons.lang3.StringUtils;
 import org.hildan.fxgson.FxGson;
 import org.shadowrun.common.NumericLimitListener;
 import org.shadowrun.common.constants.VehicleType;
@@ -19,9 +20,9 @@ import java.io.InputStreamReader;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class ControllerAddVehicle implements Controller {
+public class AddVehicle implements Controller {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ControllerAddVehicle.class);
+    private static final Logger LOG = LoggerFactory.getLogger(AddVehicle.class);
 
     private static final Gson gson = FxGson.createWithExtras();
 
@@ -55,6 +56,8 @@ public class ControllerAddVehicle implements Controller {
     private TextField textField_pilot;
     @FXML
     private TextField textField_sensor;
+    @FXML
+    private TextField textField_image;
 
     @FXML
     private RadioButton radioButton_type_drone;
@@ -150,6 +153,8 @@ public class ControllerAddVehicle implements Controller {
                         .setValue(String.valueOf(newValue.getValue().getVehicle().getSensor()));
                 textField_name.textProperty()
                         .setValue(newValue.getValue().getVehicle().getName());
+                textField_image.textProperty()
+                        .setValue(newValue.getValue().getVehicle().getImage());
                 selectType(newValue.getValue().getVehicle().getType());
             }
         });
@@ -166,6 +171,7 @@ public class ControllerAddVehicle implements Controller {
             textField_speed_onRoad.setText(String.valueOf(edit.getSpeed().getOnRoad()));
             textField_handling_offRoad.setText(String.valueOf(edit.getHandling().getOffRoad()));
             textField_handling_onRoad.setText(String.valueOf(edit.getHandling().getOnRoad()));
+            textField_image.setText(edit.getImage());
             selectType(edit.getType());
         }
 
@@ -252,7 +258,8 @@ public class ControllerAddVehicle implements Controller {
                 Integer.parseInt(textField_armor.getText()),
                 Integer.parseInt(textField_pilot.getText()),
                 Integer.parseInt(textField_sensor.getText()),
-                (VehicleType) type.getSelectedToggle().getUserData()
+                (VehicleType) type.getSelectedToggle().getUserData(),
+                textField_image.getText()
         );
     }
 

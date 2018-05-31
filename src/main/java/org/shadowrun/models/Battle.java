@@ -3,12 +3,10 @@ package org.shadowrun.models;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
-import javafx.beans.binding.BooleanBinding;
 import javafx.beans.binding.NumberBinding;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import org.apache.commons.lang3.StringUtils;
 import org.shadowrun.common.constants.CharacterType;
 import org.shadowrun.common.constants.Weather;
 import org.shadowrun.common.constants.World;
@@ -64,6 +62,8 @@ public class Battle implements Observable {
 
     private ObjectProperty<Weather> selectedWeather;
 
+    private ObjectProperty<VehicleChase> vehicleChase;
+
     private NumberBinding maxInitiative;
 
     private StringProperty name;
@@ -88,6 +88,7 @@ public class Battle implements Observable {
         time = new SimpleIntegerProperty(startingTime);
         maxInitiative = null;
         this.name = new SimpleStringProperty(name);
+        vehicleChase = new SimpleObjectProperty<>(null);
     }
 
     public Host getHost() {
@@ -191,6 +192,14 @@ public class Battle implements Observable {
         return backgroundNoise;
     }
 
+    public VehicleChase getVehicleChase() {
+        return vehicleChase.get();
+    }
+
+    public ObjectProperty<VehicleChase> vehicleChaseProperty() {
+        return vehicleChase;
+    }
+
     public void updateCurrentCharacter() {
         Optional<Character> current = characters.stream().max(Comparator.comparingInt(Character::getInitiative));
         current.ifPresent(character -> currentCharacter.setValue(character));
@@ -276,6 +285,7 @@ public class Battle implements Observable {
         selectedWeather.addListener(listener);
         name.addListener(listener);
         backgroundNoise.addListener(listener);
+        vehicleChase.addListener(listener);
     }
 
     @Override
@@ -294,5 +304,10 @@ public class Battle implements Observable {
         selectedWeather.removeListener(listener);
         name.removeListener(listener);
         backgroundNoise.removeListener(listener);
+        vehicleChase.removeListener(listener);
+    }
+
+    public Optional<Vehicle> findVehicle(String uuid) {
+        return vehicles.stream().filter(vehicle -> vehicle.getUuid().equals(uuid)).findFirst();
     }
 }

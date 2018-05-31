@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane hgap="14.0" maxHeight="+Infinity" maxWidth="+Infinity" minHeight="-Infinity" minWidth="-Infinity" stylesheets="@../css/dark.css" vgap="20.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.shadowrun.controllers.ControllerManageSquads">
+<GridPane hgap="14.0" maxHeight="+Infinity" maxWidth="+Infinity" minHeight="-Infinity" minWidth="-Infinity" stylesheets="@../css/dark.css" vgap="20.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.shadowrun.controllers.ManageSquads">
   <children>
       <FontAwesomeIconView glyphName="USERS" size="48" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.valignment="TOP" />
     <VBox spacing="7.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
