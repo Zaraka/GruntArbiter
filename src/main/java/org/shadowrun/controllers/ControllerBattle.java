@@ -9,7 +9,6 @@ import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
@@ -232,11 +231,15 @@ public class ControllerBattle {
     @FXML
     private Button button_spawnPlayer;
     @FXML
+    private Button button_vehicleCombat;
+    @FXML
     private Button button_selected_matrix;
     @FXML
     private Button button_selected_addCompanion;
     @FXML
-    private Button button_vehicleCombat;
+    private Button button_selected_forward;
+    @FXML
+    private Button button_selected_back;
 
     @FXML
     private TextField textField_selected_initiative;
@@ -605,7 +608,7 @@ public class ControllerBattle {
     @FXML
     private void addBarrierOnAction() {
         try {
-           AddBarrier addBarrier = dialogFactory.createBarrierDialog(appLogic);
+            AddBarrier addBarrier = dialogFactory.createBarrierDialog(appLogic);
             addBarrier.getStage().showAndWait();
             addBarrier.getBarrier()
                     .ifPresent(barrier -> {
@@ -650,7 +653,10 @@ public class ControllerBattle {
     private void addCharacterOnAction() {
         try {
             AddCharacter addCharacter =
-                    dialogFactory.createCharacterDialog(appLogic.getActiveCampaign(), CharacterType.CLASSIC, null, appLogic);
+                    dialogFactory.createCharacterDialog(appLogic.getActiveCampaign(),
+                            CharacterType.CLASSIC,
+                            null,
+                            appLogic);
             addCharacter.getStage().showAndWait();
             addCharacter.getCharacter().ifPresent(character -> {
                 battle.getCharacters().add(character);
@@ -805,15 +811,15 @@ public class ControllerBattle {
 
     @FXML
     public void engageVehicleCombat() {
-        if(battle.getVehicleChase() == null) {
+        if (battle.getVehicleChase() == null) {
             try {
                 VehicleCombat vehicleCombat = dialogFactory.createVehicleChaseDialog(battle);
                 vehicleCombat.getStage().showAndWait();
 
-                if(vehicleCombat.getValues().isPresent()) {
+                if (vehicleCombat.getValues().isPresent()) {
                     battle.vehicleChaseProperty().setValue(vehicleCombat.getValues().get());
 
-                    for(Map.Entry<Character, String> playerVehicle : vehicleCombat.getCharacterVehicleMap().entrySet()) {
+                    for (Map.Entry<Character, String> playerVehicle : vehicleCombat.getCharacterVehicleMap().entrySet()) {
                         playerVehicle.getKey().vehicleProperty().set(playerVehicle.getValue());
                     }
                     initializeCanvas();
@@ -826,6 +832,24 @@ public class ControllerBattle {
             battle.vehicleChaseProperty().setValue(null);
         }
 
+    }
+
+    @FXML
+    public void vehicleMoveForwardOnAction() {
+        ObservableMap<String, Integer> positions = battle.getVehicleChase().getPositions();
+        Vehicle vehicle = tableView_vehicles.selectionModelProperty().get().getSelectedItem();
+        if (positions.get(vehicle.getUuid()) != null) {
+            positions.put(vehicle.getUuid(), positions.get(vehicle.getUuid()) + 1);
+        }
+    }
+
+    @FXML
+    public void vehicleMoveBackwardOnAction() {
+        ObservableMap<String, Integer> positions = battle.getVehicleChase().getPositions();
+        Vehicle vehicle = tableView_vehicles.selectionModelProperty().get().getSelectedItem();
+        if (positions.get(vehicle.getUuid()) != null) {
+            positions.put(vehicle.getUuid(), positions.get(vehicle.getUuid()) - 1);
+        }
     }
 
     public void setNewInitiative() {
@@ -1008,7 +1032,7 @@ public class ControllerBattle {
                                 .or(battle.combatTurnProperty().greaterThan(1)).not()));
 
         button_hostAction.textProperty().bind(Bindings.createStringBinding(() -> {
-            if(battle.getHost().getRating() > 0) {
+            if (battle.getHost().getRating() > 0) {
                 return LABEL_DISCONNECT;
             } else {
                 return LABEL_GENERATE_HOST;
@@ -1068,7 +1092,7 @@ public class ControllerBattle {
         vbox_vehicleChase.setVisible(false);
         Bindings.isNull(battle.vehicleChaseProperty()).addListener((observable, oldValue, newValue) -> {
             vbox_vehicleChase.setVisible(!newValue);
-            if(newValue) {
+            if (newValue) {
                 button_vehicleCombat.textProperty().setValue("Engage vehicle combat");
                 textField_terrainModifier.textProperty().unbind();
             } else {
@@ -1126,7 +1150,7 @@ public class ControllerBattle {
                 anchorPane_selected.setVisible(true);
                 fontAwesomeIcon_selected.setVisible(true);
 
-                if(newValue.getType() == VehicleType.VEHICLE) {
+                if (newValue.getType() == VehicleType.VEHICLE) {
                     flowPane_selected_badges.getChildren()
                             .add(BadgeFactory.createBadge(
                                     "Vehicle",
@@ -1142,8 +1166,8 @@ public class ControllerBattle {
 
                 titledPane_selcted_passengers.setVisible(newValue.getType() == VehicleType.VEHICLE);
 
-                if(battle.getVehicleChase() != null) {
-                    if(battle.getVehicleChase().getChaseRoles().get(newValue.getUuid()) == VehicleChaseRole.PURSUER) {
+                if (battle.getVehicleChase() != null) {
+                    if (battle.getVehicleChase().getChaseRoles().get(newValue.getUuid()) == VehicleChaseRole.PURSUER) {
                         flowPane_selected_badges.getChildren()
                                 .add(BadgeFactory.createBadge(
                                         "Pursuer",
@@ -1161,8 +1185,8 @@ public class ControllerBattle {
 
                     tableView_selected_passengers.setItems(FXCollections.observableArrayList(
                             battle.getCharacters().stream()
-                            .filter(character -> character.getVehicle().equals(newValue.getUuid()))
-                            .collect(Collectors.toList())));
+                                    .filter(character -> character.getVehicle().equals(newValue.getUuid()))
+                                    .collect(Collectors.toList())));
                 }
 
             }
@@ -1172,7 +1196,7 @@ public class ControllerBattle {
         });
 
         canvas_chaseScreen.selectedVehicleProperty().addListener((observable, oldValue, newValue) -> {
-            if(newValue != tableView_vehicles.selectionModelProperty().getValue().getSelectedItem()) {
+            if (newValue != tableView_vehicles.selectionModelProperty().getValue().getSelectedItem()) {
                 tableView_vehicles.selectionModelProperty().getValue().select(newValue);
             }
         });
@@ -1414,7 +1438,7 @@ public class ControllerBattle {
                                             CssClasses.SUCCESS));
                         }
 
-                        if(newCharacter.playerUUIDProperty().isNotEmpty().get()) {
+                        if (newCharacter.playerUUIDProperty().isNotEmpty().get()) {
                             vbox_selected_player.setVisible(true);
                         }
 
@@ -1727,7 +1751,7 @@ public class ControllerBattle {
 
     private void refreshMasterTable() {
         tableView_masterTable.refresh();
-        for(TableColumn<Character, Integer> tableColumn : turnTableColumns) {
+        for (TableColumn<Character, Integer> tableColumn : turnTableColumns) {
             tableColumn.getStyleClass().remove("current-pass");
         }
         passToColumn(battle.getInitiativePass()).getStyleClass().add("current-pass");

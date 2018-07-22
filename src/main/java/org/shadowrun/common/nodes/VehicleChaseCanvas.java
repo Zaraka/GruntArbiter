@@ -1,7 +1,6 @@
 package org.shadowrun.common.nodes;
 
 import com.sun.javafx.geom.Vec2d;
-import com.sun.javafx.geom.Vec3d;
 import javafx.animation.AnimationTimer;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -42,6 +41,8 @@ public class VehicleChaseCanvas extends Canvas {
 
     private Image sandTexture;
     private Image waterTexture;
+    private Image grassTexture;
+    private Image concreteTexture;
     private Image skyCloud;
     private Image selectBox;
     private Image unkownVehicle;
@@ -63,6 +64,10 @@ public class VehicleChaseCanvas extends Canvas {
 
     private Image background;
     private double lastBackgroundPosition = 0;
+    private double cameraPosition = 0;
+
+    private int maxVehiclePos;
+    private int minVehiclePos;
 
     private double lastWidth;
     private double lastHeight;
@@ -70,6 +75,8 @@ public class VehicleChaseCanvas extends Canvas {
     private AnimationTimer redrawTimer;
 
     private long frames = 0;
+
+    private Vec2d lastPos = new Vec2d();
 
     private ThreadLocalRandom threadLocalRandom;
 
@@ -85,6 +92,8 @@ public class VehicleChaseCanvas extends Canvas {
         ClassLoader classLoader = getClass().getClassLoader();
         sandTexture = new Image(classLoader.getResource("textures/sand.jpg").toExternalForm());
         waterTexture = new Image(classLoader.getResource("textures/water.jpg").toExternalForm());
+        concreteTexture = new Image(classLoader.getResource("textures/concrete.png").toExternalForm());
+        grassTexture = new Image(classLoader.getResource("textures/grass.png").toExternalForm());
         selectBox = new Image(classLoader.getResource("objects/selection.png").toExternalForm());
         skyCloud = new Image(classLoader.getResource("textures/cloud.png").toExternalForm());
         unkownVehicle = new Image(classLoader.getResource("objects/car.png").toExternalForm());
@@ -117,16 +126,38 @@ public class VehicleChaseCanvas extends Canvas {
 
         };
 
+        setFocusTraversable(true);
+
         addEventHandler(MouseEvent.MOUSE_MOVED, event -> {
             Optional<Vehicle> hovered = posToVehicle(event.getX(), event.getY());
             hoveredVehicle = hovered.orElse(null);
         });
 
+
         addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
             Optional<Vehicle> clicked = posToVehicle(event.getX(), event.getY());
             selectedVehicle.setValue(clicked.orElse(null));
         });
+
+        setOnMousePressed(event -> {
+            lastPos.set(event.getX(), event.getY());
+        });
+
+        setOnMouseDragged(event -> {
+            cameraPosition += lastPos.x - event.getX();
+            lastPos.set(event.getX(), event.getY());
+            updateCameraLimits();
+        });
+
+        setOnScroll(event -> {
+            cameraPosition += event.getDeltaY();
+            updateCameraLimits();
+        });
+
+        addEventFilter(MouseEvent.ANY, (e) -> requestFocus());
+
     }
+
 
     public Vehicle getSelectedVehicle() {
         return selectedVehicle.get();
@@ -139,14 +170,45 @@ public class VehicleChaseCanvas extends Canvas {
     public void setBattle(Battle battle) {
         this.battle = battle;
         battle.vehicleChaseProperty().addListener((observable, oldValue, newValue) -> {
-            if(newValue != null)
+            if (newValue != null) {
+                newValue.setPositionChangeEventHandler(event -> {
+                    updateVehiclePos();
+                    updateCameraLimits();
+                });
                 redrawTimer.start();
-            else
+            } else {
                 redrawTimer.stop();
+            }
         });
 
         battle.getVehicles().addListener((ListChangeListener<? super Vehicle>) c -> updateVehicles());
         updateVehicles();
+        updateVehiclePos();
+    }
+
+    private void updateCameraLimits() {
+        double minCameraPos = minVehiclePos * VEHICLE_BLOCK_SIZE;
+        double maxCameraPos = (maxVehiclePos + 1)  * VEHICLE_BLOCK_SIZE + SPACE_SIZE;
+        double scrollableRange = maxCameraPos - minCameraPos - getWidth();
+
+        if (cameraPosition < minCameraPos)
+            cameraPosition = minCameraPos;
+
+
+        if (scrollableRange < 0)
+            scrollableRange = 0;
+
+        if (cameraPosition > scrollableRange) {
+            cameraPosition = scrollableRange;
+        }
+    }
+
+    private void updateVehiclePos() {
+        Optional<Integer> maxPosition = battle.getVehicleChase().getPositions().values().stream().max(Integer::compareTo);
+        maxVehiclePos = maxPosition.isPresent() ? maxPosition.get() : 0;
+
+        Optional<Integer> minPosition = battle.getVehicleChase().getPositions().values().stream().min(Integer::compareTo);
+        minVehiclePos = minPosition.isPresent() ? minPosition.get() : 0;
     }
 
 
@@ -189,8 +251,8 @@ public class VehicleChaseCanvas extends Canvas {
         }
 
 
-        for(int x = 0; x < getWidth(); x += scaledTile) {
-            for(int y = 0; y < getHeight(); y += scaledTile) {
+        for (int x = 0; x < getWidth(); x += scaledTile) {
+            for (int y = 0; y < getHeight(); y += scaledTile) {
                 context.drawImage(texture, x, y, scaledTile, scaledTile);
             }
         }
@@ -206,40 +268,39 @@ public class VehicleChaseCanvas extends Canvas {
      * @param deltaTime - in nanoseconds
      */
     private void redraw(long deltaTime) {
-        if(lastWidth != getWidth() || lastHeight != getHeight())
+        if (lastWidth != getWidth() || lastHeight != getHeight())
             init();
 
         context.setFill(Color.BLACK);
-        context.fillRect(0,0, getWidth(), getHeight());
+        context.fillRect(0, 0, getWidth(), getHeight());
 
-        context.drawImage(background, lastBackgroundPosition, 0);
-        context.drawImage(background,  lastBackgroundPosition + getWidth(), 0);
+        context.drawImage(background, lastBackgroundPosition - cameraPosition, 0);
+        context.drawImage(background, lastBackgroundPosition + getWidth() - cameraPosition, 0);
         lastBackgroundPosition -= deltaTime * textureSpeeds.get(battle.getVehicleChase().getTerrainType());
-        if(lastBackgroundPosition <= -getWidth())
+        if (lastBackgroundPosition <= -getWidth())
             lastBackgroundPosition = 0;
         //lastBackgroundPosition++;
 
-        if(battle.getVehicleChase().getTerrainType() == TerrainType.SKY) {
-            for(Vec2d positions : particlesPosition) {
-                context.drawImage(skyCloud, positions.x, positions.y);
+        if (battle.getVehicleChase().getTerrainType() == TerrainType.SKY) {
+            for (Vec2d positions : particlesPosition) {
+                context.drawImage(skyCloud, positions.x - cameraPosition, positions.y);
                 positions.x -= deltaTime * SKY_CLOUDS;
-                if(positions.x <= -skyCloud.getWidth())
+                if (positions.x <= -skyCloud.getWidth())
                     positions.x = getWidth();
             }
         }
 
         int lane = 0;
-        for(Vehicle vehicle : battle.getVehicles()) {
+        for (Vehicle vehicle : battle.getVehicles()) {
             Double vehicleAmplitude = amplitude.get(vehicle);
             Double vehicleSpeed = speed.get(vehicle);
             Double vehiclePhase = phase.get(vehicle);
 
-
             Image vehicleImage = vehicleImages.get(vehicle);
             ObservableMap<String, Integer> positions = battle.getVehicleChase().getPositions();
-            double x = SPACE_SIZE + (VEHICLE_BLOCK_SIZE * positions.get(vehicle.getUuid()));
+            double x = SPACE_SIZE + (VEHICLE_BLOCK_SIZE * positions.get(vehicle.getUuid())) - cameraPosition;
             double y = (lane * LANE_HEIGHT) + (LANE_HEIGHT / 2) - (vehicleImage.getHeight() / 2) +
-                    (vehicleAmplitude * Math.sin((frames+vehiclePhase) / vehicleSpeed));
+                    (vehicleAmplitude * Math.sin((frames + vehiclePhase) / vehicleSpeed));
             context.drawImage(vehicleImage, x, y);
             lane++;
 
@@ -254,7 +315,7 @@ public class VehicleChaseCanvas extends Canvas {
 
             context.setStroke(Color.GREEN);
             double hp = (vehicle.getConditionMonitor().getCurrent() * 100) / vehicle.getConditionMonitor().getMax();
-            if(hp > 0) {
+            if (hp > 0) {
                 context.strokeLine(x + 35,
                         y + LANE_HEIGHT,
                         x + 35 + hp,
@@ -262,7 +323,7 @@ public class VehicleChaseCanvas extends Canvas {
             }
 
             VehicleChaseRole role = battle.getVehicleChase().getChaseRoles().get(vehicle.getUuid());
-            if(role == VehicleChaseRole.PURSUER)
+            if (role == VehicleChaseRole.PURSUER)
                 context.setStroke(Color.RED);
             else
                 context.setStroke(Color.GREEN);
@@ -273,7 +334,7 @@ public class VehicleChaseCanvas extends Canvas {
                     y + LANE_HEIGHT - 4);
 
 
-            if(hoveredVehicle == vehicle || selectedVehicle.getValue() == vehicle) {
+            if (hoveredVehicle == vehicle || selectedVehicle.getValue() == vehicle) {
                 context.drawImage(selectBox, x, y);
             }
 
@@ -281,37 +342,37 @@ public class VehicleChaseCanvas extends Canvas {
     }
 
     private void updateVehicles() {
-        for(Vehicle vehicle : battle.getVehicles()) {
+        for (Vehicle vehicle : battle.getVehicles()) {
             Double vehicleAmplitude = amplitude.get(vehicle);
-            if(vehicleAmplitude == null) {
+            if (vehicleAmplitude == null) {
                 vehicleAmplitude = ThreadLocalRandom.current().nextDouble(1, 4) * 3;
                 amplitude.put(vehicle, vehicleAmplitude);
             }
 
 
             Double vehicleSpeed = speed.get(vehicle);
-            if(vehicleSpeed == null) {
-                vehicleSpeed = ThreadLocalRandom.current().nextDouble(2, 4) * 2;
+            if (vehicleSpeed == null) {
+                vehicleSpeed = ThreadLocalRandom.current().nextDouble(2, 6) * 2;
                 speed.put(vehicle, vehicleSpeed);
             }
 
             Double vehiclePhase = phase.get(vehicle);
-            if(vehiclePhase == null) {
+            if (vehiclePhase == null) {
                 vehiclePhase = ThreadLocalRandom.current().nextDouble(0, 500);
                 phase.put(vehicle, vehiclePhase);
             }
 
-            if(!vehicleBoxes.containsKey(vehicle)) {
+            if (!vehicleBoxes.containsKey(vehicle)) {
                 vehicleBoxes.put(vehicle, new RectangleF(0, 0, VEHICLE_BLOCK_SIZE, LANE_HEIGHT));
             }
 
 
-            if(vehicleImages.get(vehicle) == null) {
-                if(getClass().getClassLoader().getResource(vehicle.getImage()) == null)
+            if (vehicleImages.get(vehicle) == null) {
+                if (getClass().getClassLoader().getResource(vehicle.getImage()) == null)
                     vehicleImages.put(vehicle, unkownVehicle);
                 else
                     vehicleImages.put(vehicle, new Image(getClass().getClassLoader()
-                        .getResource(vehicle.getImage()).toExternalForm()));
+                            .getResource(vehicle.getImage()).toExternalForm()));
             }
         }
     }

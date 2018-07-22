@@ -274,8 +274,8 @@ public class Main {
         this.application = app;
         this.scene = scene;
 
-        KeyCombination combinationNextTurn = new KeyCodeCombination(KeyCode.RIGHT,KeyCombination.CONTROL_ANY);
-        KeyCombination combinationPrevTurn = new KeyCodeCombination(KeyCode.LEFT,KeyCombination.CONTROL_ANY);
+        KeyCombination combinationNextTurn = new KeyCodeCombination(KeyCode.RIGHT,KeyCombination.CONTROL_DOWN);
+        KeyCombination combinationPrevTurn = new KeyCodeCombination(KeyCode.LEFT,KeyCombination.CONTROL_DOWN);
 
         scene.addEventFilter(KeyEvent.KEY_RELEASED, event -> {
             if (combinationNextTurn.match(event) && battleLogic.hasBattle().get()) {

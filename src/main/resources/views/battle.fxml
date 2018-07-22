@@ -931,8 +931,14 @@
                                  <children>
                                     <ToolBar prefHeight="40.0" prefWidth="200.0">
                                       <items>
-                                        <Button mnemonicParsing="false" styleClass="button-primary" text="Catch up" />
-                                          <Button mnemonicParsing="false" styleClass="button-primary" text="Break away" />
+                                        <Button fx:id="button_selected_forward" mnemonicParsing="false" onAction="#vehicleMoveForwardOnAction" styleClass="button-primary" text="Forward">
+                                             <graphic>
+                                                <FontAwesomeIconView glyphName="ARROW_UP" />
+                                             </graphic></Button>
+                                          <Button fx:id="button_selected_back" mnemonicParsing="false" onAction="#vehicleMoveBackwardOnAction" styleClass="button-primary" text="Back">
+                                             <graphic>
+                                                <FontAwesomeIconView glyphName="ARROW_DOWN" />
+                                             </graphic></Button>
                                       </items>
                                     </ToolBar>
                                     <TitledPane fx:id="titledPane_selcted_passengers" animated="false" expanded="false" text="Passengers">
