@@ -36,6 +36,7 @@ public class VehicleChaseCanvas extends Canvas {
     private static final double GROUND_SPEED = 0.0000001;
     private static final double SKY_LAND = 0.00000001;
     private static final double SKY_CLOUDS = 0.00000005;
+    private static final double ARROW_SPEED = 0.000000005;
 
     private ObjectProperty<Vehicle> selectedVehicle;
 
@@ -46,6 +47,8 @@ public class VehicleChaseCanvas extends Canvas {
     private Image skyCloud;
     private Image selectBox;
     private Image unkownVehicle;
+    private Image arrowGreen;
+    private Image arrowRed;
 
     private GraphicsContext context;
 
@@ -65,6 +68,7 @@ public class VehicleChaseCanvas extends Canvas {
     private Image background;
     private double lastBackgroundPosition = 0;
     private double cameraPosition = 0;
+    private double arrowPhase = 0;
 
     private int maxVehiclePos;
     private int minVehiclePos;
@@ -97,6 +101,8 @@ public class VehicleChaseCanvas extends Canvas {
         selectBox = new Image(classLoader.getResource("objects/selection.png").toExternalForm());
         skyCloud = new Image(classLoader.getResource("textures/cloud.png").toExternalForm());
         unkownVehicle = new Image(classLoader.getResource("objects/car.png").toExternalForm());
+        arrowRed = new Image(classLoader.getResource("objects/arrow_red.png").toExternalForm());
+        arrowGreen = new Image(classLoader.getResource("objects/arrow_green.png").toExternalForm());
         vehicleBoxes = new HashMap<>();
         amplitude = new HashMap<>();
         speed = new HashMap<>();
@@ -156,6 +162,18 @@ public class VehicleChaseCanvas extends Canvas {
 
         addEventFilter(MouseEvent.ANY, (e) -> requestFocus());
 
+        setOnKeyPressed(event -> {
+            switch(event.getCode()){
+                case LEFT:
+                    cameraPosition -= 15;
+                    break;
+                case RIGHT:
+                    cameraPosition += 15;
+                    break;
+                default:
+            }
+        });
+
     }
 
 
@@ -188,7 +206,7 @@ public class VehicleChaseCanvas extends Canvas {
 
     private void updateCameraLimits() {
         double minCameraPos = minVehiclePos * VEHICLE_BLOCK_SIZE;
-        double maxCameraPos = (maxVehiclePos + 1)  * VEHICLE_BLOCK_SIZE + SPACE_SIZE;
+        double maxCameraPos = (maxVehiclePos + 1) * VEHICLE_BLOCK_SIZE + SPACE_SIZE;
         double scrollableRange = maxCameraPos - minCameraPos - getWidth();
 
         if (cameraPosition < minCameraPos)
@@ -277,9 +295,8 @@ public class VehicleChaseCanvas extends Canvas {
         context.drawImage(background, lastBackgroundPosition - cameraPosition, 0);
         context.drawImage(background, lastBackgroundPosition + getWidth() - cameraPosition, 0);
         lastBackgroundPosition -= deltaTime * textureSpeeds.get(battle.getVehicleChase().getTerrainType());
-        if (lastBackgroundPosition <= -getWidth())
-            lastBackgroundPosition = 0;
-        //lastBackgroundPosition++;
+        if (lastBackgroundPosition <= -getWidth() + cameraPosition)
+            lastBackgroundPosition = cameraPosition;
 
         if (battle.getVehicleChase().getTerrainType() == TerrainType.SKY) {
             for (Vec2d positions : particlesPosition) {
@@ -292,16 +309,31 @@ public class VehicleChaseCanvas extends Canvas {
 
         int lane = 0;
         for (Vehicle vehicle : battle.getVehicles()) {
+            VehicleChaseRole vehicleChaseRole = battle.getVehicleChase().getChaseRoles().get(vehicle.getUuid());
             Double vehicleAmplitude = amplitude.get(vehicle);
             Double vehicleSpeed = speed.get(vehicle);
             Double vehiclePhase = phase.get(vehicle);
 
+            // draw car (even outside bounds)
             Image vehicleImage = vehicleImages.get(vehicle);
             ObservableMap<String, Integer> positions = battle.getVehicleChase().getPositions();
             double x = SPACE_SIZE + (VEHICLE_BLOCK_SIZE * positions.get(vehicle.getUuid())) - cameraPosition;
             double y = (lane * LANE_HEIGHT) + (LANE_HEIGHT / 2) - (vehicleImage.getHeight() / 2) +
                     (vehicleAmplitude * Math.sin((frames + vehiclePhase) / vehicleSpeed));
             context.drawImage(vehicleImage, x, y);
+
+            // draw arrow if outside bounds
+            arrowPhase = (arrowPhase + deltaTime * ARROW_SPEED) % 12;
+            Image arrow = vehicleChaseRole == VehicleChaseRole.PURSUER ? arrowRed : arrowGreen;
+            if (x > getWidth() + SPACE_SIZE) {
+                double arrowY = (lane * LANE_HEIGHT) + (LANE_HEIGHT / 2) - (arrow.getHeight() / 2);
+                context.drawImage(arrow, getWidth() - 64 + arrowPhase, arrowY);
+            } else if (x < -(SPACE_SIZE + LANE_HEIGHT)) {
+                double arrowY = (lane * LANE_HEIGHT) + (LANE_HEIGHT / 2) - (arrow.getHeight() / 2);
+                context.drawImage(arrow, 0, 0, arrow.getWidth(), arrow.getHeight(), 64 - arrowPhase, arrowY, -arrow.getWidth(), arrow.getHeight());
+            }
+
+
             lane++;
 
             RectangleF rect = vehicleBoxes.get(vehicle);
