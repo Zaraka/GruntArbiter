@@ -927,7 +927,7 @@
                                     </GridPane>
                                  </children>
                               </HBox>
-                              <VBox fx:id="vbox_selected_vehicle">
+                              <VBox fx:id="vbox_selected_vehicle_chase">
                                  <children>
                                     <ToolBar prefHeight="40.0" prefWidth="200.0">
                                       <items>
@@ -939,6 +939,7 @@
                                              <graphic>
                                                 <FontAwesomeIconView glyphName="ARROW_DOWN" />
                                              </graphic></Button>
+                                          <Button mnemonicParsing="false" onAction="#vehicleChangeRoleOnAction" styleClass="button-primary" text="Change role" />
                                       </items>
                                     </ToolBar>
                                     <TitledPane fx:id="titledPane_selcted_passengers" animated="false" expanded="false" text="Passengers">

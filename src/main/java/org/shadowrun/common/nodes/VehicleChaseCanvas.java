@@ -5,7 +5,9 @@ import javafx.animation.AnimationTimer;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ListChangeListener;
+import javafx.collections.MapChangeListener;
 import javafx.collections.ObservableMap;
+import javafx.geometry.Bounds;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -15,12 +17,15 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import org.shadowrun.common.constants.TerrainType;
 import org.shadowrun.common.constants.VehicleChaseRole;
+import org.shadowrun.common.utils.FontUtils;
 import org.shadowrun.models.Battle;
 import org.shadowrun.models.RectangleF;
 import org.shadowrun.models.Vehicle;
+import org.shadowrun.models.VehicleChase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.net.URL;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -37,6 +42,9 @@ public class VehicleChaseCanvas extends Canvas {
     private static final double SKY_LAND = 0.00000001;
     private static final double SKY_CLOUDS = 0.00000005;
     private static final double ARROW_SPEED = 0.000000005;
+    private static final long MESSAGE_CYCLE = 1000000000;
+
+    private Font digitalFont;
 
     private ObjectProperty<Vehicle> selectedVehicle;
 
@@ -53,6 +61,9 @@ public class VehicleChaseCanvas extends Canvas {
     private GraphicsContext context;
 
     private Battle battle;
+
+    private boolean onlyPursuers;
+    private boolean onlyRunners;
 
     private Vehicle hoveredVehicle;
 
@@ -77,14 +88,16 @@ public class VehicleChaseCanvas extends Canvas {
     private double lastHeight;
 
     private AnimationTimer redrawTimer;
-
     private long frames = 0;
+    private boolean messageCycle = true;
 
     private Vec2d lastPos = new Vec2d();
 
     private ThreadLocalRandom threadLocalRandom;
 
     public VehicleChaseCanvas() {
+        URL res = VehicleChaseCanvas.class.getClassLoader().getResource("fonts/CourierPrimeSans.ttf");
+        digitalFont = Font.font("Courier Prime Sans", 26);
         context = getGraphicsContext2D();
         this.battle = null;
         background = null;
@@ -119,6 +132,7 @@ public class VehicleChaseCanvas extends Canvas {
         redrawTimer = new AnimationTimer() {
 
             private long lastUpdate = System.nanoTime();
+            private long lastMessageCycle = 0;
 
             @Override
             public void handle(long now) {
@@ -127,6 +141,12 @@ public class VehicleChaseCanvas extends Canvas {
                     redraw(dt);
                     increaseFrames();
                     lastUpdate = now;
+
+                    lastMessageCycle += dt;
+                    if(lastMessageCycle >= MESSAGE_CYCLE) {
+                        messageCycle = !messageCycle;
+                        lastMessageCycle -= MESSAGE_CYCLE;
+                    }
                 }
             }
 
@@ -163,7 +183,7 @@ public class VehicleChaseCanvas extends Canvas {
         addEventFilter(MouseEvent.ANY, (e) -> requestFocus());
 
         setOnKeyPressed(event -> {
-            switch(event.getCode()){
+            switch (event.getCode()) {
                 case LEFT:
                     cameraPosition -= 15;
                     break;
@@ -176,7 +196,6 @@ public class VehicleChaseCanvas extends Canvas {
 
     }
 
-
     public Vehicle getSelectedVehicle() {
         return selectedVehicle.get();
     }
@@ -187,12 +206,18 @@ public class VehicleChaseCanvas extends Canvas {
 
     public void setBattle(Battle battle) {
         this.battle = battle;
-        battle.vehicleChaseProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) {
-                newValue.setPositionChangeEventHandler(event -> {
+        battle.vehicleChaseProperty().addListener((observable, oldValue, newVehicleChase) -> {
+            if (newVehicleChase != null) {
+
+                newVehicleChase.getPositions().addListener((MapChangeListener<String, Integer>) change -> {
                     updateVehiclePos();
                     updateCameraLimits();
                 });
+
+                newVehicleChase.getChaseRoles().addListener((MapChangeListener<String, VehicleChaseRole>) change -> {
+                    updateRoleStatus();
+                });
+
                 redrawTimer.start();
             } else {
                 redrawTimer.stop();
@@ -202,6 +227,7 @@ public class VehicleChaseCanvas extends Canvas {
         battle.getVehicles().addListener((ListChangeListener<? super Vehicle>) c -> updateVehicles());
         updateVehicles();
         updateVehiclePos();
+        updateRoleStatus();
     }
 
     private void updateCameraLimits() {
@@ -346,11 +372,11 @@ public class VehicleChaseCanvas extends Canvas {
             context.strokeLine(x + 35, y + LANE_HEIGHT, x + 35 + 100, y + LANE_HEIGHT);
 
             context.setStroke(Color.GREEN);
-            double hp = (vehicle.getConditionMonitor().getCurrent() * 100) / vehicle.getConditionMonitor().getMax();
+            int hp = (vehicle.getConditionMonitor().getCurrent() * 100) / vehicle.getConditionMonitor().getMax();
             if (hp > 0) {
                 context.strokeLine(x + 35,
                         y + LANE_HEIGHT,
-                        x + 35 + hp,
+                        x + (double) (35 + hp),
                         y + LANE_HEIGHT);
             }
 
@@ -371,9 +397,37 @@ public class VehicleChaseCanvas extends Canvas {
             }
 
         }
+
+        // draw overlay
+        if(messageCycle){
+            String message = null;
+            Color textColor = null;
+            if (onlyPursuers) {
+                message = "NO RUNNERS";
+                textColor = Color.RED;
+            } else if (onlyRunners) {
+                message = "NO PURSUERS";
+                textColor = Color.GREEN;
+            }
+
+            if (message != null) {
+                context.setFill(textColor);
+                Font font = digitalFont;
+                context.setFont(font);
+                Bounds messageBounds = FontUtils.reportSize(message, font);
+                context.fillText(message,
+                        getWidth() / 2 - messageBounds.getWidth() / 2,
+                        getHeight() - 15 - messageBounds.getHeight());
+            }
+        }
+
     }
 
+    /**
+     * Called everytime vehicles are removed or added
+     */
     private void updateVehicles() {
+
         for (Vehicle vehicle : battle.getVehicles()) {
             Double vehicleAmplitude = amplitude.get(vehicle);
             if (vehicleAmplitude == null) {
@@ -412,6 +466,18 @@ public class VehicleChaseCanvas extends Canvas {
     private Optional<Vehicle> posToVehicle(double x, double y) {
         return vehicleBoxes.entrySet().stream().filter(mapEntry -> mapEntry.getValue()
                 .contains(x, y)).map(Map.Entry::getKey).findAny();
+    }
+
+    private void updateRoleStatus() {
+        onlyPursuers = true;
+        onlyRunners = true;
+        VehicleChase vehicleChase = battle.getVehicleChase();
+        for (VehicleChaseRole vehicleChaseRole : vehicleChase.getChaseRoles().values()) {
+            if (vehicleChaseRole == VehicleChaseRole.PURSUER)
+                onlyRunners = false;
+            else
+                onlyPursuers = false;
+        }
     }
 
 

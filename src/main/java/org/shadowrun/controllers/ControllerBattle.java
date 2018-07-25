@@ -164,7 +164,7 @@ public class ControllerBattle {
     @FXML
     private VBox vbox_selected_companions;
     @FXML
-    private VBox vbox_selected_vehicle;
+    private VBox vbox_selected_vehicle_chase;
     @FXML
     private VBox vbox_vehicleChase;
 
@@ -838,8 +838,9 @@ public class ControllerBattle {
     public void vehicleMoveForwardOnAction() {
         ObservableMap<String, Integer> positions = battle.getVehicleChase().getPositions();
         Vehicle vehicle = tableView_vehicles.selectionModelProperty().get().getSelectedItem();
-        if (positions.get(vehicle.getUuid()) != null) {
-            positions.put(vehicle.getUuid(), positions.get(vehicle.getUuid()) + 1);
+        Integer position = positions.get(vehicle.getUuid());
+        if (position != null) {
+            positions.put(vehicle.getUuid(), position + 1);
         }
     }
 
@@ -847,8 +848,20 @@ public class ControllerBattle {
     public void vehicleMoveBackwardOnAction() {
         ObservableMap<String, Integer> positions = battle.getVehicleChase().getPositions();
         Vehicle vehicle = tableView_vehicles.selectionModelProperty().get().getSelectedItem();
-        if (positions.get(vehicle.getUuid()) != null) {
-            positions.put(vehicle.getUuid(), positions.get(vehicle.getUuid()) - 1);
+        Integer position = positions.get(vehicle.getUuid());
+        if (position != null) {
+            positions.put(vehicle.getUuid(), position - 1);
+        }
+    }
+
+    @FXML
+    public void vehicleChangeRoleOnAction() {
+        ObservableMap<String, VehicleChaseRole> roles = battle.getVehicleChase().getChaseRoles();
+        Vehicle vehicle = tableView_vehicles.selectionModelProperty().get().getSelectedItem();
+        VehicleChaseRole role = roles.get(vehicle.getUuid());
+        if (role != null) {
+            roles.put(vehicle.getUuid(),
+                    (role == VehicleChaseRole.PURSUER) ? VehicleChaseRole.RUNNER : VehicleChaseRole.PURSUER);
         }
     }
 
@@ -886,7 +899,7 @@ public class ControllerBattle {
         fontAwesomeIcon_selected.setVisible(false);
         button_selected_matrix.setVisible(false);
         imageView_selected.setVisible(false);
-        vbox_selected_vehicle.setVisible(false);
+        vbox_selected_vehicle_chase.setVisible(false);
 
         flowPane_selected_badges.getChildren().clear();
     }
@@ -938,7 +951,7 @@ public class ControllerBattle {
         imageView_selected.managedProperty().bind(imageView_selected.visibleProperty());
         button_selected_matrix.managedProperty().bind(button_selected_matrix.visibleProperty());
         vbox_vehicleChase.managedProperty().bindBidirectional(vbox_vehicleChase.visibleProperty());
-        vbox_selected_vehicle.managedProperty().bindBidirectional(vbox_selected_vehicle.visibleProperty());
+        vbox_selected_vehicle_chase.managedProperty().bindBidirectional(vbox_selected_vehicle_chase.visibleProperty());
         tableView_selected_passengers.managedProperty().bindBidirectional(tableView_selected_passengers.visibleProperty());
         titledPane_selcted_passengers.managedProperty().bindBidirectional(titledPane_selcted_passengers.visibleProperty());
 
@@ -1181,7 +1194,7 @@ public class ControllerBattle {
                                         CssClasses.SUCCESS));
                     }
 
-                    vbox_selected_vehicle.setVisible(true);
+                    vbox_selected_vehicle_chase.setVisible(true);
 
                     tableView_selected_passengers.setItems(FXCollections.observableArrayList(
                             battle.getCharacters().stream()
