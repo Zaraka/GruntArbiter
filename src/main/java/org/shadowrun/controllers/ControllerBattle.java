@@ -862,6 +862,7 @@ public class ControllerBattle {
         if (role != null) {
             roles.put(vehicle.getUuid(),
                     (role == VehicleChaseRole.PURSUER) ? VehicleChaseRole.RUNNER : VehicleChaseRole.PURSUER);
+            cleanSelectedPane();
         }
     }
 
@@ -1185,7 +1186,7 @@ public class ControllerBattle {
                                 .add(BadgeFactory.createBadge(
                                         "Pursuer",
                                         "This vehicle is pursuer in ongoing vehicle chase",
-                                        CssClasses.WARNING));
+                                        CssClasses.DANGER));
                     } else {
                         flowPane_selected_badges.getChildren()
                                 .add(BadgeFactory.createBadge(
@@ -1774,12 +1775,14 @@ public class ControllerBattle {
         splitPane_centerContent.getItems().add(0, anchorPane_chaseScreen);
         canvas_chaseScreen.heightProperty().bind(anchorPane_chaseScreen.heightProperty());
         canvas_chaseScreen.widthProperty().bind(anchorPane_chaseScreen.widthProperty());
+        cleanSelectedPane();
     }
 
     private void deinitializeCanvas() {
         canvas_chaseScreen.heightProperty().unbind();
         canvas_chaseScreen.widthProperty().unbind();
         splitPane_centerContent.getItems().remove(anchorPane_chaseScreen);
+        cleanSelectedPane();
     }
 
 }
