@@ -218,6 +218,9 @@ public class VehicleChaseCanvas extends Canvas {
                     updateRoleStatus();
                 });
 
+                updateVehiclePos();
+                updateRoleStatus();
+
                 redrawTimer.start();
             } else {
                 redrawTimer.stop();
@@ -226,8 +229,6 @@ public class VehicleChaseCanvas extends Canvas {
 
         battle.getVehicles().addListener((ListChangeListener<? super Vehicle>) c -> updateVehicles());
         updateVehicles();
-        updateVehiclePos();
-        updateRoleStatus();
     }
 
     private void updateCameraLimits() {
