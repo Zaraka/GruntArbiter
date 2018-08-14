@@ -18,6 +18,7 @@ import javafx.scene.text.Font;
 import org.shadowrun.common.constants.TerrainType;
 import org.shadowrun.common.constants.VehicleChaseRole;
 import org.shadowrun.common.utils.FontUtils;
+import org.shadowrun.logic.Animation;
 import org.shadowrun.models.Battle;
 import org.shadowrun.models.RectangleF;
 import org.shadowrun.models.Vehicle;
@@ -48,15 +49,18 @@ public class VehicleChaseCanvas extends Canvas {
 
     private ObjectProperty<Vehicle> selectedVehicle;
 
+    // Images and Textures
     private Image sandTexture;
     private Image waterTexture;
     private Image grassTexture;
     private Image concreteTexture;
     private Image skyCloud;
-    private Image selectBox;
     private Image unkownVehicle;
     private Image arrowGreen;
     private Image arrowRed;
+
+    // Animations
+    private Animation selectionAnimation;
 
     private GraphicsContext context;
 
@@ -111,11 +115,18 @@ public class VehicleChaseCanvas extends Canvas {
         waterTexture = new Image(classLoader.getResource("textures/water.jpg").toExternalForm());
         concreteTexture = new Image(classLoader.getResource("textures/concrete.png").toExternalForm());
         grassTexture = new Image(classLoader.getResource("textures/grass.png").toExternalForm());
-        selectBox = new Image(classLoader.getResource("objects/selection.png").toExternalForm());
         skyCloud = new Image(classLoader.getResource("textures/cloud.png").toExternalForm());
         unkownVehicle = new Image(classLoader.getResource("objects/car.png").toExternalForm());
         arrowRed = new Image(classLoader.getResource("objects/arrow_red.png").toExternalForm());
         arrowGreen = new Image(classLoader.getResource("objects/arrow_green.png").toExternalForm());
+
+        List<Image> selectBox = new ArrayList<>();
+        selectBox.add(new Image(classLoader.getResource("objects/selection.png").toExternalForm()));
+        selectBox.add(new Image(classLoader.getResource("objects/selection2.png").toExternalForm()));
+        selectBox.add(new Image(classLoader.getResource("objects/selection3.png").toExternalForm()));
+        selectBox.add(new Image(classLoader.getResource("objects/selection4.png").toExternalForm()));
+        selectionAnimation = new Animation(selectBox, 8);
+
         vehicleBoxes = new HashMap<>();
         amplitude = new HashMap<>();
         speed = new HashMap<>();
@@ -394,7 +405,8 @@ public class VehicleChaseCanvas extends Canvas {
 
 
             if (hoveredVehicle == vehicle || selectedVehicle.getValue() == vehicle) {
-                context.drawImage(selectBox, x, y);
+                selectionAnimation.update(deltaTime);
+                context.drawImage(selectionAnimation.getCurrentFrame(), x, y);
             }
 
         }
